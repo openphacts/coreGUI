@@ -4,7 +4,7 @@
 */
 Ext.define('LSP.model.Filter', {
 	extend: 'Ext.data.Model',
-	fields: ['activity', 'condition', 'value', 'unit', 'filterView', 'controller'],
+	fields: ['activity', 'condition', 'value', 'unit', 'filterView', 'controller', 'unit_text'],
 	filterType: undefined, //set to whatever type you are adding eg, activity or organism
 	getConditions: function() {
 

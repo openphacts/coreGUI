@@ -41,6 +41,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     success_count: 0,
 
+    csids: undefined,
+
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
         this.control({
@@ -76,7 +78,32 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, 
 
     prepareTSVDownload: function() {
-        console.log('Sim Search TSV download');
+       console.log('Sim Search TSV download');
+       var me = this;
+       var gridview = this.getGridView();
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       tsv_request_store.proxy.url = cs_download_url;
+       total_count = gridview.store.getTotalCount();
+       request_type = gridview.store.REQUEST_TYPE;
+
+       tsv_request_store.load(
+           {params: {
+               csdis : me.csids,
+               total_count : total_count,
+               request_type : request_type
+           },
+       callback: function(records, operation, success) {
+           if (success) {
+               console.log('success tsv create');
+               uuid = records[0].data.uuid;
+               me.current_jobs.push(uuid);
+               background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
+               background_tasks_form.fireEvent('taskadded', uuid, me.getGridView().getStore().getTypeName());
+           } else {
+               console.log('fail tsv create');
+           }
+       }});
     },   
 
     setTSVDownloadParams: function() {
@@ -84,12 +111,15 @@ Ext.define('LSP.controller.SimSearchForm', {
         var tsv_download_params = new Array();
         var grid_store = this.getStrucGrid().getStore();
         var items = grid_store.data.items;
+        var csid_array = new Array();
         Ext.each(items, function(item, index) {
             tsv_download_params.push("csids[]=" + item.data.csid);
+            csid_array.push(item.data.csid);
         });
         total_params = tsv_download_params.join("&");
         tsv_download_button.href = cs_download_url + "?" + total_params
         tsv_download_button.setParams();
+        this.csids = csid_array;
     },
 
     prepGrid: function() {

@@ -4,7 +4,7 @@ Ext.define('LSP.view.filter.CompletedActivityFilter', {
 	closable: true,
 	headerPosition: 'right',
 	height: 30,
-	width: 250,
+	width: 270,
 	filterModel:null,
 	layout: {
 		type: 'hbox'

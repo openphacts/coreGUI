@@ -61,5 +61,11 @@ Ext.define('LDA.helper.LDAConstants', {
 	"activity_pubmed_id": "pmid",
         "targets": "target_name",
         "target_organisms": "target_organisms"
-    }
+    },
+    LDAUnits: {
+	    "percentage": "%",
+	    "microgram_per_milliliter": "μg/ml",
+	    "nanomolar": "nM",
+	    "micromolar": "μM"
+}
 });

@@ -297,10 +297,10 @@ CREATE TABLE tsv_files (
 
 
 --
--- Name: tsv_file_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: tsv_files_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE tsv_file_id_seq
+CREATE SEQUENCE tsv_files_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -309,10 +309,10 @@ CREATE SEQUENCE tsv_file_id_seq
 
 
 --
--- Name: tsv_file_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: tsv_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE tsv_file_id_seq OWNED BY tsv_files.id;
+ALTER SEQUENCE tsv_files_id_seq OWNED BY tsv_files.id;
 
 
 --
@@ -453,7 +453,7 @@ ALTER TABLE ONLY roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY tsv_files ALTER COLUMN id SET DEFAULT nextval('tsv_file_id_seq'::regclass);
+ALTER TABLE ONLY tsv_files ALTER COLUMN id SET DEFAULT nextval('tsv_files_id_seq'::regclass);
 
 
 --
@@ -527,11 +527,11 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: tsv_file_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: tsv_files_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY tsv_files
-    ADD CONSTRAINT tsv_file_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT tsv_files_pkey PRIMARY KEY (id);
 
 
 --

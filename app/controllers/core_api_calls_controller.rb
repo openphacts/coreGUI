@@ -28,36 +28,16 @@ class CoreApiCallsController < ApplicationController
   # Given a list of chemspider ids, grab the data about each
   # id from the Linked Data API, create the tsv file and return it
   def chemspider_tab_separated_file
-    # no guarantee you will get all the headers so here is a complete list, might change in the future so be aware
-    all_headers = ["http://www.chemspider.com", "inchi", "inchikey", "smiles", "hba", "hbd", "logp", "psa", "ro5_violations", "http://www.conceptwiki.org", "prefLabel", "http://linkedlifedata.com/resource/drugbank", "biotransformation", "description", "meltingPoint", "proteinBinding", "toxicity", "http://data.kasabi.com/dataset/chembl-rdf", "full_mwt", "molform", "mw_freebase", "rtb", "isPrimaryTopicOf"]
-    domain = AppSettings.config["tsv"]["tsv_url"]
-    path = "/compound"
     uuid = UUIDTools::UUID.random_create.to_s
-    tmpfile = Tempfile.new(uuid)
-    first = true
-    FasterCSV.open(tmpfile.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
-      tab << all_headers
-      params[:csids].each do |csid|
-        url_params = "uri=" + CGI::escape("http://rdf.chemspider.com/#{csid}") + "&_format=tsv"
-        # puts url_params
-        begin
-          url_path = "#{path}?".concat(url_params)
-          response = Net::HTTP.get(domain, url_path)
-          tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
-          tab_data.each do |row|
-            current_row = []
-            all_headers.each {|header| current_row << row.values_at(header)}
-            tab << current_row
-          end
-          # tmpfile << response
-          first = false
-        rescue Exception => e
-          logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
-        end
-      end  
-    end    
-    send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
-    tmpfile.close(true)
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    tsv_file.process_chemspider params
+    respond_to do |format|
+      format.json {
+        render :json => "[{'uuid' : '#{uuid}'}]"   
+      }
+    end
   end
 
   # Get the list of organisms for use in the filter
