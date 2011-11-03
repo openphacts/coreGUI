@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: 
+  role_id: 1
+  application_module_id: 1
+  priv_create: 1
+  priv_read: 1
+  priv_update: 1
+  priv_destroy: 1

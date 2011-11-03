@@ -1,0 +1,35 @@
+#lsp-header {
+    color: #596F8F;
+    font-size: 17px;
+    font-weight: 200;
+    padding: 2px 8px;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.icon-new { background-image:url(/images/icon-new.gif) !important; }
+.icon-edit { background-image:url(/images/icon-edit.png) !important; }
+.icon-delete{ background-image:url(/images/icon-delete.gif) !important; }
+.icon-filter { background-image:url(/images/icon-filter.png) !important; }
+.icon-reload { background-image:url(/images/icon-reload.png) !important; }
+.ux-rangemenu-gt { background-image:url(/images/greater_than.png) !important; }
+.ux-rangemenu-lt { background-image:url(/images/less_than.png) !important; }
+.ux-rangemenu-eq { background-image:url(/images/equals.png) !important; }
+.ux-filtered-column {
+    font-style: italic;  
+    font-weight: bold;
+}
+.ux-gridfilter-text-icon {
+    background-image: url(/images/find.png) !important;
+}
+
+
+/*buttons*/
+.x-btn-default-small .icon-add {
+    background-image: url(/images/add16.gif) !important;
+}
+.x-btn-default-medium .icon-add {
+    background-image: url(/images/add24.gif) !important;
+}
+.x-btn-default-large .icon-add {
+    background-image: url(/images/add.gif) !important;
+}
