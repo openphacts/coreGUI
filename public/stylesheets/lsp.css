@@ -11,6 +11,7 @@
 .icon-delete{ background-image:url(/images/icon-delete.gif) !important; }
 .icon-filter { background-image:url(/images/icon-filter.png) !important; }
 .icon-reload { background-image:url(/images/icon-reload.png) !important; }
+.icon-mol_dv { background-image:url(/images/icon-mol_dataview.png) !important; }
 .ux-rangemenu-gt { background-image:url(/images/greater_than.png) !important; }
 .ux-rangemenu-lt { background-image:url(/images/less_than.png) !important; }
 .ux-rangemenu-eq { background-image:url(/images/equals.png) !important; }
@@ -21,6 +22,42 @@
 .ux-gridfilter-text-icon {
     background-image: url(/images/find.png) !important;
 }
+
+
+.structure_data_view-wrap {
+    float: left;
+    padding: 8px 17px;
+    margin: 5px;
+/*    margin: 10px 0 0 25px;*/
+    text-align: center;
+    line-height: 14px;
+    color: #333;
+    height: 158px;
+    width: 140px;
+    font-size: 10px;
+   /* font-family: "Helvetica Neue",sans-serif;   */
+    overflow: hidden;
+    border-top: 1px solid transparent;
+}
+ 
+.structure_data_view-wrap span {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+                      
+.x-view-over_structure_dv {
+    border:1px solid #dddddd;
+}
+
+.x-item-selected_structure_dv {
+    background: #DFEDFF;
+}
+
+.x-item-selected_structure_dv span {
+    color:#1A4D8F;
+}
+
 
 
 /*buttons*/

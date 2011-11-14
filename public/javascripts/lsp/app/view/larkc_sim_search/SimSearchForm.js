@@ -100,14 +100,23 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                           action: 'query',
                           text: 'Start search'
                       },
-                      grid_ss = Ext.widget('dynamicgrid')
+                      grid_ss = Ext.widget('dynamicgrid2')
                       ]
                   }           
                 ];
-        grid_ss.timeout = 9000000;
+                
+                grid_toolbar = Ext.create('Ext.toolbar.Toolbar', {
+                       items: [
+                {
+                    xtype: 'button',
+                    iconCls: 'icon-mol_dv',
+                    text: 'Data View',
+                    action: 'data_view'
+                }
+    ]
+});        
+        grid_ss.addDocked(grid_toolbar);
         grid_ss.setTitle('Structure search results');
-        grid_ss.setHeight('82%'); 
-        grid_ss.buttonRender(['exporter']);                                  
         this.callParent(arguments);
     }    
 });

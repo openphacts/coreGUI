@@ -32,80 +32,45 @@
 #  
 ########################################################################################*/
 
-/* replace with the settings panel options later on */
-iconSize = 'small'
-
-Ext.define('LSP.view.Viewport', {
-    extend: 'Ext.container.Viewport',
-    alias: 'widget.lspviewport',
-
-    requires: [
-      'LSP.view.Viewer',
-      'LSP.view.Navigator',
-      'LSP.view.Settings',
-      'LSP.view.user.Loginbutton',
-      'LSP.view.user.Logoutbutton',
-      'LSP.view.user.Newbutton',
-      'Ext.layout.container.Border',
-      'Ext.toolbar.Spacer'
-    ],
-
-  	layout: 'border',
+Ext.define('LSP.controller.DynamicGrid', {
+    extend: 'Ext.app.Controller',
     
-    initComponent: function() {
-
-      var ops_logo = Ext.create('Ext.Img',{src: 'images/ops_logo.png',bodyStyle: {background: 'transparent'}});
-      this.items = [
-        {
-      	  region: 'north',
-      	  id: 'northView',
-      	  height: 60,
-      	  border: false,
-      	  bodyStyle: {
-              background: 'transparent',
-          },
-      	  layout: {
-            type: 'hbox',
-            padding: '5',
-            align: 'middle'
-          },
-      	  items: [
-      	     ops_logo,
-            {
-              id: 'lsp-header',
-              xtype: 'box',
-              html: 'Open PHACTS GUI'
-            },
-            {
-              xtype: 'tbspacer',
-              flex: 1
-            },
-            {
-              xtype: 'loginbutton',
-              id: 'loginButton'
-            },
-            {
-              xtype: 'usernewbutton',
-              id: 'userNewButton'
-            },
-            {
-              xtype: 'logoutbutton',
-              id: 'logoutButton'
-            }
-          ]
-        },
-        {
-      		region: 'center',
-      		id: 'centerView',
-      		xtype: 'viewer'      		
-      	},
-        {
-      		region: 'west',
-      		id: 'westView',
-      		width: 225,
-      		xtype: 'navigator'
-      	}
-      ]
-      this.callParent(arguments);
-    }
+    views: [
+        'dynamicgrid.DynamicGrid'
+    ],   
+     
+    stores: ['DynamicGrid'],
+    models: ['DynamicGrid'],
+    
+//     onLaunch: function() {
+//         var dynamicgridStore = this.getStore('DynamicGrid');
+//         dynamicgridStore.on('load', this.storeLoad, this);
+//     },
+//       
+//     storeLoad: function() {
+//         console.log(this);
+//         if(typeof(this.store.proxy.reader.jsonData.columns) === 'object') {  
+//             var columns = [];
+//             //console.log(this);
+//             if(this.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
+//             Ext.each(this.store.proxy.reader.jsonData.columns, function(column){
+//                 columns.push(column);  
+//             });
+//             //console.log(columns);
+//             //console.log(this);
+// //             if (typeof(title) == "undefined") {
+// //      	        var title = this.title;
+// //             }			
+// //             if (this.store.proxy.reader.jsonData.totalCount > 0){
+// //                     this.setTitle(title + ' - Records found: ' +  this.store.proxy.reader.jsonData.totalCount);
+// //             }
+// //             else {
+// //                      this.setTitle(title + ' - Records found: ' +  'No records found!');
+// //             }
+//                   console.log(this);
+//                   var dymview2 = this.getView('dynamicgrid2');
+//                   dymview2.reconfigure(this, columns);
+//                         
+//                     } 
+//     }
 });

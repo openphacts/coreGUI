@@ -314,7 +314,7 @@ class SparqlEndpointController < ApplicationController
          cs_image = nil
          if uri =~ /http:\/\/rdf.chemspider.com\/(\d+)/ then
            csid = $1
-           cs_image = '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=' + csid + '&w=200&h=160" alt="CSID:' + csid + '"/>'
+           cs_image = '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id=' + csid + '&w=128&h=128" alt="CSID:' + csid + '"/>'
          end
          record[:csid] = csid
          record[:chemspider_id] = '<a href ="http://inchi.chemspider.com/Chemical-Structure.' + csid + '.html' + '" target="_blank">' + csid + '</a>'
@@ -408,6 +408,9 @@ class SparqlEndpointController < ApplicationController
          type = 'auto'
          if field =~ /ic50/ then
             type = 'float'
+         end
+         if field == 'csid' then
+            type = 'int'
          end
          field_aofh.push({:name => field, :type => type})
       end 

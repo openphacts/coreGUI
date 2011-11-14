@@ -30,6 +30,17 @@ LSP4All::Application.routes.draw do
     end  
   end
   
+  resources :core_api_calls do 
+    collection do
+       get :cmpd_name_lookup
+       post :pharm_by_cmpd_name
+       post :pharm_enzyme_fam
+       post :search_by_smiles
+      
+                                   
+    end
+  end
+  
   resources :enzymes do
      collection do
        get :index

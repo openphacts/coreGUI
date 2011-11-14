@@ -35,7 +35,7 @@
 Ext.define('LSP.controller.SimSearchForm', {
     extend: 'Ext.app.Controller',
 
-    views: ['larkc_sim_search.SimSearchForm','mol_editor_forms.KetcherForm'],
+    views: ['larkc_sim_search.SimSearchForm','mol_editor_forms.KetcherForm', 'dataview.StructureViewer'],
 
     refs: [
         {
@@ -54,6 +54,9 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=query]': {
                 click: this.submitQuery
+            },
+            'SimSearchForm button[action=data_view]': {
+                click: this.launchDataView
             }
         });
     },
@@ -98,8 +101,15 @@ Ext.define('LSP.controller.SimSearchForm', {
         
         //grid.store.proxy.create;
         grid_ss.store.load();
+    },
+    
+    launchDataView: function(button) {
+        var grid = button.up('dynamicgrid2');
+        structureViewStore = grid.store;
+        var view = Ext.widget('StructureViewer');    
+        console.log(grid.store);  
+    
     }
-    
-    
+        
     }
 );

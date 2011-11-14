@@ -45,7 +45,7 @@ Ext.define('LSP.view.Appmoduletree', {
     useArrows: true,
     frame: false,
     autoScroll: true,
-    height: 400,
+    height: '100%',
     
     store: 'NavigationTree',
     

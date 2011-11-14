@@ -67,16 +67,17 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                       },
                       {
                         xtype: 'combo',
-                        valueField:'cmpd_name',
+                        valueField:'compound_name',
                       	store:  Ext.create('Ext.data.Store',{
                                       fields: [
-                                        {type: 'string', name: 'cmpd_name'},
-                                        {type: 'string', name: 'cmpdurl'}
+                                        {type: 'string', name: 'compound_name'},
+                                        {type: 'string', name: 'compound_uri'}
                                       ],
                                       proxy: {
                                           type: 'ajax',
                                           api: {
-                                              read: 'sparql_endpoint/cmpd_name_lookup.json'
+                                          //    read: 'sparql_endpoint/cmpd_name_lookup.json'
+                                              read: 'core_api_calls/cmpd_name_lookup.json'
                                           },
                                           reader: {
                                               type: 'json',
@@ -86,13 +87,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                                       }
                                   }),
                       	queryMode: 'remote',
-                      	displayField: 'cmpd_name',
+                      	displayField: 'compound_name',
                       	minChars:4,
                       	hideTrigger:true,
                       	forceSelection:true,
                       	typeAhead:true,
                         emptyText: 'Start typing...',
-                        name: 'cmpd_name',
+                        name: 'compound_name',
                         margin: '5 5 5 5',
                         width: 800,
                         fieldLabel: 'Compound name',
@@ -106,7 +107,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                             var post = selection[0];
                               if (post) {
                                  var fields = this.up().items.items;
-                                 fields.forEach(function(item) { if(item.name == 'cmpd_uuid'){item.setValue(post.data.cmpdurl);}});
+                                 fields.forEach(function(item) { if(item.name == 'cmpd_uuid'){item.setValue(post.data.compound_uri);}});
                               }
                             }
                         }
@@ -117,12 +118,10 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                         text: 'Search',
                         action: 'query_pharm_by_cmpd_name'
                       }]},
-                      grid_pharmbycompoundname = Ext.widget('dynamicgrid')                             
+                      grid_pharmbycompoundname = Ext.widget('dynamicgrid2')                             
                 ];
-        grid_pharmbycompoundname.timeout = 9000000;
         grid_pharmbycompoundname.setTitle('Pharmacology by Compound name search results');
         grid_pharmbycompoundname.setHeight('92%'); 
-        grid_pharmbycompoundname.buttonRender(['exporter']);                                  
         this.callParent(arguments);
     }    
 });

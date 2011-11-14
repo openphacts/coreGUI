@@ -171,12 +171,10 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                        action: 'query',
                        text: 'Start search'
                    },
-			             pharenz_grid = Ext.widget('dynamicgrid')
+			             pharenz_grid = Ext.widget('dynamicgrid2')
         ];
-        pharenz_grid.timeout = 9000000;
         pharenz_grid.setTitle('Inhibitors for enzyme class: no selection yet');
-        pharenz_grid.setHeight('70%'); 
-        pharenz_grid.buttonRender(['exporter']);                       
+       // pharenz_grid.setHeight('70%');                  
         me.callParent(arguments);
     }
 });
