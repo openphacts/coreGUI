@@ -1,4 +1,95 @@
-== Welcome to Rails
+== Checking out this code
+
+To check out this code from GitHub install Git on your development machine and add
+your public RSA key to your GitHub account.
+Then on the command line type
+$ git clone git@github.com:openphacts/coreGUI/whatever_branch_you_are_interested_in
+
+
+== Git Flow
+
+We would like you to use the tool Git Flow to develop feature branches etc. Please
+take a look at the Git Flow tutorial.
+
+== Setting it up
+
+To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
+wiki.openphacts.org and follow the instructions there.
+In case of problems contact Sune Askjaer on suap@lundbeck.com.
+
+== Adding a new tab to the Navigation three
+
+To add a new tab to the Navigation tree on the left follow these steps:
+
+  1.  Add a row to the PostgreSQL database modelling the ancestry informatin for 
+      existing nodes. In the 'xtype' column add the name ExtJS widget alias defined
+      in the the javascript view file. NB. skip this part if you do not have the
+      js code scaffold for your widget done yet.
+  
+  2.  Create your javascript ExtJS view and controller (and optional model and store)
+      in folders under /public/javascrip/lsp(soon ops)/app/. Make sure to stick to the ExtJS MVC
+      concept as much as possible keeping the view layout apart from the logic and
+      controls that all should go into the javascript controller.
+  
+  3.  List your javascript controller in \public\javascripts\lsp\app.js file controller
+      array and your javascript view definition in the \public\javascripts\lsp\app\view\Viewer.js
+      file. If you have defined and cross referenced the javascript model, store,
+      view and controller controller you should be good to go with the exception of
+      the hidden athentication field that need to be included in the form. For these
+      it is best to look at one of the existing pages and simply copy paste these. 
+      
+In case you are only building a stand alone widget that goes on an existing page
+you can skip the above steps and just create the javascript view, controller,
+model and store as needed and make sure that the they reference each other and that
+the view defines the widget alias. Then all you need to put it in a page is to add
+it to an items: tag usings xtype: my_widget_name or Ext.Widget('my_widget_name').
+      
+== Adding a controller method that accepts Ajax post or get
+
+Once you have the view up it is time to get some data into it. This is done by
+having the widget get data from the server via a Ajax call. These are either set
+up as a ExtJS proxy on the ExtJs model where it is stored in a ExtJS store for
+later use (preferred method) or alternatively as a Ajax query from inside the 
+controller. This later option is only preferred for simple data that is not 
+needed outside the scope of a single function.
+
+  1.  If you need a new Rails method implement this in the appropriate rails 
+      controller or find the url for the method needed.
+  2.  Configure you Ajax proxy or url method to hit this controller method and 
+      make it fire/load the call.
+  3.  If you defining a new controller method you need to configure the rails 
+      routes file \config\routes.rb so that ExtJS accepts gets or posts on these
+      methods. 
+      
+Use Firebug to track how this goes and for debugging any erros that might remain.             
+
+== Debugging the OPS GUI
+
+When developing the Javascript code for the GUI an essential tool to use is the 
+FireBug extension to Firefox. This tool (and others like it for Chrome) lets you
+see all comminicaiton between the web front end and the server. In addition,
+during development mode it allows for inspection of DOM obbjects and debugging of
+the Javascript code. 
+
+For debugging the Ruby on Rails server part the best way is simply to look at the
+/log/development.log file and the console (see further down under Rails for details).
+For Ruby syntax use interactive ruby 'irb' on the command line. Start it by typing 'irb'. 
+
+== About ExtJS
+
+ExtJS is a Javascript library the OPS project uses for building front ends and widgets.
+The ExtJS API documentation can be found here: coreGUI\public\ext\index.html
+Please read the ExtJS Guide on MVC design and try to stick too it as much as possible.
+Having the javascript code divided into model, store, controller and view makes the
+much easier to understand and reuse.
+
+For help with the ExtJS view part consider using the ExtJS Builder tool. A 30 day trial
+is available for the current version which is 1.2. Please be aware that this version do
+not support the ExtJS MVC concept as introduced with ExtJS 4.
+Version 2 of the ExtJS Builder is expected to support MVC and it will likely be out
+sometime durin Q1 2012. 
+
+== About Rails
 
 Rails is a web-application framework that includes everything needed to create
 database-backed web applications according to the Model-View-Control pattern.
@@ -28,16 +119,14 @@ link:files/vendor/rails/actionpack/README.html.
 
 == Getting Started
 
-1. At the command prompt, create a new Rails application:
-       <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
 
-2. Change directory to <tt>myapp</tt> and start the web server:
+1. Change directory to <tt>coreAPI</tt> and start the web server:
        <tt>cd myapp; rails server</tt> (run with --help for options)
 
-3. Go to http://localhost:3000/ and you'll see:
+2. Go to http://localhost:3000/ and you'll see:
        "Welcome aboard: You're riding Ruby on Rails!"
 
-4. Follow the guidelines to start developing your application. You can find
+3. Follow the guidelines to start developing your application. You can find
 the following resources handy:
 
 * The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
@@ -157,10 +246,10 @@ The default directory structure of a generated Ruby on Rails application:
 
   |-- app
   |   |-- controllers
-  |   |-- helpers
+  |   |-- helpers     // For OPS we do not use helpers
   |   |-- mailers
   |   |-- models
-  |   `-- views
+  |   `-- views       // For OPS coreGUI we do not use these besides for the basic layout
   |       `-- layouts
   |-- config
   |   |-- environments
