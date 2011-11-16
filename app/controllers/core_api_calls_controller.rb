@@ -30,11 +30,11 @@ class CoreApiCallsController < ApplicationController
   # search_types: 1 = exact match, 2 = substructure search, 3 = similarity search
   def search_by_smiles(smiles = params[:smiles], search_type = params[:search_type].to_i)  
      if search_type == 1 then
-      api_method = 'chemSpiderExactStructureSearch'
+      api_method = 'chemicalExactStructureSearch'
      elsif search_type == 2 then
-      api_method = 'chemSpiderSubstructureSearch'
+      api_method = 'chemicalSubstructureSearch'
      elsif search_type == 3 then
-      api_method = 'chemSpiderSimilaritySearch'
+      api_method = 'chemicalSimilaritySearch'
      end
       options = Hash.new
       options[:smiles] = smiles
