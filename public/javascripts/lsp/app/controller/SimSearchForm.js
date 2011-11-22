@@ -92,7 +92,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         //console.log(values.endpoint);
         grid_ss.store.proxy.actionMethods = {read: 'POST'};
         grid_ss.store.proxy.extraParams = values;
-        grid_ss.store.proxy.api.read = '/sparql_endpoint/search_by_smiles.json';
+        grid_ss.store.proxy.api.read = '/core_api_calls/search_by_smiles.json';
         var grid_title = '';
         if (values.search_type == '1') {grid_title = 'Exact structure match'};
         if (values.search_type == '2') {grid_title = 'Substructure structure'};

@@ -4,13 +4,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     closable: true,
     requires: [
         'LSP.view.dropdowns.compoundLookup'
-    ],    
+    ],
+    layout: 'auto',    
      initComponent: function() {
         
         this.items = [
                    {
                 xtype: 'container',
-                height: '8%',
+                height: '9%',
                 margin: '5 5 5 5',
                 name: 'form_fields',
                 layout: {
@@ -34,8 +35,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         value: $$('meta[name=csrf-token]')[0].readAttribute('content')
                       },
                       { 
-                        xtype: 'compoundLookup',
-                        minChars: 8
+                        xtype: 'compoundLookup',                        
                       },
                       {
                         xtype: 'button',
@@ -43,12 +43,9 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         text: 'Search',
                         action: 'query_cmpd_by_name'
                       }]},
-                      grid_cmpdbyname = Ext.widget('dynamicgrid')                             
+                      grid_cmpdbyname = Ext.widget('dynamicgrid2')                             
                 ];
-        grid_cmpdbyname.timeout = 9000000;
         grid_cmpdbyname.setTitle('Compound by name search results');
-        grid_cmpdbyname.setHeight('92%'); 
-        grid_cmpdbyname.buttonRender(['exporter']);                                  
         this.callParent(arguments);
     }    
 });

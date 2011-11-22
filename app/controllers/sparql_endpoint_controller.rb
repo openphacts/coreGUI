@@ -208,7 +208,7 @@ class SparqlEndpointController < ApplicationController
       end
       pharm_enzyme_query += "?ic50experiment brenda:has_inhibitor ?inhibitor .\n" 
       pharm_enzyme_query += "?ic50experiment brenda:species ?species_code .\n"
-      pharm_enzyme_query += "?species_code <http://w3.org/2000/01/rdf-schema#label> ?species .\n" 
+      pharm_enzyme_query += "?species_code rdfs:label ?species .\n" 
       if species.length >= 1 then
         pharm_enzyme_query += "filter(?species = \"#{species.join('" || ?species = "')}\") .\n"
       end

@@ -1,6 +1,5 @@
 require 'results_formatter'
 class CoreApiCallsController < ApplicationController
-
   
   def cmpd_name_lookup(substring = params[:query])
       options = Hash.new
@@ -13,8 +12,42 @@ class CoreApiCallsController < ApplicationController
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
   end
   
+  def protein_lookup(substring = params[:query])
+      options = Hash.new
+      api_method = 'proteinLookup'
+      options[:substring] = substring 
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+  end
+  
+  def compound_info(cmpd_uri = params[:compound_uri])
+    options = Hash.new
+    api_method = 'compoundInfo'
+    options[:uri] = '<' + cmpd_uri + '>'
+    options[:limit] =  params[:limit]
+    options[:offset] = params[:offset]
+    api_call = CoreApiCall.new
+    results = api_call.request( api_method, options)
+    render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+  end
+  
+  def protein_info(prot_uri = params[:protein_uri])
+    options = Hash.new
+    api_method = 'proteinInfo'
+    options[:uri] = '<' + prot_uri + '>' 
+    options[:limit] =  params[:limit]
+    options[:offset] = params[:offset]
+    api_call = CoreApiCall.new
+    results = api_call.request( api_method, options)
+    render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+  end
+  
+  
   # Main search for pharmacology by compound name. The input parameter is the cmpd_url returned by cmdp_name_lookup
-  def pharm_by_cmpd_name(cmpd_uri = params[:cmpd_uuid], cmpd_name = params[:cmpd_name])
+  def pharm_by_compound_name(cmpd_uri = params[:compound_uri])
       options = Hash.new
       api_method = 'compoundPharmacology'
       options[:uri] = '<' + cmpd_uri + '>'
@@ -25,6 +58,20 @@ class CoreApiCallsController < ApplicationController
       if results.nil? then "Then what?" end
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(ResultsFormatter.format_pubmed_id(results))).to_json, :layout => false    
   end
+  
+  # Main search for pharmacology by compound name. The input parameter is the cmpd_url returned by cmdp_name_lookup
+  def pharm_by_protein_name(prot_uri = params[:protein_uri])
+      options = Hash.new
+      api_method = 'proteinPharmacology'
+      options[:uri] = '<' + prot_uri + '>'
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      if results.nil? then "Then what?" end
+      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(ResultsFormatter.format_pubmed_id(results))).to_json, :layout => false    
+  end
+  
   
   # Query for the substructure/exact and similarity search by smiles string from the drawn structure
   # search_types: 1 = exact match, 2 = substructure search, 3 = similarity search
@@ -72,7 +119,7 @@ class CoreApiCallsController < ApplicationController
       end
       pharm_enzyme_query += "?ic50experiment brenda:has_inhibitor ?inhibitor .\n" 
       pharm_enzyme_query += "?ic50experiment brenda:species ?species_code .\n"
-      pharm_enzyme_query += "?species_code <http://w3.org/2000/01/rdf-schema#label> ?species .\n" 
+      pharm_enzyme_query += "?species_code rdfs:label ?species .\n" 
       if species.length >= 1 then
         pharm_enzyme_query += "filter(?species = \"#{species.join('" || ?species = "')}\") .\n"
       end

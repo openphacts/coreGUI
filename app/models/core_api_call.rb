@@ -6,7 +6,7 @@ class CoreApiCall
   include ActiveModel::Validations
   extend ActiveModel::Naming
 
-  CORE_API_URL = "http://ops.few.vu.nl:8183/opsapi"
+   CORE_API_URL = "http://ops.few.vu.nl:8183/opsapi"
   
   def initialize(url = CORE_API_URL, open_timeout = 1, read_timeout = 1)
      # Configuring the connection

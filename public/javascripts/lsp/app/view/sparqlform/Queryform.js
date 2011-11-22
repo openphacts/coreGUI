@@ -55,16 +55,16 @@ Ext.define('LSP.view.sparqlform.Queryform', {
 						width: 700,
 						value: 'SELECT *  WHERE { <http://linkedlifedata.com/resource/umls/id/C0000970> ?p ?o} LIMIT 100'
 					},
-					{
-            name: 'utf8',
-            xtype: 'hidden',
-            value: '&#x2713;'
-          },
-          {
-            name: 'authenticity_token',
-            xtype: 'hidden',
-            value: $$('meta[name=csrf-token]')[0].readAttribute('content')
-          },
+// 					{
+//             name: 'utf8',
+//             xtype: 'hidden',
+//             value: '&#x2713;'
+//           },
+//           {
+//             name: 'authenticity_token',
+//             xtype: 'hidden',
+//             value: $$('meta[name=csrf-token]')[0].readAttribute('content')
+//           },
 					{
 						xtype: 'button',
 						action: 'query',

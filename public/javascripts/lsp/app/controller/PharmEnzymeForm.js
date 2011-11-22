@@ -80,10 +80,9 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     submitQuery: function(button) {
         var form    = button.up('form');
         var values = form.getValues();
-
         pharenz_grid.store.proxy.actionMethods = {read: 'POST'};
         pharenz_grid.store.proxy.extraParams = values;
- //       pharenz_grid.store.proxy.api.read = '/sparql_endpoint/pharm_enzyme_fam.json';
+//        pharenz_grid.store.proxy.api.read = '/sparql_endpoint/pharm_enzyme_fam.json';
         pharenz_grid.store.proxy.api.read = '/core_api_calls/pharm_enzyme_fam.json';
  
         pharenz_grid.setTitle('Inhibitors for enzymes in class:  ' + values.ec_number + ' => ' + values.enz_name);

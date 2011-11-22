@@ -94,7 +94,7 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                 xtype: 'fieldset',
           //      width: 600,
                 layout: {
-                    type: 'auto'
+                    type: 'fit'
                 },
                 title: 'Variables',
                 items: [
@@ -155,7 +155,7 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                                 boxLabel: 'Mouse',
                                 inputValue: 'Mus+musculus',
                                 name: 'species_2'
-                            },
+                            },                            
                             {
                                 xtype: 'checkboxfield',
                                 boxLabel: 'Rat',
@@ -170,7 +170,7 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                        xtype: 'button',
                        action: 'query',
                        text: 'Start search'
-                   },
+                   },                   
 			             pharenz_grid = Ext.widget('dynamicgrid2')
         ];
         pharenz_grid.setTitle('Inhibitors for enzyme class: no selection yet');
