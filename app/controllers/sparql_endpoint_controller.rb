@@ -97,7 +97,7 @@ class SparqlEndpointController < ApplicationController
   # NB see function "format_chemspider_results" below for formatting for Chemsider ID to structure image and hyperlink. 
   # For this special formating to work the chemcallout subject variable must be called ?csid_uri and the returned identifier must contain the substring "Chemical-Structure"
   # If the Chemcallout return value is changes the to return a different string the "format_chemspider_results" function must also be changed accordingly! 
-  def cmpd_by_name(cmpd_url = params[:cmpd_uuid])
+  def cmpd_by_name(cmpd_url = params[:compound_uri])
     if "#{cmpd_url}".index("brenda") then
         query_str = "PREFIX brenda: <http://brenda-enzymes.info/> \n"
         query_str += "PREFIX pdsp: <http://wiki.openphacts.org/index.php/PDSP_DB#>\n"
