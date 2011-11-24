@@ -7,7 +7,7 @@ Ext.define('LSP.view.dropdowns.conceptWikiLookup', {
               {type: 'string', name: 'concept_label'},
               {type: 'string', name: 'concept_url'},
               {type: 'string', name: 'concept_uuid'},
-              {type: 'string', name: 'concept_alt_label'},
+              {type: 'string', name: 'concept_alt_labels'},
               {type: 'string', name: 'tag_label'},
               {type: 'string', name: 'tag_uuid'},
               
@@ -33,12 +33,16 @@ Ext.define('LSP.view.dropdowns.conceptWikiLookup', {
     	typeAhead:true,
       emptyText: 'Start typing...',
       margin: '5 5 5 5',
-      width: 600,
+      width: 700,
       queryDelay: 700,
       fieldLabel: 'Concept name',
       labelWidth: 120,
       listConfig: {
         loadingText: 'Searching...',
         emptyText: 'No matching concepts found.',
+        getInnerTpl: function() {
+            return '<p><b>{concept_label}</b> <a href="{concept_url}" target="_blank">(definition)</a> <i>({tag_label})</i><br/ ><small><i>{concept_alt_labels}</i></small></p>';
+        }
+
       }
 });

@@ -13,7 +13,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
     
     submitQuery: function(button) {
         var form = button.up('form');
-        values = form.getValues();
+        values = form.getValues(); 
         grid_pharmbycompoundname.store.proxy.actionMethods = {read: 'POST'};
         grid_pharmbycompoundname.store.proxy.extraParams = values;
         grid_pharmbycompoundname.store.proxy.api.read = '/core_api_calls/pharm_by_compound_name.json';

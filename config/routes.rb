@@ -34,12 +34,16 @@ LSP4All::Application.routes.draw do
     collection do
        get :cmpd_name_lookup
        get :protein_lookup
+       get :pmid_lookup
        post :protein_info
        post :pharm_by_compound_name
        post :pharm_by_protein_name
        post :pharm_enzyme_fam
        post :search_by_smiles
-       post :compound_info                                   
+       post :compound_info
+       post :pmid2title                                       
+       post :pmid2abstract                                       
+
     end
   end
   
@@ -47,7 +51,7 @@ LSP4All::Application.routes.draw do
     collection do
        get :concept_lookup
        get :compound_lookup
-       get :protein_lookup                                   
+       get :protein_lookup                               
     end
   end
 

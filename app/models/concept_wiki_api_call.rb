@@ -20,7 +20,7 @@ class ConceptWikiApiCall
      
      @response = nil
      @api_method = nil    
-     @limit = 10
+     @limit = 30
      @offset = 0
      @results = nil
      @parsed_results = nil     
@@ -75,10 +75,11 @@ class ConceptWikiApiCall
             result[:concept_label] = label['text']          
           end
           if label['type'] == "ALTERNATIVE"
-            alt_labels.push(label['text'])          
+            alt_label = label['text'].gsub(Regexp.new(substring, true),"<b>#{substring}</b>")
+            alt_labels.push(alt_label)          
           end  
         end
-        result[:concept_alt_labels] = alt_labels.join(', ')
+        result[:concept_alt_labels] = alt_labels.join('; ')
         #tags
         tag = concept['tags'].first
 
@@ -141,10 +142,11 @@ class ConceptWikiApiCall
             result[:concept_label] = label['text']          
           end
           if label['type'] == "ALTERNATIVE"
-            alt_labels.push(label['text'])          
+            alt_label = label['text'].gsub(Regexp.new(substring, true),"<b>#{substring}</b>")
+            alt_labels.push(alt_label)          
           end  
         end
-        result[:concept_alt_labels] = alt_labels.join(', ')
+        result[:concept_alt_labels] = alt_labels.join('; ')
         #tags
         tag = concept['tags'].first
         result[:tag_uuid] = tag['uuid']
@@ -174,7 +176,7 @@ class ConceptWikiApiCall
   puts "Call took #{@query_time} seconds"
      status = case @response.code.to_i
         when 100..199 then
-          @http_error = "HTTP {status.to_s}-error"
+          @http_error = "HTTP #{@response.code}-error"
           puts @http_error
           return nil        
         when 200 then #HTTPOK =>  Success
@@ -190,7 +192,7 @@ class ConceptWikiApiCall
 #          end
 #          return @results                                             
         when 201..403 then           
-          @http_error = "HTTP {status.to_s}-error"
+          @http_error = "HTTP #{@response.code}-error"
           puts @http_error
           return nil
         when 404 then  
@@ -202,7 +204,7 @@ class ConceptWikiApiCall
           return nil  
         when 409..600 then
           puts @http_error
-          @http_error = "HTTP {status.to_s}-error"
+          @http_error = "HTTP #{@response.code}-error"
           return nil
      end   
 #    rescue StandardError => the_exception

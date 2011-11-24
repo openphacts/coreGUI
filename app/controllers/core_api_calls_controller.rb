@@ -141,4 +141,100 @@ class CoreApiCallsController < ApplicationController
   end 
 
 
+  def pmid_lookup(pmid_query = params[:query])
+  
+      query_str = "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+      query_str += "PREFIX pubmed:<http://www.ncbi.nlm.nih.gov/pubmed/> \n"
+      query_str += "PREFIX bibo:<http://purl.org/ontology/bibo/>\n"
+      query_str += "select ?pmid_uri where {\n"
+      query_str += "?pmid_uri rdf:type bibo:Document .\n"
+      query_str += "FILTER regex(str(?pmid_uri), \"http://www.ncbi.nlm.nih.gov/pubmed/#{pmid_query}\") } \n"
+    
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      results.each do |record|
+      
+         if record[:pmid_uri] =~ /pubmed\/(\d+)/ then
+           pubmed_id = $1
+         else
+           pubmed_id = nil
+         end
+         record[:pmid] = pubmed_id
+      end   
+      render :json => results.to_json, :layout => false     
+  end 
+
+  def pmid2title(pmid_uri = params[:pubmed_uri])
+  
+      query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
+      query_str += "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX bibo:<http://purl.org/ontology/bibo/> \n"
+      query_str += "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> \n"
+      query_str += "SELECT ?title WHERE { \n"
+      query_str += "?sentence dc-term:isPartOf <#{pmid_uri}> . \n"
+      query_str += "?sentence rdfs:label ?title . \n"
+      query_str += "?sentence bibo:number \"0\"^^xsd:integer . \n"
+      query_str += " } "
+
+puts query_str    
+
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options).first
+      render :json => results.to_json, :layout => false     
+  end
+
+  def pmid2abstact(pmid_uri = params[:pubmed_uri])
+      query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
+      query_str +="PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str +="PREFIX bibo:<http://purl.org/ontology/bibo/> \n"
+      query_str +="SELECT ?abstract WHERE { \n"
+      query_str +="?sentence dc-term:isPartOf <#{pmid_uri}> . \n"
+      query_str +="?sentence rdfs:label ?abstract . \n"
+      query_str +="?sentence bibo:number ?sentenceNumber . \n"
+      query_str +="FILTER (?sentenceNumber > 0) . \n"
+      query_str +=" } ORDER BY ?sentenceNumber \n"
+ puts query_str    
+ 
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      sentences = api_call.request( api_method, options)
+      abstract = ""
+      sentences.each do |record|
+         abstract << record['abstract']
+      end
+      render :json => {:abstract => abstract}.to_json, :layout => false     
+   end
+   
+   def pmid2concepts(pmid_uri = params[:pubmed_uri])
+      query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
+      query_str +="  "
+       puts query_str    
+ 
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      sentences = api_call.request( api_method, options)
+      abstract = ""
+      sentences.each do |record|
+         abstract << record['abstract']
+      end
+      render :json => {:abstract => abstract}.to_json, :layout => false
+   end   
 end

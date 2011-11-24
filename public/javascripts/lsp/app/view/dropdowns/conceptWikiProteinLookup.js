@@ -7,7 +7,7 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
               {type: 'string', name: 'concept_label'},
               {type: 'string', name: 'concept_url'},
               {type: 'string', name: 'concept_uuid'},
-              {type: 'string', name: 'concept_alt_label'},
+              {type: 'string', name: 'concept_alt_labels'},
               {type: 'string', name: 'tag_label'},
               {type: 'string', name: 'tag_uuid'},
               
@@ -33,15 +33,16 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
     	typeAhead:true,
       emptyText: 'Start typing...',
       margin: '5 5 5 5',
-      width: 600,
+      width: 700,
       queryDelay: 700,
       fieldLabel: 'Protein name',
       labelWidth: 120,
       listConfig: {
         loadingText: 'Searching...',
         emptyText: 'No matching proteins found.',
-        tpl: '<tpl for="."><div class="x-combo-list-item">{concept_label} : {concept_alt_label}</div></tpl>',
-        itemSelector: 'span.item' // you need to provide an itemSelector if you change the template
+        getInnerTpl: function() {
+                    return '<p><b>{concept_label}</b> <a href="{concept_url}" target="_blank">(definition)</a><br/ ><small><i>{concept_alt_labels}</i></small></p>';
+                }
       }
 });
-       
+                              
