@@ -42,7 +42,8 @@ LSP4All::Application.routes.draw do
        post :search_by_smiles
        post :compound_info
        post :pmid2title                                       
-       post :pmid2abstract                                       
+       post :pmid2abstract   
+       get :pmid2concepts                                       
 
     end
   end

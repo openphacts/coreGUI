@@ -25,7 +25,7 @@ Ext.define('LSP.view.dropdowns.pmidLookup', {
     	hideTrigger:true,
     	forceSelection:true,
     	typeAhead:true,
-      emptyText: 'Start typing...',
+      emptyText: 'Start typing Pubmed id...',
       margin: '5 5 5 5',
       width: 600,
       queryDelay: 700,

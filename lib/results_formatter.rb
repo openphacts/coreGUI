@@ -75,7 +75,7 @@ class ResultsFormatter
          col = Hash.new
          col[:text] = key
          col[:xtype] = 'templatecolumn'  
-         col[:tpl] = '<a href ="{' + header_strings[idx_pair.last.to_i] + '}" target="_blank">{' + header_strings[idx_pair.first.to_i] + '}</a>'
+         col[:tpl] = '<a href ="{' + header_strings[idx_pair.first.to_i] + '}" target="_blank">{' + header_strings[idx_pair.last.to_i] + '}</a>'
          col[:hidden] = false
          col[:groupable] = true
          columns.push(col)

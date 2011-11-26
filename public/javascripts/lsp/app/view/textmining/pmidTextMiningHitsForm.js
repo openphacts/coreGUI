@@ -8,11 +8,14 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
     height: 560,
     width: 606,
     bodyPadding: 10,
-
+    layout: {
+              type: 'vbox',
+              align: 'stretch'
+          },
     initComponent: function() {
         var me = this;
 
-        Ext.applyIf(me, {
+        Ext.applyIf(me, { 
             items: [
                 {
                     xtype: 'container',
@@ -20,48 +23,49 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                     layout: {
                         type: 'column'
                     },
-                    anchor: '100%',
                     items: [
                         {
                             xtype: 'pmidLookup',
                             margin: '0 10 0 10',                          
-                            labelWidth: 75
+                            labelWidth: 75,
+                            width: 650,
                         },
                         {
                             xtype: 'button',
                             text: 'Search...',
-                            action: 'query'
+                            action: 'query',
+                            width: 120,
                         }
                     ]
                 },
                 {
                     xtype: 'fieldset',
-                    height: 244,
-                 //   width: 582,
-                    defaults: 'labelWidth: 75',
+                    height: 200,
+                    layout: 'anchor',
+                    defaults: {labelWidth: 75},
                     title: 'Bibliographic information',
                     items: [
                         {
                             xtype: 'displayfield',
                             fieldLabel: 'Title',
-                            labelWidth: 75,
+                            name: 'title',
                             anchor: '100%',
-                            name: 'title'
                         },
                         {
-                            xtype: 'textfield',
+                            xtype: 'textarea',
                             height: 150,
+                            readOnly: true,
                             fieldLabel: 'Abstract',
-                            labelWidth: 75,
+                            name: 'abstract',
                             anchor: '100%',
-                            name: 'pmid_abstract'
                         }
                     ]
                 },
                 {
                     xtype: 'dynamicgrid2',
-                    title: 'Concepts',
-                    
+                    title: 'Text mined concepts',
+                    name: 'textmining_hits',
+                    flex: 1,
                 }
             ]
         });

@@ -63,7 +63,7 @@ class CoreApiCall
      if not options[:default_graph_uri] then
         @default_graph_uri = options[:default_graph_uri]
      end
-     puts "\nIssues call to coreAPI with options: #{p options}\n"
+     puts "\nIssues call to coreAPI on #{CORE_API_URL} with options: #{options.inspect}\n"
      
      # setting the options for the api call
      @request.set_form_data(options)
@@ -83,9 +83,9 @@ class CoreApiCall
             return nil        
           when 200 then #HTTPOK =>  Success
             @success = true
-            puts @response.content_type
             parsed_responce = CoreApiResponseParser.parse_response(@response)
             @results = Array.new
+puts parsed_responce.inspect 
             parsed_responce.each do |solution|  
                rdf = solution.to_hash
                rdf.each {|key, value| rdf[key] = value.to_s}                                                        

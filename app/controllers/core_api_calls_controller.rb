@@ -193,7 +193,7 @@ puts query_str
       render :json => results.to_json, :layout => false     
   end
 
-  def pmid2abstact(pmid_uri = params[:pubmed_uri])
+  def pmid2abstract(pmid_uri = params[:pubmed_uri])
       query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
       query_str +="PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str +="PREFIX bibo:<http://purl.org/ontology/bibo/> \n"
@@ -203,7 +203,6 @@ puts query_str
       query_str +="?sentence bibo:number ?sentenceNumber . \n"
       query_str +="FILTER (?sentenceNumber > 0) . \n"
       query_str +=" } ORDER BY ?sentenceNumber \n"
- puts query_str    
  
       api_method = 'sparql'
       options = Hash.new
@@ -212,16 +211,29 @@ puts query_str
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
       sentences = api_call.request( api_method, options)
-      abstract = ""
+      abstract = Array.new
       sentences.each do |record|
-         abstract << record['abstract']
+         abstract.push(record[:abstract])
       end
-      render :json => {:abstract => abstract}.to_json, :layout => false     
+      render :json => {:abstract => abstract.join(" ")}.to_json, :layout => false     
    end
-   
+
    def pmid2concepts(pmid_uri = params[:pubmed_uri])
-      query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
-      query_str +="  "
+      query_str = "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> \n"
+      query_str +="PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str +="PREFIX bibo:<http://purl.org/ontology/bibo/>  \n"
+      query_str +="PREFIX cwt:<http://conceptwiki.org/index.php/Term:> \n"
+      query_str +="PREFIX uima:<http://clerezza.apache.org/2010/22/uima-entities#> \n"
+      query_str +="SELECT ?match ?concept_label ?begin ?end ?concept_url  WHERE {  \n"
+      query_str +="?hit cwt:occurs_in <#{pmid_uri}> . \n"
+      query_str +="?hit rdfs:label ?match .  \n"
+      query_str +="?concept_hit bibo:annotates ?hit .  \n"
+      query_str +="?concept_hit skos:prefLabel ?concept_label . \n"
+      query_str +="?concept_hit skos:exactMatch ?concept_url . \n" 
+      query_str +="?hit uima:atPosition ?pos .  \n"
+      query_str +="?pos uima:begin ?begin .  \n"
+      query_str +="?pos uima:end ?end .  \n"
+      query_str +="}"
        puts query_str    
  
       api_method = 'sparql'
@@ -230,11 +242,8 @@ puts query_str
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
-      sentences = api_call.request( api_method, options)
-      abstract = ""
-      sentences.each do |record|
-         abstract << record['abstract']
-      end
-      render :json => {:abstract => abstract}.to_json, :layout => false
+      hits = api_call.request( api_method, options)
+puts hits.inspect      
+      render :json => ResultsFormatter.construct_column_objects(hits).to_json, :layout => false
    end   
 end
