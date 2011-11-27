@@ -23,7 +23,7 @@ Ext.define('LSP.view.dataview.StructureViewer', {
         tpl  : Ext.create('Ext.XTemplate',
             '<tpl for=".">',
                 '<div class="structure_data_view-wrap">',
-                   '<p height="160">', 
+                   '<p height="180">', 
                     '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
                     '<br /><strong>Chemspider id : <a href ="http://inchi.chemspider.com/Chemical-Structure.{csid}.html" target="_blank">{csid}</a></strong>',
                    '</p>', 

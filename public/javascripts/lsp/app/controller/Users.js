@@ -41,6 +41,8 @@ Ext.define('LSP.controller.Users', {
     ],
 
     init: function() {
+        this.checkCoreAPI();
+    
         this.control({
             'loginbutton': {
                 click: this.userLoginWindow
@@ -63,6 +65,20 @@ Ext.define('LSP.controller.Users', {
                 click: this.newUser
             }
         });
+    },
+    
+    checkCoreAPI: function(){
+        Ext.Ajax.request({
+          url: 'core_api_calls/check',
+          success: function(response){
+              var status_field = Ext.ComponentQuery.query('displayfield[id="ops_api_staus_id"]')[0];
+              status_field.setValue("");
+          },
+          failure: function(response){
+              var status_field = Ext.ComponentQuery.query('displayfield[id="ops_api_staus_id"]')[0];
+              status_field.setValue("<b>Sorry, Open PHACTS core API is currently off-line<br/>Please try again later by refreshing your browser</b>");
+          }
+      });
     },
     
     userLoginWindow: function(button, event, object) {

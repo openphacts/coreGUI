@@ -32,9 +32,12 @@ LSP4All::Application.routes.draw do
   
   resources :core_api_calls do 
     collection do
+       get :check
        get :cmpd_name_lookup
        get :protein_lookup
        get :pmid_lookup
+       get :wiki_pathway_compound_lookup
+       post :sparql
        post :protein_info
        post :pharm_by_compound_name
        post :pharm_by_protein_name
@@ -44,7 +47,7 @@ LSP4All::Application.routes.draw do
        post :pmid2title                                       
        post :pmid2abstract   
        get :pmid2concepts                                       
-
+       get :wiki_pathways_by_compound
     end
   end
   

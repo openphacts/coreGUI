@@ -45,10 +45,8 @@ Ext.define('LSP.controller.Settings', {
             
         });
     },
-    // Launch Enzyme class selection window
     saveEndpoint: function(button) {
         // Call to store endpoint in session
-   //TODO store url in sessino variable.....!!!!!!!!         
         var form    = button.up('form');
         var values = form.getValues();
         form.submit({

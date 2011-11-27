@@ -18,7 +18,8 @@ Ext.application({
 	'PharmEnzymeForm',
 	'SummeryForm',
 	'Settings',
-	'pmidTextMiningHitsForm'
+	'pmidTextMiningHitsForm',
+	'pathwayByCompoundForm'
     ],
     
     autoCreateViewport: true,

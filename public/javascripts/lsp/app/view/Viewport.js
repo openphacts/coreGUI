@@ -74,7 +74,18 @@ Ext.define('LSP.view.Viewport', {
             {
               id: 'lsp-header',
               xtype: 'box',
-              html: 'Open PHACTS GUI'
+              html: '<b>Open PHACTS GUI</b>'
+            },
+            {
+              xtype: 'tbspacer',
+              flex: 1
+            },
+            {
+              xtype: 'displayfield',
+              value: 'Testing connection to OPS API...',
+              width: 400,
+              name: 'ops_api_staus',
+              id: 'ops_api_staus_id',
             },
             {
               xtype: 'tbspacer',

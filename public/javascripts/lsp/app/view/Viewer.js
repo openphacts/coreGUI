@@ -13,7 +13,8 @@ Ext.define('LSP.view.Viewer', {
 		'LSP.view.concept.SummeryForm',
 		'LSP.view.placeholder.temp',
 		'LSP.view.larkc_pharm_by_target.PharmEnzymeForm',
-		'LSP.view.textmining.pmidTextMiningHitsForm'
+		'LSP.view.textmining.pmidTextMiningHitsForm',
+		'LSP.view.pathways.pathwayByCompoundForm'
 	],
     
     activeItem: 0,

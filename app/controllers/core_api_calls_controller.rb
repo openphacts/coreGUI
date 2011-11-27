@@ -93,8 +93,30 @@ class CoreApiCallsController < ApplicationController
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false    
    end
  
+  # check to see if endpoint is responding
+   def check
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  "select * where {?s ?p ?o} limit 1"
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      if results.nil? then 
+        render :json => {:success => false}.to_json, :layout => false     
+      elsif results.length == 1 then
+        render :json => {:success => true}.to_json, :layout => false
+      end 
+   end
   
-  
+   def sparql(query = params[:query])
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  params[:query]
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false   
+   end
   
   # Temporary methods implemented via SPARQL
   
@@ -169,6 +191,8 @@ class CoreApiCallsController < ApplicationController
       render :json => results.to_json, :layout => false     
   end 
 
+
+  # Text mining stuff
   def pmid2title(pmid_uri = params[:pubmed_uri])
   
       query_str = "PREFIX dc-term:<http://purl.org/dc/terms/> \n"
@@ -234,7 +258,6 @@ puts query_str
       query_str +="?pos uima:begin ?begin .  \n"
       query_str +="?pos uima:end ?end .  \n"
       query_str +="}"
-       puts query_str    
  
       api_method = 'sparql'
       options = Hash.new
@@ -243,7 +266,68 @@ puts query_str
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
       hits = api_call.request( api_method, options)
-puts hits.inspect      
       render :json => ResultsFormatter.construct_column_objects(hits).to_json, :layout => false
    end   
+
+   # WikiPathways related queries
+   
+   # All compounds in WP   
+   def wiki_pathway_compound_lookup(wp_cmpd_query = params[:query])
+  
+      query_str = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+      query_str += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/elements/1.1/> \n"
+      query_str += "SELECT DISTINCT ?cmpd_label ?cmpd_uri \n"
+      query_str += "WHERE {?compound rdf:type biopax:SmallMolecule  . \n"
+      query_str += "?compound rdfs:label ?cmpd_label . \n"
+  #    query_str += "?compound dc:source ?idSource . \n"
+      query_str += "?compound dc:identifier ?cmpd_uri .\n"
+      query_str += "FILTER regex(?cmpd_label, \"#{wp_cmpd_query}\", \"i\") } \n"
+puts query_str    
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      results.each do |record|
+  puts record.inspect  #NB Some compounds to NOT have a real uri! just "http://identifiers.org/#/WikiPathways/Other/" or similar
+      end   
+      render :json => results.to_json, :layout => false     
+  end 
+
+  def wiki_pathways_by_compound(compound_uri = params[:compound_uri])
+  
+      query_str = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+      query_str += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
+      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#>  \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/elements/1.1/> \n"
+      query_str += "PREFIX dcterms: <http://purl.org/dc/terms/> \n"
+      query_str += "SELECT DISTINCT ?TargetLabel  ?PathwayUrl \n"
+      query_str += "WHERE { ?PathwayUrl dcterms:hasVersion ?PathwayRevision . \n"
+      query_str += "?Target dcterms:isPartOf ?PathwayRevision . \n"
+      query_str += "?Target rdf:type biopax:SmallMolecule  . \n"
+      query_str += "?interaction rdf:predicate ?Compound . \n"
+      query_str += "?interaction rdf:predicate ?Target . \n"
+      query_str += "?Target rdfs:label ?TargetLabel . \n"
+      query_str += "?Target rdfs:label \"#{compound_uri}\"  \n"
+      query_str += "} \n"
+puts query_str    
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+  puts results.inspect    
+      results.each do |record|
+  puts record.inspect  
+      end   
+      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false       
+  end    
+
 end
