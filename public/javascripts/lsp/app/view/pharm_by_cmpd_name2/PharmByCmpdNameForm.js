@@ -65,52 +65,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                         xtype: 'hidden',
                         value: $$('meta[name=csrf-token]')[0].readAttribute('content')
                       },
-                      {
-                        xtype: 'combo',
-                        valueField:'compound_name',
-                      	store:  Ext.create('Ext.data.Store',{
-                                      fields: [
-                                        {type: 'string', name: 'compound_name'},
-                                        {type: 'string', name: 'compound_uri'}
-                                      ],
-                                      proxy: {
-                                          type: 'ajax',
-                                          api: {
-                                          //    read: 'sparql_endpoint/cmpd_name_lookup.json'
-                                              read: 'core_api_calls/cmpd_name_lookup.json'
-                                          },
-                                          reader: {
-                                              type: 'json',
-                                              root: 'objects',
-                                              totalProperty: 'totalCount'
-                                          }
-                                      }
-                                  }),
-                      	queryMode: 'remote',
-                      	displayField: 'compound_name',
-                      	minChars:4,
-                      	hideTrigger:true,
-                      	forceSelection:true,
-                      	typeAhead:true,
-                        emptyText: 'Start typing...',
-                        name: 'compound_name',
-                        margin: '5 5 5 5',
-                        width: 800,
-                        fieldLabel: 'Compound name',
-                        labelWidth: 120,
-                        listConfig: {
-                          loadingText: 'Searching...',
-                          emptyText: 'No matching compounds found.',
-                        },
-                        listeners: {
-                            select: function(combo, selection) {
-                            var post = selection[0];
-                              if (post) {
-                                 var fields = this.up().items.items;
-                                 fields.forEach(function(item) { if(item.name == 'cmpd_uuid'){item.setValue(post.data.compound_uri);}});
-                              }
-                            }
-                        }
+                      { 
+                        xtype: 'compoundLookup',                        
                       },
                       {
                         xtype: 'button',
