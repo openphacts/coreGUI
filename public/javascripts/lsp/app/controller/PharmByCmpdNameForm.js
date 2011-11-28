@@ -13,12 +13,13 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
     
     submitQuery: function(button) {
         var form = button.up('form');
-        values = form.getValues(); 
-        grid_pharmbycompoundname.store.proxy.actionMethods = {read: 'POST'};
-        grid_pharmbycompoundname.store.proxy.extraParams = values;
-        grid_pharmbycompoundname.store.proxy.api.read = '/core_api_calls/pharm_by_compound_name.json';
-        //grid.store.proxy.create;
-        grid_pharmbycompoundname.store.load();
+        values = form.getValues();
+        var grid = form.query('dynamicgrid2')[0];
+        grid.store.proxy.actionMethods = {read: 'POST'};
+        grid.store.proxy.extraParams = values;
+        grid.store.proxy.api.read = '/core_api_calls/pharm_by_compound_name.json';
+        grid.store.load({params: { offset: 0, limit: 100}});
+        grid.store.on('load',function(){form.doLayout()});
     }
     
     

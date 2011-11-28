@@ -36,13 +36,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',  
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
+    layout: {
+          type: 'vbox',
+          align: 'stretch'
+      },
     
      initComponent: function() {
         
         this.items = [
                    {
                 xtype: 'container',
-                height: '8%',
                 margin: '5 5 5 5',
                 name: 'form_fields',
                 layout: {
@@ -74,10 +77,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                         text: 'Search',
                         action: 'query_pharm_by_cmpd_name'
                       }]},
-                      grid_pharmbycompoundname = Ext.widget('dynamicgrid2')                             
+                      {
+                    xtype: 'dynamicgrid2',
+                    title: 'Pharmacology by Compound name search results',
+                    flex: 1,
+                    }                              
                 ];
-        grid_pharmbycompoundname.setTitle('Pharmacology by Compound name search results');
-        grid_pharmbycompoundname.setHeight('92%'); 
+
         this.callParent(arguments);
     }    
 });

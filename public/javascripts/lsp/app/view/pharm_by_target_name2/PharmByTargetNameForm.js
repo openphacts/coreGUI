@@ -5,12 +5,15 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
     requires: [
         'LSP.view.dropdowns.proteinLookup'
     ],
+    layout: {
+          type: 'vbox',
+          align: 'stretch'
+      },
      initComponent: function() {
         
         this.items = [
                    {
                 xtype: 'container',
-                height: '8%',
                 margin: '5 5 5 5',
                 name: 'form_fields',
                 layout: {
@@ -37,10 +40,12 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                         text: 'Search',
                         action: 'query_pharm_by_target_name'
                       }]},
-                      grid_pharmbytargetname = Ext.widget('dynamicgrid2')                             
-                ];
-        grid_pharmbytargetname.setTitle('Pharmacology by Target name search results');
-        grid_pharmbytargetname.setHeight('92%'); 
+                      {
+                        xtype: 'dynamicgrid2',
+                        title: 'Pharmacology by Target name search results',
+                        flex: 1,
+                        } 
+                ]; 
         this.callParent(arguments);
     }    
 });

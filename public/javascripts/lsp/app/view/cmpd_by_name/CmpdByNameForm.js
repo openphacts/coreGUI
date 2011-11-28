@@ -5,13 +5,18 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     requires: [
         'LSP.view.dropdowns.compoundLookup'
     ],
-    layout: 'auto',    
+    layout: {
+          type: 'vbox',
+          align: 'stretch'
+      },
+    
      initComponent: function() {
-        
-        this.items = [
+        var me = this;
+
+        Ext.applyIf(me, {
+          items: [
                    {
                 xtype: 'container',
-                height: '9%',
                 margin: '5 5 5 5',
                 name: 'form_fields',
                 layout: {
@@ -19,21 +24,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                 },
                 style: 'background-color: #fff;',
                 items: [                      
-                      {
-                        name: 'utf8',
-                        xtype: 'hidden',
-                        value: '&#x2713;'
-                      },
-                      {
-                        name: 'cmpd_uuid',
-                        xtype: 'hidden',
-                        value: ''
-                      },
-                      {
-                        name: 'authenticity_token',
-                        xtype: 'hidden',
-                        value: $$('meta[name=csrf-token]')[0].readAttribute('content')
-                      },
                       { 
                         xtype: 'compoundLookup',                        
                       },
@@ -42,10 +32,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         padding: '5 5 5 5',
                         text: 'Search',
                         action: 'query_cmpd_by_name'
-                      }]},
-                      grid_cmpdbyname = Ext.widget('dynamicgrid2')                             
-                ];
-        grid_cmpdbyname.setTitle('Compound by name search results');
+                      }
+                      ]},
+                      {
+                    xtype: 'dynamicgrid2',
+                    title: 'Compound by name search results',
+                    flex: 1,
+                    }                             
+                ]        
+          });
         this.callParent(arguments);
     }    
 });
