@@ -15,12 +15,13 @@ Ext.define('LSP.controller.TargetByNameForm', {
     submitQuery: function(button) {
         var form = button.up('form'),
         values = form.getValues();
-        grid_targetbyname.store.proxy.actionMethods = {read: 'POST'};
-        grid_targetbyname.store.proxy.extraParams = values;
-    //    grid_targetbyname.store.proxy.api.read = '/sparql_endpoint/target_by_name.json';
-         grid_targetbyname.store.proxy.api.read = '/core_api_calls/protein_info.json';
-        //grid.store.proxy.create;
-        grid_targetbyname.store.load();
+        var grid = form.query('dynamicgrid2')[0];
+        grid.store.proxy.actionMethods = {read: 'POST'};
+        grid.store.proxy.extraParams = values;
+        grid.store.proxy.api.read = '/core_api_calls/protein_info.json';
+        grid.store.load({params: { offset: 0, limit: 100}});
+        grid.store.on('load',function(){form.doLayout()});
+   
     }
     
     

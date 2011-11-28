@@ -6,12 +6,15 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
         'LSP.view.dropdowns.proteinLookup'
 //        'LSP.view.dropdowns.conceptWikiProteinLookup'
     ],
+    layout: {
+          type: 'vbox',
+          align: 'stretch'
+      },
      initComponent: function() {
     
         this.items = [
                    {
                 xtype: 'container',
-                height: '8%',
                 margin: '5 5 5 5',
                 name: 'form_fields',
                 layout: {
@@ -38,10 +41,12 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         text: 'Search',
                         action: 'query_target_by_name'
                       }]},
-                      grid_targetbyname = Ext.widget('dynamicgrid2')                             
+                      {
+                    xtype: 'dynamicgrid2',
+                    title: 'Target by name search results',
+                    flex: 1,
+                    }                       
                 ];
-        grid_targetbyname.setTitle('Target by name search results');
-        grid_targetbyname.setHeight('92%'); 
         this.callParent(arguments);
     }    
 });
