@@ -3,8 +3,8 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
     alias: 'widget.TargetByNameForm',
     closable: true,
     requires: [
-//        'LSP.view.dropdowns.proteinLookup'
-        'LSP.view.dropdowns.conceptWikiProteinLookup'
+        'LSP.view.dropdowns.proteinLookup'
+//        'LSP.view.dropdowns.conceptWikiProteinLookup'
     ],
      initComponent: function() {
     
@@ -30,7 +30,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         value: $$('meta[name=csrf-token]')[0].readAttribute('content')
                       },
                       {
-                        xtype: 'conceptWikiProteinLookup'                      
+                        xtype: 'proteinLookup'                      
                       },                        
                       {
                         xtype: 'button',

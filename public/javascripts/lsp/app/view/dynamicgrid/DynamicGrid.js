@@ -9,7 +9,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 		'Ext.ux.grid.FiltersFeature',
 		'LSP.view.dynamicgrid.feature.selectable'
 	   ],
-	  forceFit: true,
+	  //forceFit: true,
+    autoScroll: true,
     layout: 'fit',
     initComponent: function(){
         
@@ -60,8 +61,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
             else {
                      this.setTitle(title + ' - Records found: ' +  'No records found!');
             }
-                console.log(this);
-                  console.log(this.views);
+    //            console.log(this);
+    //              console.log(this.views);
                          this.reconfigure(this.store, columns);
                  this.setHeight('80%');       
                     }  

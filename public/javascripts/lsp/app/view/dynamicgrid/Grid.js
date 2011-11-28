@@ -111,8 +111,8 @@ Ext.define('LSP.view.dynamicgrid.Grid', {
             else {
                      this.setTitle(title + ' - Records found: ' +  'No records found!');
             }
-                console.log(this);
-                  console.log(this.views);
+          //      console.log(this);
+          //        console.log(this.views);
                          this.reconfigure(this.store, columns);
                         
                     }  

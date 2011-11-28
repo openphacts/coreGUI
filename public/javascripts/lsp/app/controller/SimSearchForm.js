@@ -107,7 +107,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         var grid = button.up('dynamicgrid2');
         structureViewStore = grid.store;
         var view = Ext.widget('StructureViewer');    
-        console.log(grid.store);  
+   //     console.log(grid.store);  
     
     }
         

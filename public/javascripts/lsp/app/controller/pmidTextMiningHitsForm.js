@@ -21,7 +21,7 @@ extend: 'Ext.app.Controller',
     
     submitQuery: function(button) {
         var form = button.up('form');
-        console.log(form);
+  //      console.log(form);
         values = form.getValues();
         
         var grid = form.query('dynamicgrid2')[0];
