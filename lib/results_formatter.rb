@@ -50,8 +50,8 @@ class ResultsFormatter
       tpl_headers = Array.new
       header_idx = 0
       header_strings.each do |header|
-          if header =~ /(\w+)_(url|label)/ then        
-            if $2 == 'url' then
+          if header =~ /(\w+)_(url|label|uri)/ then        
+            if (($2 == 'url') or ($2 == 'uri')) then
               if not url_label_pairs.has_key?($1) then
                 url_label_pairs[$1] = Array.new(2)
               end 
@@ -86,13 +86,21 @@ class ResultsFormatter
           col = Hash.new
           col[:text] = key.gsub(/_/,' ').capitalize
           col[:dataIndex] = key
-          col[:hidden] = false
+          if key =~ /_uri/ then
+            col[:hidden] = true
+          else
+            col[:hidden] = false
+          end
           col[:filter] = {:type => 'string'}
           col[:width] = 150
           if key =~ /structure/ then
             col[:width] = 200
           end
           if key =~ /ic50/ then
+             col[:type] = 'float'
+             col[:filter] = {:type => 'numeric'}             
+          end
+          if key =~ /value/ then
              col[:type] = 'float'
              col[:filter] = {:type => 'numeric'}             
           end

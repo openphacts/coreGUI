@@ -74,7 +74,7 @@ Ext.define('LSP.view.Viewport', {
             {
               id: 'lsp-header',
               xtype: 'box',
-              html: '<b>Open PHACTS GUI</b>'
+              html: '<h1>Open PHACTS GUI</h1>'
             },
             {
               xtype: 'tbspacer',

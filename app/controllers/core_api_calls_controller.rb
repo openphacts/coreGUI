@@ -5,8 +5,8 @@ class CoreApiCallsController < ApplicationController
       options = Hash.new
       api_method = 'compoundLookup'
       options[:substring] = substring 
-      options[:limit] =  params[:limit]
-      options[:offset] = params[:offset]
+      options[:limit] =  params[:limit] || 100
+      options[:offset] = params[:offset] || 0
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
@@ -16,8 +16,8 @@ class CoreApiCallsController < ApplicationController
       options = Hash.new
       api_method = 'proteinLookup'
       options[:substring] = substring 
-      options[:limit] =  params[:limit]
-      options[:offset] = params[:offset]
+      options[:limit] =  params[:limit] || 100
+      options[:offset] = params[:offset] || 0
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
@@ -31,7 +31,7 @@ class CoreApiCallsController < ApplicationController
     options[:offset] = params[:offset]
     api_call = CoreApiCall.new
     results = api_call.request( api_method, options)
-    render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+    render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false
   end
   
   def protein_info(prot_uri = params[:protein_uri])
@@ -97,13 +97,19 @@ class CoreApiCallsController < ApplicationController
    def check
       api_method = 'sparql'
       options = Hash.new
-      options[:query] =  "select * where {?s ?p ?o} limit 1"
+      options[:query] =  "select * where {?s ?p ?o}"
+      options[:limit] =  1
+      options[:offset] = 0
       api_call = CoreApiCall.new
+      begin
       results = api_call.request( api_method, options)
-      if results.nil? then 
-        render :json => {:success => false}.to_json, :layout => false     
-      elsif results.length == 1 then
-        render :json => {:success => true}.to_json, :layout => false
+        if results.nil? then 
+          render :json => {:success => false}.to_json, :layout => false     
+       elsif results.length >= 1 then
+          render :json => {:success => true}.to_json, :layout => false
+       end
+      rescue 
+         render :json => {:success => false}.to_json, :layout => false    
       end 
    end
   
@@ -273,7 +279,7 @@ puts query_str
    
    # All compounds in WP   
    def wiki_pathway_compound_lookup(wp_cmpd_query = params[:query])
-  
+ 
       query_str = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
       query_str += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"

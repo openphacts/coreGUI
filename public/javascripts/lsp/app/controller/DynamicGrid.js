@@ -39,8 +39,8 @@ Ext.define('LSP.controller.DynamicGrid', {
         'dynamicgrid.DynamicGrid'
     ],   
      
-    stores: ['DynamicGrid'],
-    models: ['DynamicGrid'],
+//    stores: ['DynamicGrid'],
+//    models: ['DynamicGrid'],
     
 //     onLaunch: function() {
 //         var dynamicgridStore = this.getStore('DynamicGrid');

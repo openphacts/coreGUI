@@ -41,7 +41,7 @@ Ext.define('LSP.controller.Users', {
     ],
 
     init: function() {
-        this.checkCoreAPI();
+        
     
         this.control({
             'loginbutton': {
@@ -67,9 +67,13 @@ Ext.define('LSP.controller.Users', {
         });
     },
     
+    onLaunch: function(){
+        this.checkCoreAPI();
+    },
+    
     checkCoreAPI: function(){
         Ext.Ajax.request({
-          url: 'core_api_calls/check',
+          url: '/core_api_calls/check.json',
           success: function(response){
               var status_field = Ext.ComponentQuery.query('displayfield[id="ops_api_staus_id"]')[0];
               status_field.setValue("");

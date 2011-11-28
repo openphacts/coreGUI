@@ -12,6 +12,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	  //forceFit: true,
     autoScroll: true,
     layout: 'fit',
+    limit: 100,
     initComponent: function(){
         
         // initializing features for the grid
@@ -31,7 +32,20 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
         };  
         
         var config = {
-            store: 'DynamicGrid', 
+            store: {
+                fields: [],
+                proxy: {
+                    type: 'ajax',
+                    api: {
+                        read: ''
+                    },
+                    reader: {
+                        type: 'json',
+                        root: 'objects',
+                        totalProperty: 'totalCount'
+                    }
+                }
+            }, 
             columns:[{name: 'temp', hidden:true}],  
             rowNumberer: true,
             defaultWidth : 200,

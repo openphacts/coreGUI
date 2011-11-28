@@ -19,7 +19,7 @@ Ext.define('LSP.view.dropdowns.wikiPathwaysCompoundLookup', {
         }),
     	queryMode: 'remote',
 //      valueField:'cmpd_uri',
-      valueField:'cmpd_label',
+      valueField:'cmpd_uri',
     	displayField: 'cmpd_label',
       name: 'compound_uri',
     	minChars:4,

@@ -18,7 +18,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         grid_cmpdbyname.store.proxy.actionMethods = {read: 'POST'};
         grid_cmpdbyname.store.proxy.extraParams = values;
         grid_cmpdbyname.store.proxy.api.read = '/core_api_calls/compound_info.json';
-        grid_cmpdbyname.store.load();
+        grid_cmpdbyname.store.load({params: { offset: 0, limit: 100}});
     }
     
     
