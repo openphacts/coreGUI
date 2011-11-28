@@ -280,16 +280,16 @@ puts query_str
    # All compounds in WP   
    def wiki_pathway_compound_lookup(wp_cmpd_query = params[:query])
  
-      query_str = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-      query_str += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
-      query_str += "PREFIX dc: <http://purl.org/dc/elements/1.1/> \n"
-      query_str += "SELECT DISTINCT ?cmpd_label ?cmpd_uri \n"
-      query_str += "WHERE {?compound rdf:type biopax:SmallMolecule  . \n"
-      query_str += "?compound rdfs:label ?cmpd_label . \n"
-  #    query_str += "?compound dc:source ?idSource . \n"
-      query_str += "?compound dc:identifier ?cmpd_uri .\n"
-      query_str += "FILTER regex(?cmpd_label, \"#{wp_cmpd_query}\", \"i\") } \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/terms/> \n"
+      query_str += "SELECT DISTINCT ?compound_uri ?compound_name \n"
+      query_str += "WHERE { \n"
+      query_str += "?compound_uri a biopax:SmallMolecule \n"
+      query_str += "; rdfs:label ?compound_name \n"
+      query_str += "; dc:isPartOf ?pathway_revision .\n"
+      query_str += "?pathway_uri dc:hasVersion ?pathway_revision ;\n"
+      query_str += "FILTER (regex(?compound_name, \"#{wp_cmpd_query}\", \"i\")) } \n"
 puts query_str    
       api_method = 'sparql'
       options = Hash.new
@@ -306,21 +306,18 @@ puts query_str
 
   def wiki_pathways_by_compound(compound_uri = params[:compound_uri])
   
-      query_str = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-      query_str += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
-      query_str += "PREFIX owl: <http://www.w3.org/2002/07/owl#> \n"
-      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#>  \n"
-      query_str += "PREFIX dc: <http://purl.org/dc/elements/1.1/> \n"
-      query_str += "PREFIX dcterms: <http://purl.org/dc/terms/> \n"
-      query_str += "SELECT DISTINCT ?TargetLabel  ?PathwayUrl \n"
-      query_str += "WHERE { ?PathwayUrl dcterms:hasVersion ?PathwayRevision . \n"
-      query_str += "?Target dcterms:isPartOf ?PathwayRevision . \n"
-      query_str += "?Target rdf:type biopax:SmallMolecule  . \n"
-      query_str += "?interaction rdf:predicate ?Compound . \n"
-      query_str += "?interaction rdf:predicate ?Target . \n"
-      query_str += "?Target rdfs:label ?TargetLabel . \n"
-      query_str += "?Target rdfs:label \"#{compound_uri}\"  \n"
-      query_str += "} \n"
+      query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/terms/>  \n"
+      query_str += "select DISTINCT ?compound_name ?pathway_uri ?datanode_type ?datanode_label  \n"
+      query_str += "where { \n"
+      query_str += "<#{compound_uri}> rdfs:label ?compound_name \n"
+      query_str += "; dc:isPartOf ?pathway_revision . \n"
+      query_str += "?pathway_uri dc:hasVersion ?pathway_revision . \n"
+      query_str += "?datanode dc:isPartOf ?pathwayrevision \n"
+      query_str += "; a ?datanode_type_uri \n"
+      query_str += "; rdfs:label ?datanode_label . \n"
+      query_str += "?datanote_type_uri rdfs:label ?datanode_type} \n"
 puts query_str    
       api_method = 'sparql'
       options = Hash.new
@@ -330,7 +327,12 @@ puts query_str
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
   puts results.inspect    
+      
       results.each do |record|
+        wp_uri = record[:pathway_uri]
+        if wp_uri =~ /\/Pathway\/(WP\d+)\// then
+           record[:Pathway_id] = $1
+        end
   puts record.inspect  
       end   
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false       

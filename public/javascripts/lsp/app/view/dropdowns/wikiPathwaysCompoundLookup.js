@@ -4,8 +4,8 @@ Ext.define('LSP.view.dropdowns.wikiPathwaysCompoundLookup', {
 
     store:  Ext.create('Ext.data.Store',{
             fields: [
-              {type: 'string', name: 'cmpd_label'},
-              {type: 'string', name: 'cmpd_uri'},              
+              {type: 'string', name: 'compound_name'},
+              {type: 'string', name: 'compound_uri'},              
             ],
             proxy: {
                 type: 'ajax',
@@ -19,8 +19,8 @@ Ext.define('LSP.view.dropdowns.wikiPathwaysCompoundLookup', {
         }),
     	queryMode: 'remote',
 //      valueField:'cmpd_uri',
-      valueField:'cmpd_uri',
-    	displayField: 'cmpd_label',
+      valueField:'compound_uri',
+    	displayField: 'compound_name',
       name: 'compound_uri',
     	minChars:4,
     	hideTrigger:true,

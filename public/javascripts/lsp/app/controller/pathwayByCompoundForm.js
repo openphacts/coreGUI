@@ -27,11 +27,11 @@ extend: 'Ext.app.Controller',
         var form = button.up('form');
         var grid = form.query('dynamicgrid2')[0];
         var selection = grid.getSelectionModel().getSelection()[0];
-  //      console.log(selection);
+        console.log(selection.data);
         if (selection) {
             //TODO get the "WP88" like id and save to a var before fireing
            // Launch the window
-            var view = Ext.widget('wikiPathwaysWindow',{wpathway_id: "WP88"});    
+            var view = Ext.widget('wikiPathwaysWindow',{wpathway_id: selection.data.Pathway_id});    
           }            
     },
     
