@@ -341,13 +341,13 @@ puts query_str
       query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
       query_str += "PREFIX dc: <http://purl.org/dc/terms/> \n"
-      query_str += "SELECT DISTINCT ?protein_uri ?protein_name \n"
+      query_str += "SELECT DISTINCT ?wp_protein_uri ?wp_protein_name \n"
       query_str += "WHERE { \n"
-      query_str += "?protein_uri a biopax:Protein \n"
-      query_str += "; rdfs:label ?protein_name \n"
+      query_str += "?wp_protein_uri a biopax:Protein \n"
+      query_str += "; rdfs:label ?wp_protein_name \n"
       query_str += "; dc:isPartOf ?pathway_revision .\n"
       query_str += "?pathway_uri dc:hasVersion ?pathway_revision ;\n"
-      query_str += "FILTER (regex(?protein_name, \"#{wp_protein_query}\", \"i\")) } \n"
+      query_str += "FILTER (regex(?wp_protein_name, \"#{wp_protein_query}\", \"i\")) } \n"
 puts query_str
       api_method = 'sparql'
       options = Hash.new
