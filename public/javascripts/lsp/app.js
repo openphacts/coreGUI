@@ -19,7 +19,8 @@ Ext.application({
 	'SummeryForm',
 	'Settings',
 	'pmidTextMiningHitsForm',
-	'pathwayByCompoundForm'
+	'pathwayByCompoundForm', 
+        'pathwayByProteinForm'
     ],
     
     autoCreateViewport: true,

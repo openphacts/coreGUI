@@ -40,7 +40,7 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                 },
                 {
                     xtype: 'dynamicgrid2',
-                    title: 'Pathways includen compound',
+                    title: 'Pathways including compound',
                     name: 'pathway_by_cmpd_grid',
                     flex: 1,
                     dockedItems: [{
@@ -48,7 +48,7 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                         dock: 'top',
                         items: [{
                             xtype: 'button',
-                            text: 'View pathway in WikiPathways applet',
+                            text: 'View pathway in WikiPathways applet (Google Chrome only)',
                             action: 'wp_view'
                         }]
                     }]
