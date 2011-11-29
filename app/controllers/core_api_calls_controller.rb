@@ -309,15 +309,15 @@ puts query_str
       query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
       query_str += "PREFIX dc: <http://purl.org/dc/terms/>  \n"
-      query_str += "select DISTINCT ?compound_name ?pathway_uri ?datanode_type ?datanode_label  \n"
+      query_str += "select DISTINCT ?compound_name ?pathway_uri ?protein_name ?pathway_description  \n"
       query_str += "where { \n"
       query_str += "<#{compound_uri}> rdfs:label ?compound_name \n"
       query_str += "; dc:isPartOf ?pathway_revision . \n"
       query_str += "?pathway_uri dc:hasVersion ?pathway_revision . \n"
       query_str += "?datanode dc:isPartOf ?pathwayrevision \n"
-      query_str += "; a ?datanode_type_uri \n"
-      query_str += "; rdfs:label ?datanode_label . \n"
-      query_str += "?datanote_type_uri rdfs:label ?datanode_type} \n"
+      query_str += "; a ?protein_name_uri \n"
+      query_str += "; rdfs:label ?pathway_description . \n"
+      query_str += "?datanote_type_uri rdfs:label ?protein_name} \n"
 puts query_str    
       api_method = 'sparql'
       options = Hash.new
@@ -326,14 +326,12 @@ puts query_str
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
-  puts results.inspect    
       
       results.each do |record|
         wp_uri = record[:pathway_uri]
         if wp_uri =~ /\/Pathway\/(WP\d+)\// then
            record[:Pathway_id] = $1
-        end
-  puts record.inspect  
+        end  
       end   
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false       
   end    
