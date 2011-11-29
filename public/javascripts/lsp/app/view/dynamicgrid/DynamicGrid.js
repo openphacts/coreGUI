@@ -32,6 +32,13 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
         };  
         
         var config = {
+            tbar : [
+                      {
+            					xtype: 'exporterbutton',
+            					name: 'exporter-button',
+            					text: 'Download to Excel'
+                      }
+                    ],
             store: {
                 fields: [],
                 proxy: {
