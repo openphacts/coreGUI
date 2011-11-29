@@ -50,7 +50,8 @@ class ResultsFormatter
       tpl_headers = Array.new
       header_idx = 0
       header_strings.each do |header|
-          if header =~ /(\w+)_(url|label|uri)/ then        
+          if header =~ /(\w+)_(url|label|uri)/ then
+              if header == 'pathway_uri' then next end        
             if (($2 == 'url') or ($2 == 'uri')) then
               if not url_label_pairs.has_key?($1) then
                 url_label_pairs[$1] = Array.new(2)
@@ -100,6 +101,7 @@ class ResultsFormatter
              col[:type] = 'float'
              col[:filter] = {:type => 'numeric'}             
           end
+          
           if key =~ /value/ then
              col[:type] = 'float'
              col[:filter] = {:type => 'numeric'}             
@@ -112,6 +114,9 @@ class ResultsFormatter
       fields.each do |field|
          type = 'auto'
          if field =~ /ic50/ then
+            type = 'float'
+         end
+         if field =~ /value/ then
             type = 'float'
          end
          if field == 'csid' then
