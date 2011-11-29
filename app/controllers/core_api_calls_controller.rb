@@ -336,4 +336,63 @@ puts query_str
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false       
   end    
 
+   def wiki_pathway_protein_lookup(wp_protein_query = params[:query])
+
+      query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/terms/> \n"
+      query_str += "SELECT DISTINCT ?protein_uri ?protein_name \n"
+      query_str += "WHERE { \n"
+      query_str += "?protein_uri a biopax:Protein \n"
+      query_str += "; rdfs:label ?protein_name \n"
+      query_str += "; dc:isPartOf ?pathway_revision .\n"
+      query_str += "?pathway_uri dc:hasVersion ?pathway_revision ;\n"
+      query_str += "FILTER (regex(?protein_name, \"#{wp_protein_query}\", \"i\")) } \n"
+puts query_str
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      results.each do |record|
+  puts record.inspect  #NB Some proteins to NOT have a real uri! just "http://identifiers.org/#/WikiPathways/Other/" or similar
+      end
+      render :json => results.to_json, :layout => false
+  end
+
+  def wiki_pathways_by_protein(wp_protein_uri = params[:wp_protein_uri])
+
+      query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+      query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
+      query_str += "PREFIX dc: <http://purl.org/dc/terms/>  \n"
+      query_str += "select DISTINCT ?protein_name ?pathway_uri ?protein_name ?pathway_description  \n"
+      query_str += "where { \n"
+      query_str += "<#{wp_protein_uri}> rdfs:label ?protein_name \n"
+      query_str += "; dc:isPartOf ?pathway_revision . \n"
+      query_str += "?pathway_uri dc:hasVersion ?pathway_revision . \n"
+      query_str += "?datanode dc:isPartOf ?pathwayrevision \n"
+      query_str += "; a ?protein_name_uri \n"
+      query_str += "; rdfs:label ?pathway_description . \n"
+      query_str += "?datanote_type_uri rdfs:label ?protein_name} \n"
+puts query_str
+      api_method = 'sparql'
+      options = Hash.new
+      options[:query] =  query_str
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+
+      results.each do |record|
+        wp_uri = record[:pathway_uri]
+        if wp_uri =~ /\/Pathway\/(WP\d+)\// then
+           record[:Pathway_id] = $1
+        end
+      end
+      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+  end
+
+
 end

@@ -1,8 +1,8 @@
-Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
+Ext.define('LSP.view.pathways.pathwayByProteinForm', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.pathwayByCompoundForm',
+    alias: 'widget.pathwayByProteinForm',
     requires: [
-        'LSP.view.dropdowns.wikiPathwaysCompoundLookup'
+        'LSP.view.dropdowns.wikiPathwaysProteinLookup'
     ],                         
     closable: true,
     height: 560,
@@ -25,7 +25,7 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                     },
                     items: [
                         {
-                            xtype: 'wikiPathwaysCompoundLookup',
+                            xtype: 'wikiPathwaysProteinLookup',
                             margin: '0 10 0 10',                          
                             labelWidth: 100,
                             width: 650,
@@ -40,8 +40,8 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                 },
                 {
                     xtype: 'dynamicgrid2',
-                    title: 'Pathways including compound',
-                    name: 'pathway_by_cmpd_grid',
+                    title: 'Pathways including protein',
+                    name: 'pathway_by_protein_grid',
                     flex: 1,
                     dockedItems: [{
                         xtype: 'toolbar',

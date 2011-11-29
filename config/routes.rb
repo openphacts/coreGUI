@@ -37,6 +37,7 @@ LSP4All::Application.routes.draw do
        get :protein_lookup
        get :pmid_lookup
        get :wiki_pathway_compound_lookup
+       get :wiki_pathway_protein_lookup
        post :sparql
        post :protein_info
        post :pharm_by_compound_name
@@ -48,6 +49,7 @@ LSP4All::Application.routes.draw do
        post :pmid2abstract   
        get :pmid2concepts                                       
        get :wiki_pathways_by_compound
+       get :wiki_pathways_by_protein
     end
   end
   
