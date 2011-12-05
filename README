@@ -21,7 +21,7 @@ In case of problems contact Sune Askjaer on suap@lundbeck.com.
 
 To add a new tab to the Navigation tree on the left follow these steps:
 
-  1.  Add a row to the PostgreSQL database modelling the ancestry informatin for 
+  1.  Add a row to the PostgreSQL database modelling the ancestry information for 
       existing nodes. In the 'xtype' column add the name ExtJS widget alias defined
       in the the javascript view file. NB. skip this part if you do not have the
       js code scaffold for your widget done yet.
@@ -34,7 +34,7 @@ To add a new tab to the Navigation tree on the left follow these steps:
   3.  List your javascript controller in \public\javascripts\lsp\app.js file controller
       array and your javascript view definition in the \public\javascripts\lsp\app\view\Viewer.js
       file. If you have defined and cross referenced the javascript model, store,
-      view and controller controller you should be good to go with the exception of
+      view, and controller, you should be good to go with the exception of
       the hidden athentication field that need to be included in the form. For these
       it is best to look at one of the existing pages and simply copy paste these. 
       
