@@ -12,6 +12,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	  //forceFit: true,
     autoScroll: true,
     layout: 'fit',
+    gridBaseTitle: '',
     limit: 100,
     initComponent: function(){
         
@@ -77,10 +78,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
      	        var title = this.title;
             }			
             if (this.store.proxy.reader.jsonData.totalCount > 0){
-                    this.setTitle(title + ' - Records found: ' +  this.store.proxy.reader.jsonData.totalCount);
+                    this.setTitle(this.gridBaseTitle + ' - Records found: ' +  this.store.proxy.reader.jsonData.totalCount);
             }
             else {
-                     this.setTitle(title + ' - Records found: ' +  'No records found!');
+                     this.setTitle(this.gridBaseTitle + ' - Records found: ' +  'No records found!');
             }
     //            console.log(this);
     //              console.log(this.views);

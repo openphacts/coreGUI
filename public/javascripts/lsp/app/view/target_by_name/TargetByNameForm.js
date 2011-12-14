@@ -39,11 +39,13 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         xtype: 'button',
                         padding: '5 5 5 5',
                         text: 'Search',
+                        disabled: true,
                         action: 'query_target_by_name'
                       }]},
                       {
                     xtype: 'dynamicgrid2',
                     title: 'Target by name search results',
+                    gridBaseTitle: 'Target by name search results',
                     flex: 1,
                     }                       
                 ];

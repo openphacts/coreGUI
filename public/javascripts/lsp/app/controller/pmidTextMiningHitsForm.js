@@ -15,12 +15,22 @@ extend: 'Ext.app.Controller',
         this.control({
             'pmidTextMiningHits button[action=query]': {
                 click: this.submitQuery                
+            },
+            'pmidTextMiningHits pmidLookup': {
+                select: this.enableSubmit
             }
         });
+    },
+
+    enableSubmit: function(pmidLookup) {
+        var form = pmidLookup.up('form');
+        var button = form.query('button[action=query]')[0];
+        button.enable();
     },
     
     submitQuery: function(button) {
         var form = button.up('form');
+        button.disable();
   //      console.log(form);
         values = form.getValues();
         
@@ -28,7 +38,10 @@ extend: 'Ext.app.Controller',
         grid.store.proxy.extraParams = {pubmed_uri: values.pmid_uri};
         grid.store.proxy.api.read = 'core_api_calls/pmid2concepts.json';
         grid.store.load();
-        grid.store.on('load',function(){form.doLayout()});
+        grid.store.on('load',function(){
+              form.doLayout();
+              button.enable();
+              });
         
         Ext.Ajax.request({
           url: 'core_api_calls/pmid2title.json',

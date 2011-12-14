@@ -34,6 +34,7 @@ Ext.define('LSP.view.pathways.pathwayByProteinForm', {
                             xtype: 'button',
                             text: 'Search...',
                             action: 'query',
+                            disabled: true,
                             width: 120,
                         }
                     ]
@@ -41,6 +42,7 @@ Ext.define('LSP.view.pathways.pathwayByProteinForm', {
                 {
                     xtype: 'dynamicgrid2',
                     title: 'Pathways including protein',
+                    gridBaseTitle: 'Pathways including protein',
                     name: 'pathway_by_protein_grid',
                     flex: 1,
                     dockedItems: [{

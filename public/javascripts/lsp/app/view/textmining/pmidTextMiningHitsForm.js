@@ -34,6 +34,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                             xtype: 'button',
                             text: 'Search...',
                             action: 'query',
+                            disabled: true,
                             width: 120,
                         }
                     ]
@@ -64,6 +65,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                 {
                     xtype: 'dynamicgrid2',
                     title: 'Text mined concepts',
+                    gridBaseTitle: 'Text mined concepts',                    
                     name: 'textmining_hits',
                     flex: 1,
                 }

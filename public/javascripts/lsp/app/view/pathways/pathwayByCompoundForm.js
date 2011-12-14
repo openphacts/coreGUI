@@ -33,6 +33,7 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                         {
                             xtype: 'button',
                             text: 'Search...',
+                            disabled: true,
                             action: 'query',
                             width: 120,
                         }
@@ -41,6 +42,7 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                 {
                     xtype: 'dynamicgrid2',
                     title: 'Pathways including compound',
+                    gridBaseTitle: 'Pathways including compound',
                     name: 'pathway_by_cmpd_grid',
                     flex: 1,
                     dockedItems: [{

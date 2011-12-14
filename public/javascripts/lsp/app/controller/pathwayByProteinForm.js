@@ -18,8 +18,19 @@ extend: 'Ext.app.Controller',
             },
             'pathwayByProteinForm button[action=wp_view]': {
                 click: this.launchWPApplet                               
-            }
+            },
+            'pathwayByProteinForm wikiPathwaysProteinLookup': {
+                select: this.enableSubmit                               
+            },
+            
         });
+    },
+    
+    
+    enableSubmit: function(wikiPathwaysProteinLookup) {
+        var form = wikiPathwaysProteinLookup.up('form');
+        var button = form.query('button[action=query]')[0];
+        button.enable();
     },
     
     // Launch WikiPathways applet window
@@ -37,6 +48,7 @@ extend: 'Ext.app.Controller',
     
     submitQuery: function(button) {
         var form = button.up('form');
+        button.disable();
   //      console.log(form);
         values = form.getValues();
   //      console.log(values);
@@ -44,6 +56,9 @@ extend: 'Ext.app.Controller',
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = 'core_api_calls/wiki_pathways_by_protein.json';
         grid.store.load();
-        grid.store.on('load',function(){form.doLayout()});
+        grid.store.on('load',function(){
+            form.doLayout();
+            button.enable();
+            });
     }}
 );

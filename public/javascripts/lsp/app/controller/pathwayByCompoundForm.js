@@ -18,9 +18,21 @@ extend: 'Ext.app.Controller',
             },
             'pathwayByCompoundForm button[action=wp_view]': {
                 click: this.launchWPApplet                               
+            },
+            'pathwayByCompoundForm wikiPathwaysCompoundLookup': {
+                select: this.enableSubmit                               
             }
+            
         });
     },
+    
+    
+    enableSubmit: function(wikiPathwaysCompoundLookup) {
+        var form = wikiPathwaysCompoundLookup.up('form');
+        var button = form.query('button[action=query]')[0];
+        button.enable();
+    },
+    
     
     // Launch WikiPathways applet window
     launchWPApplet: function(button) {
@@ -37,6 +49,7 @@ extend: 'Ext.app.Controller',
     
     submitQuery: function(button) {
         var form = button.up('form');
+        button.disable();
   //      console.log(form);
         values = form.getValues();
   //      console.log(values);
@@ -44,6 +57,9 @@ extend: 'Ext.app.Controller',
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = 'core_api_calls/wiki_pathways_by_compound.json';
         grid.store.load();
-        grid.store.on('load',function(){form.doLayout()});
+        grid.store.on('load',function(){
+            form.doLayout();
+            button.enable();
+            });
     }}
 );

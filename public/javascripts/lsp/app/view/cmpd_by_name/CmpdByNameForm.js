@@ -31,12 +31,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         xtype: 'button',
                         padding: '5 5 5 5',
                         text: 'Search',
+                        disabled: true,
                         action: 'query_cmpd_by_name'
                       }
                       ]},
                       {
                     xtype: 'dynamicgrid2',
                     title: 'Compound by name search results',
+                    gridBaseTitle: 'Compound by name search results',
                     flex: 1,
                     }                             
                 ]        
