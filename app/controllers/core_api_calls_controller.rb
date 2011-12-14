@@ -309,7 +309,7 @@ puts query_str
       query_str = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
       query_str += "PREFIX biopax: <http://www.biopax.org/release/biopax-level3.owl#> \n"
       query_str += "PREFIX dc: <http://purl.org/dc/terms/>  \n"
-      query_str += "select DISTINCT ?compound_name ?pathway_uri ?protein_name ?pathway_description  \n"
+      query_str += "select DISTINCT ?compound_name ?pathway_uri ?protein_or_compound_name ?pathway_description  \n"
       query_str += "where { \n"
       query_str += "<#{compound_uri}> rdfs:label ?compound_name \n"
       query_str += "; dc:isPartOf ?pathway_revision . \n"
@@ -317,7 +317,7 @@ puts query_str
       query_str += "?datanode dc:isPartOf ?pathwayrevision \n"
       query_str += "; a ?protein_name_uri \n"
       query_str += "; rdfs:label ?pathway_description . \n"
-      query_str += "?datanote_type_uri rdfs:label ?protein_name} \n"
+      query_str += "?datanote_type_uri rdfs:label ?protein_or_compound_name} \n"
 puts query_str    
       api_method = 'sparql'
       options = Hash.new
