@@ -1,8 +1,8 @@
 Ext.define('LSP.controller.pmidTextMiningHitsForm', {
 extend: 'Ext.app.Controller',
 
-    views: ['LSP.view.textmining.pmidTextMiningHitsForm'],
-    stores: ['LSP.store.DynamicGrid'],
+    views: ['textmining.pmidTextMiningHitsForm'],
+    stores: ['DynamicGrid'],
     
     refs: [
         {

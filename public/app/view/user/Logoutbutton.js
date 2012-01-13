@@ -37,7 +37,7 @@ Ext.define('LSP.view.user.Logoutbutton', {
     alias: 'widget.logoutbutton',
     
     size: 'small',
-    text: 'Log out ' + LSPSharedData.user,
+    text: 'Log out',
     
     initComponent: function() {
         this.callParent(arguments);

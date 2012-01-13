@@ -1,8 +1,8 @@
 Ext.define('LSP.controller.pathwayByProteinForm', {
 extend: 'Ext.app.Controller',
 
-    views: ['LSP.view.pathways.pathwayByProteinForm','LSP.view.pathways.wikiPathwaysWindow'],
-    stores: ['LSP.store.DynamicGrid'],
+    views: ['pathways.pathwayByProteinForm','pathways.wikiPathwaysWindow'],
+    stores: ['DynamicGrid'],
     
     refs: [
         {

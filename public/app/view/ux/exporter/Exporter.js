@@ -4,7 +4,7 @@
  * Class providing a common way of downloading data in .xls or .csv format
  */
 Ext.Loader.setConfig({enabled: true});
-Ext.Loader.setPath('Ext.ux.exporter', '/javascripts/lsp/app/view/ux/exporter');
+Ext.Loader.setPath('Ext.ux.exporter', '/app/view/ux/exporter');
  
 Ext.define("Ext.ux.exporter.Exporter", {
     uses: [

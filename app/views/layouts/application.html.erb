@@ -6,22 +6,20 @@
   <link rel="icon" type="image/png" href="/images/ops_favicon.png">
   <%= stylesheet_link_tag :all %>
   <%= stylesheet_link_tag '/ext/resources/css/ext-all.css' %>  
+  
   <% if ENV['RAILS_ENV'] == 'development' %>
-  <script type="text/javascript" src="/ext/ext-debug.js"></script>
-  <% else %>
-  <%= javascript_include_tag '/ext/builds/ext-core.js' %>
-  <%= javascript_include_tag 'lsp/classes.js' %>
-  <% end %>
-  <%= javascript_include_tag 'lsp/app.js' %>
+  <%= javascript_include_tag '/ext/ext-all-debug.js' %>
   <%= javascript_include_tag 'prototype.js' %>
-  <%= javascript_include_tag 'lsp/app/view/ux/exporter/Exporter.js' %>
-  <script type="text/javascript">    
-    Ext.define('LSPSharedData', { 
-        singleton: true, 
-    
-        user: '<%= if current_user.instance_values.length > 0 then current_user.login end %>'
-    });  
-  </script>
+  <%= javascript_include_tag '/app.js' %>  
+  <% else %>
+  <%= javascript_include_tag '/ext/ext-all.js' %>
+  <%= javascript_include_tag 'prototype.js' %>
+  <%= javascript_include_tag '/all-classes.js' %>
+  <%= javascript_include_tag '/app-all.js' %>
+  <% end %>
+  
+  <%= javascript_include_tag '/app/view/ux/exporter/Exporter.js' %>
+  
   <%= csrf_meta_tag %>
 </head>
 <body>

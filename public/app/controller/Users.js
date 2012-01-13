@@ -105,8 +105,8 @@ Ext.define('LSP.controller.Users', {
             url: '/login',
             params: values,
             success: function(response){
-                LSPSharedData.user = values['user_session[login]'];
-                Ext.getCmp('logoutButton').setText('Log out ' + LSPSharedData.user);
+                //LSPSharedData.user = values['user_session[login]'];
+                Ext.getCmp('logoutButton').setText('Log out');
                 Ext.getCmp('loginButton').setVisible(false);
                 Ext.getCmp('userNewButton').setVisible(false);
                 Ext.getCmp('logoutButton').setVisible(true);
@@ -152,8 +152,8 @@ Ext.define('LSP.controller.Users', {
             method: 'POST',
             params: values,
             success: function(response){
-                LSPSharedData.user = values['user[login]'];
-                Ext.getCmp('logoutButton').setText('Log out ' + LSPSharedData.user);
+                //LSPSharedData.user = values['user[login]'];
+                Ext.getCmp('logoutButton').setText('Log out');
                 Ext.getCmp('loginButton').setVisible(false);
                 Ext.getCmp('userNewButton').setVisible(false);
                 Ext.getCmp('logoutButton').setVisible(true);

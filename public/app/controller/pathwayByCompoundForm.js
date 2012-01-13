@@ -1,8 +1,8 @@
 Ext.define('LSP.controller.pathwayByCompoundForm', {
 extend: 'Ext.app.Controller',
 
-    views: ['LSP.view.pathways.pathwayByCompoundForm','LSP.view.pathways.wikiPathwaysWindow'],
-    stores: ['LSP.store.DynamicGrid'],
+    views: ['pathways.pathwayByCompoundForm','pathways.wikiPathwaysWindow'],
+    stores: ['DynamicGrid'],
     
     refs: [
         {

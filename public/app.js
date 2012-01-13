@@ -1,7 +1,8 @@
-Ext.application({
+Ext.Loader.setConfig({enabled:true});
+Ext.create('Ext.app.Application', {
     name: 'LSP',
 
-    appFolder: '/javascripts/lsp/app',
+    appFolder: 'app',
 
     // Define all the controllers that should initialize at boot up of your application
     controllers: [
@@ -26,11 +27,7 @@ Ext.application({
     autoCreateViewport: true,
     
     launch: function() {
-        if (LSPSharedData.user) {
-          Ext.getCmp('loginButton').setVisible(false);
-        }
-        else {
-          Ext.getCmp('logoutButton').setVisible(false);
-        }
+		Ext.Loader.setConfig({enabled:true});
+        
     }
 });
