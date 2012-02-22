@@ -30,11 +30,13 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
     	minChars:4,
     	hideTrigger:true,
     	forceSelection:true,
-    	typeAhead:true,
+    	allowBlank: false,
+      typeAhead:true,
+      typeAheadDelay: 150,
+      queryDelay: 70,
       emptyText: 'Start typing...',
       margin: '5 5 5 5',
       width: 700,
-      queryDelay: 700,
       fieldLabel: 'Protein name',
       labelWidth: 120,
       listConfig: {
@@ -45,4 +47,5 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
                 }
       }
 });
-                              
+         
+           
