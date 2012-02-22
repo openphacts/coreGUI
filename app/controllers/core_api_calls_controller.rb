@@ -93,11 +93,23 @@ class CoreApiCallsController < ApplicationController
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false    
    end
  
+  def protein_info(prot_uri = params[:protein_uri])
+    options = Hash.new
+    api_method = 'proteinInfo'
+    options[:uri] = '<' + prot_uri + '>' 
+    options[:limit] =  params[:limit]
+    options[:offset] = params[:offset]
+    api_call = CoreApiCall.new
+    results = api_call.request( api_method, options)
+    render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false
+  end
+
   # check to see if endpoint is responding
    def check
-      api_method = 'sparql'
+      api_method = 'proteinInfo'
+      prot_uri = 'http://chem2bio2rdf.org/chembl/resource/chembl_targets/12261'
       options = Hash.new
-      options[:query] =  "select * where {?s ?p ?o}"
+      options[:uri] =  '<' + prot_uri + '>'
       options[:limit] =  1
       options[:offset] = 0
       api_call = CoreApiCall.new
@@ -112,7 +124,7 @@ class CoreApiCallsController < ApplicationController
          render :json => {:success => false}.to_json, :layout => false    
       end 
    end
-  
+    
    def sparql(query = params[:query])
       api_method = 'sparql'
       options = Hash.new
