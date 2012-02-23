@@ -7,7 +7,7 @@ Ext.create('Ext.app.Application', {
     // Define all the controllers that should initialize at boot up of your application
     controllers: [
         'Users',
-        'DynamicGrid',
+        'grids.DynamicGrid',
         'Grid',
         'NavigationTree',
         'Queryform',
