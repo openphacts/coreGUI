@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<TITLE>JME Functions</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<center>
+<IMG SRC="jme.gif" WIDTH=340 HEIGHT=45 ALT="JME Molecular Editor">
+<img src="smiles.gif" align="top" width="19" height="19">
+<p>
+<H2>Description of the Public Functions</H2>
+</center>
+<HR>
+<p>
+Following public functions may be accessed by other applets or the JavaScript code on the HTML page (see also JavaScript in examples <a href="jme_example1.html">jme_example1.html</a>, <a href="jme_example2.html">jme_example2.html</a>, and  <a href="jme_example3.html">jme_example3.html</a>).
+<P>
+
+<B>public String JME.smiles()</B><P>
+returns a <a href="http://www.daylight.com/smiles/">SMILES</a> string of the current molecule(s) or reaction. For single molecule without stereochemistry the SMILES is unique, unification is not yet implemented for molecules with stereochemistry and for reactions.
+<P>
+
+<b>public String JME.nonisomericSmiles()</B><P>
+returns unique SMILES without stereochemistry features.
+<p>
+
+<B>public String JME.jmeFile()</B><P>
+returns JME file (i.e. simple topological information) of the current molecule(s) or reaction as a String (for description of the JME format see below).
+<P>
+
+<B>public void JME.readMolecule(String molecule)</B><P>
+reads  molecule(s) or reaction in JME format into the editor.
+<br>
+the format of the JME String is as follows<BR>
+natoms nbonds (atomic_symbol x_coord y_coord) for all atoms (atom1 atom2 bond_order) for all bonds<br>
+(for stereo bonds the bond order is -1 for up and -2 for down from the first to the second atom)<br>
+JME tries to guess valence model (number of hydrogens) on the atom, you can force your model by enclosing the atom symbol in square brackets (i.e. [NH2+])<BR>
+(see also <a href="jme_example1.html">jme_example1</a> example for the interactive generation of JME strings).<br>
+Molecules in multipart system are separated by the | character.
+Components of the reaction are separated by the > character. The JME string for the reaction is thus
+"reactant1 | reactant 2 ... > modulator(s) > product(s)"<br>
+<p>
+
+<b>public void JME.readMolFile(String molFile)</b><p>
+reads molecule or reaction in the  <a href="http://en.wikipedia.org/wiki/Chemical_table_file">MDL  mol file or rxn file</a> into the editor. The mol/rxn file must be encoded into a single String parameter. Therefore it is necessary to mark the line separations by the | characters. See also description of this issue in the <a href="jme_use.html">installation instructions</a> and <a href="jme_example3.html">example 3</a>. 
+<p>
+
+<b>public void JME.molFile(void)</b><p>
+returns MDL mol file of created molecule or rxn file of reaction. Conversion of query features into mol file is not yet implemented.
+<p>
+
+<B>public void JME.reset()</B><P>
+clears the drawing canvas (deletes all molecules)
+<P>
+
+<b>public void JME.options(String)</b><p>
+enables to change applet parameters dynamically from JavaScript. Recognized keywords are :<br>
+<b>xbutton, noxbutton</b> - show / hide the X button (even when not visible the X button functionality is accessible through the X and H key shortcuts<br>
+<b>rbutton, norbutton</b> - show / hide the R button (to mark connection of substituent with the main scaffold)<br>
+<!--r1button, r2button, r3button - show buttons with R1, R2 and R3 (useful for creation of scaffolds for combinatorial chemistry)<br>-->
+<b>hydrogens, nohydrogens</b> - display / hide hydrogens<br>
+<b>query, noquery</b> - enable / disable query features<br>
+<b>autoez, noautoez</b> - automatic generation of SMILES with E,Z stereochemistry<br>
+<b>nocanonize</b> - SMILES canonicalization and detection of aromaticity supressed<br>
+<b>nostereo</b> - stereochemistry not considered when creating SMILES<br>
+<b>reaction, noreaction</b> - enable / disable reaction input<br>
+<b>multipart</b> - possibility to enter multipart structures<br> 
+<b>polarnitro</b> - prevent automatic conversion of nitro (and similar) groups into nonpolar form<br>
+<b>number</b> - possibility to number (mark) atoms<br>
+<b>depict</b> - the applet will appear without editing butons, this is used for structure display only<br>
+<b>border</b> (used together with the depict option) - displays a border around depicted molecule<br>
+<br>
+See also <a href="jme_use.html">description</a> of the applet's param tag.
+<p>
+
+<p>
+<HR>
+</BODY>
+</HTML>
+
