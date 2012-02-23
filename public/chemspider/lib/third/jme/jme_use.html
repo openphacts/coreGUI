@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>JME Installation</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<CENTER>
+<IMG SRC="jme.gif" HEIGHT=45 WIDTH=340 ALT="JME Molecular Editor">
+<img src="smiles.gif" align="top" width="19" height="19">
+<H2>Installation Instructions</H2>
+</CENTER>
+
+<HR>
+<p>
+<B>Incorporation of the JME applet into an HTML page</B>
+
+<P>Recommended HTML code is
+
+<P>&lt;applet code="JME.class" name="JME" archive="JME.jar" width="360" height="335"&gt;
+<BR>&lt;param name="options" value="list of keywords"&gt;
+<br>Enable Java in your browser !
+<BR>&lt;/applet&gt;
+<p>
+If you are updating from an older version of JME please note that you have to change JME.zip to JME.jar in the applet's archive tag.
+<P>You can modify width and height parameters according to your requirements, or to
+add the codebase parameter. <br>
+The warning "Enable Java ..." appears only when Java is not enabled in the users web  browser.
+
+<P>By using the parameter "options" you can modify some editor features by placing respective keywords into the value field. See description of function <a href="jme_functions.html">JME.options()</a> for a list of recognized options.
+<br>The parameter tag may look for example like this
+<br>&lt;param name="options" value="query,nohydrogens"&gt;<br>
+<P>
+If you want to start the applet directly with a molecule in it, you can do this by providing one of the following lines in the applet tag:<br>
+&lt;param name="jme" value="molecule in the jme format"&gt;<br>
+or<br>
+&lt;param name="mol" value="MDL mol file or rxn file"&gt;<p>
+<p>
+When supplying MDL file as a parameter, it is necessary to add the | character at the end of each line (HTML removes newline characters and without | the JME mol parser would not be able to process the file correctly).
+<br>
+Another possibility is to read a molecule by JME functions <a href="jme_functions.html">readMolecule</a> or <a href="jme_functions.html">readMolFile</a>, launched by the onLoad event handler.
+<br>
+Both these possibilities are illustrated in <a href="jme_example3.html">example3</a>.
+<br>
+When using MDL mol or rxn files as function parameters, take care to respect exactly the <a href="http://en.wikipedia.org/wiki/Chemical_table_file">MDL mol/rxn file format conventions</a>.
+<P>
+The JME editor is able to run also as an application (in a standalone mode without a browser) provided you have Java runtime environment available. Start the program with<br>
+java -jar JME.jar "list of keywords"
+<p>
+<HR>
+</BODY>
+</HTML>

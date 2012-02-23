@@ -27,7 +27,7 @@ Ext.create('Ext.app.Application', {
     autoCreateViewport: true,
     
     launch: function() {
-		Ext.Loader.setConfig({enabled:true});
+		Ext.Loader.setConfig({enabled:true, paths: { 'CS':'chemspider/lib' } });
         
     }
 });
