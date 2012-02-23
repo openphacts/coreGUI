@@ -6,6 +6,7 @@ Ext.define('LSP.view.dropdowns.conceptWikiCompoundLookup', {
             fields: [
               {type: 'string', name: 'concept_label'},
               {type: 'string', name: 'concept_url'},
+              {type: 'string', name: 'define_url'},
               {type: 'string', name: 'concept_uuid'},
               {type: 'string', name: 'concept_alt_labels'},
               {type: 'string', name: 'tag_label'},
@@ -43,7 +44,7 @@ Ext.define('LSP.view.dropdowns.conceptWikiCompoundLookup', {
         loadingText: 'Searching...',
         emptyText: 'No matching compounds found.',
                 getInnerTpl: function() {
-                    return '<p><b>{concept_label}</b> <a href="{concept_url}" target="_blank">(definition)</a><br/ ><small><i>{concept_alt_labels}</i></small></p>';
+                    return '<p><b>{concept_label}</b> <a href="{define_url}" target="_blank">(definition)</a><br/ ><small><i>{concept_alt_labels}</i></small></p>';
                 }
       }
 });
