@@ -45,6 +45,7 @@ LSP4All::Application.routes.draw do
        post :pharm_enzyme_fam
        post :search_by_smiles
        post :compound_info
+       post :chemspider_info
        post :pmid2title                                       
        post :pmid2abstract   
        get :pmid2concepts                                       

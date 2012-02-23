@@ -124,6 +124,19 @@ class CoreApiCallsController < ApplicationController
          render :json => {:success => false}.to_json, :layout => false    
       end 
    end
+   
+   def chemspider_info(csid_string = params[:csids])
+   puts "======================"
+   puts  csid_string
+      api_method = 'chemspiderInfo'
+      options = Hash.new
+      options[:csids] =  csid_string
+      options[:limit] =  params[:limit]
+      options[:offset] = params[:offset]
+      api_call = CoreApiCall.new
+      results = api_call.request( api_method, options)
+      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false      
+   end
     
    def sparql(query = params[:query])
       api_method = 'sparql'
