@@ -1,11 +1,11 @@
 Ext.define('LSP.model.DynamicGrid', {
     extend: 'Ext.data.Model',
     fields: [],
-   
+
     proxy: {
         type: 'ajax',
         api: {
-            read: ''
+            read: ''  // We configure this in the form controller
         },
         reader: {
             type: 'json',
