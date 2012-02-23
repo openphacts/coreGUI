@@ -7,6 +7,10 @@ Ext.define('LSP.controller.SimSearchForm', {
         {
             ref: 'ssform',  // reference to the view
             selector: 'SimSearchForm'
+        },
+        {
+            ref: 'strucGrid',
+            selector: 'SimSearchForm dynamicgrid3'
         }
     ],
 
@@ -53,14 +57,16 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     submitQuery: function (button) {
-        var form = button.up('form'),
+        var form = button.up('form');
+        var this_controller = this;
         values = form.getValues();
         //console.log(values.endpoint);
-
+        csid_string = "";
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
+                        this_controller.hitCoreAPI(csids);
                         alert('Found Chemspider IDs (' + csids.length + '): ' + csids);
                     });
                 }
@@ -91,16 +97,20 @@ Ext.define('LSP.controller.SimSearchForm', {
         else {
             //  Unsupported search type...
         };
-
+        this.getStrucGrid().setTitle(grid_title);
         searchEngine.doSearch(search_type, params);
+    },
 
-        var grid = form.query('dynamicgrid2')[0];
-        //        grid.store.proxy.actionMethods = {read: 'POST'};
-        //        grid.store.proxy.extraParams = values;
-        //        grid.store.proxy.api.read = '/core_api_calls/search_by_smiles.json';
-        //        grid.store.load({params: { offset: 0, limit: 100}});
-        //        grid.store.on('load',function(){form.doLayout()});
-        grid.setTitle(grid_title);
+    hitCoreAPI: function (csid_string) {
+      console.log(csid_string);
+      grid = this.getStrucGrid();
+      grid.store.proxy.actionMethods = {read: 'POST'};
+      grid.store.proxy.extraParams = {csids: csid_string.join(',')};
+      grid.store.proxy.api.read = '/core_api_calls/chemspider_info.json';
+      grid.store.load({params: { offset: 0, limit: 100}});
+      grid.store.on('load',function(){
+          grid.doLayout();
+      });
     },
 
     launchDataView: function (button) {

@@ -47,7 +47,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         var form    = button.up('form');
         var values = form.getValues();
         
-        var grid = form.query('dynamicgrid2')[0];
+        var grid = form.query('dynamicgrid3')[0];
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = '/core_api_calls/pharm_enzyme_fam.json';
         grid.setTitle('Inhibitors for enzymes in class:  ' + values.ec_number + ' => ' + values.enz_name);

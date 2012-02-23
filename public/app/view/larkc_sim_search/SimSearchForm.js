@@ -71,7 +71,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                           text: 'Start search'
                       },
                       {
-                    xtype: 'dynamicgrid2',
+                    xtype: 'dynamicgrid3',
                     title: 'Structure search results',
                     gridBaseTitle: 'Structure search results',                    
                     flex: 1,

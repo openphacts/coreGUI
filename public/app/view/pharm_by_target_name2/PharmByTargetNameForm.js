@@ -3,7 +3,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
     alias: 'widget.PharmByTargetNameForm',
     closable: true,
     requires: [
-        'LSP.view.dropdowns.proteinLookup'
+        'LSP.view.dropdowns.conceptWikiProteinLookup',
+        'LSP.view.dynamicgrid.DynamicGrid3'
     ],
     layout: {
           type: 'vbox',
@@ -12,42 +13,46 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
      initComponent: function() {
         
         this.items = [
-                   {
-                xtype: 'container',
-                margin: '5 5 5 5',
-                name: 'form_fields',
-                layout: {
-                    type: 'column'
-                },
-                style: 'background-color: #fff;',
-                items: [                      
                       {
-                        name: 'utf8',
-                        xtype: 'hidden',
-                        value: '&#x2713;'
+                        xtype: 'label',
+                        html: '<font face="verdana" color="grey">Hint: Type in protein name and species. E.g. \"GPR39 Human\"</font>',
+                        labelWidth: 400,
+                        padding: '5 0 0 140' 
                       },
                       {
-                        name: 'authenticity_token',
-                        xtype: 'hidden',
-                        value: $$('meta[name=csrf-token]')[0].readAttribute('content')
+                        xtype: 'container',
+                        margin: '0 5 5 5',
+                        name: 'form_fields',
+                        layout: {
+                            type: 'column'
+                        },
+                        style: 'background-color: #fff;',
+                        items: [                      
+                            
+                              {
+                                xtype: 'conceptWikiProteinLookup',
+                                fieldLabel: 'Protein name',                        
+                              	forceSelection:true,
+                              	allowBlank: false,
+                                typeAhead:true,
+                                typeAheadDelay: 250,
+                                queryDelay: 70,    
+                              },
+                              {
+                                xtype: 'button',
+                                padding: '5 5 5 5',
+                                text: 'Search...',
+                                disabled: false,
+                                name: 'query_summit_button',
+                                action: 'query_pharm_by_target_name'
+                              }]
                       },
                       {
-                        xtype: 'proteinLookup'                      
-                      },
-                      {
-                        xtype: 'button',
-                        padding: '5 5 5 5',
-                        text: 'Search',
-                        disabled: true,
-                        name: 'query_summit_button',
-                        action: 'query_pharm_by_target_name'
-                      }]},
-                      {
-                        xtype: 'dynamicgrid2',
+                        xtype: 'dynamicgrid3',
                         title: 'Pharmacology by Target name search results',
                         gridBaseTitle: 'Pharmacology by Target name search results',
                         flex: 1,
-                        } 
+                      } 
                 ]; 
         this.callParent(arguments);
     }    

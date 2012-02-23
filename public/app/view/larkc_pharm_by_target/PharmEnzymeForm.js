@@ -46,16 +46,6 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                         name: 'ec_number',
                         xtype: 'hidden',
                         value: ''
-                    },
-                    {
-                        name: 'utf8',
-                        xtype: 'hidden',
-                        value: '&#x2713;'
-                    },
-                    {
-                        name: 'authenticity_token',
-                        xtype: 'hidden',
-                        value: $$('meta[name=csrf-token]')[0].readAttribute('content')
                     }
                 ]
             },
@@ -141,7 +131,7 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                        text: 'Start search'
                    },                   
 			            {
-                    xtype: 'dynamicgrid2',
+                    xtype: 'dynamicgrid3',
                     title: 'Inhibitors for enzyme class: no selection yet',
                     gridBaseTitle: 'Inhibitors for enzymes in class: ',
                     flex: 1,

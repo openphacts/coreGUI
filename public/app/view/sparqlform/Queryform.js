@@ -62,16 +62,6 @@ Ext.define('LSP.view.sparqlform.Queryform', {
                 ]
             },
 					{
-            name: 'utf8',
-            xtype: 'hidden',
-            value: '&#x2713;'
-          },
-          {
-            name: 'authenticity_token',
-            xtype: 'hidden',
-            value: $$('meta[name=csrf-token]')[0].readAttribute('content')
-          },
-					{
 						xtype: 'button',
 						action: 'query',
 						text: 'Submit query'
@@ -79,7 +69,7 @@ Ext.define('LSP.view.sparqlform.Queryform', {
                 ]
             },
 					{
-            xtype: 'dynamicgrid2',
+            xtype: 'dynamicgrid3',
             title: 'SPARQL query results',
             name: 'sparql_query_results',
             flex: 1,

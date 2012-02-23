@@ -24,7 +24,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         var form = button.up('form');
         button.disable();
         values = form.getValues();
-        var grid = form.query('dynamicgrid2')[0];
+        var grid = form.query('dynamicgrid3')[0];
         grid.store.proxy.actionMethods = {read: 'POST'};
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = '/core_api_calls/compound_info.json';

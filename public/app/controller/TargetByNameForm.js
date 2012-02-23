@@ -8,7 +8,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
             'TargetByNameForm button[action=query_target_by_name]': {
                 click: this.submitQuery
             },
-            'TargetByNameForm proteinLookup': {
+            'TargetByNameForm conceptWikiProteinLookup': {
                 select: this.enableSubmit
             }
         });

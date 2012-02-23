@@ -3,7 +3,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     alias: 'widget.CmpdByNameForm',
     closable: true,
     requires: [
-        'LSP.view.dropdowns.compoundLookup'
+        'LSP.view.dropdowns.conceptWikiCompoundLookup',
+        'LSP.view.dynamicgrid.DynamicGrid3'
     ],
     layout: {
           type: 'vbox',
@@ -24,8 +25,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                 },
                 style: 'background-color: #fff;',
                 items: [                      
-                      { 
-                        xtype: 'compoundLookup',                        
+                      {
+                            xtype: 'conceptWikiCompoundLookup',
+                            fieldLabel: 'Compound name',                        
+                          	forceSelection:true,
+                          	allowBlank: false,
+                            typeAhead:true,
+                            typeAheadDelay: 250,
+                            queryDelay: 70,    
                       },
                       {
                         xtype: 'button',
@@ -36,7 +43,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                       }
                       ]},
                       {
-                    xtype: 'dynamicgrid2',
+                    xtype: 'dynamicgrid3',
                     title: 'Compound by name search results',
                     gridBaseTitle: 'Compound by name search results',
                     flex: 1,
