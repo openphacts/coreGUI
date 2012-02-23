@@ -120,16 +120,20 @@ class ConceptWikiApiCall
      @parsed_results = Array.new
      results.each do |concept|
         result = Hash.new
+        result[:match] = concept['match']
         # concept uuid
         result[:concept_uuid] = concept['uuid']
+        # construct concept uri to LDC
+        result[:concept_url] = 'http://www.conceptwiki.org/concept/' +  concept['uuid'] 
         # urls
         if concept['urls'].nil? then
           next
         else
           concept['urls'].each do |url|
-            result[:concept_url] = url['value']
+            result[:define_url] = url['value']
             if url['type'] == "PREFERRED"
-              result[:concept_url] = url['value']          
+              result[:define_url] = url['value']
+              break          
             end  
           end
         end
@@ -151,10 +155,10 @@ class ConceptWikiApiCall
         tag = concept['tags'].first
         result[:tag_uuid] = tag['uuid']
         result[:tag_label] = tag['labels'].first['text']
+puts result.inspect 
         @parsed_results.push(result)
                            
      end
-     puts @parsed_results.inspect   
      @parsed_results     
   end
   
