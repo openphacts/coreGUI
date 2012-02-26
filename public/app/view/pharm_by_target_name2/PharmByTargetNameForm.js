@@ -36,7 +36,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                               	allowBlank: false,
                                 typeAhead:true,
                                 typeAheadDelay: 250,
-                                queryDelay: 70,    
+                                queryDelay: 70   
                               },
                               {
                                 xtype: 'button',
@@ -51,7 +51,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                         xtype: 'dynamicgrid3',
                         title: 'Pharmacology by Target name search results',
                         gridBaseTitle: 'Pharmacology by Target name search results',
-                        flex: 1,
+                        flex: 1
                       } 
                 ]; 
         this.callParent(arguments);

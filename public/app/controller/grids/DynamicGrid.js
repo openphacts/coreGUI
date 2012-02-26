@@ -67,7 +67,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                       {
               'dynamicgrid3' : {
               afterrender: this.prepGrid       
-            },
+            }
             
         });
     },
@@ -126,5 +126,5 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 }
                 
      }
-    },
+    }
 })

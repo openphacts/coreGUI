@@ -96,7 +96,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         }
         else {
             //  Unsupported search type...
-        };
+        }
         this.getStrucGrid().setTitle(grid_title);
         searchEngine.doSearch(search_type, params);
     },

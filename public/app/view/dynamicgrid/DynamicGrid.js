@@ -24,7 +24,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
         ftype: 'filters',
         // encode and local configuration options defined previously for easier reuse
         encode: true, // json encode the filter query
-        local: true,   // defaults to false (remote filtering)
+        local: true   // defaults to false (remote filtering)
         };
         // this feature allows for selection of text in the grid by changing the underlaying style for the cell
         var cellTextSelector = {

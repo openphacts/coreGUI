@@ -34,7 +34,7 @@ Ext.define('LSP.view.dropdowns.compoundLookup_sparql', {
     labelWidth: 120,
     listConfig: {
       loadingText: 'Searching...',
-      emptyText: 'No matching compounds found.',
+      emptyText: 'No matching compounds found.'
     },
     listeners: {
         select: function(combo, selection) {

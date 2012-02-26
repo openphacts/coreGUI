@@ -21,8 +21,7 @@ extend: 'Ext.app.Controller',
             },
             'pathwayByProteinForm wikiPathwaysProteinLookup': {
                 select: this.enableSubmit                               
-            },
-            
+            }
         });
     },
     

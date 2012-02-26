@@ -35,6 +35,6 @@ Ext.define('LSP.view.dropdowns.compoundLookup', {
       labelWidth: 120,
       listConfig: {
         loadingText: 'Searching...',
-        emptyText: 'No matching compounds found.',
+        emptyText: 'No matching compounds found.'
       }
 });

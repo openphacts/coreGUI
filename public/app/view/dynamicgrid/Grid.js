@@ -53,7 +53,7 @@ Ext.define('LSP.view.dynamicgrid.Grid', {
         ftype: 'filters',
         // encode and local configuration options defined previously for easier reuse
         encode: false, // json encode the filter query
-        local: true,   // defaults to false (remote filtering)
+        local: true   // defaults to false (remote filtering)
         };  
         var config = {
             store: {

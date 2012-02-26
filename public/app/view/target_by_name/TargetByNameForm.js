@@ -29,7 +29,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         style: 'background-color: #fff;',
                         items: [                      
                               {
-                                xtype: 'conceptWikiProteinLookup',
+                                xtype: 'conceptWikiProteinLookup'
                               },
                               {
                                 xtype: 'button',
@@ -43,7 +43,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         xtype: 'dynamicgrid3',
                         title: 'Target by name search results',
                         gridBaseTitle: 'Target by name search results',
-                        flex: 1,
+                        flex: 1
                         }                       
                 ];
         this.callParent(arguments);
