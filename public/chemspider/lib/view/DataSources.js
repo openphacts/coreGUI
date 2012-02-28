@@ -24,7 +24,7 @@ Ext.define('CS.view.DataSources', {
                 title: key,
                 items: {
                     xtype: 'panel',
-                    id: 'ds' + key,
+                    id: oThis.id + '_panel' + oThis.items.getCount(),
                     border: 0,
                     tpl: new Ext.XTemplate(
                         '<ul class="zebra" style="overflow:auto; height:100%;">',

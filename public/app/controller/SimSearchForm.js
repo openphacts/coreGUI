@@ -27,6 +27,12 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=data_view]': {
                 click: this.launchDataView
+            },
+            'SimSearchForm dynamicgrid3': {
+                itemdblclick: function (view, record, item, index, e, opts) {
+                    //  ATTENTION: add real CSID here in order to show details of real compound... now it's only for demonstration purposes
+                    Ext.create('CS.view.CompoundWindow').showCompound(2157);
+                }
             }
         });
     },
@@ -67,7 +73,6 @@ Ext.define('LSP.controller.SimSearchForm', {
                 finished: function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
                         this_controller.hitCoreAPI(csids);
-                        alert('Found Chemspider IDs (' + csids.length + '): ' + csids);
                     });
                 }
             }
@@ -102,15 +107,15 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     hitCoreAPI: function (csid_string) {
-      console.log(csid_string);
-      grid = this.getStrucGrid();
-      grid.store.proxy.actionMethods = {read: 'POST'};
-      grid.store.proxy.extraParams = {csids: csid_string.join(',')};
-      grid.store.proxy.api.read = '/core_api_calls/chemspider_info.json';
-      grid.store.load({params: { offset: 0, limit: 100}});
-      grid.store.on('load',function(){
-          grid.doLayout();
-      });
+        console.log(csid_string);
+        grid = this.getStrucGrid();
+        grid.store.proxy.actionMethods = { read: 'POST' };
+        grid.store.proxy.extraParams = { csids: csid_string.join(',') };
+        grid.store.proxy.api.read = '/core_api_calls/chemspider_info.json';
+        grid.store.load({ params: { offset: 0, limit: 100} });
+        grid.store.on('load', function () {
+            grid.doLayout();
+        });
     },
 
     launchDataView: function (button) {
