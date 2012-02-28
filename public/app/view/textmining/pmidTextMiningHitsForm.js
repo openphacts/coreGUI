@@ -28,14 +28,14 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                             xtype: 'pmidLookup',
                             margin: '0 10 0 10',                          
                             labelWidth: 75,
-                            width: 650,
+                            width: 650
                         },
                         {
                             xtype: 'button',
                             text: 'Search...',
                             action: 'query',
                             disabled: true,
-                            width: 120,
+                            width: 120
                         }
                     ]
                 },
@@ -50,7 +50,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                             xtype: 'displayfield',
                             fieldLabel: 'Title',
                             name: 'title',
-                            anchor: '100%',
+                            anchor: '100%'
                         },
                         {
                             xtype: 'textarea',
@@ -58,7 +58,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                             readOnly: true,
                             fieldLabel: 'Abstract',
                             name: 'abstract',
-                            anchor: '100%',
+                            anchor: '100%'
                         }
                     ]
                 },
@@ -67,7 +67,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                     title: 'Text mined concepts',
                     gridBaseTitle: 'Text mined concepts',                    
                     name: 'textmining_hits',
-                    flex: 1,
+                    flex: 1
                 }
             ]
         });

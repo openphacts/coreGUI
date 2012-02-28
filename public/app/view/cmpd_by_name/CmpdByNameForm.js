@@ -32,7 +32,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                           	allowBlank: false,
                             typeAhead:true,
                             typeAheadDelay: 250,
-                            queryDelay: 70,    
+                            queryDelay: 70
                       },
                       {
                         xtype: 'button',
@@ -46,7 +46,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                     xtype: 'dynamicgrid3',
                     title: 'Compound by name search results',
                     gridBaseTitle: 'Compound by name search results',
-                    flex: 1,
+                    flex: 1
                     }                             
                 ]        
           });

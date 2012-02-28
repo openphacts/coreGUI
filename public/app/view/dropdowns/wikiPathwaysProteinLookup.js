@@ -33,6 +33,6 @@ Ext.define('LSP.view.dropdowns.wikiPathwaysProteinLookup', {
       fieldLabel: 'Protein name',
       labelWidth: 120,
       listConfig: {
-        loadingText: 'Searching...',
+        loadingText: 'Searching...'
       }
 });

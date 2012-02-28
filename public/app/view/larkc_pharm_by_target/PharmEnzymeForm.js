@@ -134,7 +134,7 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
                     xtype: 'dynamicgrid3',
                     title: 'Inhibitors for enzyme class: no selection yet',
                     gridBaseTitle: 'Inhibitors for enzymes in class: ',
-                    flex: 1,
+                    flex: 1
                     }  
         ];                  
         me.callParent(arguments);

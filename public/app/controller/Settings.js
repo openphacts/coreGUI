@@ -41,8 +41,7 @@ Ext.define('LSP.controller.Settings', {
         this.control({
             'settingsform button[action=save_endpoint]': {
                 click: this.saveEndpoint
-            },
-            
+            }
         });
     },
     saveEndpoint: function(button) {

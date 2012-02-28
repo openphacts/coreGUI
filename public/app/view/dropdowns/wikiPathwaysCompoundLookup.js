@@ -33,6 +33,6 @@ Ext.define('LSP.view.dropdowns.wikiPathwaysCompoundLookup', {
       fieldLabel: 'Compound name',
       labelWidth: 120,
       listConfig: {
-        loadingText: 'Searching...',
+        loadingText: 'Searching...'
       }
 });

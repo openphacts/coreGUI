@@ -62,7 +62,7 @@ Ext.define('LSP.view.Viewport', {
       	  height: 60,
       	  border: false,
       	  bodyStyle: {
-              background: 'transparent',
+              background: 'transparent'
           },
       	  layout: {
             type: 'hbox',
@@ -85,7 +85,7 @@ Ext.define('LSP.view.Viewport', {
               value: 'Testing connection to OPS API...',
               width: 400,
               name: 'ops_api_staus',
-              id: 'ops_api_staus_id',
+              id: 'ops_api_staus_id'
             },
             {
               xtype: 'tbspacer',

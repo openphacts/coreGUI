@@ -41,7 +41,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                           	allowBlank: false,
                             typeAhead:true,
                             typeAheadDelay: 250,
-                            queryDelay: 70,    
+                            queryDelay: 70
                           },
                           {
                             xtype: 'button',
@@ -54,7 +54,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                         xtype: 'dynamicgrid3',
                         title: 'Pharmacology by Compound name search results',
                         gridBaseTitle: 'Pharmacology by Compound name search results',                    
-                        flex: 1,
+                        flex: 1
                         }                              
                 ];
 
