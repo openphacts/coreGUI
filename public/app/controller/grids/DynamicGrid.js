@@ -43,6 +43,19 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     
     init: function() {
+      this.control({
+           'dynamicgrid3': {
+                itemdblclick: function (view, record, item, index, e, opts) {
+                  if (record.data.csid_uri !== undefined){
+                    var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                    console.log(csid);
+                    if (parseInt(csid) >= 1) {
+                      Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                    }
+                  }
+                }
+            }
+      })
     },
     onLaunch: function() {
     },

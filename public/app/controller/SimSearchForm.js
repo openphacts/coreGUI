@@ -27,12 +27,6 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=data_view]': {
                 click: this.launchDataView
-            },
-            'SimSearchForm dynamicgrid3': {
-                itemdblclick: function (view, record, item, index, e, opts) {
-                    //  ATTENTION: add real CSID here in order to show details of real compound... now it's only for demonstration purposes
-                    Ext.create('CS.view.CompoundWindow').showCompound(56586);
-                }
             }
         });
     },

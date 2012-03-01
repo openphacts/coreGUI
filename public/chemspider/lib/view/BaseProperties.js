@@ -1,6 +1,7 @@
-﻿Ext.define('CS.view.BaseProperties', {
+Ext.define('CS.view.BaseProperties', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.cs.baseproperties',
+    requires: ['CS.config.Settings'],
     autoScroll: true,
     layout: 'fit',
     border: 0,
