@@ -59,6 +59,11 @@ Ext.define('LSP.controller.SimSearchForm', {
     submitQuery: function (button) {
         var form = button.up('form');
         var this_controller = this;
+        var this_gridview = this.getStrucGrid();
+        var current_records = this_gridview.store.getRange();
+        this_gridview.store.remove(current_records);
+//        this.getStrucGrid().removeAll(true);
+        this.getStrucGrid().recordsLoaded = 0;
         values = form.getValues();
         //console.log(values.endpoint);
         csid_string = "";
@@ -66,7 +71,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             listeners: {
                 finished: function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
-                        this_controller.hitCoreAPI(csids);
+                        this_controller.addRecords(csids);
                         alert('Found Chemspider IDs (' + csids.length + '): ' + csids);
                     });
                 }
@@ -101,25 +106,66 @@ Ext.define('LSP.controller.SimSearchForm', {
         searchEngine.doSearch(search_type, params);
     },
 
-    hitCoreAPI: function (csid_string) {
+    hitCoreAPI: function (first_csid) {
       console.log(csid_string);
       grid = this.getStrucGrid();
       grid.store.proxy.actionMethods = {read: 'POST'};
-      grid.store.proxy.extraParams = {csids: csid_string.join(',')};
-      grid.store.proxy.api.read = '/core_api_calls/chemspider_info.json';
+      grid.store.proxy.extraParams = {csids: first_csid};
+      grid.store.proxy.api.read = '/core_api_calls/compound_info.json';
       grid.store.load({params: { offset: 0, limit: 100}});
       grid.store.on('load',function(){
           grid.doLayout();
       });
+    },                
+    
+    addRecords: function (csids) {
+    console.log(csids);
+      var this_gridview = this.getStrucGrid();
+      var this_store = this_gridview.store;
+      var this_controller = this;
+      var temp_store = Ext.create('LSP.store.DynamicGrid');
+      temp_store.proxy.actionMethods = {read: 'POST'};
+      temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
+      var offset = 0;
+      this_gridview.setLoading(true);
+      csids.forEach(function(csid) {
+      console.log(csid);
+        temp_store.removeAll();
+        temp_store.load({params: { offset: offset, limit: 100, compound_uri: 'http://rdf.chemspider.com/' + csid}}); 
+        temp_store.on('load',function() {
+            records = temp_store.getRange();
+            if (records.length > 0) {
+            this_store.loadRecords(temp_store.getRange(),{addRecords: true});
+
+            if(typeof(temp_store.proxy.reader.jsonData.columns) === 'object') {  
+             var columns = [];
+             if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
+             Ext.each(temp_store.proxy.reader.jsonData.columns, function(column){
+                 columns.push(column);  
+             });
+                this_gridview.reconfigure(this_store, columns);
+                this_gridview.recordsLoaded = this_store.data.length;
+                if (this_gridview.recordsLoaded == 0) {
+                     this_gridview.setTitle(this_gridview.gridBaseTitle + '- No records found within OPS for this search!');
+                }
+                else {
+                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
+                    if (this_gridview.recordsLoaded == this_gridview.limit) {
+                    console.log(this_controller.getNext100());
+                      this_controller.getNext100().enable();      
+                    }
+                    else {
+                      this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
+                    }
+                }
+                
+     }
+     }
+     });
+      
+    });
+      this_gridview.setLoading(false);
     },
-
-    launchDataView: function (button) {
-        var grid = button.up('dynamicgrid2');
-        structureViewStore = grid.store;
-        var view = Ext.widget('StructureViewer');
-        //     console.log(grid.store);  
-
-    }
-
+      
 }
 );

@@ -47,27 +47,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     onLaunch: function() {
     },
 
-//     prepGrid: function(current_view) {
-//       console.log(current_view);
-//       var dynamicgridStore = current_view.store;
-//       dynamicgridStore.on('load', this.storeLoad, this);
-//       console.log(dynamicgridStore);
-//       //alert("prepGrid hit");
-//     },      
    
     testThis: function(args) {
-      alert(args);
-      console.log(args);
-    },
+     },
    
     addNextRecords: function(this_gridview,extraParams) {
-    console.log(extraParams)
-     //  var this_gridview ;= this.getViewDynGrid();
       var this_store = this_gridview.store;
       var this_controller = this;
       var temp_store = Ext.create('LSP.store.DynamicGrid');
-      // configure copy store:
-//       temp_store.proxy.extraParams = this_store.proxy.extraParams;
+     // configure copy store:
       temp_store.proxy.extraParams = extraParams;
       temp_store.proxy.api.read = this_gridview.readUrl;
       temp_store.proxy.actionMethods = this_store.proxy.actionMethods;
@@ -91,11 +79,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     }, 
      
     storeLoad: function(this_gridview) {
-    console.log(this_gridview);
         var this_controller = this;
-//        var dynamicgridStore = this.getStore('DynamicGrid');
         var dynamicgridStore = this_gridview.store;
-//        var this_gridview = this.getViewDynGrid();
         if(typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {  
              var columns = [];
              if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
