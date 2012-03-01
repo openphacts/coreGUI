@@ -72,8 +72,7 @@ Ext.define('LSP.view.textmining.pmidTextMiningHitsForm', {
                 },
                 {
                     xtype: 'dynamicgrid2',
-                    title: 'Concepts',
-                    
+                    title: 'Concepts'
                 }
             ]
         });

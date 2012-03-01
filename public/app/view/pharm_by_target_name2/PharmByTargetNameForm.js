@@ -42,7 +42,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                               	allowBlank: false,
                                 typeAhead:true,
                                 typeAheadDelay: 250,
-                                queryDelay: 70,    
+                                queryDelay: 70   
                               },
                               {
                                 xtype: 'button',

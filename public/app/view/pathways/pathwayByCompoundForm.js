@@ -28,14 +28,14 @@ Ext.define('LSP.view.pathways.pathwayByCompoundForm', {
                             xtype: 'wikiPathwaysCompoundLookup',
                             margin: '0 10 0 10',                          
                             labelWidth: 100,
-                            width: 650,
+                            width: 650
                         },
                         {
                             xtype: 'button',
                             text: 'Search...',
                             disabled: true,
                             action: 'query',
-                            width: 120,
+                            width: 120
                         }
                     ]
                 },

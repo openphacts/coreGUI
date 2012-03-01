@@ -35,6 +35,6 @@ Ext.define('LSP.view.dropdowns.proteinLookup', {
       labelWidth: 120,
       listConfig: {
         loadingText: 'Searching...',
-        emptyText: 'No matching proteins found.',
+        emptyText: 'No matching proteins found.'
       }
 });

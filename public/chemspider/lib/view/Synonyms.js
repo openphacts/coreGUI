@@ -46,7 +46,7 @@ Ext.define('CS.view.Synonyms', {
             this.addTab("Rejected", compound.getRejectedSynonyms());
 
         if (compound.hasUncertaintSynonyms()) 
-            this.addTab("Uncertaint", compound.getUncertaintSynonyms());
+            this.addTab("Uncertain", compound.getUncertaintSynonyms());
 
         this.update('');
     },
@@ -55,7 +55,7 @@ Ext.define('CS.view.Synonyms', {
             title: name,
             items: {
                 xtype: 'panel',
-                id: 'syn' + name,
+                id: this.id + '_panel' + this.items.getCount(),
                 border: 0,
                 padding: 0,
                 tpl: new Ext.XTemplate(

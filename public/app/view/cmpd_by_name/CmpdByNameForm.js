@@ -38,7 +38,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                           	allowBlank: false,
                             typeAhead:true,
                             typeAheadDelay: 250,
-                            queryDelay: 70,    
+                            queryDelay: 70
                       },
                       {
                         xtype: 'button',

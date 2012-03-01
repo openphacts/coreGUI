@@ -27,6 +27,12 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=data_view]': {
                 click: this.launchDataView
+            },
+            'SimSearchForm dynamicgrid3': {
+                itemdblclick: function (view, record, item, index, e, opts) {
+                    //  ATTENTION: add real CSID here in order to show details of real compound... now it's only for demonstration purposes
+                    Ext.create('CS.view.CompoundWindow').showCompound(56586);
+                }
             }
         });
     },
@@ -71,8 +77,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             listeners: {
                 finished: function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
-                        this_controller.addRecords(csids);
-                        alert('Found Chemspider IDs (' + csids.length + '): ' + csids);
+                        this_controller.hitCoreAPI(csids);
                     });
                 }
             }
@@ -101,7 +106,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         }
         else {
             //  Unsupported search type...
-        };
+        }
         this.getStrucGrid().setTitle(grid_title);
         searchEngine.doSearch(search_type, params);
     },

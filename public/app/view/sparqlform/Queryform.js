@@ -72,7 +72,7 @@ Ext.define('LSP.view.sparqlform.Queryform', {
             xtype: 'dynamicgrid3',
             title: 'SPARQL query results',
             name: 'sparql_query_results',
-            flex: 1,
+            flex: 1
           }           
         ];
         this.callParent(arguments);

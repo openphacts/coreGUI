@@ -104,7 +104,5 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 }
                 
      }
-    },
-    
-   
+    }
 })

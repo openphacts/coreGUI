@@ -24,7 +24,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         var filters = {
           ftype: 'filters',
           encode: true, // json encode the filter query
-          local: true,   // defaults to false (remote filtering)
+          local: true   // defaults to false (remote filtering)
         };
         // this feature allows for selection of text in the grid by changing the underlaying style for the cell
         var cellTextSelector = {
@@ -42,7 +42,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                         tooltip: 'On each click 100 additional records\nare added to the resultset',
                         itemId: 'nextRecords',
                         iconCls: 'icon-new',
-                        disabled: true,
+                        disabled: true
                       },
 //                       {
 //               					xtype: 'exporterbutton',
@@ -68,6 +68,6 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         Ext.apply(this, config);  
         Ext.apply(this.initialConfig, config);
         this.callParent(arguments);
-    },  
+    }  
 
 });

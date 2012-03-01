@@ -13,7 +13,7 @@ Ext.define('LSP.view.dropdowns.pmidLookup', {
                     read: 'core_api_calls/pmid_lookup.json'
                 },
                 reader: {
-                    type: 'json',                    
+                    type: 'json'               
                 }
             }
         }),
@@ -33,6 +33,6 @@ Ext.define('LSP.view.dropdowns.pmidLookup', {
       labelWidth: 120,
       listConfig: {
         loadingText: 'Searching...',
-        emptyText: 'No matching pubmed ids found.',
+        emptyText: 'No matching pubmed ids found.'
       }
 });
