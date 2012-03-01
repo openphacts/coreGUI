@@ -13,10 +13,9 @@ class ResultsFormatter
            csid = $1
            cs_image = '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id=' + csid + '&w=128&h=128" alt="CSID:' + csid + '"/>'
          end
-         record[:csid] = csid
+#         record[:csid] = csid
          record[:chemspider_id] = '<a href ="http://inchi.chemspider.com/Chemical-Structure.' + csid + '.html' + '" target="_blank">' + csid + '</a>'
          record[:structure] = cs_image
-         puts record.inspect
       end
     end
     return input_arr
@@ -49,8 +48,15 @@ class ResultsFormatter
       singleton_vars = Hash.new
       tpl_headers = Array.new
       header_idx = 0
+      columns = Array.new
+
       header_strings.each do |header|
           if header =~ /(\w+)_(url|label|uri)/ then
+              if header == 'csid_uri' then 
+                 singleton_vars[header] = header_idx
+                 header_idx += 1
+                next 
+              end
               if header == 'pathway_uri' then next end        
             if (($2 == 'url') or ($2 == 'uri')) then
               if not url_label_pairs.has_key?($1) then
@@ -67,10 +73,8 @@ class ResultsFormatter
           else
             singleton_vars[header] = header_idx
           end
-          puts url_label_pairs.keys
           header_idx += 1
       end
-      columns = Array.new
 
       url_label_pairs.each_pair do |key, idx_pair|
          col = Hash.new
@@ -85,7 +89,11 @@ class ResultsFormatter
       end
       singleton_vars.each do |key, idx|
           col = Hash.new
-          col[:text] = key.gsub(/_/,' ').capitalize
+          if key == 'csid_uri' then
+            col[:text] = key
+          else
+            col[:text] = key.gsub(/_/,' ').capitalize
+          end
           col[:dataIndex] = key
           if key =~ /_uri/ then
             col[:hidden] = true
@@ -97,7 +105,7 @@ class ResultsFormatter
           if key =~ /structure/ then
             col[:width] = 200
           end
-          if key =~ /ic50/ then
+          if key =~ /ic50/ or key =~ /alogp/ or key =~ /hha/ or key =~ /hhb/ or key =~ /molweight/ or key =~ /freebase/ or key =~ /violations/ or key =~ /psa/ or key =~ /rbt/ then
              col[:type] = 'float'
              col[:filter] = {:type => 'numeric'}             
           end
@@ -106,8 +114,11 @@ class ResultsFormatter
              col[:type] = 'float'
              col[:filter] = {:type => 'numeric'}             
           end
-          columns.push(col)
-       
+          if col[:text] == 'Structure' then
+             columns.unshift(col)
+          else
+            columns.push(col)
+          end
       end                      
       fields = header_strings + tpl_headers
       field_aofh = Array.new
