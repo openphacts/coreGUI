@@ -104,7 +104,7 @@ class ConceptWikiApiCall
      if options[:limit].nil? then
        options[:limit] = @limit
      end
-     options[:q] = substring
+     options[:q] = substring.strip # + '*'
      options[:uuid] =  tag_uuid
      url = URI.parse(CONCEPT_WIKI_API_BY_TAG_URL)
      results = request(url, options)
@@ -121,6 +121,8 @@ class ConceptWikiApiCall
      results.each do |concept|
         result = Hash.new
         result[:match] = concept['match']
+        result[:match].gsub!(/<em>/,'<b>')
+        result[:match].gsub!(/<\/em>/,'</b>')
         # concept uuid
         result[:concept_uuid] = concept['uuid']
         # construct concept uri to LDC
@@ -141,6 +143,9 @@ class ConceptWikiApiCall
         # labels
         alt_labels = Array.new
         concept['labels'].each do |label|
+          if not label['language']['code'] == 'en' then
+             next # we skip all non english labels 
+          end
           result[:concept_label] = label['text']
           if label['type'] == "PREFERRED"
             result[:concept_label] = label['text']          
@@ -155,7 +160,6 @@ class ConceptWikiApiCall
         tag = concept['tags'].first
         result[:tag_uuid] = tag['uuid']
         result[:tag_label] = tag['labels'].first['text']
-puts result.inspect 
         @parsed_results.push(result)
                            
      end
