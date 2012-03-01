@@ -39,48 +39,40 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         'dynamicgrid.DynamicGrid3'
     ],   
 
-   stores: ['DynamicGrid'],
    models: ['DynamicGrid'],
 
-   refs: [
-    {
-        ref: 'viewDynGrid',
-        selector: 'dynamicgrid3'
-    },
-    {
-        ref: 'next100',
-        selector: 'dynamicgrid3 #nextRecords'
-    }
-    ],
     
     init: function() {
-        this.control({
-               'dynamicgrid3 #nextRecords' : {
-                  click: this.addNextRecords
-                  }
-                  })   
-   },
-   onLaunch: function() {
-      var dynamicgridStore = this.getStore('DynamicGrid');
-      dynamicgridStore.on('load', this.storeLoad, this);
-      this.control(
-                      {
-              'dynamicgrid3' : {
-              afterrender: this.prepGrid       
-            },
-            
-        });
     },
-    prepGrid: function() {
-      //alert("prepGrid hit");
-    },      
+    onLaunch: function() {
+    },
+
+//     prepGrid: function(current_view) {
+//       console.log(current_view);
+//       var dynamicgridStore = current_view.store;
+//       dynamicgridStore.on('load', this.storeLoad, this);
+//       console.log(dynamicgridStore);
+//       //alert("prepGrid hit");
+//     },      
    
-    addNextRecords: function (){
-      var this_gridview = this.getViewDynGrid();
-      var this_store = this.getStore('DynamicGrid');
+    testThis: function(args) {
+      alert(args);
+      console.log(args);
+    },
+   
+    addNextRecords: function(this_gridview,extraParams) {
+    console.log(extraParams)
+     //  var this_gridview ;= this.getViewDynGrid();
+      var this_store = this_gridview.store;
       var this_controller = this;
       var temp_store = Ext.create('LSP.store.DynamicGrid');
+      // configure copy store:
+//       temp_store.proxy.extraParams = this_store.proxy.extraParams;
+      temp_store.proxy.extraParams = extraParams;
+      temp_store.proxy.api.read = this_gridview.readUrl;
+      temp_store.proxy.actionMethods = this_store.proxy.actionMethods;
       var offset = this_store.data.length + 1;
+      // We load the copy store to get the new records
       this_gridview.setLoading(true);
       temp_store.load({params: { offset: offset, limit: 100}}); 
       temp_store.on('load',function(){
@@ -89,7 +81,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
           this_gridview.recordsLoaded = this_store.data.length;
           if (temp_store.data.length < 100) {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                    this_controller.getNext100().disable();
+                    this_gridview.down('#nextRecords').disable();             
           }
           else {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_store.data.length);
@@ -98,11 +90,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
       
     }, 
      
-    storeLoad: function() {
-        console.log(this);
+    storeLoad: function(this_gridview) {
+    console.log(this_gridview);
         var this_controller = this;
-        var dynamicgridStore = this.getStore('DynamicGrid');
-        var this_gridview = this.getViewDynGrid();
+//        var dynamicgridStore = this.getStore('DynamicGrid');
+        var dynamicgridStore = this_gridview.store;
+//        var this_gridview = this.getViewDynGrid();
         if(typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {  
              var columns = [];
              if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
@@ -112,13 +105,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 this_gridview.reconfigure(dynamicgridStore, columns);
                 this_gridview.recordsLoaded = dynamicgridStore.data.length;
                 if (this_gridview.recordsLoaded == 0) {
-                     this_gridview.setTitle(this_gridview.gridBaseTitle + 'No records found for this query!');
+                     this_gridview.setTitle(this_gridview.gridBaseTitle + '- No records found within OPS for this search!');
                 }
                 else {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
                     if (this_gridview.recordsLoaded == this_gridview.limit) {
-                    console.log(this_controller.getNext100());
-                      this_controller.getNext100().enable();      
+                      this_gridview.down('#nextRecords').enable();
+                        
                     }
                     else {
                       this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
@@ -127,4 +120,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 
      }
     },
+    
+   
 })

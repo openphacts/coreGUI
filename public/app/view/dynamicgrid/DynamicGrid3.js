@@ -9,11 +9,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 		'Ext.ux.grid.FiltersFeature',
 		'LSP.view.dynamicgrid.feature.selectable'
 	   ],
-	  store: 'DynamicGrid',
-    autoScroll: true,
+	  autoScroll: true,
     layout: 'fit',
     gridBaseTitle: '',
-    limit: 500,
+    readUrl: '',
+    limit: 100,
     recordsLoaded: 0,
     initComponent: function(){
         
@@ -31,8 +31,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
           ftype: 'selectable', 
           id: 'selectable'
         };  
-        
         var config = {
+            
+            store: Ext.create('LSP.store.DynamicGrid'),
+    
             tbar : [
                       {
                         xtype: 'button',
@@ -54,10 +56,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 //               					itemId: 'sdf_exporter_button_id',
 //                         text: 'Download SDF-file',
 //                         iconCls: 'icon-sdf',
+//                         hidden: true,
 //                       }
                     ],
             columns:[{name: 'temp', hidden:true}],  
-            rowNumberer: true,
+            rowNumberer: false,
             defaultWidth : 200,
             features: [groupingFeature, filters, cellTextSelector]
         };
@@ -66,33 +69,5 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         Ext.apply(this.initialConfig, config);
         this.callParent(arguments);
     },  
-//     storeLoad: function() {
-//         if(typeof(this.store.proxy.reader.jsonData.columns) === 'object') {  
-//             var columns = [];
-//             //console.log(this);
-//             if(this.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
-//             Ext.each(this.store.proxy.reader.jsonData.columns, function(column){
-//                 columns.push(column);  
-//             });
-//             //console.log(columns);
-//             //console.log(this);
-//             if (typeof(title) == "undefined") {
-//      	        var title = this.title;
-//             }			
-//             if (this.store.proxy.reader.jsonData.totalCount > 0){
-//                     this.setTitle(this.gridBaseTitle + ' - Records found: ' +  this.store.proxy.reader.jsonData.totalCount);
-//             }
-//             else {
-//                      this.setTitle(this.gridBaseTitle + ' - Records found: ' +  'No records found!');
-//             }
-//     //            console.log(this);
-//     //              console.log(this.views);
-//                          this.reconfigure(this.store, columns);
-//                  this.setHeight('80%');       
-//                     }  
-//     },  
-//     onRender: function(ct, position) {
-//         LSP.view.dynamicgrid.Grid.superclass.onRender.call(this, ct, position);  
-//         this.store.on('load', this.storeLoad, this);
 
 });
