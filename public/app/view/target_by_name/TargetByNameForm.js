@@ -15,7 +15,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
         this.items = [
                       {
                         xtype: 'label',
-                        html: '<font face="verdana" color="grey">Hint: Type in protein name and species. E.g. \"GPR39 Human\"</font>',
+                        html: '<font face="verdana" color="grey">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</font>',
                         labelWidth: 400,
                         padding: '0 0 0 140' 
                       },
@@ -35,12 +35,15 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                                 xtype: 'button',
                                 padding: '5 5 5 5',
                                 text: 'Search',
+                                itemId: 'TargetByNameSubmit_id',
                                 disabled: true,
                                 action: 'query_target_by_name'
                               }]
                         },
                        {
                         xtype: 'dynamicgrid3',
+                        itemId: 'TargetByNameGrid_id',
+                        readUrl: '/core_api_calls/protein_info.json',
                         title: 'Target by name search results',
                         gridBaseTitle: 'Target by name search results',
                         flex: 1,

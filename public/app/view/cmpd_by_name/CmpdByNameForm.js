@@ -16,9 +16,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
 
         Ext.applyIf(me, {
           items: [
+                    {
+                        xtype: 'label',
+                        html: '<font face="verdana" color="grey">Hint: Type in compound name. E.g. \"Aspirin\"</font>',
+                        labelWidth: 400,
+                        padding: '5 0 0 140' 
+                    },
                    {
                 xtype: 'container',
-                margin: '5 5 5 5',
+                margin: '0 5 5 5',
                 name: 'form_fields',
                 layout: {
                     type: 'column'
@@ -38,16 +44,19 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         xtype: 'button',
                         padding: '5 5 5 5',
                         text: 'Search',
-                        disabled: true,
+                        itemId: 'CmpdByNameSubmit_id',
+                    //    disabled: true,
                         action: 'query_cmpd_by_name'
                       }
                       ]},
                       {
-                    xtype: 'dynamicgrid3',
-                    title: 'Compound by name search results',
-                    gridBaseTitle: 'Compound by name search results',
-                    flex: 1,
-                    }                             
+                            xtype: 'dynamicgrid3',
+                            itemId: 'CmpdByNameGrid_id',
+                            readUrl: '/core_api_calls/compound_info.json',                                
+                            title: 'Compound search by name results',
+                            gridBaseTitle: 'Compound search by name results',
+                            flex: 1,
+                     }                            
                 ]        
           });
         this.callParent(arguments);
