@@ -12,7 +12,11 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
       },
     
      initComponent: function() {
-        
+//         var dymgrid = Ext.widget('dynamicgrid3', {
+//                         itemId: 'pharmByCmpdGrid_id',
+//                         title: 'Pharmacology by Compound name search results',
+//                         gridBaseTitle: 'Pharmacology by Compound name search results',                    
+//                         flex: 1,});
         this.items = [
                     {
                         xtype: 'label',
@@ -41,21 +45,26 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                           	allowBlank: false,
                             typeAhead:true,
                             typeAheadDelay: 250,
-                            queryDelay: 70,    
+                            queryDelay: 200,    
                           },
                           {
                             xtype: 'button',
+                            itemId: 'pharmByCmpdSubmit_id',
                             padding: '5 5 5 5',
                             text: 'Search',
                             disabled: true,
                             action: 'query_pharm_by_cmpd_name'
                           }]},
                           {
-                        xtype: 'dynamicgrid3',
-                        title: 'Pharmacology by Compound name search results',
-                        gridBaseTitle: 'Pharmacology by Compound name search results',                    
-                        flex: 1,
-                        }                              
+                            xtype: 'dynamicgrid3',
+                            itemId: 'pharmByCmpdGrid_id',
+                            readUrl: '/core_api_calls/pharm_by_compound_name.json',                                
+                            title: 'Pharmacology by Compound name search results',
+                            gridBaseTitle: 'Pharmacology by Compound name search results',
+                            flex: 1,
+                        }
+//                            dymgrid
+                                                      
                 ];
 
         this.callParent(arguments);
