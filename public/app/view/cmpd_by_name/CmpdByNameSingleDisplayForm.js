@@ -5,7 +5,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
     initComponent: function() {
 
-         var me = this;
+        var me = this;
 
         Ext.applyIf(me, {
 
@@ -32,6 +32,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                        items: [{
                                    // IMAGE panel
                                    xtype: 'panel',
+                                   name: 'image',
                                    border: false,
                                    width: 150,
                                    height: 150,
@@ -57,14 +58,17 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     name: 'compound_name',
                                                     text: 'Sorafenib',
                                                     cls: 'x-cmpTitle'
+                                                }, {
+                                                    xtype: 'displayfield',
+                                                    value: '<br><br>'
                                                 },{
                                                     xtype: 'displayfield',
                                                     name: 'csid_uri',
                                                     cls: 'x-cmpfield',
                                                     labelWidth: 120,
                                                     labelAlign: 'right',
-                                                    fieldLabel: '<br><br>ChemSpider ID',
-                                                    value: '<br><br>187440'
+                                                    fieldLabel: 'ChemSpider ID',
+                                                    value: '187440'
                                                 },{
                                                     xtype: 'displayfield',
                                                     name: 'molformula',
