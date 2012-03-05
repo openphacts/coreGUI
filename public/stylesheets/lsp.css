@@ -73,3 +73,27 @@
 .x-btn-default-large .icon-add {
     background-image: url(/images/add.gif) !important;
 }
+
+/*compound by name styling*/
+.x-cmpfield {
+    color: #808080;
+}
+
+.x-cmpBottomfield {
+    text-align: center;
+    color: #808080;
+}
+
+.x-cmpBottomfieldValue {
+    text-align: center;
+    color: black;
+}
+
+.x-cmpTitle {
+    font-size: 30px;
+}
+
+.x-cmpBottomBase {
+    color: #808080;
+    text-align: center;
+}
