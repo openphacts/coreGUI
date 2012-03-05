@@ -20,16 +20,6 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                 style: 'background-color: #fff;',
                 items: [                      
                       {
-                        name: 'utf8',
-                        xtype: 'hidden',
-                        value: '&#x2713;'
-                      },
-                      {
-                        name: 'authenticity_token',
-                        xtype: 'hidden',
-                        value: $$('meta[name=csrf-token]')[0].readAttribute('content')
-                      },
-                      {
                         name: 'molfile',
                         xtype: 'hidden',
                         value: ''
@@ -39,7 +29,6 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                       layout: 'column',
                       collapsible: false,
                       defaults: {anchor: '100%'},
-                    //  layout: 'anchor',
                       items :[                         
                          {
                           xtype: 'textfield',
@@ -68,27 +57,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                       {
                           xtype: 'button',
                           action: 'query',
-                          text: 'Start search'
+                          itemId: 'sim_sss_start_search_button_id',
+                          text: 'Start search...'
                       },
                       {
                     xtype: 'dynamicgrid3',
+                    readUrl: '/core_api_calls/get_chem_info4known_csids.json',
                     title: 'Structure search results',
-                    gridBaseTitle: 'Structure search results',                    
+                    gridBaseTitle: 'Structure search results',
                     flex: 1,
-                    dockedItems: [{
-                        xtype: 'toolbar',
-                        dock: 'top',
-                        items: [{
-                             xtype: 'button',
-                            iconCls: 'icon-mol_dv',
-                            text: 'Data View',
-                            action: 'data_view'
-                        }]
-                    }]
-                    } 
-                      ]
                   }           
-                ];
+                ]}];
                 
         this.callParent(arguments);
     }    

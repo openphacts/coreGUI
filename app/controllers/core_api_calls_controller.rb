@@ -124,19 +124,38 @@ class CoreApiCallsController < ApplicationController
          render :json => {:success => false}.to_json, :layout => false    
       end 
    end
+
+   def get_chem_info4known_csids(csid_string = params[:csids])
    
-   def chemspider_info(csid_string = params[:csids])
-   puts "======================"
-   puts  csid_string
-      api_method = 'chemspiderInfo'
+ #     NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
+      api_method = 'sparql'
       options = Hash.new
-      options[:csids] =  csid_string
+      query = "PREFIX chemspider: <http://rdf.chemspider.com/#> SELECT DISTINCT ?csid WHERE  {GRAPH <http://www.chemspider.com> { ?csid chemspider:inchikey [] FILTER (?csid = <http://rdf.chemspider.com/"
+      query += "#{csid_string.split(',').join('> || ?csid = <http://rdf.chemspider.com/')}>)}}"   
+      options[:query] =  query
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
+      api_call = CoreApiCall.new("http://ops.few.vu.nl:9188/opsapi")
+      results = api_call.request( api_method, options)
+      col_results = compound_info_list(results)
+      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json, :layout => false     
+   end
+   
+   def compound_info_list(csid_array)
+    api_method = 'compoundInfo'
+    col_results = Array.new
+    csid_array.each do |cmpd_uri|
+      options = Hash.new  
+      options[:uri] = '<' + cmpd_uri[:csid] + '>'
+      options[:limit] =  1
+      options[:offset] = 0
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
-      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false      
+      col_results.push(results.first) unless results.first.nil?
+    end
+    col_results 
    end
+   
     
    def sparql(query = params[:query])
       api_method = 'sparql'

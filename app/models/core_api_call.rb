@@ -6,8 +6,9 @@ class CoreApiCall
   include ActiveModel::Validations
   extend ActiveModel::Naming
                                     
-  CORE_API_URL = "http://ops.few.vu.nl:9185/opsapi"
-  
+  CORE_API_URL = "http://ops.few.vu.nl:9187/opsapi"
+  NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
+    
   def initialize(url = CORE_API_URL, open_timeout = 1, read_timeout = 1)
      # Configuring the connection
      @uri = URI.parse(url)
@@ -63,7 +64,7 @@ class CoreApiCall
      if not options[:default_graph_uri] then
         @default_graph_uri = options[:default_graph_uri]
      end
-     puts "\nIssues call to coreAPI on #{CORE_API_URL} with options: #{options.inspect}\n"
+     puts "\nIssues call to coreAPI on #{@uri.inspect} with options: #{options.inspect}\n"
      
      # setting the options for the api call
      @request.set_form_data(options)

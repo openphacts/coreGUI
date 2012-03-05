@@ -11,6 +11,10 @@ Ext.define('LSP.controller.SimSearchForm', {
         {
             ref: 'strucGrid',
             selector: 'SimSearchForm dynamicgrid3'
+        },
+        {
+            ref: 'submitButton',
+            selector: 'SimSearchForm #sim_sss_start_search_button_id'
         }
     ],
 
@@ -57,6 +61,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     submitQuery: function (button) {
+        button.disable();
         var form = button.up('form');
         var this_controller = this;
         var this_gridview = this.getStrucGrid();
@@ -65,6 +70,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 //        this.getStrucGrid().removeAll(true);
         this.getStrucGrid().recordsLoaded = 0;
         values = form.getValues();
+        if (values.smiles.length < 4) {button.enable(); return;}
         //console.log(values.endpoint);
         csid_string = "";
         var searchEngine = Ext.create('CS.engine.search.Structure', {
@@ -81,7 +87,6 @@ Ext.define('LSP.controller.SimSearchForm', {
         var search_type = '';
         var params = {};
         params['searchOptions.Molecule'] = values.smiles;
-
         if (values.search_type == '1') {    //  Exact structure search
             grid_title = 'Exact structure match';
             search_type = 'exact';
@@ -105,66 +110,50 @@ Ext.define('LSP.controller.SimSearchForm', {
         searchEngine.doSearch(search_type, params);
     },
 
-    hitCoreAPI: function (first_csid) {
-      console.log(csid_string);
-      grid = this.getStrucGrid();
-      grid.store.proxy.actionMethods = {read: 'POST'};
-      grid.store.proxy.extraParams = {csids: first_csid};
-      grid.store.proxy.api.read = '/core_api_calls/compound_info.json';
-      grid.store.load({params: { offset: 0, limit: 100}});
-      grid.store.on('load',function(){
-          grid.doLayout();
-      });
+ 
+    hitCoreAPI: function (csid_list) {
+        var grid = this.getStrucGrid();
+//        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
+        grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+        grid.store.proxy.actionMethods = {read: 'POST'};
+        grid.store.proxy.extraParams = {csids:csid_list.join(',')};
+        grid.store.proxy.api.read = grid.readUrl;
+        grid.store.load({params: { offset: 0, limit: 100}});
+        grid.store.on('load',function(){
+          this.getSubmitButton().enable();
+          grid_controller.storeLoad(grid);
+          this.getSsform().doLayout();
+   //       this.getStrucGrid().view.refresh();
+        },this);      
     },                
     
-    addRecords: function (csids) {
-    console.log(csids);
-      var this_gridview = this.getStrucGrid();
-      var this_store = this_gridview.store;
-      var this_controller = this;
-      var temp_store = Ext.create('LSP.store.DynamicGrid');
-      temp_store.proxy.actionMethods = {read: 'POST'};
-      temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
-      var offset = 0;
-      this_gridview.setLoading(true);
-      csids.forEach(function(csid) {
-      console.log(csid);
-        temp_store.removeAll();
-        temp_store.load({params: { offset: offset, limit: 100, compound_uri: 'http://rdf.chemspider.com/' + csid}}); 
-        temp_store.on('load',function() {
-            records = temp_store.getRange();
-            if (records.length > 0) {
-            this_store.loadRecords(temp_store.getRange(),{addRecords: true});
-
-            if(typeof(temp_store.proxy.reader.jsonData.columns) === 'object') {  
-             var columns = [];
-             if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
-             Ext.each(temp_store.proxy.reader.jsonData.columns, function(column){
-                 columns.push(column);  
-             });
-                this_gridview.reconfigure(this_store, columns);
-                this_gridview.recordsLoaded = this_store.data.length;
-                if (this_gridview.recordsLoaded == 0) {
-                     this_gridview.setTitle(this_gridview.gridBaseTitle + '- No records found within OPS for this search!');
-                }
-                else {
-                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
-                    if (this_gridview.recordsLoaded == this_gridview.limit) {
-                    console.log(this_controller.getNext100());
-                      this_controller.getNext100().enable();      
-                    }
-                    else {
-                      this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                    }
-                }
-                
-     }
-     }
-     });
-      
-    });
-      this_gridview.setLoading(false);
-    },
-      
-}
-);
+//     addRecords: function (csids) {
+//     console.log(csids);
+//       var this_gridview = this.getStrucGrid();
+//       var this_store = this_gridview.store;
+//       var this_controller = this;
+//       var temp_store = Ext.create('LSP.store.DynamicGrid');
+//       temp_store.proxy.actionMethods = {read: 'POST'};
+//       temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
+//       var offset = 0;
+//     //  this_gridview.setLoading(true);
+//       this.recursiveAddCompoundInfo(csids,this_store,temp_store,this_controller, 0);
+//     },
+//     
+//     recursiveAddCompoundInfo: function(csids,grid_store, temp_store,this_controller, dept) {
+//       var csid = csids[0];
+//       var remaining_csids = csids.slice(1);
+//       if (dept > 6) {return true;}
+//       console.log('dept: ' + dept + ' current id: ' + csid + ' left is: ' + remaining_csids);
+//       console.log(grid_store);
+//       dept++;
+//       var last_csid = remaining_csids.length == 0;
+//       temp_store.load({params: { offset: 0, limit: 1, compound_uri: 'http://rdf.chemspider.com/' + csid}});
+//       temp_store.on('load',function(){
+//           grid_store.loadRecords(temp_store.getRange(),{addRecords: true});
+//       });    
+//       if (last_csid){ return;}
+//       this_controller.recursiveAddCompoundInfo(remaining_csids,grid_store,temp_store,this_controller, dept);
+//   //    })
+//   }
+});

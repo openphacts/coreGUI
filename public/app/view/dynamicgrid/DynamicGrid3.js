@@ -44,19 +44,19 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                         iconCls: 'icon-new',
                         disabled: true
                       },
-//                       {
-//               					xtype: 'exporterbutton',
-//               					name: 'exporter-button',
-//               					itemId: 'exporter_button_id',
-//                         text: 'Download to Excel',
-//                         iconCls: 'icon-csv',
-//                       },
+                      {
+              					xtype: 'exporterbutton',
+              					name: 'exporter-button',
+              					itemId: 'exporter_button_id',
+                        text: 'Download to Excel',
+                        iconCls: 'icon-csv',
+                      },
 //                       {
 //               					xtype: 'sdfexporterbutton',
 //               					itemId: 'sdf_exporter_button_id',
 //                         text: 'Download SDF-file',
 //                         iconCls: 'icon-sdf',
-//                         hidden: true,
+//                         hidden: false,
 //                       }
                     ],
             columns:[{name: 'temp', hidden:true}],  

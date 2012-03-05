@@ -4,6 +4,7 @@ Ext.define('LSP.model.DynamicGrid', {
       fields: [],
       proxy: {
           type: 'ajax',
+          timeout: '180000',
           api: {
               read: ''  // We configure this in the form controller
           },
