@@ -93,15 +93,18 @@ Ext.define('LSP.view.Viewport', {
             },
             {
               xtype: 'loginbutton',
-              id: 'loginButton'
+              id: 'loginButton',
+	      hidden: true
             },
             {
               xtype: 'usernewbutton',
-              id: 'userNewButton'
+              id: 'userNewButton',
+	      hidden: true
             },
             {
               xtype: 'logoutbutton',
-              id: 'logoutButton'
+              id: 'logoutButton',
+	      hidden: true
             }
           ]
         },
