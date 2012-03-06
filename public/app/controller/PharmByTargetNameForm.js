@@ -67,7 +67,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         button.disable();
         var values = form.getValues();
         var grid = this.getGridView();
-        grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+        var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');    // NB this was not a var but global - check!
         grid.store.proxy.actionMethods = {read: 'POST'};
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = grid.readUrl;

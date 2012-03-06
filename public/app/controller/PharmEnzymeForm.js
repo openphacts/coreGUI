@@ -7,7 +7,11 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         {
             ref: 'PEform',  // reference to the view
             selector: 'PharmEnzymeForm'
-        }
+        },
+        {
+            ref: 'gridView',  // reference to the views grid
+            selector: 'PharmEnzymeForm dynamicgrid3'
+        },
     ],
 
     init: function() {
@@ -18,11 +22,31 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
             'EnzymeTreeForm button[action=get_enzyme]': {
                 click: this.getEnzyme
             },
-            'PharmEnzymeForm button[action=query]': {
+            'PharmEnzymeForm #submitEnzymePharm_id': {
                 click: this.submitQuery
             }
         });
     },
+    
+       onLaunch: function() {
+         this.control(
+                      {
+                        'PharmEnzymeForm' : {
+                          afterrender: this.prepGrid       
+                        },            
+                      });                
+     },
+ 
+   prepGrid: function() {
+      var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+      var grid_view = this.getGridView();
+      var add_next_button = Ext.ComponentQuery.query('PharmEnzymeForm dynamicgrid3 #nextRecords')[0]; 
+      add_next_button.on('click', function() {
+        var form_values = add_next_button.up('form').getValues();
+        grid_controller.addNextRecords(grid_view,form_values);
+      });
+   },
+    
     // Launch Enzyme class selection window
     launchEnzyme: function(button) {
         // Launch the window
@@ -44,18 +68,22 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
     
     submitQuery: function(button) {
-        var form    = button.up('form');
-        var values = form.getValues();
-        
-        var grid = form.query('dynamicgrid3')[0];
-        grid.store.proxy.extraParams = values;
-        grid.store.proxy.api.read = '/core_api_calls/pharm_enzyme_fam.json';
-        grid.setTitle('Inhibitors for enzymes in class:  ' + values.ec_number + ' => ' + values.enz_name);
-        grid.store.load();
-        grid.store.on('load',function(){form.doLayout()});
-        
-    }
+
+       var form = button.up('form');
+       button.disable();
+       var values = form.getValues();
+       var grid = this.getGridView();
+       grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+       grid.store.proxy.actionMethods = {read: 'POST'};
+       grid.store.proxy.extraParams = values;
+       grid.store.proxy.api.read = grid.readUrl;
+       grid.store.load({params: { offset: 0, limit: 100}});
+       grid.store.on('load',function(){
+          grid_controller.storeLoad(grid);
+          form.doLayout();
+          button.enable();
+        });
+
     
-    
     }
-);
+});
