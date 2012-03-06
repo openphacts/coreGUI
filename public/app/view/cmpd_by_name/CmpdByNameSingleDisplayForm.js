@@ -13,8 +13,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             xtype: 'panel',
             bodyPadding: 10,
             renderTo: Ext.getBody(),
-            width: 1200,
-            height: 600,
+            width: 1000,
+            height: 800,
             title: 'Compound by Name search results',
             layout: 'anchor',
             suspendLayout: true,
@@ -24,7 +24,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                    // TOP Panel
                    xtype: 'panel',
                    width: 1000,
-                   height: 470,
+                   height: 520,
                    border: false,
                    layout: 'column',
                    suspendLayout: true,
@@ -44,8 +44,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                    // MAINDETAILS panel
                                    xtype: 'panel',
                                    bodyPadding: 30,
-                                   width: 750,
-                                   height: 460,
+                                   width: 710,
+                                   height: 520,
                                    border: false,
                                    suspendLayout: true,
 
@@ -64,7 +64,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                 },{
                                                     xtype: 'displayfield',
                                                     name: 'description',
-                                                    textAlign: 'justify',
                                                     value: 'Sorafenib (rINN), marketed as Nexavar by Bayer, is a drug ' +
                                                         'approved for the treatment of advanced renal cell carcinoma ' +
                                                         '(primary kidney cancer). It has also received "Fast Track" ' +
@@ -152,8 +151,28 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Indication',
                                                     value: 'For the treatment of patients with advanced renal cell carcinoma.'
-
-
+                                                  },{
+                                                    xtype: 'displayfield',
+                                                    name: 'proteinBinding',
+                                                    cls: 'x-cmpfield',
+                                                    labelWidth: 120,
+                                                    labelAlign: 'left',
+                                                    fieldLabel: 'Protein Binding',
+                                                    value: '99.5%'
+                                                  },{
+                                                    xtype: 'displayfield',
+                                                    name: 'toxicity',
+                                                    cls: 'x-cmpfield',
+                                                    labelWidth: 120,
+                                                    labelAlign: 'left',
+                                                    fieldLabel: 'Toxicity'
+                                                  },{
+                                                    xtype: 'displayfield',
+                                                    name: 'meltingPoint',
+                                                    cls: 'x-cmpfield',
+                                                    labelWidth: 120,
+                                                    labelAlign: 'left',
+                                                    fieldLabel: 'Melting Point'
                                                   }]
 
 
@@ -182,7 +201,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: 'ALogP',
                         labelAlign: 'top',
-                        columnWidth: .05,
+                        columnWidth: .1,
                         value: '4.175'
                     },{
                         xtype: 'displayfield',
@@ -190,7 +209,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: '# H-Bond Receptors',
-                        columnWidth: .11,
+                        columnWidth: .13,
                         labelAlign: 'top',
                         value: '4'
                     },{
@@ -199,7 +218,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: '# H-Bond Donors',
-                        columnWidth: .1,
+                        columnWidth: .13,
                         labelAlign: 'top',
                         value: '3'
                     },{
@@ -208,7 +227,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: 'Mol Weight',
-                        columnWidth: .06,
+                        columnWidth: .1,
                         labelAlign: 'top',
                         value: '464.819'
                     },
@@ -218,7 +237,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: 'MW Freebase',
-                        columnWidth: .09,
+                        columnWidth: .1,
                         labelAlign: 'top',
                         value: '464.825'
                     },{
@@ -227,7 +246,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: '# Rule of 5 Violations',
-                        columnWidth: .12,
+                        columnWidth: .14,
                         labelAlign: 'top',
                         value: '0'
                     },{
@@ -236,7 +255,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: 'Polar Surface Area',
-                        columnWidth: .1,
+                        columnWidth: .12,
                         labelAlign: 'top',
                         value: '92.35'
                     },
@@ -246,34 +265,9 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: '# Rotatable Bonds',
-                        columnWidth: .1,
+                        columnWidth: .12,
                         labelAlign: 'top',
                         value: '6'
-                    },{
-                        xtype: 'displayfield',
-                        name: 'proteinBinding',
-                        fieldCls: 'x-cmpBottomfieldValue',     // value
-                        baseCls: 'x-cmpBottomBase',            // label
-                        fieldLabel: 'Protein Binding',
-                        columnWidth: .09,
-                        labelAlign: 'top',
-                        value: '99.5%'
-                    },{
-                        xtype: 'displayfield',
-                        name: 'toxicity',
-                        fieldCls: 'x-cmpBottomfieldValue',     // value
-                        baseCls: 'x-cmpBottomBase',            // label
-                        fieldLabel: 'Toxicity',
-                        columnWidth: .09,
-                        labelAlign: 'top'
-                    },{
-                        xtype: 'displayfield',
-                        name: 'meltingPoint',
-                        fieldCls: 'x-cmpBottomfieldValue',     // value
-                        baseCls: 'x-cmpBottomBase',            // label
-                        fieldLabel: 'Melting Point',
-                        columnWidth: .09,
-                        labelAlign: 'top'
                     }]
                 }]
 

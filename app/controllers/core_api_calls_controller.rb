@@ -124,19 +124,48 @@ class CoreApiCallsController < ApplicationController
          render :json => {:success => false}.to_json, :layout => false    
       end 
    end
+
+   def get_chem_info4known_csids(csid_string = params[:csids])
    
-   def chemspider_info(csid_string = params[:csids])
-   puts "======================"
-   puts  csid_string
-      api_method = 'chemspiderInfo'
+ #     NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
+      api_method = 'sparql'
       options = Hash.new
-      options[:csids] =  csid_string
+      query = "PREFIX chemspider: <http://rdf.chemspider.com/#> SELECT DISTINCT ?csid WHERE  {GRAPH <http://www.chemspider.com> { ?csid chemspider:inchikey [] FILTER (?csid = <http://rdf.chemspider.com/"
+      query += "#{csid_string.split(',').join('> || ?csid = <http://rdf.chemspider.com/')}>)}}"   
+      options[:query] =  query
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
+      api_call = CoreApiCall.new("http://ops.few.vu.nl:9188/opsapi")
+      results = api_call.request( api_method, options)
+      col_results = compound_info_list(results)
+      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json, :layout => false     
+   end
+   
+   def compound_info_list(csid_array)
+    api_method = 'compoundInfo'
+    col_results = Array.new
+    csid_array.each do |cmpd_uri|
+      options = Hash.new  
+      options[:uri] = '<' + cmpd_uri[:csid] + '>'
+      options[:limit] =  1
+      options[:offset] = 0
       api_call = CoreApiCall.new
       results = api_call.request( api_method, options)
-      render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false      
+      col_results.push(results.first) unless results.first.nil?
+    end
+    col_results 
    end
+
+   def pharm_enzyme_fam(enz_class_code = params[:ec_number])
+    options = Hash.new
+    api_method = 'enzymeClassPharmacology'
+    options[:class] = enz_class_code 
+    options[:limit] =  params[:limit]
+    options[:offset] = params[:offset]
+    api_call = CoreApiCall.new
+    results = api_call.request( api_method, options)
+    render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false
+   end   
     
    def sparql(query = params[:query])
       api_method = 'sparql'
@@ -155,43 +184,43 @@ class CoreApiCallsController < ApplicationController
   # Custom method for question 15 type query
   # @param  [Hash{Symbol => Object}] options these are :max_filter, min_filter, enz_name, [species_1, species_2, species_3]
   # @return [JSON] render results as JSON
-  def pharm_enzyme_fam  
-      species = [params[:species_1],params[:species_2],params[:species_3]]
-      species.compact!
-      pharm_enzyme_query = "PREFIX brenda: <http://brenda-enzymes.info/>\n" 
-      pharm_enzyme_query +=  "PREFIX uniprot: <http://purl.uniprot.org/enzymes/>\n" 
-      pharm_enzyme_query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" 
-      pharm_enzyme_query += "select  ?ic50_milli_molar?inhibitor ?species ?target_name ?enzyme_class_name where {\n"
-      pharm_enzyme_query += "?ic50experiment brenda:has_ic50_value_of ?ic50_milli_molar.\n"
-      if not params[:min_filter] == "" and not params[:max_filter] == "" then  
-        pharm_enzyme_query += "filter(?ic50_milli_molar> #{params[:min_filter]} && ?ic50_milli_molar< #{params[:max_filter]}) .\n" 
-      elsif not params[:min_filter] == "" and params[:max_filter] == "" then  
-        pharm_enzyme_query += "filter(?ic50_milli_molar> #{params[:min_filter]}) .\n"
-      elsif params[:min_filter] == "" and not params[:max_filter] == "" then
-        pharm_enzyme_query += "filter(?ic50_milli_molar< #{params[:max_filter]}) .\n" 
-      end
-      pharm_enzyme_query += "?ic50experiment brenda:has_inhibitor ?inhibitor .\n" 
-      pharm_enzyme_query += "?ic50experiment brenda:species ?species_code .\n"
-      pharm_enzyme_query += "?species_code rdfs:label ?species .\n" 
-      if species.length >= 1 then
-        pharm_enzyme_query += "filter(?species = \"#{species.join('" || ?species = "')}\") .\n"
-      end
-      pharm_enzyme_query += "?brenda_entry brenda:is_inhibited_by ?ic50experiment .\n" 
-      pharm_enzyme_query += "?brenda_entry brenda:has_ec_number ?uniprot_entry_url .\n" 
-      pharm_enzyme_query += "?uniprot_entry_url rdfs:subClassOf ?uniprot_top_level_entry .\n"
-      pharm_enzyme_query += "?uniprot_top_level_entry <http://purl.uniprot.org/core/name> \"#{params[:enz_name]}\" .\n" 
-      pharm_enzyme_query += "?brenda_entry brenda:recommended_name ?target_name .\n"
-      pharm_enzyme_query += "?uniprot_entry_url <http://purl.uniprot.org/core/name> ?enzyme_class_name }"
-
-      api_method = 'sparql'
-      options = Hash.new
-      options[:query] =  pharm_enzyme_query
-      options[:limit] =  params[:limit]
-      options[:offset] = params[:offset]
-      api_call = CoreApiCall.new
-      results = api_call.request( api_method, options)
-      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false     
-  end 
+#   def pharm_enzyme_fam  
+#       species = [params[:species_1],params[:species_2],params[:species_3]]
+#       species.compact!
+#       pharm_enzyme_query = "PREFIX brenda: <http://brenda-enzymes.info/>\n" 
+#       pharm_enzyme_query +=  "PREFIX uniprot: <http://purl.uniprot.org/enzymes/>\n" 
+#       pharm_enzyme_query += "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" 
+#       pharm_enzyme_query += "select  ?ic50_milli_molar?inhibitor ?species ?target_name ?enzyme_class_name where {\n"
+#       pharm_enzyme_query += "?ic50experiment brenda:has_ic50_value_of ?ic50_milli_molar.\n"
+#       if not params[:min_filter] == "" and not params[:max_filter] == "" then  
+#         pharm_enzyme_query += "filter(?ic50_milli_molar> #{params[:min_filter]} && ?ic50_milli_molar< #{params[:max_filter]}) .\n" 
+#       elsif not params[:min_filter] == "" and params[:max_filter] == "" then  
+#         pharm_enzyme_query += "filter(?ic50_milli_molar> #{params[:min_filter]}) .\n"
+#       elsif params[:min_filter] == "" and not params[:max_filter] == "" then
+#         pharm_enzyme_query += "filter(?ic50_milli_molar< #{params[:max_filter]}) .\n" 
+#       end
+#       pharm_enzyme_query += "?ic50experiment brenda:has_inhibitor ?inhibitor .\n" 
+#       pharm_enzyme_query += "?ic50experiment brenda:species ?species_code .\n"
+#       pharm_enzyme_query += "?species_code rdfs:label ?species .\n" 
+#       if species.length >= 1 then
+#         pharm_enzyme_query += "filter(?species = \"#{species.join('" || ?species = "')}\") .\n"
+#       end
+#       pharm_enzyme_query += "?brenda_entry brenda:is_inhibited_by ?ic50experiment .\n" 
+#       pharm_enzyme_query += "?brenda_entry brenda:has_ec_number ?uniprot_entry_url .\n" 
+#       pharm_enzyme_query += "?uniprot_entry_url rdfs:subClassOf ?uniprot_top_level_entry .\n"
+#       pharm_enzyme_query += "?uniprot_top_level_entry <http://purl.uniprot.org/core/name> \"#{params[:enz_name]}\" .\n" 
+#       pharm_enzyme_query += "?brenda_entry brenda:recommended_name ?target_name .\n"
+#       pharm_enzyme_query += "?uniprot_entry_url <http://purl.uniprot.org/core/name> ?enzyme_class_name }"
+# 
+#       api_method = 'sparql'
+#       options = Hash.new
+#       options[:query] =  pharm_enzyme_query
+#       options[:limit] =  params[:limit]
+#       options[:offset] = params[:offset]
+#       api_call = CoreApiCall.new
+#       results = api_call.request( api_method, options)
+#       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false     
+#   end 
 
 
   def pmid_lookup(pmid_query = params[:query])

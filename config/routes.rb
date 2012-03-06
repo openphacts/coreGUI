@@ -45,9 +45,9 @@ LSP4All::Application.routes.draw do
        post :pharm_enzyme_fam
        post :search_by_smiles
        post :compound_info
-       post :chemspider_info
        post :pmid2title                                       
-       post :pmid2abstract   
+       post :pmid2abstract
+       post :get_chem_info4known_csids   
        get :pmid2concepts                                       
        get :wiki_pathways_by_compound
        get :wiki_pathways_by_protein
