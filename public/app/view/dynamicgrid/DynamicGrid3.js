@@ -30,10 +30,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         var cellTextSelector = {
           ftype: 'selectable', 
           id: 'selectable'
-        };  
+        };
+        var grid_store = Ext.create('LSP.store.DynamicGrid');  
         var config = {
             
-            store: Ext.create('LSP.store.DynamicGrid'),
+            store: grid_store,
     
             tbar : [
                       {
@@ -46,18 +47,20 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                       },
                       {
               					xtype: 'exporterbutton',
-              					name: 'exporter-button',
-              					itemId: 'exporter_button_id',
-                        text: 'Download to Excel',
-                        iconCls: 'icon-csv',
-                      },
-//                       {
-//               					xtype: 'sdfexporterbutton',
-//               					itemId: 'sdf_exporter_button_id',
-//                         text: 'Download SDF-file',
-//                         iconCls: 'icon-sdf',
-//                         hidden: false,
-//                       }
+                        text: 'Download CSV-file',
+                        store: grid_store,
+                        formatter: 'csv',
+                        swfPath: 'app/view/ux/exporter/downloadify.swf',
+                        downloadImage: 'app/view/ux/exporter/download.png',
+                      }
+//                       ,{
+//               					xtype: 'exporterbutton',
+//                         text: 'Download SD-file',
+//                         store: grid_store,
+//                         formatter: 'sdf',
+//                         swfPath: 'app/view/ux/exporter/downloadify.swf',
+//                         downloadImage: 'app/view/ux/exporter/download.png',
+//                       },
                     ],
             columns:[{name: 'temp', hidden:true}],  
             rowNumberer: false,

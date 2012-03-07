@@ -14,7 +14,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             bodyPadding: 10,
             renderTo: Ext.getBody(),
             width: 1000,
-            height: 800,
+            height: 700,
             title: 'Compound by Name search results',
             layout: 'anchor',
             suspendLayout: true,
@@ -24,7 +24,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                    // TOP Panel
                    xtype: 'panel',
                    width: 1000,
-                   height: 520,
                    border: false,
                    layout: 'column',
                    suspendLayout: true,
@@ -35,7 +34,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                    name: 'image',
                                    border: false,
                                    width: 150,
-                                   height: 150,
                                    html: '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=187440" height="150" width="150" />', // e.g. Sorafenib
                                    //html: '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=2157" height="150" width="150" />',  // Viagra
                                    suspendLayout: true
@@ -45,7 +43,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                    xtype: 'panel',
                                    bodyPadding: 30,
                                    width: 710,
-                                   height: 520,
                                    border: false,
                                    suspendLayout: true,
 
@@ -64,6 +61,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                 },{
                                                     xtype: 'displayfield',
                                                     name: 'description',
+                                                    fieldCls: 'x-cmpDescriptions',
                                                     value: 'Sorafenib (rINN), marketed as Nexavar by Bayer, is a drug ' +
                                                         'approved for the treatment of advanced renal cell carcinoma ' +
                                                         '(primary kidney cancer). It has also received "Fast Track" ' +
@@ -71,7 +69,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                         'hepatocellular carcinoma (primary liver cancer), and has ' +
                                                         'since performed well in Phase III trials.' +
                                                         'Sorafenib is a small molecular inhibitor of Raf kinase, ' +
-                                                        'PDGF (platelet-derived growth factor), VEGF receptor 2 &amp; ' +
+                                                        'PDGF (platelet-derived growth factor), VEGF receptor 2 and; ' +
                                                         '3 kinases and c Kit the receptor for Stem cell factor. ' +
                                                         'A growing number of drugs target most of these pathways. ' +
                                                         'The originality of Sorafenib lays in its simultaneous ' +
@@ -81,6 +79,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                 },{
                                                     xtype: 'displayfield',
                                                     name: 'biotransformation',
+                                                    fieldCls: 'x-cmpDescriptions',
+                                                    id: 'moreInformation',
                                                     value: 'Sorafenib is metabolized primarily in the liver, undergoing' +
                                                         ' oxidative metabolism, mediated by CYP3A4, as well as ' +
                                                         'glucuronidation mediated by UGT1A9. Sorafenib accounts for ' +
@@ -88,7 +88,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                         'at steady- state. Eight metabolites of sorafenib have been ' +
                                                         'identified, of which five have been detected in plasma. ' +
                                                         'The main circulating metabolite of sorafenib in plasma, the ' +
-                                                        'pyridine N-oxide, shows &lt;i&gt;in vitro&lt;/i&gt; potency ' +
+                                                        'pyridine N-oxide, shows <i>in vitro</i> potency ' +
                                                         'similar to that of sorafenib. This metabolite comprises ' +
                                                         'approximately 9-16% of circulating analytes at steady-state.'
                                                 },{
@@ -123,6 +123,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     name: 'inchi',
                                                     cls: 'x-cmpfield',
                                                     labelWidth: 120,
+                                                    width: 650,
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Standard InChl',
                                                     value: 'InChI=1S/C21H16ClF3N4O3/c1-26-19(30)18-11-15(8-9-27-18)32-14-5-2-' +
@@ -143,7 +144,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Affected Organism',
                                                     value: 'Humans and other mammals'
-                                                  },{
+                                                },{
                                                     xtype: 'displayfield',
                                                     name: 'indication',
                                                     cls: 'x-cmpfield',
@@ -151,7 +152,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Indication',
                                                     value: 'For the treatment of patients with advanced renal cell carcinoma.'
-                                                  },{
+                                                },{
                                                     xtype: 'displayfield',
                                                     name: 'proteinBinding',
                                                     cls: 'x-cmpfield',
@@ -159,21 +160,21 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Protein Binding',
                                                     value: '99.5%'
-                                                  },{
+                                                },{
                                                     xtype: 'displayfield',
                                                     name: 'toxicity',
                                                     cls: 'x-cmpfield',
                                                     labelWidth: 120,
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Toxicity'
-                                                  },{
+                                                },{
                                                     xtype: 'displayfield',
                                                     name: 'meltingPoint',
                                                     cls: 'x-cmpfield',
                                                     labelWidth: 120,
                                                     labelAlign: 'left',
                                                     fieldLabel: 'Melting Point'
-                                                  }]
+                                                }]
 
 
                                     }]
@@ -195,8 +196,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                     items: [{
                         xtype: 'displayfield',
                         name: 'alogp',
-                        //cls: 'x-cmpBottomfield',
-                        //fieldBodyCls: 'x-cmpBottomfield',
                         fieldCls: 'x-cmpBottomfieldValue',     // value
                         baseCls: 'x-cmpBottomBase',            // label
                         fieldLabel: 'ALogP',
@@ -230,8 +229,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         columnWidth: .1,
                         labelAlign: 'top',
                         value: '464.819'
-                    },
-                    {
+                    },{
                         xtype: 'displayfield',
                         name: 'mw_freebase',
                         fieldCls: 'x-cmpBottomfieldValue',     // value
@@ -270,8 +268,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         value: '6'
                     }]
                 }]
-
-
 
         });
 

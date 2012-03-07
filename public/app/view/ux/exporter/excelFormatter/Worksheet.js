@@ -118,17 +118,17 @@ Ext.define("Ext.ux.exporter.excelFormatter.Worksheet", {
     Ext.each(this.columns, function(col) {
       var title;
 
-      if(col.dataIndex) {
+      //if(col.dataIndex) {
           if (col.text != undefined) {
             title = col.text;
-          } else {
+          } else if(col.name) {
             //make columns taken from Record fields (e.g. with a col.name) human-readable
             title = col.name.replace(/_/g, " ");
-            title = title.charAt(0).toUpperCase() + title.substr(1).toLowerCase();
+            title = Ext.String.capitalize(title);
           }
 
           cells.push(Ext.String.format('<ss:Cell ss:StyleID="headercell"><ss:Data ss:Type="String">{0}</ss:Data><ss:NamedCell ss:Name="Print_Titles" /></ss:Cell>', title));
-      }
+      //}
     }, this);
 
     return cells.join("");
@@ -148,10 +148,8 @@ Ext.define("Ext.ux.exporter.excelFormatter.Worksheet", {
             var value = col.renderer(record.get(name), null, record),
                 type = "String";
           } else {
-			if(record.fields.get(name)) {
-				var value = record.get(name),
-					type  = this.typeMappings[col.type || record.fields.get(name).type.type];
-			}
+            var value = record.get(name),
+                type  = this.typeMappings[col.type || record.fields.get(name).type.type];
           }
 
           cells.push(this.buildCell(value, type, style).render());
