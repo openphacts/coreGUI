@@ -10,6 +10,8 @@ Ext.define("Ext.ux.exporter.Exporter", {
     uses: [
         "Ext.ux.exporter.Base64",
         "Ext.ux.exporter.Button",
+        "Ext.ux.exporter.sdfFormatter.SdfFormatter",
+        "Ext.ux.exporter.csvFormatter.CsvFormatter",
         "Ext.ux.exporter.excelFormatter.ExcelFormatter"
     ],
 
@@ -22,8 +24,12 @@ Ext.define("Ext.ux.exporter.Exporter", {
                 func = func + "Grid";
             } else if (component.is("treepanel")) {
                 func = func + "Tree";
+            } else {
+                func = func + "Store";
+                component = component.getStore();
             }
-            return this[func](component, formatter, config);
+
+            return this[func](component, this.getFormatterByName(formatter), config);
         },
 
         /**
@@ -33,34 +39,34 @@ Ext.define("Ext.ux.exporter.Exporter", {
          */
         exportGrid: function(grid, formatter, config) {
           config = config || {};
-          formatter = formatter || new Ext.ux.exporter.excelFormatter.ExcelFormatter();
+          formatter = this.getFormatterByName(formatter);
+
           var columns = Ext.Array.filter(grid.columns, function(col) {
-              return !col.hidden;
+              return !col.hidden; // && (!col.xtype || col.xtype != "actioncolumn");
           });
 
           Ext.applyIf(config, {
             title  : grid.title,
             columns: columns
           });
-		  beforeEncode = formatter.format(grid.store, config);
 
-          return Ext.ux.exporter.Base64.encode(formatter.format(grid.store, config));
+          return formatter.format(grid.store, config);
         },
 
         exportStore: function(store, formatter, config) {
            config = config || {};
-           formatter = formatter || new Ext.ux.exporter.excelFormatter.ExcelFormatter();
+           formatter = this.getFormatterByName(formatter);
 
            Ext.applyIf(config, {
-             columns: config.store.fields.items
+             columns: store.fields ? store.fields.items : store.model.prototype.fields.items
            });
 
-           return Ext.ux.exporter.Base64.encode(formatter.format(store, config));
+           return formatter.format(store, config);
         },
 
         exportTree: function(tree, formatter, config) {
           config    = config || {};
-          formatter = formatter || new Ext.ux.exporter.excelFormatter.ExcelFormatter();
+          formatter = this.getFormatterByName(formatter);
 
           var store = tree.store || config.store;
 
@@ -68,7 +74,13 @@ Ext.define("Ext.ux.exporter.Exporter", {
             title: tree.title
           });
 
-          return Ext.ux.exporter.Base64.encode(formatter.format(store, config));
+          return formatter.format(store, config);
+        },
+
+        getFormatterByName: function(formatter) {
+            formatter = formatter ? formatter : "excel";
+            formatter = !Ext.isString(formatter) ? formatter : Ext.create("Ext.ux.exporter." + formatter + "Formatter." + Ext.String.capitalize(formatter) + "Formatter");
+            return formatter;
         }
     }
 });
