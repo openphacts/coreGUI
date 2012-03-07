@@ -176,7 +176,7 @@ class ConceptWikiApiCall
   end
   private
   def request(url, options)
-     puts "\nIssues call to coreAPI with options: #{p options}\n"
+     puts "\nIssues call to ConceptWiki API \"#{p url}\" with options: \"#{p options}\"\n"
      @request_time = Time.now
      @response = Net::HTTP.post_form(url, options)
      @response_time = Time.now
