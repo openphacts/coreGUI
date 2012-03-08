@@ -116,6 +116,7 @@ class ConceptWikiApiCall
         puts "Concept wiki not responding correctly!"
         return nil
      end
+puts results.inspect
      # parsing the response 
      @parsed_results = Array.new
      results.each do |concept|
@@ -141,12 +142,15 @@ class ConceptWikiApiCall
         end
         
         # labels
+        result[:concept_label] = nil
         alt_labels = Array.new
         concept['labels'].each do |label|
-          if not label['language']['code'] == 'en' then
+          if not label['language']['code'] == 'en' then      # only use english labels
              next # we skip all non english labels 
           end
-          result[:concept_label] = label['text']
+          if result[:concept_label].nil? then
+            result[:concept_label] = label['text']  # In case there is no preferred label we use the first one
+          end
           if label['type'] == "PREFERRED"
             result[:concept_label] = label['text']          
           end
@@ -163,6 +167,7 @@ class ConceptWikiApiCall
         @parsed_results.push(result)
                            
      end
+puts @parsed_results.inspect
      @parsed_results     
   end
   
