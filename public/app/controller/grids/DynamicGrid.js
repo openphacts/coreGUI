@@ -54,6 +54,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     }
                   }
                 }
+            },
+            'dynamicgrid3 toolbar #sdfDownloadProxy_id': {
+              click: this.prepSDFile
             }
       })
     },
@@ -65,6 +68,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
      },
    
     addNextRecords: function(this_gridview,extraParams) {
+      this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+      this_gridview.down('#sdfDownload_id').disable();
       var this_store = this_gridview.store;
       var this_controller = this;
       var temp_store = Ext.create('LSP.store.DynamicGrid');
@@ -92,6 +97,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     }, 
      
     storeLoad: function(this_gridview) {
+        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+      
         var this_controller = this;
         var dynamicgridStore = this_gridview.store;
         if(typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {  
@@ -99,6 +106,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
              if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
              Ext.each(dynamicgridStore.proxy.reader.jsonData.columns, function(column){
                  columns.push(column);  
+                 if (column.text == 'csid_uri') {
+                   this_gridview.csid_column = true;
+                   this_gridview.down('#sdfDownloadProxy_id').enable();
+                 }
              });
                 this_gridview.reconfigure(dynamicgridStore, columns);
                 this_gridview.recordsLoaded = dynamicgridStore.data.length;
@@ -109,6 +120,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
                     if (this_gridview.recordsLoaded == this_gridview.limit) {
                       this_gridview.down('#nextRecords').enable();
+ //                     this_gridview.down('#csvDownloadProxy_id').enable();
                         
                     }
                     else {
@@ -117,5 +129,50 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 }
                 
      }
+    },
+    
+    prepSDFile: function (sdf_prep_button) {
+        var gridview = sdf_prep_button.up('dynamicgrid3');
+        var grid_store = gridview.store;
+        console.log(grid_store);
+        var items = grid_store.data.items;
+
+        var compoundStore = Ext.create('CS.store.Compound');
+        var item_count = items.length;
+        var success_count = 0;
+        var fail_count = 0;
+        sdf_prep_button.setText('SD-file preparing...');
+        Ext.each(items, function(item) {
+          var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+          if (!isNaN(parseInt(csid))){
+            if (item.molfile === undefined || item.molfile.length < 30) {
+              compoundStore.load({
+                    params: { 'csids[0]': csid },
+                    callback: function (records, operation, success) {
+                        if(success){
+                            success_count++;
+                            compound = compoundStore.first().raw.Mol;
+                            item.molfile = compound;
+                            sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+                            if (success_count === item_count) {
+                              sdf_prep_button.setText('SD-File ready! Click ->');
+                              gridview.down('#sdfDownload_id').enable();
+                              }
+                        }
+                        else {
+                          fail_count++;
+                        }
+                    }
+                },this);   
+            }
+          else {
+             success_count++;
+             sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+          }
+         }   
+        else {fail_count++}  
+        
+       })
+    
     }
 })

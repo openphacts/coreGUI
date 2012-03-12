@@ -31,7 +31,7 @@ Ext.define("Ext.ux.exporter.Button", {
       var self = this;
       this.store.on("load", function() { // We wait for the combo to be rendered, so we can look up to grab the component containing it
           self.setComponent(self.up("dynamicgrid3"), config);
-      }, this, {delay:3000});
+      }, this, {delay:1000});
     },
 
     setComponent: function(component, config) {
@@ -43,6 +43,7 @@ Ext.define("Ext.ux.exporter.Button", {
     setDownloadify: function(config) {
         var self = this;
  //       console.log(Ext.ux.exporter.Exporter.exportAny(self.component, self.formatter, config));
+ console.log(this.el.down('p'));
         Downloadify.create(this.el.down('p').id,{
             filename: function() {
               return self.getDownloadName() + "." + Ext.ux.exporter.Exporter.getFormatterByName(self.formatter).extension;
@@ -65,7 +66,7 @@ Ext.define("Ext.ux.exporter.Button", {
             width: this.getWidth(),
             height: this.getHeight(),
             transparent: true,
-            append: false
+            append: true
         });
     }
 });

@@ -15,6 +15,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
     readUrl: '',
     limit: 100,
     recordsLoaded: 0,
+    csid_column: false,
     initComponent: function(){
         
         // initializing features for the grid
@@ -45,22 +46,41 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                         iconCls: 'icon-new',
                         disabled: true
                       },
+                      { xtype: 'tbseparator' },                      
                       {
               					xtype: 'exporterbutton',
-                        text: 'Download CSV-file',
                         store: grid_store,
                         formatter: 'csv',
                         swfPath: 'app/view/ux/exporter/downloadify.swf',
-                        downloadImage: 'app/view/ux/exporter/download.png',
-                      }
-//                       ,{
-//               					xtype: 'exporterbutton',
-//                         text: 'Download SD-file',
-//                         store: grid_store,
-//                         formatter: 'sdf',
-//                         swfPath: 'app/view/ux/exporter/downloadify.swf',
-//                         downloadImage: 'app/view/ux/exporter/download.png',
-//                       },
+                        downloadImage: 'app/view/ux/exporter/csv_button.png',
+                        itemId: 'csvDownload_id',
+                        width: 117,
+                        height: 22,
+                        hidden: false
+                      },
+                      { xtype: 'tbseparator' },
+                      {
+                        xtype: 'button',
+                        text: 'Prepare SD-file download',
+                        tooltip: 'Starts a two steep process to download the SD-file. This may take a while...',
+                        itemId: 'sdfDownloadProxy_id',
+//                        width: 155,
+                        iconCls: 'icon-sdf',
+                        hidden: false,
+                        disabled: true,          
+                      },
+                      {
+              					xtype: 'exporterbutton',
+                        store: grid_store,
+                        formatter: 'sdf',
+                        swfPath: 'app/view/ux/exporter/downloadify.swf',
+                        downloadImage: 'app/view/ux/exporter/sdf_button.png',
+                        itemId: 'sdfDownload_id',
+                        width: 111,
+                        height: 22,
+                        hidden: false,
+                        disabled: true
+                      }                  
                     ],
             columns:[{name: 'temp', hidden:true}],  
             rowNumberer: false,

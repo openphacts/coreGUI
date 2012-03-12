@@ -8,8 +8,8 @@ Ext.define('LSP.view.placeholder.temp', {
         this.items = [
                       { 
                         xtype: 'label',
-                        text: 'PLACEHOLDER - NO VIEW AND CONTROLLER HERE YET!',
-                        labelWidth: 500 
+                        text: 'PLACEHOLDER - NO VIEW HERE THIS WILL BE A LINK TO EACH EXEMPLAR WHEN WE HAVE THOSE!',
+                        labelWidth: 600 
                       }       
                 ];
         this.callParent(arguments);
