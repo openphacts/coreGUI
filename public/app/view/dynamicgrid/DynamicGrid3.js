@@ -83,7 +83,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                       }                  
                     ],
             columns:[{name: 'temp', hidden:true}],  
-            rowNumberer: false,
+            rowNumberer: true,
             defaultWidth : 200,
             features: [groupingFeature, filters, cellTextSelector]
         };

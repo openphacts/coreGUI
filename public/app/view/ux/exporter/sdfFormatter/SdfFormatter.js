@@ -19,13 +19,14 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
       return sd_rows.join("\n") + "\n";
     },
    
-    buildRecord: function(columns, row, molfile) {
+    buildRecord: function(columns, row, molfile) {  
       var cols = [];
       var csid = row.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
       Ext.each(columns, function(column) {
         var data_record = ">  <";
         // todo: check hidden props
-        if (!column.hidden) {
+        if (!column.hidden && column.text != '&#160') {
+    console.log(column);    
           var data = row.data[column.dataIndex];
           // the cell has a custom object instead of a string, use its text attribute
           if (data.text !== undefined) {
