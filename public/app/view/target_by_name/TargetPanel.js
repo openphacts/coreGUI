@@ -41,9 +41,11 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             },
             {
                 xtype:'displayfield',
+                padding:'20px',
                 itemId:'msg',
                 anchor:'100% 100%',
                 hidden:true,
+                fieldCls:'target-message',
                 value:'message here'
             }
         ]
