@@ -9,7 +9,7 @@ Ext.define('LSP.store.Targets', {
     requires:'LSP.model.Target',
     extend:'Ext.data.Store',
     model:'LSP.model.Target',
-
+    id:'Targets',
 
     proxy:{
         type:'ajax',
@@ -17,7 +17,9 @@ Ext.define('LSP.store.Targets', {
             read:'POST'
         },
         extraParams:{protein_uri:''},
+//        extraParams:{protein_uri:'http://www.conceptwiki.org/concept/32f4cb35-a214-475e-8eec-70d3d6a59188'},
         url:'/core_api_calls/protein_info.json',
+//        url:'testData.json',
         reader:{
             type:'json',
             root:'objects',
