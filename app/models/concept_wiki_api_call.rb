@@ -132,13 +132,7 @@ puts results.inspect
         if concept['urls'].nil? then
           next
         else
-          concept['urls'].each do |url|
-            result[:define_url] = url['value']
-            if url['type'] == "PREFERRED"
-              result[:define_url] = url['value']
-              break          
-            end  
-          end
+          result[:define_url] = 'http://staging.conceptwiki.org/wiki/#/concept/' + concept['uuid'] + '/view'
         end
         
         # labels
