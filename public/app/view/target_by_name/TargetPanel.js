@@ -21,6 +21,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 layout:'anchor',
                 autoScroll:true,
                 itemId:'dp',
+                bodyPadding:'20px',
                 cls:'target-data-panel',
                 hidden:true,
                 items:[
@@ -73,12 +74,17 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 //        console.log(records);
 //        console.log(succesful);
         if (succesful) {
-            var dp = this.down('#dp');
-            var msg = this.down('#msg');
-            msg.setVisible(false);
-//                console.log(store.first());
-            this.setValues(store.first());
-            dp.setVisible(true);
+            if (records.length > 0) {
+                var dp = this.down('#dp');
+                var msg = this.down('#msg');
+                msg.setVisible(false);
+                this.setValues(store.first());
+                dp.setVisible(true);
+            } else {
+                this.showMessage('No records found within OPS for this search');
+            }
+        } else {
+            this.showMessage('Server did not respond');
         }
     },
 
@@ -200,4 +206,5 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.setLoading(false);
     }
 
-});
+})
+;
