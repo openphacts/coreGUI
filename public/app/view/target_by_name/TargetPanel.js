@@ -13,37 +13,43 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     anchor:'100% 100%',
     layout:'anchor',
 
-    items:[
-        {
-            xtype:'panel',
-            anchor:'100% 100%',
-            layout:'anchor',
-            autoScroll:true,
-            itemId:'dp',
-            hidden:true,
-            items:[
-                {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldLabel:'Target Name'},
-                {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type'},
-                {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism'},
-                {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description'},
-                {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms'},
-                {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function'},
-                {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location'},
-                {xtype:'displayfield', anchor:'100%', itemId:'molecularWeight', fieldLabel:'Molecular Weight'},
-                {xtype:'displayfield', anchor:'100%', itemId:'numberOfResidues', fieldLabel:'Number of Residues'},
-                {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords'}            ,
-                {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB ID Page'},
-                {xtype:'displayfield', anchor:'100%', itemId:'theoreticalPi', fieldLabel:'Theoretical Pi'}
-            ]
-        },
-        {
-            xtype:'displayfield',
-            itemId:'msg',
-            anchor:'100% 100%',
-            hidden:true,
-            value:'message here'
-        }
-    ],
+    initComponent:function () {
+        this.items = [
+            {
+                xtype:'panel',
+                anchor:'100% 100%',
+                layout:'anchor',
+                autoScroll:true,
+                itemId:'dp',
+                hidden:true,
+                items:[
+                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldLabel:'Target Name'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'molecularWeight', fieldLabel:'Molecular Weight'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'numberOfResidues', fieldLabel:'Number of Residues'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords'}            ,
+                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB ID Page'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'theoreticalPi', fieldLabel:'Theoretical Pi'}
+                ]
+            },
+            {
+                xtype:'displayfield',
+                itemId:'msg',
+                anchor:'100% 100%',
+                hidden:true,
+                value:'message here'
+            }
+        ]
+
+        var store = Ext.data.StoreManager.lookup('Targets');
+        store.addListener('load', this.showData, this);
+        this.callParent(arguments);
+    },
 
     hideAllFields:function () {
         var displayFields = this.query('displayfield');
@@ -61,17 +67,16 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         msg.setVisible(true);
     },
 
-    showData:function (target_record) {
+    showData:function (store, records, succesful) {
 //        console.log(store);
 //        console.log(records);
 //        console.log(succesful);
-//        console.log(this);
-        if (target_record) {
+        if (succesful) {
             var dp = this.down('#dp');
             var msg = this.down('#msg');
             msg.setVisible(false);
 //                console.log(store.first());
-            this.setValues(target_record);
+            this.setValues(store.first());
             dp.setVisible(true);
         }
     },
@@ -122,19 +127,19 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
-            console.log('synonyms');
+//            console.log('synonyms');
             this.addSynonyms(value);
         }
         else if (fieldId == 'keywords') {
-            console.log('keywords');
+//            console.log('keywords');
             this.addKeywords(value);
         }
         else if (fieldId == 'organism') {
-            console.log('organism');
+//            console.log('organism');
             this.addOrganism(value);
         }
         else {
-            console.log('standard field');
+//            console.log('standard field');
             var field = this.down('#' + fieldId);
             field.setValue(value);
             field.show();
@@ -148,7 +153,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-                console.log(prop);
+//                console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
         }

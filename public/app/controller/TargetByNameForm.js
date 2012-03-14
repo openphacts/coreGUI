@@ -2,7 +2,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
         extend:'Ext.app.Controller',
         models:['Target'],
         stores:['Targets'],
-        views:['target_by_name.TargetPanel'],
+        views:['target_by_name.TargetByNameForm', 'target_by_name.TargetPanel'],
 
         refs:[
             {
@@ -21,10 +21,6 @@ Ext.define('LSP.controller.TargetByNameForm', {
         ],
 
         init:function () {
-//            var store = this.getTargetsStore();
-//            var tp = this.getTargetPanel();
-//            store.addListener('load', tp.showData, tp);
-
             this.control({
                 'TargetByNameForm button[action=query_target_by_name]':{
                     click:this.submitQuery
@@ -50,29 +46,31 @@ Ext.define('LSP.controller.TargetByNameForm', {
             var target_uri = form.getValues().protein_uri;
 
             var store = this.getTargetsStore();
+//            var tp = this.getTargetPanel();
+//            store.addListener('load', tp.showData, tp);
 
             store.proxy.extraParams.protein_uri = target_uri;
-            store.load(
-                {
-                    scope:this,
-                    callback:function (records, operation, success) {
-                        if (success) {
-//                            console.log('successful response from server');
-                            if (records.length > 0) {
-//                                console.log('more than zero records returned records.length=' + records.length);
-                                tp.showData(records[0]);
-                            } else {
-//                                console.log('zero records returned records.length=' + records.length);
-                                tp.showMessage('No records found within OPS for this search');
-                            }
-                        }
-                        else {
-//                            console.log('unsuccessful response from server');
-                            tp.showMessage('Error contacting OPS core API');
-                        }
-                    }
-                }
-            );
+            store.load();
+//                {
+//                    scope:this,
+//                    callback:function (records, operation, success) {
+//                        if (success) {
+////                            console.log('successful response from server');
+//                            if (records.length > 0) {
+////                                console.log('more than zero records returned records.length=' + records.length);
+//                                tp.showData(records[0]);
+//                            } else {
+////                                console.log('zero records returned records.length=' + records.length);
+//                                tp.showMessage('No records found within OPS for this search');
+//                            }
+//                        }
+//                        else {
+////                            console.log('unsuccessful response from server');
+//                            tp.showMessage('Error contacting OPS core API');
+//                        }
+//                    }
+//                }
+//            );
             tp.endLoading();
             button.enable();
         }
