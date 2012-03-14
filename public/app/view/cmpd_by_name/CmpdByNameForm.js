@@ -44,22 +44,16 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                       {
                         xtype: 'button',
                         padding: '5 5 5 5',
-                        text: 'Search',
+                        text: 'Search...',
                         itemId: 'CmpdByNameSubmit_id',
-                         //    disabled: true,
+                        disabled: true,
                         action: 'query_cmpd_by_name'
                       }
                       ]},
                       {
-                            xtype: 'CmpdByNameSingleDisplayForm'
-                            /*
-                            xtype: 'dynamicgrid3',
-                            itemId: 'CmpdByNameGrid_id',
-                            readUrl: '/core_api_calls/compound_info.json',                                
-                            title: 'Compound search by name results',
-                            gridBaseTitle: 'Compound search by name results',
+                            xtype: 'CmpdByNameSingleDisplayForm',
                             flex: 1
-                            */
+                            
                      }
                 ]
           });

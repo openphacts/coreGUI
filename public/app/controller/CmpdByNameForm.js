@@ -6,10 +6,12 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 
     refs: [
         {
-            //ref: 'gridView',  // reference to the view
-            //selector: '#CmpdByNameGrid_id'
             ref: 'cmpdByNameSingleDisplayForm',
             selector: 'CmpdByNameSingleDisplayForm'
+        },
+        {
+            ref: 'compoundImagePanel',
+            selector: 'CmpdByNameSingleDisplayForm #compound_form_imagepanel'
         },
         {
             ref: 'formView',
@@ -17,7 +19,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         },
         {
             ref: 'submitButton',
-            selector: '#TargetByNameSubmit_id'
+            selector: '#CmpdByNameSubmit_id'
         
         }
     ],
@@ -40,6 +42,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
     },
     
     submitQuery: function(button) {
+        var me = this;
         var form = button.up('form');
         button.disable();
         var tp = this.getCmpdByNameSingleDisplayForm();
@@ -57,6 +60,8 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                     console.log('successful response from server');
                     if (records.length > 0) {
                         console.log('more than zero records returned records.length=' + records.length);
+                        var csid = records[0].data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        me.getCompoundImagePanel().setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
                         tp.showRecord(records[0]);
                     } else {
                         console.log('zero records returned records.length=' + records.length);
@@ -72,18 +77,6 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         tp.endLoading();
         button.enable();
 
-        /*
-        grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        grid.store.proxy.actionMethods = {read: 'POST'};
-        grid.store.proxy.extraParams = values;
-        grid.store.proxy.api.read = grid.readUrl;
-        grid.store.load({params: { offset: 0, limit: 100}});
-        grid.store.on('load',function(){
-          grid_controller.storeLoad(grid);
-          form.doLayout();
-          button.enable();
-        });
-        */
 
     }
     }

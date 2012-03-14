@@ -12,8 +12,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             // ROOT Panel
             xtype: 'panel',
             bodyPadding: 10,
-            width: 1000,
-            height: 750,
+//             width: 1000,
+//             height: 750,
             title: 'Compound by Name search results',
             layout: 'anchor',
             suspendLayout: true,
@@ -24,7 +24,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                    // TOP Panel
                    xtype: 'panel',
                    itemId: 'topPanelDetails',
-                   width: 1000,
+//                   width: 1000,
                    border: false,
                    layout: 'column',
                    suspendLayout: true,
@@ -32,16 +32,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                     items: [{
                                    // IMAGE panel
-                                   xtype: 'panel',
+                                   xtype: 'image',
                                    name: 'image',
-                                   id: 'imagePanel',
-                                   border: false,
+                                   //id: 'imagePanel',  // Ext uses id field and auto assigns one to it. Use itemId instead
+                                   itemId: 'compound_form_imagepanel',
                                    width: 150,
                                    height: 150,
-                                   html: '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=187440" height="150" width="150" />', // e.g. Sorafenib
+                                   src: '', // e.g. Sorafenib
                                    //html: '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=2157" height="150" width="150" />',  // Viagra
-                                   suspendLayout: true
-
+         
                                 },{
                                    // MAINDETAILS panel
                                    xtype: 'panel',
@@ -105,7 +104,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                                     value: '<br>'
                                                 },{
                                                     xtype: 'displayfield',
-                                                    name: 'csid_uri',
+                                                    name: 'chemspider_id',
                                                     cls: 'x-cmpfield',
                                                     labelWidth: 120,
                                                     labelAlign: 'left',
