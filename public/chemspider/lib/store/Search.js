@@ -1,4 +1,4 @@
-﻿Ext.define('CS.store.Search', {
+Ext.define('CS.store.Search', {
     extend: 'Ext.data.Store',
     requires: ['CS.model.Search', 'CS.config.Settings'],
     model: 'CS.model.Search',
@@ -14,6 +14,7 @@
 
         this.setProxy({
             type: 'jsonp',
+            timeout: 90000,
             url: CS.config.Settings.baseUrl + '/JSON.ashx?op=' + this.operation,
             reader: {
                 type: 'xml'

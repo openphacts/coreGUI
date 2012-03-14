@@ -1,4 +1,4 @@
-﻿Ext.define('CS.store.Compound', {
+Ext.define('CS.store.Compound', {
     extend: 'Ext.data.Store',
     requires: ['CS.model.Compound', 'CS.config.Settings'],
     model: 'CS.model.Compound',
@@ -7,6 +7,7 @@
 
         this.setProxy({
             type: 'jsonp',
+            timeout: 60000,
             url: CS.config.Settings.baseUrl + '/JSON.ashx?op=GetRecordsAsCompounds'
         });
     }
