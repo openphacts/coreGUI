@@ -4,7 +4,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     closable: true,
     requires: [
         'LSP.view.dropdowns.conceptWikiCompoundLookup',
-        'LSP.view.dynamicgrid.DynamicGrid3'
+        'LSP.view.dynamicgrid.DynamicGrid3',
+        'LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm'
     ],
     layout: {
           type: 'vbox',
@@ -45,19 +46,22 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                         padding: '5 5 5 5',
                         text: 'Search',
                         itemId: 'CmpdByNameSubmit_id',
-                    //    disabled: true,
+                         //    disabled: true,
                         action: 'query_cmpd_by_name'
                       }
                       ]},
                       {
+                            xtype: 'CmpdByNameSingleDisplayForm'
+                            /*
                             xtype: 'dynamicgrid3',
                             itemId: 'CmpdByNameGrid_id',
                             readUrl: '/core_api_calls/compound_info.json',                                
                             title: 'Compound search by name results',
                             gridBaseTitle: 'Compound search by name results',
-                            flex: 1,
-                     }                            
-                ]        
+                            flex: 1
+                            */
+                     }
+                ]
           });
         this.callParent(arguments);
     }    

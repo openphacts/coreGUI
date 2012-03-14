@@ -43,7 +43,8 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 ]
             },
             {
-                xtype:'TargetPanel'
+                xtype:'TargetPanel',
+                flex:1
             }
 //                       {
 //                        xtype: 'dynamicgrid3',
