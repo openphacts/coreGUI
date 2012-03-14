@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 Ext.define('LSP.model.Target', {
-    extend: 'Ext.data.Model',
-    autoLoad: true,
-    fields: ['target_name', 'target_type','description','keywords','organism','synonyms']
+    extend:'Ext.data.Model',
+    fields:['target_name', 'target_type', 'description', 'keywords', 'organism', 'synonyms',
+        'cellularLocation', 'molecularWeight', 'numberOfResidues', 'specificFunction',
+        'pdbIdPage', 'theoreticalPi']
 });

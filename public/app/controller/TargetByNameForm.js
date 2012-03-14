@@ -21,6 +21,10 @@ Ext.define('LSP.controller.TargetByNameForm', {
         ],
 
         init:function () {
+//            var store = this.getTargetsStore();
+//            var tp = this.getTargetPanel();
+//            store.addListener('load', tp.showData, tp);
+
             this.control({
                 'TargetByNameForm button[action=query_target_by_name]':{
                     click:this.submitQuery
@@ -48,30 +52,31 @@ Ext.define('LSP.controller.TargetByNameForm', {
             var store = this.getTargetsStore();
 
             store.proxy.extraParams.protein_uri = target_uri;
-            store.load({
-                scope:this,
-                callback:function (records, operation, success) {
-                    if (success) {
-                        console.log('successful response from server');
-                        if (records.length > 0) {
-                            console.log('more than zero records returned records.length=' + records.length);
-                            tp.showRecord(records[0]);
-                        } else {
-                            console.log('zero records returned records.length=' + records.length);
-                            tp.showNoDataMessage();
+            store.load(
+                {
+                    scope:this,
+                    callback:function (records, operation, success) {
+                        if (success) {
+//                            console.log('successful response from server');
+                            if (records.length > 0) {
+//                                console.log('more than zero records returned records.length=' + records.length);
+                                tp.showData(records[0]);
+                            } else {
+//                                console.log('zero records returned records.length=' + records.length);
+                                tp.showMessage('No records found within OPS for this search');
+                            }
+                        }
+                        else {
+//                            console.log('unsuccessful response from server');
+                            tp.showMessage('Error contacting OPS core API');
                         }
                     }
-                    else {
-                        console.log('unsuccessful response from server');
-                        tp.showErrorMessage();
-                    }
                 }
-            });
+            );
             tp.endLoading();
             button.enable();
         }
 
 
     }
-)
-;
+);
