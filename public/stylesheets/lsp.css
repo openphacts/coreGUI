@@ -134,6 +134,22 @@
     text-align: justify;
 }
 
+.target-field-label {
+    color: rgb(128,128,128);
+}
+
+.target-title {
+    font-size: 30px;
+    padding-bottom: 20px;
+}
+
+.target-data-panel {
+    padding-left: 20px;
+    padding-top: 20px;
+    border: none;
+}
+
+
 .keyword {
     background: rgb(200, 200, 200);
     color: rgb(0, 0, 0);
@@ -156,4 +172,5 @@
 
 .organism {
     font-style: italic;
+    color: rgb(0, 0, 0);
 }

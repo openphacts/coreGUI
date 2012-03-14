@@ -21,20 +21,21 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 layout:'anchor',
                 autoScroll:true,
                 itemId:'dp',
+                cls:'target-data-panel',
                 hidden:true,
                 items:[
-                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldLabel:'Target Name'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'molecularWeight', fieldLabel:'Molecular Weight'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'numberOfResidues', fieldLabel:'Number of Residues'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords'}            ,
-                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB ID Page'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'theoreticalPi', fieldLabel:'Theoretical Pi'}
+                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'molecularWeight', fieldLabel:'Molecular Weight', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'numberOfResidues', fieldLabel:'Number of Residues', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
+                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB ID Page', cls:'target-field-label'},
+                    {xtype:'displayfield', anchor:'100%', itemId:'theoreticalPi', fieldLabel:'Theoretical Pi', cls:'target-field-label'}
                 ]
             },
             {
