@@ -54,6 +54,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     }
                   }
                 }
+            },
+            'dynamicgrid3 toolbar #sdfDownloadProxy_id': {
+              click: this.prepSDFile
             }
       })
     },
@@ -65,6 +68,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
      },
    
     addNextRecords: function(this_gridview,extraParams) {
+      this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+      this_gridview.down('#sdfDownload_id').disable();
       var this_store = this_gridview.store;
       var this_controller = this;
       var temp_store = Ext.create('LSP.store.DynamicGrid');
@@ -77,7 +82,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
       this_gridview.setLoading(true);
       temp_store.load({params: { offset: offset, limit: 100}}); 
       temp_store.on('load',function(){
-          this_store.loadRecords(temp_store.getRange(),{addRecords: true});
+          var new_records = temp_store.getRange();
+          var idx_start = offset - 1;
+          var row_count = 0
+          Ext.each(new_records, function(new_record) {
+            new_record.index = idx_start + row_count;
+            row_count++;
+          });          
+          this_store.loadRecords(new_records,{addRecords: true});
           this_gridview.setLoading(false);
           this_gridview.recordsLoaded = this_store.data.length;
           if (temp_store.data.length < 100) {
@@ -92,6 +104,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     }, 
      
     storeLoad: function(this_gridview) {
+        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+      
         var this_controller = this;
         var dynamicgridStore = this_gridview.store;
         if(typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {  
@@ -99,6 +113,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
              if(this_gridview.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
              Ext.each(dynamicgridStore.proxy.reader.jsonData.columns, function(column){
                  columns.push(column);  
+                 if (column.text == 'csid_uri') {
+                   this_gridview.csid_column = true;
+                   this_gridview.down('#sdfDownloadProxy_id').enable();
+                 }
              });
                 this_gridview.reconfigure(dynamicgridStore, columns);
                 this_gridview.recordsLoaded = dynamicgridStore.data.length;
@@ -109,6 +127,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
                     if (this_gridview.recordsLoaded == this_gridview.limit) {
                       this_gridview.down('#nextRecords').enable();
+ //                     this_gridview.down('#csvDownloadProxy_id').enable();
                         
                     }
                     else {
@@ -117,5 +136,173 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 }
                 
      }
-    }
+    },
+    
+    prepSDFile2: function (sdf_prep_button) {
+        var gridview = sdf_prep_button.up('dynamicgrid3');
+        var grid_store = gridview.store;
+        console.log(grid_store);
+        var items = grid_store.data.items;
+
+        var compoundStore = Ext.create('CS.store.Compound');
+        var item_count = items.length;
+        var success_count = 0;
+        var fail_count = 0;
+        sdf_prep_button.setText('SD-file preparing...');
+        Ext.each(items, function(item) {
+          var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+          if (!isNaN(parseInt(csid))){
+            if (item.molfile === undefined || item.molfile.length < 30) {
+      //        console.log(grid_store.findBy(function(record, record_id) { if (csid === record.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1] && record.molfile !== undefined && record.molfile.length < 30){return true;} else {return false;} }));
+              compoundStore.load({
+                    params: { 'csids[0]': csid },
+                    callback: function (records, operation, success) {
+                        if(success){
+                            success_count++;
+                            compound = compoundStore.first().raw.Mol;
+                            item.molfile = compound;
+                            sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+                            if (success_count === item_count) {
+                              sdf_prep_button.setText('SD-File ready! Click ->');
+                              gridview.down('#sdfDownload_id').enable();
+                              }
+                        }
+                        else {
+                          fail_count++;
+                        }
+                    }
+                },this);   
+            }
+          else {
+             success_count++;
+             sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+          }
+         }   
+        else {fail_count++}  
+        
+       })
+    
+    },
+    
+        prepSDFile: function (sdf_prep_button) {
+        var gridview = sdf_prep_button.up('dynamicgrid3');
+        var grid_store = gridview.store;
+        console.log(grid_store);
+        var items = grid_store.data.items;
+
+    //    var compoundStore = Ext.create('CS.store.Compound');
+        var item_count = items.length;
+        var success_count = 0;
+        var fail_count = 0;
+        sdf_prep_button.setText('SD-file preparing...');
+        csid_hash = {};
+        csid_molfile_hash = {};
+        Ext.each(items, function(item) {
+             var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+             if (!isNaN(parseInt(csid))){
+              if (item.molfile !== undefined && item.molfile.length > 30) {
+                  csid_molfile_hash[csid] = item.molfile;
+              }
+              if (csid_hash[csid] === undefined) {
+                 csid_hash[csid] = [item.index];
+              }
+              else {
+                 csid_hash[csid].push(item.index);
+               }
+             }
+        });
+        for(var csid in csid_hash) {
+            var csid_records = csid_hash[csid]; // record indices with this csid
+            var has_molfile = (csid_molfile_hash[csid] !== undefined)   // true or false if molfile exists in store allready
+            if (has_molfile) {
+              var idx_len = csid_records.length;  
+              for(i=0;i<idx_len;i++) {
+    //  console.log("Reusing for idx: " + csid_records[i]);
+                  var row = grid_store.getAt(csid_records[i])
+                  if (row.molfile == undefined) {
+                    row.molfile = csid_molfile_hash[csid];
+                  }
+              }
+              this.updateSDFStatus(sdf_prep_button,grid_store);
+            }
+            else {
+    //  console.log("Getting for csid: " + csid);
+              this.getMolfile(csid,csid_records,grid_store,sdf_prep_button);
+            }
+        }
+  },
+  
+  updateSDFStatus: function(button,store) {
+        var items = store.data.items;
+        var item_count = items.length;
+        var missing_count = 0;
+        var success_count = 0;
+        Ext.each(items, function(item) {
+          if (item.molfile === undefined){
+             missing_count++;
+          }
+        });
+        success_count = item_count - missing_count;
+        button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');  
+        if (success_count === item_count) {
+                    button.setText('SD-File ready! Click ->');
+                    button.up('grid').down('#sdfDownload_id').enable();
+        }
+  },
+  
+  getMolfile: function(csid,row_idxs,grid_store,sdf_prep_button){
+            var me = this;
+            var compoundStore = Ext.create('CS.store.Compound');
+            var idx_len = row_idxs.length;
+            compoundStore.load({
+                    params: { 'csids[0]': csid },
+                    callback: function (obsrecords, operation, success) {
+                        if(success){
+                            var compound = compoundStore.first().raw.Mol;
+                            for (i=0; i < idx_len; i++){
+                               var item = grid_store.getAt(row_idxs[i]);
+                                item.molfile = compound;
+                            }
+                            me.updateSDFStatus(sdf_prep_button,grid_store);
+                        }
+                        else {
+                          // CHEMSIDER JSONP TIMES OUT!!! HANDLER..?
+                        }
+                    }
+            },this);
+            
+  }
+//         Ext.each(items, function(item) {
+//           var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+//           if (!isNaN(parseInt(csid))){
+//             if (item.molfile === undefined || item.molfile.length < 30) {
+//       //        console.log(grid_store.findBy(function(record, record_id) { if (csid === record.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1] && record.molfile !== undefined && record.molfile.length < 30){return true;} else {return false;} }));
+//               compoundStore.load({
+//                     params: { 'csids[0]': csid },
+//                     callback: function (records, operation, success) {
+//                         if(success){
+//                             success_count++;
+//                             compound = compoundStore.first().raw.Mol;
+//                             item.molfile = compound;
+//                             sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+//                             if (success_count === item_count) {
+//                               sdf_prep_button.setText('SD-File ready! Click ->');
+//                               gridview.down('#sdfDownload_id').enable();
+//                               }
+//                         }
+//                         else {
+//                           fail_count++;
+//                         }
+//                     }
+//                 },this);   
+//             }
+//           else {
+//              success_count++;
+//              sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
+//           }
+//          }   
+//         else {fail_count++}  
+//         
+//        })
+
 })

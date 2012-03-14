@@ -23,10 +23,11 @@ Ext.define("Ext.ux.exporter.csvFormatter.CsvFormatter", {
             title = col.name.replace(/_/g, " ");
             title = Ext.String.capitalize(title);
           }
-
-          columns.push(title);
+          
+          if (col.text != '&#160'){
+            columns.push(title);
+          }
         }, this);
-
         return columns.join(this.separator);
     },
     getRows: function(store) {
