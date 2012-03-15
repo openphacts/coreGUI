@@ -45,7 +45,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                             {
                                 xtype:'panel',
                                 bodyPadding:30,
-                                columnWidth:0.8,
+                                columnWidth:1.0,
                                 border:0,
                                 autoScroll:true,
                                 itemId:'textDataPanel',
