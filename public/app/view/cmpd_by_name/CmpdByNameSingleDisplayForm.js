@@ -315,6 +315,9 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         var bp = this.query('#bottomPanelDetails')[0]
         bp.show();
 
+        var ip = this.query('#compound_form_imagepanel')[0]
+        ip.show();
+
         this.loadRecord(record);
         this.doLayout();
 
@@ -323,14 +326,33 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     showErrorMessage:function () {
         var dp = this.query('#dataPanel')[0];
         dp.hide();
-        var field = this.query('#messageField')[0];
-        field.setRawValue('Server did not respond');
-        field.show();
+
+        var tp = this.query('#topPanelDetails')[0]
+        tp.hide();
+
+        var bp = this.query('#bottomPanelDetails')[0]
+        bp.hide();
+
+        var ip = this.query('#compound_form_imagepanel')[0]
+        ip.hide();
+
+        //var field = this.query('#messageField')[0];
+        //field.setRawValue('Server did not respond');
+        //field.show();
     },
 
     showNoDataMessage:function () {
         var dp = this.query('#dataPanel')[0];
         dp.hide();
+
+        var tp = this.query('#topPanelDetails')[0]
+        tp.hide();
+
+        var bp = this.query('#bottomPanelDetails')[0]
+        bp.hide();
+
+        var ip = this.query('#compound_form_imagepanel')[0]
+        ip.hide();
         //var field = this.query('#messageField')[0];
         //field.setRawValue('No records found within OPS for this search');
         //field.show();
