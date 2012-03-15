@@ -67,13 +67,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
     storeLoad: function() {
         if(typeof(this.store.proxy.reader.jsonData.columns) === 'object') {  
             var columns = [];
-            //console.log(this);
             if(this.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
             Ext.each(this.store.proxy.reader.jsonData.columns, function(column){
                 columns.push(column);  
             });
-            //console.log(columns);
-            //console.log(this);
             if (typeof(title) == "undefined") {
      	        var title = this.title;
             }			
@@ -83,8 +80,6 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
             else {
                      this.setTitle(this.gridBaseTitle + ' - Records found: ' +  'No records found!');
             }
-    //            console.log(this);
-    //              console.log(this.views);
                          this.reconfigure(this.store, columns);
                  this.setHeight('80%');       
                     }  
@@ -99,13 +94,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 //     storeLoad: function() {
 //         if(typeof(this.store.proxy.reader.jsonData.columns) === 'object') {  
 //             var columns = [];
-//             //console.log(this);
 //             if(this.rowNumberer) { columns.push(Ext.create('Ext.grid.RowNumberer',{width:40})); }  
 //             Ext.each(this.store.proxy.reader.jsonData.columns, function(column){
 //                 columns.push(column);  
 //             });
-//             //console.log(columns);
-//             //console.log(this);
 //             if (typeof(title) == "undefined") {
 //      	        var title = this.title;
 //             }			

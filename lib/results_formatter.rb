@@ -139,13 +139,15 @@ class ResultsFormatter
             :objects => input_arr,
             :totalCount => input_arr.size,
             :metaData => { :fields => field_aofh, :root => 'objects' },
-            :columns => columns }
+            :columns => columns,
+            :success => true }
       return @col_objs
     else
         return {  :objects => input_arr,
                   :totalCount => [],
                   :metaData => { :fields => [], :root => 'objects' },
-                  :columns => [] }
+                  :columns => [] ,
+                  :success => true }
     end       
   end
   

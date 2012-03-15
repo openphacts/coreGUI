@@ -118,9 +118,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     showData:function (store, records, succesful) {
-//        console.log(store);
-//        console.log(records);
-//        console.log(succesful);
         if (succesful) {
             if (records.length > 0) {
                 var dp = this.down('#dp');

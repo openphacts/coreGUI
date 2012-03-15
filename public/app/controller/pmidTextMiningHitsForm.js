@@ -31,7 +31,6 @@ extend: 'Ext.app.Controller',
     submitQuery: function(button) {
         var form = button.up('form');
         button.disable();
-  //      console.log(form);
         values = form.getValues();
         
         var grid = form.query('dynamicgrid2')[0];
@@ -70,7 +69,6 @@ extend: 'Ext.app.Controller',
 //           },
 //           success: function(response){
 //               var hits = response.responseText;
-//               console.log(hits);
 //               //form.form.findField('abstract').setValue(Ext.JSON.decode(abst).abstract);
 //           }
 //       });

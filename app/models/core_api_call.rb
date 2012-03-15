@@ -9,20 +9,13 @@ class CoreApiCall
   CORE_API_URL = "http://ops.few.vu.nl:9184/opsapi"
   NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
     
-  def initialize(url = CORE_API_URL, open_timeout = 1, read_timeout = 1)
+  def initialize(url = CORE_API_URL, open_timeout = 60, read_timeout = 60)
      # Configuring the connection
      @uri = URI.parse(url)
      @http = Net::HTTP.new(@uri.host, @uri.port)
      @http.open_timeout = open_timeout # in seconds
      @http.read_timeout = read_timeout # in seconds
-     # Setting up the request
-     @request = Net::HTTP::Post.new(@uri.request_uri)
-     # Tweak headers, removing this will default to application/x-www-form-urlencoded
-     @request["Content-Type"] = "application/json" 
-     
-     # Errrgh!
-     @temp_uri = URI(url)
-     
+
      # For timing the transaction   
      @request_time = nil
      @response_time = nil
@@ -30,7 +23,7 @@ class CoreApiCall
      @success = false
      @http_error = nil
      
-     @response = nil
+     response = nil
      @api_method = nil    
      @limit = 100
      @offset = 0
@@ -65,29 +58,38 @@ class CoreApiCall
         @default_graph_uri = options[:default_graph_uri]
      end
      puts "\nIssues call to coreAPI on #{@uri.inspect} with options: #{options.inspect}\n"
-     
-     # setting the options for the api call
-     @request.set_form_data(options)
-     # start of call
-  #   begin
-       @request_time = Time.now
+ 
+     request = Net::HTTP::Post.new(@uri.path)
+      # Tweak headers, removing this will default to application/x-www-form-urlencoded
+      request["Content-Type"] = "application/json"
+      request.form_data = options
+      
+      response = nil
+      start_time = Time.now
+      begin
+        @http.start do |http|
+          response = http.request(request)
+        end
+      rescue Timeout::Error
+        query_time = Time.now - start_time
+        puts "Timeout after #{query_time} seconds"
+        raise Timeout::Error
+      end
 
- #      @response = @http.request(@request)
- @response = Net::HTTP.post_form(@uri, options)
-       @response_time = Time.now
-       @query_time = @response_time - @request_time
+      @query_time = Time.now - start_time
+
        puts "Call took #{@query_time} seconds"
-       status = case @response.code.to_i
+
+       status = case response.code.to_i
           when 100..199 then
             @http_error = "HTTP {status.to_s}-error"
             puts @http_error
             return nil        
           when 200 then #HTTPOK =>  Success
             @success = true
-            parsed_responce = CoreApiResponseParser.parse_response(@response)
+            parsed_response = CoreApiResponseParser.parse_response(response)
             @results = Array.new
-puts parsed_responce.inspect 
-            parsed_responce.each do |solution|  
+            parsed_response.each do |solution|  
                rdf = solution.to_hash
                rdf.each {|key, value| rdf[key] = value.to_s}                                                        
                @results.push(rdf)

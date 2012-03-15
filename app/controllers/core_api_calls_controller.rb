@@ -54,8 +54,16 @@ class CoreApiCallsController < ApplicationController
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
-      results = api_call.request( api_method, options)
-      if results.nil? then "Then what?" end
+      begin
+        results = api_call.request( api_method, options)
+        if results.nil? then 
+          render :json => {:success => false, :error_text => api_call.http_error}.to_json, :layout => false
+          return      
+        end
+      rescue Timeout::Error
+        render :json => {:success => false, :error_text => "System timeout"}.to_json, :layout => false
+        return
+      end
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(ResultsFormatter.format_pubmed_id(results))).to_json, :layout => false    
   end
   
@@ -67,8 +75,16 @@ class CoreApiCallsController < ApplicationController
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
-      results = api_call.request( api_method, options)
-      if results.nil? then "Then what?" end
+      begin
+        results = api_call.request( api_method, options)
+        if results.nil? then 
+          render :json => {:success => false, :error_text => api_call.http_error}.to_json, :layout => false
+          return      
+        end
+      rescue Timeout::Error
+        render :json => {:success => false, :error_text => "System timeout"}.to_json, :layout => false
+        return
+      end
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(ResultsFormatter.format_pubmed_id(results))).to_json, :layout => false    
   end
   
@@ -136,7 +152,16 @@ class CoreApiCallsController < ApplicationController
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new("http://ops.few.vu.nl:9188/opsapi")
-      results = api_call.request( api_method, options)
+      begin
+        results = api_call.request( api_method, options)
+        if results.nil? then 
+          render :json => {:success => false, :error_text => api_call.http_error}.to_json, :layout => false
+          return      
+        end
+      rescue Timeout::Error
+        render :json => {:success => false, :error_text => "System timeout"}.to_json, :layout => false
+        return
+      end      
       col_results = compound_info_list(results)
       render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json, :layout => false     
    end
@@ -163,7 +188,16 @@ class CoreApiCallsController < ApplicationController
     options[:limit] =  params[:limit]
     options[:offset] = params[:offset]
     api_call = CoreApiCall.new
-    results = api_call.request( api_method, options)
+    begin
+        results = api_call.request( api_method, options)
+        if results.nil? then 
+          render :json => {:success => false, :error_text => api_call.http_error}.to_json, :layout => false
+          return      
+        end
+    rescue Timeout::Error
+        render :json => {:success => false, :error_text => "System timeout"}.to_json, :layout => false
+        return
+    end
     render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(results)).to_json, :layout => false
    end   
     
@@ -174,7 +208,16 @@ class CoreApiCallsController < ApplicationController
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
       api_call = CoreApiCall.new
-      results = api_call.request( api_method, options)
+      begin
+        results = api_call.request( api_method, options)
+        if results.nil? then 
+          render :json => {:success => false, :error_text => api_call.http_error}.to_json, :layout => false
+          return      
+        end
+      rescue Timeout::Error
+        render :json => {:success => false, :error_text => "System timeout"}.to_json, :layout => false
+        return
+      end
       render :json => ResultsFormatter.construct_column_objects(results).to_json, :layout => false   
    end
   

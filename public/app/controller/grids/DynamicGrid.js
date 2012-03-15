@@ -48,7 +48,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 itemdblclick: function (view, record, item, index, e, opts) {
                   if (record.data.csid_uri !== undefined){
                     var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                    console.log(csid);
                     if (parseInt(csid) >= 1) {
                       Ext.create('CS.view.CompoundWindow').showCompound(csid);
                     }
@@ -81,8 +80,18 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
       // We load the copy store to get the new records
       this_gridview.setLoading(true);
       temp_store.load({params: { offset: offset, limit: 100}}); 
-      temp_store.on('load',function(){
-          var new_records = temp_store.getRange();
+      temp_store.on('load',function(temp_store, new_records, success){
+          if (success === false){
+          Ext.MessageBox.show({
+                        title: 'Error',
+                        msg: 'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.ERROR
+                    });
+          this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
+          this_gridview.setLoading(false);
+          return false;
+        }
           var idx_start = offset - 1;
           var row_count = 0
           Ext.each(new_records, function(new_record) {
@@ -103,7 +112,19 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
       
     }, 
      
-    storeLoad: function(this_gridview) {
+    storeLoad: function(this_gridview, success) {
+        if (success === false){
+          Ext.MessageBox.show({
+                        title: 'Error',
+                        msg: 'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.ERROR
+                    });
+          this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
+          return false;
+        }
+    
+    
         this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
       
         var this_controller = this;
@@ -121,7 +142,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 this_gridview.reconfigure(dynamicgridStore, columns);
                 this_gridview.recordsLoaded = dynamicgridStore.data.length;
                 if (this_gridview.recordsLoaded == 0) {
-                     this_gridview.setTitle(this_gridview.gridBaseTitle + '- No records found within OPS for this search!');
+                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - No records found within OPS for this search!');  
+                    Ext.MessageBox.show({
+                        title: 'Info',
+                        msg: 'The OPS system does not contain any data that match this search.',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.INFO
+                    });
                 }
                 else {
                     this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
@@ -141,7 +168,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     prepSDFile2: function (sdf_prep_button) {
         var gridview = sdf_prep_button.up('dynamicgrid3');
         var grid_store = gridview.store;
-        console.log(grid_store);
         var items = grid_store.data.items;
 
         var compoundStore = Ext.create('CS.store.Compound');
@@ -153,7 +179,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
           var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
           if (!isNaN(parseInt(csid))){
             if (item.molfile === undefined || item.molfile.length < 30) {
-      //        console.log(grid_store.findBy(function(record, record_id) { if (csid === record.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1] && record.molfile !== undefined && record.molfile.length < 30){return true;} else {return false;} }));
               compoundStore.load({
                     params: { 'csids[0]': csid },
                     callback: function (records, operation, success) {
@@ -187,7 +212,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         prepSDFile: function (sdf_prep_button) {
         var gridview = sdf_prep_button.up('dynamicgrid3');
         var grid_store = gridview.store;
-        console.log(grid_store);
         var items = grid_store.data.items;
 
     //    var compoundStore = Ext.create('CS.store.Compound');
@@ -217,7 +241,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             if (has_molfile) {
               var idx_len = csid_records.length;  
               for(i=0;i<idx_len;i++) {
-    //  console.log("Reusing for idx: " + csid_records[i]);
                   var row = grid_store.getAt(csid_records[i])
                   if (row.molfile == undefined) {
                     row.molfile = csid_molfile_hash[csid];
@@ -226,7 +249,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
               this.updateSDFStatus(sdf_prep_button,grid_store);
             }
             else {
-    //  console.log("Getting for csid: " + csid);
               this.getMolfile(csid,csid_records,grid_store,sdf_prep_button);
             }
         }
@@ -276,7 +298,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 //           var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
 //           if (!isNaN(parseInt(csid))){
 //             if (item.molfile === undefined || item.molfile.length < 30) {
-//       //        console.log(grid_store.findBy(function(record, record_id) { if (csid === record.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1] && record.molfile !== undefined && record.molfile.length < 30){return true;} else {return false;} }));
 //               compoundStore.load({
 //                     params: { 'csids[0]': csid },
 //                     callback: function (records, operation, success) {

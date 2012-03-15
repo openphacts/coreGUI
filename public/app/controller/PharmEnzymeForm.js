@@ -78,8 +78,8 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
        grid.store.proxy.extraParams = values;
        grid.store.proxy.api.read = grid.readUrl;
        grid.store.load({params: { offset: 0, limit: 100}});
-       grid.store.on('load',function(){
-          grid_controller.storeLoad(grid);
+       grid.store.on('load',function(this_store, records, success){
+          grid_controller.storeLoad(grid, success);
           form.doLayout();
           button.enable();
         });

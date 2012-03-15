@@ -57,19 +57,15 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             scope:this,
             callback:function (records, operation, success) {
                 if (success) {
-                    console.log('successful response from server');
                     if (records.length > 0) {
-                        console.log('more than zero records returned records.length=' + records.length);
                         var csid = records[0].data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
                         me.getCompoundImagePanel().setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
                         tp.showRecord(records[0]);
                     } else {
-                        console.log('zero records returned records.length=' + records.length);
                         tp.showNoDataMessage();
                     }
                 }
                 else {
-                    console.log('unsuccessful response from server');
                     tp.showErrorMessage();
                 }
             }

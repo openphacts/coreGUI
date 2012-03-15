@@ -52,7 +52,6 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
     
    createGridColumns: function() {
       var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-      console.log(grid_controller);
       var this_gridview = this.getGridView();
       grid_controller.storeLoad(this_gridview);
    },
@@ -70,13 +69,11 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         var grid = this.getGridView();
         grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         grid.store.proxy.actionMethods = {read: 'POST'};
- //values.compound_uri = 'http://chem2bio2rdf.org/chembl/resource/chembl_compounds/276734' //   http://chem2bio2rdf.org/chembl/resource/chembl_compounds/276734
         grid.store.proxy.extraParams = values;
-//        grid.store.proxy.api.read = '/core_api_calls/pharm_by_compound_name.json';
         grid.store.proxy.api.read = grid.readUrl;
         grid.store.load({params: { offset: 0, limit: 100}});
-        grid.store.on('load',function(){
-          grid_controller.storeLoad(grid);
+        grid.store.on('load',function(this_store, records, success){
+          grid_controller.storeLoad(grid, success);
           form.doLayout();
           button.enable();
         });

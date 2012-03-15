@@ -26,7 +26,6 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
         var data_record = ">  <";
         // todo: check hidden props
         if (!column.hidden && column.text != '&#160') {
-    console.log(column);    
           var data = row.data[column.dataIndex];
           // the cell has a custom object instead of a string, use its text attribute
           if (data.text !== undefined) {

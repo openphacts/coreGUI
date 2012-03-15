@@ -71,7 +71,6 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.getStrucGrid().recordsLoaded = 0;
         values = form.getValues();
         if (values.smiles.length < 4) {button.enable(); return;}
-        //console.log(values.endpoint);
         csid_string = "";
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
@@ -119,16 +118,15 @@ Ext.define('LSP.controller.SimSearchForm', {
         grid.store.proxy.extraParams = {csids:csid_list.join(',')};
         grid.store.proxy.api.read = grid.readUrl;
         grid.store.load({params: { offset: 0, limit: 100}});
-        grid.store.on('load',function(){
+        grid.store.on('load',function(this_store, records, success){
           this.getSubmitButton().enable();
-          grid_controller.storeLoad(grid);
+          grid_controller.storeLoad(grid, success);
           this.getSsform().doLayout();
    //       this.getStrucGrid().view.refresh();
         },this);      
     },                
     
 //     addRecords: function (csids) {
-//     console.log(csids);
 //       var this_gridview = this.getStrucGrid();
 //       var this_store = this_gridview.store;
 //       var this_controller = this;
@@ -144,8 +142,6 @@ Ext.define('LSP.controller.SimSearchForm', {
 //       var csid = csids[0];
 //       var remaining_csids = csids.slice(1);
 //       if (dept > 6) {return true;}
-//       console.log('dept: ' + dept + ' current id: ' + csid + ' left is: ' + remaining_csids);
-//       console.log(grid_store);
 //       dept++;
 //       var last_csid = remaining_csids.length == 0;
 //       temp_store.load({params: { offset: 0, limit: 1, compound_uri: 'http://rdf.chemspider.com/' + csid}});

@@ -55,17 +55,13 @@ Ext.define('LSP.controller.TargetByNameForm', {
 //                    scope:this,
 //                    callback:function (records, operation, success) {
 //                        if (success) {
-////                            console.log('successful response from server');
 //                            if (records.length > 0) {
-////                                console.log('more than zero records returned records.length=' + records.length);
 //                                tp.showData(records[0]);
 //                            } else {
-////                                console.log('zero records returned records.length=' + records.length);
 //                                tp.showMessage('No records found within OPS for this search');
 //                            }
 //                        }
 //                        else {
-////                            console.log('unsuccessful response from server');
 //                            tp.showMessage('Error contacting OPS core API');
 //                        }
 //                    }

@@ -42,8 +42,6 @@ Ext.define("Ext.ux.exporter.Button", {
 
     setDownloadify: function(config) {
         var self = this;
- //       console.log(Ext.ux.exporter.Exporter.exportAny(self.component, self.formatter, config));
- console.log(this.el.down('p'));
         Downloadify.create(this.el.down('p').id,{
             filename: function() {
               return self.getDownloadName() + "." + Ext.ux.exporter.Exporter.getFormatterByName(self.formatter).extension;

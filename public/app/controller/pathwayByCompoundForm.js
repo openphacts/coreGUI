@@ -39,7 +39,6 @@ extend: 'Ext.app.Controller',
         var form = button.up('form');
         var grid = form.query('dynamicgrid2')[0];
         var selection = grid.getSelectionModel().getSelection()[0];
-        console.log(selection.data);
         if (selection) {
             //TODO get the "WP88" like id and save to a var before fireing
            // Launch the window
@@ -50,14 +49,13 @@ extend: 'Ext.app.Controller',
     submitQuery: function(button) {
         var form = button.up('form');
         button.disable();
-  //      console.log(form);
         values = form.getValues();
-  //      console.log(values);
         var grid = form.query('dynamicgrid2')[0];
         grid.store.proxy.extraParams = values;
         grid.store.proxy.api.read = 'core_api_calls/wiki_pathways_by_compound.json';
         grid.store.load();
-        grid.store.on('load',function(){
+        grid.store.on('load',function(this_store, records, success){
+        alert(success);
             form.doLayout();
             button.enable();
             });
