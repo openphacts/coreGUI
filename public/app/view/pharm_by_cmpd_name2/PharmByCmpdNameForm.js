@@ -47,7 +47,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                             xtype: 'button',
                             itemId: 'pharmByCmpdSubmit_id',
                             padding: '5 5 5 5',
-                            text: 'Search',
+                            text: 'Search...',
                             disabled: true,
                             action: 'query_pharm_by_cmpd_name'
                           }]},

@@ -21,7 +21,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
         this.items = [
                       {
                         xtype: 'label',
-                        html: '<font face="verdana" color="grey">Hint: Type in protein name and species. E.g. \"human kinase\"</font>',
+                        html: '<font face="verdana" color="grey">Hint: Type in protein name and species. E.g. \"ADA protein human\"</font>',
                         labelWidth: 400,
                         padding: '5 0 0 140' 
                       },
@@ -49,7 +49,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                                 itemId: 'pharmByTargetSubmit_id',
                                 padding: '5 5 5 5',
                                 text: 'Search...',
-                                disabled: false,
+                                disabled: true,
                                 name: 'query_summit_button',
                                 action: 'query_pharm_by_target_name'
                               }]
