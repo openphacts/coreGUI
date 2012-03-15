@@ -11,13 +11,15 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     alias:'widget.TargetPanel',
     title:'Target Data',
     anchor:'100% 100%',
+    autoScroll:true,
+    bodyPadding:'10px',
     layout:'anchor',
 
     initComponent:function () {
         this.items = [
             {
                 xtype:'panel',
-                anchor:'100% 100%',
+                border:0,
                 layout:'anchor',
                 autoScroll:true,
                 itemId:'dp',
@@ -25,25 +27,66 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 cls:'target-data-panel',
                 hidden:true,
                 items:[
-                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'molecularWeight', fieldLabel:'Molecular Weight', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'numberOfResidues', fieldLabel:'Number of Residues', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
-                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB ID Page', cls:'target-field-label'},
-                    {xtype:'displayfield', anchor:'100%', itemId:'theoreticalPi', fieldLabel:'Theoretical Pi', cls:'target-field-label'}
+                    {
+                        xtype:'panel',
+                        border:0,
+                        anchor:'100%',
+                        itemId:'topPanel',
+                        layout:'column',
+                        autoScroll:true,
+                        items:[
+                            {
+                                xtype:'image',
+                                itemId:'target_image',
+                                width:150,
+                                height:150,
+                                src:'/images/target_placeholder.png'
+                            },
+                            {
+                                xtype:'panel',
+                                bodyPadding:30,
+                                columnWidth:0.8,
+                                border:0,
+                                autoScroll:true,
+                                itemId:'textDataPanel',
+                                layout:'anchor',
+                                items:[
+                                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
+                                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {
+                                        xtype:'panel',
+                                        border:0,
+                                        anchor:'100%',
+                                        itemId:'numericDataPanel',
+                                        layout:'column',
+                                        bodyPadding:30,
+                                        items:[
+                                            {xtype:'displayfield', itemId:'molecularWeight', columnWidth:0.33, fieldLabel:'Molecular Weight', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'numberOfResidues', columnWidth:0.33, fieldLabel:'Number of Residues', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoreticalPi', columnWidth:0.33, fieldLabel:'Theoretical Pi', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                        ]
+                                    }
+                                ]
+                            }
+
+                        ]
+                    }
                 ]
             },
             {
                 xtype:'displayfield',
+                border:0,
                 padding:'20px',
                 itemId:'msg',
-                anchor:'100% 100%',
+//                anchor:'100% 100%',
+                region:'center',
                 hidden:true,
                 fieldCls:'target-message',
                 value:'message here'
@@ -55,11 +98,14 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.callParent(arguments);
     },
 
-    hideAllFields:function () {
+    resetAllFields:function () {
         var displayFields = this.query('displayfield');
         Ext.each(displayFields, function (field) {
             field.hide();
         }, this);
+        var img = this.down('#target_image');
+        img.setSrc('/images/target_placeholder.png');
+
         this.doLayout();
     },
 
@@ -134,6 +180,19 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         synonymsField.show();
     },
 
+    addPDBImage:function (pdbIdPage) {
+        //example http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF
+//        http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
+        var stringURL = new String(pdbIdPage);
+        var img = this.down('#target_image');
+        var pdbID = stringURL.substr(stringURL.lastIndexOf('=') + 1);
+        var pdbField = this.down('#pdbIdPage');
+        pdbField.setRawValue('<a target=\'_blank\' href=\'' + pdbIdPage + '\'>' + pdbID + '</a>');
+        pdbField.show();
+        img.setSrc('http://www.rcsb.org/pdb/images/' + pdbID + '_asr_r_250.jpg');
+        img.show();
+    },
+
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
 //            console.log('synonyms');
@@ -147,6 +206,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 //            console.log('organism');
             this.addOrganism(value);
         }
+        else if (fieldId == 'pdbIdPage') {
+            this.addPDBImage(value);
+        }
         else {
 //            console.log('standard field');
             var field = this.down('#' + fieldId);
@@ -157,7 +219,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
 
     setValues:function (target) {
-        this.hideAllFields();
+        this.resetAllFields();
         var td = target.data;
 
         for (var prop in td) {

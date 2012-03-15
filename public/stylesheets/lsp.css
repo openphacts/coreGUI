@@ -135,7 +135,17 @@
 }
 
 .target-field-label {
-    color: rgb(128,128,128);
+    color: rgb(128, 128, 128);
+}
+
+.target-field-bottom {
+    color: rgb(128, 128, 128);
+    text-align: center;
+}
+
+.target-field-bottom-field {
+    text-align: center;
+    color: rgb(0, 0, 0);
 }
 
 .target-title {
