@@ -1,5 +1,6 @@
 require 'results_formatter'
 class CoreApiCallsController < ApplicationController
+   NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
   
   def cmpd_name_lookup(substring = params[:query])
       options = Hash.new
@@ -151,7 +152,7 @@ class CoreApiCallsController < ApplicationController
       options[:query] =  query
       options[:limit] =  params[:limit]
       options[:offset] = params[:offset]
-      api_call = CoreApiCall.new("http://ops.few.vu.nl:9188/opsapi")
+      api_call = CoreApiCall.new( NO_EXPANDER_CORE_API_URL)
       begin
         results = api_call.request( api_method, options)
         if results.nil? then 
