@@ -147,7 +147,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', class:'keyword', html:'{kw}'});
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:'{kw}'});
         Ext.each(bits, function (keyword) {
             tpl.append(bodyEl, {kw:keyword});
         }, this);
@@ -159,7 +159,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = organismDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', class:'organism', html:'{org}'});
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'{org}'});
         tpl.append(bodyEl, {org:organism});
         organismDisplayField.show();
     },
@@ -170,7 +170,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = synonymsField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', class:'synonym', html:'{syn}'});
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:'{syn}'});
         Ext.each(bits, function (synonym) {
             tpl.append(bodyEl, {syn:synonym});
         }, this);
