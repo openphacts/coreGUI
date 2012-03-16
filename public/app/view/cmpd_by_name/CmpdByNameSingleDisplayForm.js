@@ -305,7 +305,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         //mf.hide();
         //var img = Ext.get('imagePanel');
         //img.html= '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=187440" height="150" width="150" />';
-
         var dp = this.query('#dataPanel')[0]
         dp.show();
 
@@ -318,6 +317,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         var ip = this.query('#compound_form_imagepanel')[0]
         ip.show();
 
+        this.form.reset();
         this.loadRecord(record);
         this.doLayout();
 
