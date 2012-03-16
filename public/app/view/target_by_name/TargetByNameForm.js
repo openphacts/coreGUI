@@ -18,7 +18,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 xtype:'label',
                 html:'<font face="verdana" color="grey">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</font>',
                 labelWidth:400,
-                padding:'0 0 0 140'
+                padding:'5 0 0 140'
             },
             {
                 xtype:'container',
