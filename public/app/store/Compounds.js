@@ -9,7 +9,7 @@ Ext.define('LSP.store.Compounds', {
         actionMethods:{
             read:'POST'
         },
-        extraParams:{compound_uri:''},   //compound_uri
+        extraParams:{compound_uri:''}, //compound_uri
         url:'/core_api_calls/compound_info.json',
         reader:{
             type:'json',

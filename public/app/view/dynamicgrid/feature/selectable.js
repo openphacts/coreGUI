@@ -5,53 +5,53 @@
  * 
  * 1. copy this file to feature/selectable.js
  * 2. add this to your grid config:
- 
-    features: [
-        {ftype: 'selectable', id: 'selectable'}
-    ],
- 
+
+ features: [
+ {ftype: 'selectable', id: 'selectable'}
+ ],
+
  * Tested with Ext.grid.Panel in Ext JS 4.0.2a MVC app
  */
- 
+
 // append our CSS class to <head>
-Ext.getHead().insertHtml("beforeEnd", 
+Ext.getHead().insertHtml("beforeEnd",
     '<style type="text/css">' +
-    '.x-selectable, .x-selectable * {' +
-    '    -khtml-user-select: text !important;' +
-    '    -moz-user-select: text !important;' +
-    '}' +
-    '</style>'
+        '.x-selectable, .x-selectable * {' +
+        '    -khtml-user-select: text !important;' +
+        '    -moz-user-select: text !important;' +
+        '}' +
+        '</style>'
 );
- 
-Ext.require('Ext.view.Table', function() {
+
+Ext.require('Ext.view.Table', function () {
     Ext.override(Ext.view.Table, {
-        afterRender: function() {
+        afterRender:function () {
             var me = this;
- 
+
             me.callParent();
             me.mon(me.el, {
-                scroll: me.fireBodyScroll,
-                scope: me
+                scroll:me.fireBodyScroll,
+                scope:me
             });
- 
+
             // in case the selectable feature is present, don't do me.el.unselectable() 
-            if ( me.getFeature('selectable')===undefined ) {
+            if (me.getFeature('selectable') === undefined) {
                 me.el.unselectable();
             }
             me.attachEventsForFeatures();
         }
     });
 });
- 
-Ext.require('Ext.grid.feature.Feature', function() {
+
+Ext.require('Ext.grid.feature.Feature', function () {
     Ext.define('LSP.view.dynamicgrid.feature.selectable', {
-        extend: 'Ext.grid.feature.Feature',
-        alias: 'feature.selectable',
- 
-        mutateMetaRowTpl: function(metaRowTpl) {
+        extend:'Ext.grid.feature.Feature',
+        alias:'feature.selectable',
+
+        mutateMetaRowTpl:function (metaRowTpl) {
             var i,
                 ln = metaRowTpl.length;
- 
+
             for (i = 0; i < ln; i++) {
                 tpl = metaRowTpl[i];
                 tpl = tpl.replace(/x-grid-row/, 'x-grid-row x-selectable');
@@ -59,6 +59,6 @@ Ext.require('Ext.grid.feature.Feature', function() {
                 tpl = tpl.replace(/unselectable="on"/g, '');
                 metaRowTpl[i] = tpl;
             }
-        }        
+        }
     });
 });  

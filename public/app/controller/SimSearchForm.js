@@ -1,54 +1,59 @@
 Ext.define('LSP.controller.SimSearchForm', {
-    extend: 'Ext.app.Controller',
+    extend:'Ext.app.Controller',
 
-    views: ['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer'],
+    views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer'],
 
-    refs: [
+    refs:[
         {
-            ref: 'ssform',  // reference to the view
-            selector: 'SimSearchForm'
+            ref:'ssform', // reference to the view
+            selector:'SimSearchForm'
         },
         {
-            ref: 'strucGrid',
-            selector: 'SimSearchForm dynamicgrid3'
+            ref:'strucGrid',
+            selector:'SimSearchForm dynamicgrid3'
         },
         {
-            ref: 'submitButton',
-            selector: 'SimSearchForm #sim_sss_start_search_button_id'
+            ref:'submitButton',
+            selector:'SimSearchForm #sim_sss_start_search_button_id'
         }
     ],
 
-    init: function () {
+    init:function () {
         this.control({
-            'SimSearchForm button[action=ketcher_editor]': {
-                click: this.launchKetcher
+            'SimSearchForm button[action=ketcher_editor]':{
+                click:this.launchKetcher
             },
-            'KetcherForm button[action=commit_structure]': {
-                click: this.getSmiles
+            'KetcherForm button[action=commit_structure]':{
+                click:this.getSmiles
             },
-            'SimSearchForm button[action=query]': {
-                click: this.submitQuery
+            'SimSearchForm button[action=query]':{
+                click:this.submitQuery
             },
-            'SimSearchForm button[action=data_view]': {
-                click: this.launchDataView
+            'SimSearchForm button[action=data_view]':{
+                click:this.launchDataView
             }
         });
     },
     // Launch ketcher window
-    launchKetcher: function (button) {
+    launchKetcher:function (button) {
         // Launch the window
         var view = Ext.widget('KetcherForm');
         // Check to see if we already have a structure to modify and load it if we do
         fields = this.getSsform().form.getFields().items;
         var molfile = '';
-        fields.forEach(function (item) { if (item.name == 'molfile') { molfile = item.getValue(); var temp = 12; } });
+        fields.forEach(function (item) {
+            if (item.name == 'molfile') {
+                molfile = item.getValue();
+                var temp = 12;
+            }
+        });
         if (molfile != '') {
             document.getElementById('ketcher_box_id').contentWindow.ketcher.setMolecule(molfile);
         }
     },
 
     // Grep smiles from ketcher window and store in smiles field in form
-    getSmiles: function (button) {
+    getSmiles:function (button) {
         var ketcher_window = document.getElementById('ketcher_box_id');
         // smiles is used for query
         smiles = ketcher_window.contentWindow.ketcher.getSmiles();
@@ -56,11 +61,17 @@ Ext.define('LSP.controller.SimSearchForm', {
         molfile = ketcher_window.contentWindow.ketcher.getMolfile();
         // We get all fields in form so that we can update the right one
         fields = this.getSsform().form.getFields().items;
-        fields.forEach(function (item) { if (item.name == 'smiles') { item.setValue(smiles) } else if (item.name == 'molfile') { item.setValue(molfile) } });
+        fields.forEach(function (item) {
+            if (item.name == 'smiles') {
+                item.setValue(smiles)
+            } else if (item.name == 'molfile') {
+                item.setValue(molfile)
+            }
+        });
         button.up('KetcherForm').close();
     },
 
-    submitQuery: function (button) {
+    submitQuery:function (button) {
         button.disable();
         var form = button.up('form');
         var this_controller = this;
@@ -70,11 +81,14 @@ Ext.define('LSP.controller.SimSearchForm', {
 //        this.getStrucGrid().removeAll(true);
         this.getStrucGrid().recordsLoaded = 0;
         values = form.getValues();
-        if (values.smiles.length < 4) {button.enable(); return;}
+        if (values.smiles.length < 4) {
+            button.enable();
+            return;
+        }
         csid_string = "";
         var searchEngine = Ext.create('CS.engine.search.Structure', {
-            listeners: {
-                finished: function (sender, rid) {
+            listeners:{
+                finished:function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
                         this_controller.hitCoreAPI(csids);
                     });
@@ -109,23 +123,23 @@ Ext.define('LSP.controller.SimSearchForm', {
         searchEngine.doSearch(search_type, params);
     },
 
- 
-    hitCoreAPI: function (csid_list) {
+
+    hitCoreAPI:function (csid_list) {
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
         grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        grid.store.proxy.actionMethods = {read: 'POST'};
+        grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.extraParams = {csids:csid_list.join(',')};
         grid.store.proxy.api.read = grid.readUrl;
-        grid.store.load({params: { offset: 0, limit: 100}});
-        grid.store.on('load',function(this_store, records, success){
-          this.getSubmitButton().enable();
-          grid_controller.storeLoad(grid, success);
-          this.getSsform().doLayout();
-   //       this.getStrucGrid().view.refresh();
-        },this);      
-    },                
-    
+        grid.store.load({params:{ offset:0, limit:100}});
+        grid.store.on('load', function (this_store, records, success) {
+            this.getSubmitButton().enable();
+            grid_controller.storeLoad(grid, success);
+            this.getSsform().doLayout();
+            //       this.getStrucGrid().view.refresh();
+        }, this);
+    }
+
 //     addRecords: function (csids) {
 //       var this_gridview = this.getStrucGrid();
 //       var this_store = this_gridview.store;

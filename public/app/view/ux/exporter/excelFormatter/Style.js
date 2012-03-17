@@ -30,72 +30,72 @@
  * @cfg {String} parentStyle The (optional parentStyle ID)
  */
 Ext.define("Ext.ux.exporter.excelFormatter.Style", {
-  constructor: function(config) {
-    config = config || {};
+    constructor:function (config) {
+        config = config || {};
 
-    Ext.apply(this, config, {
-      parentStyle: '',
-      attributes : []
-    });
+        Ext.apply(this, config, {
+            parentStyle:'',
+            attributes:[]
+        });
 
-    Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
+        Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
 
-    if (this.id == undefined) throw new Error("An ID must be provided to Style");
+        if (this.id == undefined) throw new Error("An ID must be provided to Style");
 
-    this.preparePropertyStrings();
-  },
+        this.preparePropertyStrings();
+    },
 
-  /**
-   * Iterates over the attributes in this style, and any children they may have, creating property
-   * strings on each suitable for use in the XTemplate
-   */
-  preparePropertyStrings: function() {
-    Ext.each(this.attributes, function(attr, index) {
-      this.attributes[index].propertiesString = this.buildPropertyString(attr);
-      this.attributes[index].children = attr.children || [];
+    /**
+     * Iterates over the attributes in this style, and any children they may have, creating property
+     * strings on each suitable for use in the XTemplate
+     */
+    preparePropertyStrings:function () {
+        Ext.each(this.attributes, function (attr, index) {
+            this.attributes[index].propertiesString = this.buildPropertyString(attr);
+            this.attributes[index].children = attr.children || [];
 
-      Ext.each(attr.children, function(child, childIndex) {
-        this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
-      }, this);
-    }, this);
-  },
+            Ext.each(attr.children, function (child, childIndex) {
+                this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
+            }, this);
+        }, this);
+    },
 
-  /**
-   * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
-   */
-  buildPropertyString: function(attribute) {
-    var propertiesString = "";
+    /**
+     * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
+     */
+    buildPropertyString:function (attribute) {
+        var propertiesString = "";
 
-    Ext.each(attribute.properties || [], function(property) {
-      propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
-    }, this);
+        Ext.each(attribute.properties || [], function (property) {
+            propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
+        }, this);
 
-    return propertiesString;
-  },
+        return propertiesString;
+    },
 
-  render: function() {
-    return this.tpl.apply(this);
-  },
+    render:function () {
+        return this.tpl.apply(this);
+    },
 
-  tpl: new Ext.XTemplate(
-    '<tpl if="parentStyle.length == 0">',
-      '<ss:Style ss:ID="{id}">',
-    '</tpl>',
-    '<tpl if="parentStyle.length != 0">',
-      '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
-    '</tpl>',
-    '<tpl for="attributes">',
-      '<tpl if="children.length == 0">',
+    tpl:new Ext.XTemplate(
+        '<tpl if="parentStyle.length == 0">',
+        '<ss:Style ss:ID="{id}">',
+        '</tpl>',
+        '<tpl if="parentStyle.length != 0">',
+        '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
+        '</tpl>',
+        '<tpl for="attributes">',
+        '<tpl if="children.length == 0">',
         '<ss:{name} {propertiesString} />',
-      '</tpl>',
-      '<tpl if="children.length > 0">',
+        '</tpl>',
+        '<tpl if="children.length > 0">',
         '<ss:{name} {propertiesString}>',
-          '<tpl for="children">',
-            '<ss:{name} {propertiesString} />',
-          '</tpl>',
+        '<tpl for="children">',
+        '<ss:{name} {propertiesString} />',
+        '</tpl>',
         '</ss:{name}>',
-      '</tpl>',
-    '</tpl>',
-    '</ss:Style>'
-  )
+        '</tpl>',
+        '</tpl>',
+        '</ss:Style>'
+    )
 });

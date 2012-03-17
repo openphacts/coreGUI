@@ -1,51 +1,51 @@
 Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.PharmEnzymeForm',
+    extend:'Ext.form.Panel',
+    alias:'widget.PharmEnzymeForm',
 
-    requires: [
+    requires:[
         'LSP.view.tree_selector_forms.EnzymeTreeForm'
-    ],                         
-    closable: true,
-    layout: {
-          type: 'vbox',
-          align: 'stretch'
-      },
-    initComponent: function() {
+    ],
+    closable:true,
+    layout:{
+        type:'vbox',
+        align:'stretch'
+    },
+    initComponent:function () {
         var me = this;
         me.items = [
             {
-                xtype: 'container',
-                height: 34,
-                name: 'form_fields',
-          //      width: 600,
-                layout: {
-                    type: 'column'
+                xtype:'container',
+                height:34,
+                name:'form_fields',
+                //      width: 600,
+                layout:{
+                    type:'column'
                 },
-                items: [
+                items:[
                     {
-                        xtype: 'displayfield',
-                        name: 'enzyme_family',
-                        margin: '5 5 5 5',
-                        width: 688,
-                        value: 'No enzyme class selected - press button ->',
-                        fieldLabel: 'Enzyme family class',
-                        labelWidth: 130
+                        xtype:'displayfield',
+                        name:'enzyme_family',
+                        margin:'5 5 5 5',
+                        width:688,
+                        value:'No enzyme class selected - press button ->',
+                        fieldLabel:'Enzyme family class',
+                        labelWidth:130
                     },
                     {
-                        xtype: 'button',
-                        padding: '5 5 5 5',
-                        text: 'Browse EC codes',
-                        action: 'enz_tree'
+                        xtype:'button',
+                        padding:'5 5 5 5',
+                        text:'Browse EC codes',
+                        action:'enz_tree'
                     },
                     {
-                        name: 'enz_name',
-                        xtype: 'hidden',
-                        value: ''
+                        name:'enz_name',
+                        xtype:'hidden',
+                        value:''
                     },
                     {
-                        name: 'ec_number',
-                        xtype: 'hidden',
-                        value: ''
+                        name:'ec_number',
+                        xtype:'hidden',
+                        value:''
                     }
                 ]
             },
@@ -125,20 +125,20 @@ Ext.define('LSP.view.larkc_pharm_by_target.PharmEnzymeForm', {
 //                     }
 //                 ]
 //            },
-                   {
-                       xtype: 'button',
-                       action: 'query',
-                       itemId: 'submitEnzymePharm_id',
-                       text: 'Start search...'
-                   },                   
-			            {
-                    xtype: 'dynamicgrid3',
-                    title: 'Inhibitors for enzyme class: no selection yet',
-                    gridBaseTitle: 'Inhibitors for enzymes in class: ',
-                    readUrl: '/core_api_calls/pharm_enzyme_fam.json',
-                    flex: 1
-                    }  
-        ];                  
+            {
+                xtype:'button',
+                action:'query',
+                itemId:'submitEnzymePharm_id',
+                text:'Start search...'
+            },
+            {
+                xtype:'dynamicgrid3',
+                title:'Inhibitors for enzyme class: no selection yet',
+                gridBaseTitle:'Inhibitors for enzymes in class: ',
+                readUrl:'/core_api_calls/pharm_enzyme_fam.json',
+                flex:1
+            }
+        ];
         me.callParent(arguments);
     }
 });
