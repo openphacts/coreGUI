@@ -11,6 +11,14 @@
             "files": [
                 {
                     "path": "app/view/user/",
+                    "name": "New.js"
+                },
+                {
+                    "path": "app/view/user/",
+                    "name": "Logoutbutton.js"
+                },
+                {
+                    "path": "app/view/user/",
                     "name": "Loginbutton.js"
                 },
                 {
@@ -19,43 +27,43 @@
                 },
                 {
                     "path": "app/view/user/",
-                    "name": "Logoutbutton.js"
-                },
-                {
-                    "path": "app/view/user/",
                     "name": "Newbutton.js"
-                },
-                {
-                    "path": "app/view/user/",
-                    "name": "New.js"
-                },
-                {
-                    "path": "app/store/",
-                    "name": "Grids.js"
-                },
-                {
-                    "path": "app/model/",
-                    "name": "DynamicGrid.js"
-                },
-                {
-                    "path": "app/model/",
-                    "name": "Grid.js"
-                },
-                {
-                    "path": "app/view/",
-                    "name": "Appmoduletree.js"
                 },
                 {
                     "path": "app/store/",
                     "name": "NavigationTree.js"
                 },
                 {
+                    "path": "app/view/",
+                    "name": "Appmoduletree.js"
+                },
+                {
+                    "path": "app/model/",
+                    "name": "Grid.js"
+                },
+                {
                     "path": "app/view/mol_editor_forms/",
                     "name": "KetcherForm.js"
                 },
                 {
+                    "path": "app/view/larkc_sim_search/",
+                    "name": "SimSearchForm.js"
+                },
+                {
+                    "path": "app/store/",
+                    "name": "Grids.js"
+                },
+                {
                     "path": "app/view/sparqlform/",
                     "name": "Queryform.js"
+                },
+                {
+                    "path": "app/model/",
+                    "name": "DynamicGrid.js"
+                },
+                {
+                    "path": "app/view/target_by_name/",
+                    "name": "TargetPanel.js"
                 },
                 {
                     "path": "app/view/cmpd_by_name/",
@@ -63,19 +71,19 @@
                 },
                 {
                     "path": "app/model/",
-                    "name": "Compound.js"
+                    "name": "Target.js"
                 },
                 {
                     "path": "app/model/",
-                    "name": "Target.js"
+                    "name": "Compound.js"
                 },
                 {
                     "path": "app/store/",
                     "name": "Targets.js"
                 },
                 {
-                    "path": "app/view/target_by_name/",
-                    "name": "TargetPanel.js"
+                    "path": "app/store/",
+                    "name": "Compounds.js"
                 },
                 {
                     "path": "app/view/user/",
@@ -90,60 +98,44 @@
                     "name": "DynamicGrid.js"
                 },
                 {
-                    "path": "app/view/pathways/",
-                    "name": "wikiPathwaysWindow.js"
-                },
-                {
-                    "path": "app/view/placeholder/",
-                    "name": "temp.js"
-                },
-                {
                     "path": "app/view/dynamicgrid/feature/",
                     "name": "selectable.js"
-                },
-                {
-                    "path": "ext/examples/ux/grid/",
-                    "name": "FiltersFeature.js"
-                },
-                {
-                    "path": "app/view/",
-                    "name": "Enzymetree.js"
-                },
-                {
-                    "path": "app/view/dropdowns/",
-                    "name": "conceptWikiProteinLookup.js"
                 },
                 {
                     "path": "/ext/examples/ux/DataView//",
                     "name": "Animated.js"
                 },
                 {
+                    "path": "app/view/pathways/",
+                    "name": "wikiPathwaysWindow.js"
+                },
+                {
+                    "path": "ext/examples/ux/grid/",
+                    "name": "FiltersFeature.js"
+                },
+                {
+                    "path": "app/view/dropdowns/",
+                    "name": "conceptWikiProteinLookup.js"
+                },
+                {
                     "path": "app/view/dropdowns/",
                     "name": "conceptWikiCompoundLookup.js"
                 },
                 {
-                    "path": "app/view/dropdowns/",
-                    "name": "conceptWikiLookup.js"
+                    "path": "app/view/",
+                    "name": "Enzymetree.js"
                 },
                 {
-                    "path": "app/view/buttons/",
-                    "name": "Edit.js"
-                },
-                {
-                    "path": "app/view/dropdowns/",
-                    "name": "wikiPathwaysCompoundLookup.js"
-                },
-                {
-                    "path": "app/view/dropdowns/",
-                    "name": "pmidLookup.js"
-                },
-                {
-                    "path": "app/view/dropdowns/",
-                    "name": "wikiPathwaysProteinLookup.js"
+                    "path": "app/view/placeholder/",
+                    "name": "temp.js"
                 },
                 {
                     "path": "app/view/buttons/",
                     "name": "New.js"
+                },
+                {
+                    "path": "app/view/dropdowns/",
+                    "name": "pmidLookup.js"
                 },
                 {
                     "path": "app/view/buttons/",
@@ -151,7 +143,23 @@
                 },
                 {
                     "path": "app/view/buttons/",
+                    "name": "Edit.js"
+                },
+                {
+                    "path": "app/view/dropdowns/",
+                    "name": "conceptWikiLookup.js"
+                },
+                {
+                    "path": "app/view/buttons/",
                     "name": "Filter.js"
+                },
+                {
+                    "path": "app/view/dropdowns/",
+                    "name": "wikiPathwaysCompoundLookup.js"
+                },
+                {
+                    "path": "app/view/dropdowns/",
+                    "name": "wikiPathwaysProteinLookup.js"
                 },
                 {
                     "path": "app/controller/",
@@ -160,6 +168,10 @@
                 {
                     "path": "app/controller/",
                     "name": "Queryform.js"
+                },
+                {
+                    "path": "app/controller/",
+                    "name": "CmpdByNameForm.js"
                 },
                 {
                     "path": "app/controller/",
@@ -186,24 +198,12 @@
                     "name": "DynamicGrid.js"
                 },
                 {
-                    "path": "app/view/larkc_sim_search/",
-                    "name": "SimSearchForm.js"
-                },
-                {
                     "path": "app/view/dataview/",
                     "name": "StructureViewer.js"
                 },
                 {
                     "path": "app/controller/",
                     "name": "SimSearchForm.js"
-                },
-                {
-                    "path": "app/store/",
-                    "name": "Compounds.js"
-                },
-                {
-                    "path": "app/controller/",
-                    "name": "CmpdByNameForm.js"
                 },
                 {
                     "path": "app/view/target_by_name/",
@@ -214,24 +214,8 @@
                     "name": "TargetByNameForm.js"
                 },
                 {
-                    "path": "app/view/pharm_by_cmpd_name2/",
-                    "name": "PharmByCmpdNameForm.js"
-                },
-                {
-                    "path": "app/controller/",
-                    "name": "PharmByCmpdNameForm.js"
-                },
-                {
                     "path": "app/view/tree_selector_forms/",
                     "name": "EnzymeTreeForm.js"
-                },
-                {
-                    "path": "app/view/concept/",
-                    "name": "SummeryForm.js"
-                },
-                {
-                    "path": "app/controller/",
-                    "name": "SummeryForm.js"
                 },
                 {
                     "path": "app/view/larkc_pharm_by_target/",
@@ -250,6 +234,22 @@
                     "name": "PharmByTargetNameForm.js"
                 },
                 {
+                    "path": "app/view/pharm_by_cmpd_name2/",
+                    "name": "PharmByCmpdNameForm.js"
+                },
+                {
+                    "path": "app/controller/",
+                    "name": "PharmByCmpdNameForm.js"
+                },
+                {
+                    "path": "app/view/concept/",
+                    "name": "SummeryForm.js"
+                },
+                {
+                    "path": "app/controller/",
+                    "name": "SummeryForm.js"
+                },
+                {
                     "path": "app/view/textmining/",
                     "name": "pmidTextMiningHitsForm.js"
                 },
@@ -266,16 +266,16 @@
                     "name": "pathwayByProteinForm.js"
                 },
                 {
-                    "path": "app/view/cmpd_by_name/",
-                    "name": "CmpdByNameForm.js"
-                },
-                {
                     "path": "app/view/pathways/",
                     "name": "pathwayByCompoundForm.js"
                 },
                 {
                     "path": "app/controller/",
                     "name": "pathwayByCompoundForm.js"
+                },
+                {
+                    "path": "app/view/cmpd_by_name/",
+                    "name": "CmpdByNameForm.js"
                 },
                 {
                     "path": "app/view/",
@@ -330,16 +330,8 @@
                     "name": "CsvFormatter.js"
                 },
                 {
-                    "path": "/app/view/ux/exporter/excelFormatter/",
-                    "name": "ExcelFormatter.js"
-                },
-                {
                     "path": "ext/examples/ux/grid/filter/",
                     "name": "BooleanFilter.js"
-                },
-                {
-                    "path": "ext/examples/ux/grid/filter/",
-                    "name": "ListFilter.js"
                 },
                 {
                     "path": "ext/examples/ux/grid/filter/",
@@ -351,15 +343,23 @@
                 },
                 {
                     "path": "ext/examples/ux/grid/filter/",
+                    "name": "ListFilter.js"
+                },
+                {
+                    "path": "/app/view/ux/exporter/excelFormatter/",
+                    "name": "ExcelFormatter.js"
+                },
+                {
+                    "path": "ext/examples/ux/grid/filter/",
                     "name": "StringFilter.js"
                 },
                 {
                     "path": "/app/view/ux/exporter/excelFormatter/",
-                    "name": "Worksheet.js"
+                    "name": "Workbook.js"
                 },
                 {
                     "path": "/app/view/ux/exporter/excelFormatter/",
-                    "name": "Workbook.js"
+                    "name": "Worksheet.js"
                 },
                 {
                     "path": "/app/view/ux/exporter/excelFormatter/",
