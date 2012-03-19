@@ -52,16 +52,16 @@ Ext.define('LSP.controller.pmidTextMiningHitsForm', {
                     form.form.findField('title').setValue(Ext.JSON.decode(title).title);
                 }
             });
-            Ext.Ajax.request({
-                url:'core_api_calls/pmid2abstract.json',
-                params:{
-                    pubmed_uri:values.pmid_uri
-                },
-                success:function (response) {
-                    var abst = response.responseText;
-                    form.form.findField('abstract').setValue(Ext.JSON.decode(abst).abstract);
-                }
-            });
+//             Ext.Ajax.request({
+//                 url:'core_api_calls/pmid2abstract.json',
+//                 params:{
+//                     pubmed_uri:values.pmid_uri
+//                 },
+//                 success:function (response) {
+//                     var abst = response.responseText;
+//                     form.form.findField('abstract').setValue(Ext.JSON.decode(abst).abstract);    // NB! abstract might be a reserved keyword
+//                 }
+//             });
 //       Ext.Ajax.request({
 //           url: 'core_api_calls/pmid2concepts.json',
 //           params: {
