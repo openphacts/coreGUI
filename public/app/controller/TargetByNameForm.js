@@ -44,33 +44,10 @@ Ext.define('LSP.controller.TargetByNameForm', {
 
             var form = this.getFormView();
             var target_uri = form.getValues().protein_uri;
-
             var store = this.getTargetsStore();
-//            var tp = this.getTargetPanel();
-//            store.addListener('load', tp.showData, tp);
 
             store.proxy.extraParams.protein_uri = target_uri;
             store.load();
-//                {
-//                    scope:this,
-//                    callback:function (records, operation, success) {
-//                        if (success) {
-//                            if (records.length > 0) {
-//                                tp.showData(records[0]);
-//                            } else {
-//                                tp.showMessage('No records found within OPS for this search');
-//                            }
-//                        }
-//                        else {
-//                            tp.showMessage('Error contacting OPS core API');
-//                        }
-//                    }
-//                }
-//            );
-            tp.endLoading();
-            button.enable();
         }
-
-
     }
 );

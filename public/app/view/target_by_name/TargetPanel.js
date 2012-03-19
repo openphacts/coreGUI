@@ -105,7 +105,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }, this);
         var img = this.down('#target_image');
         img.setSrc('/images/target_placeholder.png');
-
         this.doLayout();
     },
 
@@ -131,6 +130,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         } else {
             this.showMessage('Server did not respond');
         }
+        this.endLoading();
+        var searchButton = Ext.ComponentQuery.query('#TargetByNameSubmit_id')[0].enable();
     },
 
     clearDomBelow:function (domElement) {
