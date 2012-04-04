@@ -33,13 +33,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                     style:'background-color: #fff;',
                     items:[
                         {
-                            xtype:'conceptWikiCompoundLookup',
-                            fieldLabel:'Compound name',
-                            forceSelection:true,
-                            allowBlank:false,
-                            typeAhead:true,
-                            typeAheadDelay:250,
-                            queryDelay:70
+                            xtype:'conceptWikiCompoundLookup'
                         },
                         {
                             xtype:'button',

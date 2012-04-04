@@ -33,8 +33,6 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
     forceSelection:true,
     allowBlank:false,
     typeAhead:true,
-    typeAheadDelay:150,
-    queryDelay:70,
     emptyText:'Start typing...',
     margin:'5 5 5 5',
     width:700,
