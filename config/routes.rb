@@ -1,5 +1,5 @@
 LSP4All::Application.routes.draw do
-  
+
   get "home/index", :as => :home
   
   resources :users

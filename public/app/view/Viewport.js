@@ -47,12 +47,39 @@ Ext.define('LSP.view.Viewport', {
         'LSP.view.user.Logoutbutton',
         'LSP.view.user.Newbutton',
         'Ext.layout.container.Border',
-        'Ext.toolbar.Spacer'
+        'Ext.toolbar.Spacer',
+        'LSP.store.GuiComponents'
     ],
 
     layout:'border',
 
     initComponent:function () {
+        Ext.History.init();
+
+        Ext.History.on('change', function (token) {
+            if (token) {
+                var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
+                var records = appModStore.queryBy(
+                    function (record, id) {
+                        if (record.raw.xtype == token) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                );
+                if (records) {
+                    if (records.getCount() > 0) {
+                        var record = records.first();
+                        Ext.ComponentQuery.query('appmoduletree')[0].changeView(record);
+                    }
+                }
+            }
+        });
+
+        this.on('render', function () {
+
+        });
 
         var ops_logo = Ext.create('Ext.Img', {src:'images/ops_logo.png', bodyStyle:{background:'transparent'}});
         this.items = [
