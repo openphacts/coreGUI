@@ -53,33 +53,35 @@ Ext.define('LSP.view.Viewport', {
 
     layout:'border',
 
+    handleHistoryToken:function (token) {
+        console.log('Viewport History change: ' + token);
+        var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
+        var records = appModStore.queryBy(
+            function (record, id) {
+                if (record.raw.xtype == token) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        );
+        if (records) {
+            if (records.getCount() > 0) {
+                var record = records.first();
+                Ext.ComponentQuery.query('appmoduletree')[0].changeView(record);
+            }
+        }
+    },
+
+
     initComponent:function () {
         Ext.History.init();
 
         Ext.History.on('change', function (token) {
             if (token) {
-                var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
-                var records = appModStore.queryBy(
-                    function (record, id) {
-                        if (record.raw.xtype == token) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                );
-                if (records) {
-                    if (records.getCount() > 0) {
-                        var record = records.first();
-                        Ext.ComponentQuery.query('appmoduletree')[0].changeView(record);
-                    }
-                }
+                this.handleHistoryToken(token);
             }
-        });
-
-        this.on('render', function () {
-
-        });
+        }, this);
 
         var ops_logo = Ext.create('Ext.Img', {src:'images/ops_logo.png', bodyStyle:{background:'transparent'}});
         this.items = [
