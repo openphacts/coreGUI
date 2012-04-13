@@ -11,6 +11,11 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         {
             ref:'gridView', // reference to the views grid
             selector:'PharmEnzymeForm dynamicgrid3'
+        },
+        {
+            ref:'submitButton',
+            selector:'#submitEnzymePharm_id'
+
         }
     ],
 
@@ -45,6 +50,20 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
             var form_values = add_next_button.up('form').getValues();
             grid_controller.addNextRecords(grid_view, form_values);
         });
+        grid_view.store.proxy.actionMethods = {read:'POST'};
+        grid_view.store.proxy.api.read = grid_view.readUrl;
+        //previously multiple 'load' event listeners were being added.
+        //one before every store load
+        //this was slowing everything down
+        var form = this.getPEform();
+        var button = this.getSubmitButton();
+        grid_view.store.on('load', function (this_store, records, success) {
+            grid_controller.storeLoad(grid_view, success);
+            form.doLayout();
+            button.enable();
+            grid_view.doLayout();
+            grid_view.doComponentLayout();
+        });
     },
 
     // Launch Enzyme class selection window
@@ -68,22 +87,11 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     submitQuery:function (button) {
-
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
         var grid = this.getGridView();
-        grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.extraParams = values;
-        grid.store.proxy.api.read = grid.readUrl;
         grid.store.load({params:{ offset:0, limit:100}});
-        grid.store.on('load', function (this_store, records, success) {
-            grid_controller.storeLoad(grid, success);
-            form.doLayout();
-            button.enable();
-        });
-
-
     }
 });
