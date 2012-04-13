@@ -44,10 +44,8 @@ Ext.define('LSP.controller.TargetByNameForm', {
 
             var form = this.getFormView();
             var target_uri = form.getValues().protein_uri;
-            var store = this.getTargetsStore();
 
-            store.proxy.extraParams.protein_uri = target_uri;
-            store.load();
+            Ext.History.add('TargetByNameForm=' + target_uri);
         }
     }
 );

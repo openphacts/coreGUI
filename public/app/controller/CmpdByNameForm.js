@@ -42,38 +42,14 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         },
 
         submitQuery:function (button) {
-            var me = this;
-            var form = button.up('form');
             button.disable();
             var tp = this.getCmpdByNameSingleDisplayForm();
             tp.startLoading();
-            var values = form.getValues();
-            //var grid = this.getGridView();
 
-            var store = this.getCompoundsStore();
-            store.proxy.extraParams.compound_uri = values;
+            var form = this.getFormView();
+            var compound_uri = form.getValues().compound_uri;
 
-            store.load({
-                scope:this,
-                callback:function (records, operation, success) {
-                    if (success) {
-                        if (records.length > 0) {
-                            var csid = records[0].data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                            me.getCompoundImagePanel().setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-                            tp.showRecord(records[0]);
-                        } else {
-                            tp.showNoDataMessage();
-                        }
-                    }
-                    else {
-                        tp.showErrorMessage();
-                    }
-                }
-            });
-            tp.endLoading();
-            button.enable();
-
-
+            Ext.History.add('CmpdByNameForm=' + compound_uri);
         }
     }
 );

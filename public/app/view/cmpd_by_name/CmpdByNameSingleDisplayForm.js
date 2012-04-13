@@ -39,7 +39,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             itemId:'compound_form_imagepanel',
                             width:150,
                             height:150,
-                            src:'' // e.g. Sorafenib
+                            src:'/images/target_placeholder.png' // e.g. Sorafenib
                             //html: '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=2157" height="150" width="150" />',  // Viagra
 
                         },
@@ -60,16 +60,19 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'compound_name',
+                                    itemId:'compound_name',
                                     //text: 'Sorafenib',
                                     fieldCls:'x-cmpTitle'
                                 },
                                 {
                                     xtype:'displayfield',
-                                    value:'<br>'
+                                    value:'<br>',
+                                    itemId:'spacer1'
                                 },
                                 {
                                     xtype:'displayfield',
                                     name:'description',
+                                    itemId:'description',
                                     fieldCls:'x-cmpDescriptions',
                                     width:680
 
@@ -88,11 +91,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                      'targeting of the Raf/Mek/Erk pathway.' */
                                 },
                                 {
-                                    xtype:'displayfield'
+                                    xtype:'displayfield',
+                                    itemId:'spacer2'
                                 },
                                 {
                                     xtype:'displayfield',
                                     name:'biotransformation',
+                                    itemId:'biotransformation',
                                     fieldCls:'x-cmpDescriptions',
                                     width:680
                                     /*
@@ -114,6 +119,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'chemspider_id',
+                                    itemId:'chemspider_id',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     labelAlign:'left',
@@ -123,6 +129,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'molformula',
+                                    itemId:'molformula',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:400,
@@ -133,6 +140,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'smiles',
+                                    itemId:'smiles',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     labelAlign:'left',
@@ -142,6 +150,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'inchi',
+                                    itemId:'inchi',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:650,
@@ -153,6 +162,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'inchiKey',
+                                    itemId:'inchiKey',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:400,
@@ -163,6 +173,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'affectedOrganism',
+                                    itemId:'affectedOrganism',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:300,
@@ -173,6 +184,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'indication',
+                                    itemId:'indication',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:650,
@@ -183,6 +195,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'proteinBinding',
+                                    itemId:'proteinBinding',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:650,
@@ -193,6 +206,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'toxicity',
+                                    itemId:'toxicity',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:650,
@@ -202,6 +216,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 {
                                     xtype:'displayfield',
                                     name:'meltingPoint',
+                                    itemId:'meltingPoint',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
                                     width:650,
@@ -235,6 +250,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'alogp',
+                            itemId:'alogp',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'ALogP',
@@ -245,6 +261,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'hha',
+                            itemId:'hha',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'# H-Bond Receptors',
@@ -255,6 +272,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'hhd',
+                            itemId:'hhd',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'# H-Bond Donors',
@@ -265,6 +283,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'molweight',
+                            itemId:'molweight',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'Mol Weight',
@@ -275,6 +294,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'mw_freebase',
+                            itemId:'mw_freebase',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'MW Freebase',
@@ -285,6 +305,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'num_ro5_violations',
+                            itemId:'num_ro5_violations',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'# Rule of 5 Violations',
@@ -295,6 +316,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'psa',
+                            itemId:'psa',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'Polar Surface Area',
@@ -305,6 +327,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         {
                             xtype:'displayfield',
                             name:'rtb',
+                            itemId:'rtb',
                             fieldCls:'x-cmpBottomfieldValue', // value
                             baseCls:'x-cmpBottomBase', // label
                             fieldLabel:'# Rotatable Bonds',
@@ -313,11 +336,22 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             //value: '6'
                         }
                     ]
+                },
+                {
+                    xtype:'displayfield',
+                    border:0,
+                    padding:'20px',
+                    itemId:'msg',
+                    region:'center',
+                    hidden:true,
+                    fieldCls:'compound-message',
+                    value:'message here'
                 }
             ]
 
         });
-
+        var store = Ext.data.StoreManager.lookup('Compounds');
+        store.addListener('load', this.showData, this);
         this.callParent(arguments);
 
     },
@@ -330,30 +364,76 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         this.setLoading(false);
     },
 
-    showRecord:function (record) {
-        //var mf = this.query('#messageField')[0];
-        //mf.hide();
-        //var img = Ext.get('imagePanel');
-        //img.html= '<img src="http://www.chemspider.com/ImagesHandler.ashx?id=187440" height="150" width="150" />';
-        var dp = this.query('#dataPanel')[0]
-        dp.show();
+    showData:function (store, records, succesful) {
+        if (succesful) {
+            if (records.length > 0) {
+                var record = store.first();
 
-        var tp = this.query('#topPanelDetails')[0]
-        tp.show();
+                var dp = this.query('#dataPanel')[0];
+                dp.show();
 
-        var bp = this.query('#bottomPanelDetails')[0]
-        bp.show();
+                var tp = this.query('#topPanelDetails')[0];
+                tp.show();
 
-        var ip = this.query('#compound_form_imagepanel')[0]
-        ip.show();
+                var bp = this.query('#bottomPanelDetails')[0];
+                bp.show();
 
-        this.form.reset();
-        this.loadRecord(record);
+                var ip = this.query('#compound_form_imagepanel')[0];
+                var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+                ip.show();
+
+                var msg = this.down('#msg');
+                msg.hide();
+
+                this.setValues(record);
+            } else {
+                this.showMessage('No records found within OPS for this search');
+            }
+        } else {
+            this.showMessage('Server did not respond');
+        }
+        this.endLoading();
+        var searchButton = Ext.ComponentQuery.query('#CmpdByNameSubmit_id')[0].enable();
+    },
+
+    resetAllFields:function () {
+        var displayFields = this.query('displayfield');
+        Ext.each(displayFields, function (field) {
+            field.hide();
+        }, this);
         this.doLayout();
-
     },
 
-    showErrorMessage:function () {
+    showSpacerFields:function () {
+        var spacer = this.down('#spacer1');
+        spacer.show();
+        spacer = this.down('#spacer2');
+        spacer.show();
+    },
+
+    setValues:function (compound) {
+        this.resetAllFields();
+        this.showSpacerFields();
+        var td = compound.data;
+
+        for (var prop in td) {
+            if (td.hasOwnProperty(prop)) {
+                console.log("Field: " + prop + " Value: " + td[prop]);
+
+                var field = this.down('#' + prop);
+                if (field) {
+                    field.setValue(td[prop]);
+                    field.show();
+                } else {
+                    console.log("No itemId for: " + prop);
+                }
+            }
+        }
+        this.doLayout();
+    },
+
+    showMessage:function (message) {
         var dp = this.query('#dataPanel')[0];
         dp.hide();
 
@@ -366,26 +446,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         var ip = this.query('#compound_form_imagepanel')[0]
         ip.hide();
 
-        //var field = this.query('#messageField')[0];
-        //field.setRawValue('Server did not respond');
-        //field.show();
-    },
-
-    showNoDataMessage:function () {
-        var dp = this.query('#dataPanel')[0];
-        dp.hide();
-
-        var tp = this.query('#topPanelDetails')[0]
-        tp.hide();
-
-        var bp = this.query('#bottomPanelDetails')[0]
-        bp.hide();
-
-        var ip = this.query('#compound_form_imagepanel')[0]
-        ip.hide();
-        //var field = this.query('#messageField')[0];
-        //field.setRawValue('No records found within OPS for this search');
-        //field.show();
+        var msg = this.query('#msg')[0];
+        msg.setValue(message);
+        msg.setVisible(true);
     }
-
 });

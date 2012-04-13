@@ -56,5 +56,14 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
 //                        }
         ]
         this.callParent(arguments);
+    },
+
+    setFormData:function (formData) {
+        //formdata comes directly from form via history
+        //load data
+        //this needs to be the function that does everything after clicking the button
+        var store = Ext.data.StoreManager.lookup('Targets');
+        store.proxy.extraParams.protein_uri = formData;
+        store.load();
     }
 });

@@ -52,5 +52,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
             ]
         });
         this.callParent(arguments);
+    },
+
+    setFormData:function (formData) {
+        //load data
+        //this needs to be the function that does everything after clicking the button
+        //        Ext.ComponentQuery.query('conceptWikiProteinLookup')[0].protein_uri = formData;
+        var store = Ext.data.StoreManager.lookup('Compounds');
+        store.proxy.extraParams.compound_uri = formData;
+        store.load();
     }
 });

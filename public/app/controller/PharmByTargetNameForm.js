@@ -47,6 +47,20 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             var form_values = add_next_button.up('form').getValues();
             grid_controller.addNextRecords(grid_view, form_values);
         });
+        grid_view.store.proxy.actionMethods = {read:'POST'};
+        grid_view.store.proxy.api.read = grid_view.readUrl;
+        //previously multiple 'load' event listeners were being added.
+        //one before every store load
+        //this was slowing everything down
+        var form = this.getFormView();
+        var button = this.getSubmitButton();
+        grid_view.store.on('load', function (this_store, records, success) {
+            grid_controller.storeLoad(grid_view, success);
+            form.doLayout();
+            button.enable();
+            grid_view.doLayout();
+            grid_view.doComponentLayout();
+        });
     },
 
     createGridColumns:function () {
@@ -68,15 +82,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var values = form.getValues();
         var grid = this.getGridView();
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');    // NB this was not a var but global - check!
-        grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.extraParams = values;
-        grid.store.proxy.api.read = grid.readUrl;
         grid.store.load({params:{ offset:0, limit:100}});
-        grid.store.on('load', function (this_store, records, success) {
-            grid_controller.storeLoad(grid, success);
-            form.doLayout();
-            button.enable();
-        });
     }
 
 

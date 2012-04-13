@@ -22,9 +22,13 @@ Ext.define('LSP.store.GuiComponents', {
 
         listeners:{
             load:{
+                //triggered when GuiComponents store has loaded
+                //load is triggered automatically by NavigationTree controller creation
+                //check for an initial history token
+                //then pass it to the central Viewport history token handler method, bypassing history change
                 fn:function () {
                     var currentToken = Ext.History.getToken();
-                    console.log('GuiComponents onLoad: Initial HistoryToken: ' + currentToken);
+//                    console.log('GuiComponents onLoad: Initial HistoryToken: ' + currentToken);
                     if (currentToken) {
                         if (currentToken.length > 0) {
                             var viewPort = Ext.ComponentQuery.query('lspviewport')[0];

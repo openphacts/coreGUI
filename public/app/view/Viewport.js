@@ -53,8 +53,8 @@ Ext.define('LSP.view.Viewport', {
 
     layout:'border',
 
-    handleHistoryToken:function (token) {
-        console.log('Viewport History change: ' + token);
+    //gets a record from GuiComponents store by its xtype
+    getFormByXtype:function (token) {
         var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
         var records = appModStore.queryBy(
             function (record, id) {
@@ -68,15 +68,68 @@ Ext.define('LSP.view.Viewport', {
         if (records) {
             if (records.getCount() > 0) {
                 var record = records.first();
-                Ext.ComponentQuery.query('appmoduletree')[0].changeView(record);
+                return record;
+            }
+        }
+    },
+
+    //all UI changes should come through this function
+    handleHistoryToken:function (token) {
+        if (token) {
+            console.log('Viewport History change: ' + token);
+
+            var bits = token.split('=');
+            if (bits.length > 1) {
+                var form = this.getFormByXtype(bits[0]);
+                if (form) {
+                    this.changeView(form, bits[1]);
+                }
+            } else {
+                var form = this.getFormByXtype(token);
+                if (form) {
+                    this.changeView(form);
+                }
+            }
+        }
+
+
+    },
+
+    //this handles the changing of central ui panel
+    changeView:function (record, formData) {
+        var view;
+        Ext.getCmp('centerView').items.each(function (curItem) {
+            if (curItem.gridId == record.raw.id) {
+                view = curItem;
+                return;
+            }
+        });
+        if (!view) {
+            view = Ext.widget(record.raw.xtype);
+            view.setTitle(record.raw.home);
+            view.url = record.raw.url;
+            view.gridId = record.raw.id;
+            Ext.getCmp('centerView').add(view);
+        }
+        Ext.getCmp('centerView').setActiveTab(view);
+
+        //this handles any formData provided by the History token
+        //e.g. record = 'CmpdByNameForm'
+        // formData = 'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc'
+        //it is the individual forms responsibility to process the formData string
+        if (formData) {
+            if (view.setFormData) {
+                view.setFormData(formData);
             }
         }
     },
 
 
     initComponent:function () {
+        //init history, needs to be done first
         Ext.History.init();
-
+        //add event listener for History 'change' event
+        //listener sends new history token to handleHistoryToken function with Viewport scope
         Ext.History.on('change', function (token) {
             if (token) {
                 this.handleHistoryToken(token);

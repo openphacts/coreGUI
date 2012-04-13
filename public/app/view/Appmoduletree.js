@@ -58,27 +58,7 @@ Ext.define('LSP.view.Appmoduletree', {
         }
     },
 
-    changeView:function (record) {
-        var view;
-        Ext.getCmp('centerView').items.each(function (curItem) {
-            if (curItem.gridId == record.raw.id) {
-                view = curItem;
-                return;
-            }
-        });
-        if (!view) {
-            view = Ext.widget(record.raw.xtype);
-            view.setTitle(record.raw.home);
-            view.url = record.raw.url;
-            view.gridId = record.raw.id;
-            Ext.getCmp('centerView').add(view);
-        }
-        Ext.getCmp('centerView').setActiveTab(view);
-//
-    },
-
     initComponent:function () {
         this.callParent(arguments);
     }
-})
-;
+});
