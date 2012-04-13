@@ -149,6 +149,9 @@ puts results.inspect
             result[:concept_label] = label['text']          
           end
           if label['type'] == "ALTERNATIVE"
+            #this line causes errors if the submitted string does not compile as a regex
+            #why are we returning html <b> tags to the UI anyway
+            #Can we not use javascript to do this regex work
             alt_label = label['text'].gsub(Regexp.new(substring, true),"<b>#{substring}</b>")
             alt_labels.push(alt_label)          
           end  
