@@ -16,7 +16,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
         this.items = [
             {
                 xtype:'label',
-                html:'<font face="verdana" color="grey">Hint: Type in compound name. E.g. \"Aspirin\"</font>',
+                html:'<span style="font-family: verdana; color: grey; ">Hint: Type in compound name. E.g. \"Aspirin\"</span>',
                 labelWidth:400,
                 padding:'5 0 0 140'
             },

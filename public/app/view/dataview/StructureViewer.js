@@ -15,7 +15,7 @@ Ext.define('LSP.view.dataview.StructureViewer', {
     width:810,
 
     initComponent:function () {
-        var store = structureViewStore
+        var store = structureViewStore;
         var dataview = Ext.create('Ext.view.View', {
             deferInitialRefresh:false,
             store:store,

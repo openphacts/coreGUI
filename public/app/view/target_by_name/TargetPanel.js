@@ -91,7 +91,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 fieldCls:'target-message',
                 value:'message here'
             }
-        ]
+        ];
 
         var store = Ext.data.StoreManager.lookup('Targets');
         store.addListener('load', this.showData, this);

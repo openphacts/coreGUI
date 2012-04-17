@@ -47,7 +47,7 @@ Ext.define('LSP.controller.pathwayByProteinForm', {
         submitQuery:function (button) {
             var form = button.up('form');
             button.disable();
-            values = form.getValues();
+            var values = form.getValues();
             var grid = form.query('dynamicgrid2')[0];
             grid.store.proxy.extraParams = values;
             grid.store.proxy.api.read = 'core_api_calls/wiki_pathways_by_protein.json';

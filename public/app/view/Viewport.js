@@ -33,7 +33,7 @@
  ########################################################################################*/
 
 /* replace with the settings panel options later on */
-iconSize = 'small'
+iconSize = 'small';
 
 Ext.define('LSP.view.Viewport', {
     extend:'Ext.container.Viewport',
@@ -58,17 +58,12 @@ Ext.define('LSP.view.Viewport', {
         var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
         var records = appModStore.queryBy(
             function (record, id) {
-                if (record.raw.xtype == token) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return record.raw.xtype == token;
             }
         );
         if (records) {
             if (records.getCount() > 0) {
-                var record = records.first();
-                return record;
+                return records.first();
             }
         }
     },
@@ -201,7 +196,7 @@ Ext.define('LSP.view.Viewport', {
                 width:225,
                 xtype:'navigator'
             }
-        ]
+        ];
         this.callParent(arguments);
     }
 });

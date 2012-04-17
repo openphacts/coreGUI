@@ -109,7 +109,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             search_type = 'substructure';
         }
         else if (values.search_type == '3') {   //  Similarity search
-            grid_title = 'Similarity search'
+            grid_title = 'Similarity search';
             search_type = 'similarity';
             //  In the future this parameters should be taken from the UI. 
             //  But right now in order to make Similarity search more realistic they are entered manually.

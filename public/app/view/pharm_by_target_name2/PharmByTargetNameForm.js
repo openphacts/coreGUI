@@ -21,7 +21,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
         this.items = [
             {
                 xtype:'label',
-                html:'<font face="verdana" color="grey">Hint: Type in protein name and species. E.g. \"ADA protein human\"</font>',
+                html:'<span style="font-family: verdana; color: grey; ">Hint: Type in protein name and species. E.g. \"ADA protein human\"</span>',
                 labelWidth:400,
                 padding:'5 0 0 140'
             },

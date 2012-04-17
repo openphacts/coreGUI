@@ -437,13 +437,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         var dp = this.query('#dataPanel')[0];
         dp.hide();
 
-        var tp = this.query('#topPanelDetails')[0]
+        var tp = this.query('#topPanelDetails')[0];
         tp.hide();
 
-        var bp = this.query('#bottomPanelDetails')[0]
+        var bp = this.query('#bottomPanelDetails')[0];
         bp.hide();
 
-        var ip = this.query('#compound_form_imagepanel')[0]
+        var ip = this.query('#compound_form_imagepanel')[0];
         ip.hide();
 
         var msg = this.query('#msg')[0];
