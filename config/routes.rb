@@ -1,16 +1,16 @@
 LSP4All::Application.routes.draw do
 
   get "home/index", :as => :home
-  
+
   resources :users
   resources :application_modules
-  
-  get    'login(.:format)'  => 'user_sessions#new',     :as => :login
-  post   'login(.:format)'  => 'user_sessions#create',  :as => :login
+
+  get 'login(.:format)' => 'user_sessions#new', :as => :login
+  post 'login(.:format)' => 'user_sessions#create', :as => :login
   delete 'logout(.:format)' => 'user_sessions#destroy', :as => :logout
   # Extjs not very restfull by default  
-  get    'login_required(.:format)' => 'user_sessions#login_required', :as => :login_required
-  
+  get 'login_required(.:format)' => 'user_sessions#login_required', :as => :login_required
+
   resources :sparql_endpoint do
     collection do
       get :cmpd_name_lookup
@@ -27,49 +27,55 @@ LSP4All::Application.routes.draw do
       post :concept_object_summery
       post :concept_subject_summery
       post :settings
-    end  
-  end
-  
-  resources :core_api_calls do 
-    collection do
-       get :check
-       get :cmpd_name_lookup
-       get :protein_lookup
-       get :pmid_lookup
-       get :wiki_pathway_compound_lookup
-       get :wiki_pathway_protein_lookup
-       post :sparql
-       post :protein_info
-       post :pharm_by_compound_name
-       post :pharm_by_protein_name
-       post :pharm_enzyme_fam
-       post :search_by_smiles
-       post :compound_info
-       post :pmid2title                                       
-       post :pmid2abstract
-       post :get_chem_info4known_csids   
-       get :pmid2concepts                                       
-       get :wiki_pathways_by_compound
-       get :wiki_pathways_by_protein
     end
   end
-  
-  resources :concept_wiki_api_calls do 
+
+  resources :core_api_calls do
     collection do
-       get :concept_lookup
-       get :compound_lookup
-       get :protein_lookup                               
+      get :check
+      get :cmpd_name_lookup
+      get :protein_lookup
+      get :pmid_lookup
+      get :wiki_pathway_compound_lookup
+      get :wiki_pathway_protein_lookup
+      post :sparql
+      post :protein_info
+      post :pharm_by_compound_name
+      post :pharm_by_protein_name
+      post :pharm_enzyme_fam
+      post :search_by_smiles
+      post :compound_info
+      post :pmid2title
+      post :pmid2abstract
+      post :get_chem_info4known_csids
+      get :pmid2concepts
+      get :wiki_pathways_by_compound
+      get :wiki_pathways_by_protein
+    end
+  end
+
+  resources :concept_wiki_api_calls do
+    collection do
+      get :concept_lookup
+      get :compound_lookup
+      get :protein_lookup
     end
   end
 
   resources :enzymes do
-     collection do
-       get :index
-     end
+    collection do
+      get :index
+    end
   end
-  
+
+  resources :feedback do
+    collection do
+      post :index
+    end
+  end
+
   root :to => "home#index"
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -38,10 +38,22 @@ module LSP4All
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+
     # When JSON-encoding a record, don't wrap the attributes in a hash where the
     config.active_record.include_root_in_json = false
     config.active_record.schema_format = :sql
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        :address => "smtp.gmail.com",
+        :port => 587,
+        :user_name => 'openphactscoregui@gmail.com',
+        :password => 'onTheF1rstOfMay',
+        :authentication => :plain,
+        :enable_starttls_auto => true
+    }
+
+    config.action_mailer.raise_delivery_errors = true
 
   end
 end
