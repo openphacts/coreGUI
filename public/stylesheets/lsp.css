@@ -181,3 +181,25 @@
     font-style: italic;
     color: rgb(0, 0, 0);
 }
+
+.fb-panel {
+    padding: 3px;
+    height: 450px;
+}
+
+.fb-message {
+    background-color: rgb(230, 230, 230);
+    padding: 3px;
+}
+
+.fb-button {
+}
+
+.fb-email {
+}
+
+.fb-text {
+}
+
+.fb-accordion {
+}
