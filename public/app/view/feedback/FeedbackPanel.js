@@ -15,12 +15,22 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
     items:[
         {
             xtype:'displayfield',
-            anchor:'100%',
-            itemId:'fpUserMessage',
-            fieldCls:'fb-message',
-            value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
+            value:'<br>',
+            itemId:'spacer1'
         },
-
+        {
+            xtype:'displayfield',
+            anchor:'100%',
+            itemId:'fpUserMessage1',
+            fieldCls:'fb-message',
+            //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
+            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer2'
+        },
         {
             xtype:'textfield',
             anchor:'100%',
