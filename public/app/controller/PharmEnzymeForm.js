@@ -98,13 +98,28 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         var tree = button.up().up().down('enzymeTree');
         var selected = tree.getView().getSelectionModel().getSelection();
         var sel_data = selected[0].data;
-        var disp_field = this.getPEform().getForm().findField('enzyme_family');
-        disp_field.setValue('<b>' + sel_data.ec_number + ' : ' + sel_data.name + '</b>');
-        var ec_num_field = this.getPEform().getForm().findField('ec_number');
-        ec_num_field.setValue(sel_data.ec_number);
-        var enz_name_field = this.getPEform().getForm().findField('enz_name');
-        enz_name_field.setValue(sel_data.name);
-        this.hideEnzyme('');
+
+        if (sel_data.leaf) {
+
+            Ext.Msg.show({
+                title:'Incorrect selection',
+                msg:'Please select an enzyme class (folder).',
+                buttons:Ext.MessageBox.OK,
+                icon:Ext.MessageBox.INFO
+            });
+
+        } else {
+
+            var disp_field = this.getPEform().getForm().findField('enzyme_family');
+            disp_field.setValue('<b>' + sel_data.ec_number + ' : ' + sel_data.name + '</b>');
+            var ec_num_field = this.getPEform().getForm().findField('ec_number');
+            ec_num_field.setValue(sel_data.ec_number);
+            var enz_name_field = this.getPEform().getForm().findField('enz_name');
+            enz_name_field.setValue(sel_data.name);
+            button.up('EnzymeTreeForm').close();
+
+        }
+
     },
 
     submitQuery:function (button) {
