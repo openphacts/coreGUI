@@ -12,8 +12,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             // ROOT Panel
             xtype:'panel',
             bodyPadding:10,
-//             width: 1000,
-//             height: 750,
+            //width: 1000,
+            //height: 750,
             title:'Compound by Name search results',
             layout:'anchor',
             suspendLayout:true,
@@ -24,7 +24,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                     // TOP Panel
                     xtype:'panel',
                     itemId:'topPanelDetails',
-//                   width: 1000,
+                    //width: 1000,
                     border:false,
                     layout:'column',
                     suspendLayout:true,
@@ -114,6 +114,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 },
                                 {
                                     xtype:'displayfield',
+                                    itemId:'spacer3',
                                     value:'<br>'
                                 },
                                 {
@@ -143,6 +144,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     itemId:'smiles',
                                     cls:'x-cmpfield',
                                     labelWidth:120,
+                                    width:650,
                                     labelAlign:'left',
                                     fieldLabel:'SMILES'
                                     //value: 'CNC(=O)c1cc(ccn1)Oc2ccc(cc2)NC(=O)Nc3ccc(c(c3)C(F)(F)F)Cl'
@@ -236,7 +238,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                     itemId:'bottomPanelDetails',
                     bodyPadding:30,
                     border:false,
-                    height:200,
+                    height:100,
                     layout:'column',
                     hidden:true,
 
@@ -369,6 +371,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             if (records.length > 0) {
                 var record = store.first();
 
+                console.log("Number of records returned " + records.length);
+
                 var dp = this.query('#dataPanel')[0];
                 dp.show();
 
@@ -410,6 +414,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         spacer.show();
         spacer = this.down('#spacer2');
         spacer.show();
+        spacer = this.down('#spacer3');
+        spacer.show();
     },
 
     setValues:function (compound) {
@@ -423,8 +429,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                 var field = this.down('#' + prop);
                 if (field) {
+
                     field.setValue(td[prop]);
                     field.show();
+
                 } else {
                     console.log("No itemId for: " + prop);
                 }
