@@ -7,7 +7,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         'Ext.grid.RowNumberer',
         'Ext.form.*',
         'Ext.ux.grid.FiltersFeature',
-        'LSP.view.dynamicgrid.feature.selectable'
+        'LSP.view.dynamicgrid.feature.selectable',
+        'Ext.selection.CellModel'
     ],
     autoScroll:true,
     layout:'fit',
@@ -16,7 +17,35 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
     limit:100,
     recordsLoaded:0,
     csid_column:false,
+    selModel:{
+        mode:'SINGLE',
+        listeners:{
+            select:{
+                fn:function (a, b, c, d, e) {
+//                    this.contextMenu.show();
+                },
+                scope:this
+            }
+        }
+    },
+    selType:'cellmodel',
+    contextMenu:null,
+
     initComponent:function () {
+
+        this.contextMenu = new Ext.menu.Menu({
+            item:[
+                {
+                    text:'Copy value', handler:this.showCopyValueWindow
+                },
+                {
+                    text:'Search for compound', handler:this.searchForCompound
+                },
+                {
+                    text:'Search for target', handler:this.searchForTarget
+                }
+            ]
+        });
 
         // initializing features for the grid
         var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
