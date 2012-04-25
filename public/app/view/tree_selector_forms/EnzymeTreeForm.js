@@ -45,32 +45,34 @@ Ext.define('LSP.view.tree_selector_forms.EnzymeTreeForm', {
     height:600,
     width:500,
 
+    items:[
+        {
+            xtype:'form',
+            padding:'0 0 0 0',
+            border:false,
+            style:'background-color: #fff;',
+
+            items:[
+                {
+                    xtype:'enzymeTree'
+                }
+            ]
+        }
+    ],
+
+    buttons:[
+        {
+            text:'Use selection',
+            action:'get_enzyme'
+        },
+        {
+            text:'Cancel',
+            action:'hide_enzyme_form'
+        }
+    ],
+
     initComponent:function () {
-        this.items = [
-            {
-                xtype:'form',
-                padding:'0 0 0 0',
-                border:false,
-                style:'background-color: #fff;',
-
-                items:[
-                    enztree = Ext.widget('enzymeTree')
-                ]
-            }
-        ];
-
-        this.buttons = [
-            {
-                text:'Use selection',
-                action:'get_enzyme'
-            },
-            {
-                text:'Cancel',
-                scope:this,
-                handler:this.close
-            }
-        ];
-
         this.callParent(arguments);
     }
-});
+})
+;

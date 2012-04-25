@@ -27,6 +27,9 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
             'EnzymeTreeForm button[action=get_enzyme]':{
                 click:this.getEnzyme
             },
+            'EnzymeTreeForm button[action=hide_enzyme_form]':{
+                click:this.hideEnzyme
+            },
             'PharmEnzymeForm #submitEnzymePharm_id':{
                 click:this.submitQuery
             }
@@ -69,8 +72,26 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     // Launch Enzyme class selection window
     launchEnzyme:function (button) {
         // Launch the window
-        var view = Ext.widget('EnzymeTreeForm');
+//        var view = Ext.widget('EnzymeTreeForm');
+        var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
+        if (view) {
+            console.log('enzyme show');
+            view.show();
+        } else {
+            console.log('enzyme create');
+            view = Ext.widget('EnzymeTreeForm');
+            view.show();
+        }
     },
+
+    hideEnzyme:function (button) {
+        var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
+        if (view) {
+            console.log('enzyme hide');
+            view.hide();
+        }
+    },
+
 
     // Get selection from the enzyme tree window
     getEnzyme:function (button) {
@@ -83,7 +104,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         ec_num_field.setValue(sel_data.ec_number);
         var enz_name_field = this.getPEform().getForm().findField('enz_name');
         enz_name_field.setValue(sel_data.name);
-        button.up('EnzymeTreeForm').close();
+        this.hideEnzyme('');
     },
 
     submitQuery:function (button) {
