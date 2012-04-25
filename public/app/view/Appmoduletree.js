@@ -53,7 +53,7 @@ Ext.define('LSP.view.Appmoduletree', {
         itemclick:function (tree, record, item, index, e, options) {
             if (record.raw.application_type == 'grid') {
                 // Check if panel with that ID exists, then switch
-                Ext.History.add(record.raw.xtype);
+                Ext.History.add('!p=' + record.raw.xtype);
             }
         }
     },

@@ -58,12 +58,21 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
         this.callParent(arguments);
     },
 
-    setFormData:function (formData) {
+    setFormData:function (historyTokenObject) {
         //formdata comes directly from form via history
         //load data
         //this needs to be the function that does everything after clicking the button
-        var store = Ext.data.StoreManager.lookup('Targets');
-        store.proxy.extraParams.protein_uri = formData;
-        store.load();
+
+        if (historyTokenObject.u) {
+            var store = Ext.data.StoreManager.lookup('Targets');
+            store.proxy.extraParams.protein_uri = historyTokenObject.u;
+            store.load();
+        } else if (historyTokenObject.s) {
+            var lookup = this.down('conceptWikiProteinLookup');
+            lookup.setRawValue(historyTokenObject.s);
+            lookup.doQuery(historyTokenObject.s);
+        }
+
+
     }
 });

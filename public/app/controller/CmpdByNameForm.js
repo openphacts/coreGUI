@@ -49,7 +49,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             var form = this.getFormView();
             var compound_uri = form.getValues().compound_uri;
 
-            Ext.History.add('CmpdByNameForm=' + compound_uri);
+            Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
         }
     }
 );

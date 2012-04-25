@@ -68,21 +68,41 @@ Ext.define('LSP.view.Viewport', {
         }
     },
 
+//    getObjectFromString:function (queryString) {
+//        var qBits = queryString.split('&');
+//        console.log(qBits);
+//        var obj = new Object();
+//        Ext.each(qBits, function (item, index) {
+//            console.log(item);
+//            if (item.length > 0) {
+//                var smallBits = item.split('=');
+//                if (smallBits.length == 1) {
+//                    obj[smallBits[0]] = '';
+//                } else if (smallBits.l == 2) {
+//                    obj[smallBits[0]] = smallBits[1];
+//                }
+//            }
+//
+//        });
+////        console.dir(obj);
+//        return obj;
+//    },
+
     //all UI changes should come through this function
     handleHistoryToken:function (token) {
+        //not null
         if (token) {
-            console.log('Viewport History change: ' + token);
-
-            var bits = token.split('=');
-            if (bits.length > 1) {
-                var form = this.getFormByXtype(bits[0]);
-                if (form) {
-                    this.changeView(form, bits[1]);
-                }
-            } else {
-                var form = this.getFormByXtype(token);
-                if (form) {
-                    this.changeView(form);
+            //must start with ! (shebang/hashbang can help with googlebot indexing, some people hate this kind of thing, personally i don't care)
+            if (token.indexOf('!') == 0) {
+//            console.log('Viewport History change: ' + token);
+                //cut off shebang
+                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
+//                console.dir(historyTokenObject);
+                if (historyTokenObject.p) {
+                    var form = this.getFormByXtype(historyTokenObject.p);
+                    if (form) {
+                        this.changeView(form, historyTokenObject);
+                    }
                 }
             }
         }
