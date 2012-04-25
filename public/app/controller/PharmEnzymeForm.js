@@ -75,10 +75,10 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
 //        var view = Ext.widget('EnzymeTreeForm');
         var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
         if (view) {
-            console.log('enzyme show');
+//            console.log('enzyme show');
             view.show();
         } else {
-            console.log('enzyme create');
+//            console.log('enzyme create');
             view = Ext.widget('EnzymeTreeForm');
             view.show();
         }
@@ -87,7 +87,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     hideEnzyme:function (button) {
         var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
         if (view) {
-            console.log('enzyme hide');
+//            console.log('enzyme hide');
             view.hide();
         }
     },
