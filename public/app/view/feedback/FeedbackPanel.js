@@ -35,7 +35,6 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'textarea',
             anchor:'100% 60%',
-            autoScroll:true,
             labelAlign:'top',
             itemId:'fpFeedbackText',
             fieldLabel:'Your feedback',
