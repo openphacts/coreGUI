@@ -126,7 +126,10 @@ Ext.define('LSP.view.Viewport', {
             view.gridId = record.raw.id;
             Ext.getCmp('centerView').add(view);
         }
-        Ext.getCmp('centerView').setActiveTab(view);
+        var centreView = Ext.getCmp('centerView');
+        centreView.suspendEvents(false);
+        centreView.setActiveTab(view);
+        centreView.resumeEvents();
 
         //this handles any formData provided by the History token
         //e.g. record = 'CmpdByNameForm'
