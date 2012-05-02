@@ -64,6 +64,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     //text: 'Sorafenib',
                                     fieldCls:'x-cmpTitle'
                                 },
+                                {xtype:'button', text:'Pharmacology Data', itemId:'pharmCompoundButton'},
                                 {
                                     xtype:'displayfield',
                                     value:'<br>',
@@ -371,7 +372,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             if (records.length > 0) {
                 var record = store.first();
 
-                console.log("Number of records returned " + records.length);
+//                console.log("Number of records returned " + records.length);
 
                 var dp = this.query('#dataPanel')[0];
                 dp.show();
@@ -423,9 +424,18 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         this.showSpacerFields();
         var td = compound.data;
 
+        var pharmButton = this.down('#pharmCompoundButton');
+        pharmButton.hide();
+        pharmButton.setHandler(function () {
+                //                console.log('Pharma button clicked: ' + '!p=PharmByCmpdNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+                Ext.History.add('!p=PharmByCmpdNameForm&u=' + compound.store.proxy.extraParams.compound_uri);
+            }
+        );
+        pharmButton.show();
+
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-                console.log("Field: " + prop + " Value: " + td[prop]);
+//                console.log("Field: " + prop + " Value: " + td[prop]);
 
                 var field = this.down('#' + prop);
                 if (field) {
@@ -434,7 +444,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                     field.show();
 
                 } else {
-                    console.log("No itemId for: " + prop);
+//                    console.log("No itemId for: " + prop);
                 }
             }
         }

@@ -60,8 +60,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
 
         if (historyTokenObject.u) {
             var store = Ext.data.StoreManager.lookup('Compounds');
-            store.proxy.extraParams.compound_uri = historyTokenObject.u;
-            store.load();
+            if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
+                store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                store.load();
+            }
         } else if (historyTokenObject.s) {
             var lookup = this.down('conceptWikiCompoundLookup');
             lookup.setRawValue(historyTokenObject.s);
