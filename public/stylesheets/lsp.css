@@ -150,7 +150,10 @@
 
 .target-title {
     font-size: 30px;
-    padding-bottom: 20px;
+}
+
+.target-pharm-button {
+    margin-bottom: 20px;
 }
 
 .target-data-panel {
