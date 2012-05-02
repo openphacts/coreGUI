@@ -14,9 +14,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
         this.items = [
             {
                 xtype:'form',
-                padding:'5 5 0 5',
+                padding:'5 5 5 5',
                 border:false,
-                height:'100%',
+//                height:'100%',
                 style:'background-color: #fff;',
                 items:[
                     {
@@ -59,15 +59,16 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                         action:'query',
                         itemId:'sim_sss_start_search_button_id',
                         text:'Start search...'
-                    },
-                    {
-                        xtype:'dynamicgrid3',
-                        readUrl:'/core_api_calls/get_chem_info4known_csids.json',
-                        title:'Structure search results',
-                        gridBaseTitle:'Structure search results',
-                        flex:1
                     }
-                ]}
+
+                ]},
+            {
+                xtype:'dynamicgrid3',
+                readUrl:'/core_api_calls/get_chem_info4known_csids.json',
+                title:'Structure search results',
+                gridBaseTitle:'Structure search results',
+                flex:1
+            }
         ];
 
         this.callParent(arguments);
