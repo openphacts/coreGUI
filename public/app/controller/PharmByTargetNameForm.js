@@ -84,6 +84,4 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         grid.store.proxy.extraParams = values;
         grid.store.load({params:{ offset:0, limit:100}});
     }
-
-
 });

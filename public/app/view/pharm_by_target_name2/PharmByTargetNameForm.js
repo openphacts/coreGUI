@@ -66,5 +66,29 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
             }
         ];
         this.callParent(arguments);
+    },
+
+    setFormData:function (historyTokenObject) {
+        //formdata comes directly from form via history
+        //load data
+        //this needs to be the function that does everything after clicking the button
+
+        if (historyTokenObject.u) {
+            //gets ref to
+            var dg = this.down('#pharmByTargetGrid_id');
+            var store = dg.store;
+            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                store.load({params:{ offset:0, limit:100}});
+            }
+        } else if (historyTokenObject.s) {
+            var lookup = this.down('conceptWikiProteinLookup');
+            lookup.setRawValue(historyTokenObject.s);
+            lookup.doQuery(historyTokenObject.s);
+        }
+
+
     }
+
+
 });

@@ -65,8 +65,10 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
 
         if (historyTokenObject.u) {
             var store = Ext.data.StoreManager.lookup('Targets');
-            store.proxy.extraParams.protein_uri = historyTokenObject.u;
-            store.load();
+            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                store.load();
+            }
         } else if (historyTokenObject.s) {
             var lookup = this.down('conceptWikiProteinLookup');
             lookup.setRawValue(historyTokenObject.s);

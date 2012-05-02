@@ -52,6 +52,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 layout:'anchor',
                                 items:[
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
+                                    {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
@@ -219,6 +220,15 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     setValues:function (target) {
         this.resetAllFields();
         var td = target.data;
+
+        var pharmButton = this.down('#pharmTargetButton');
+        pharmButton.hide();
+        pharmButton.setHandler(function () {
+//                console.log('Pharma button clicked: ' + '!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+            }
+        );
+        pharmButton.show();
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
