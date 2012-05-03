@@ -41,6 +41,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     models:['DynamicGrid'],
 
+    refs:[
+        {
+            ref:'gridView',
+            selector:'dynamicgrid3'
+        }
+    ],
 
     init:function () {
         this.control({
@@ -52,6 +58,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                             Ext.create('CS.view.CompoundWindow').showCompound(csid);
                         }
                     }
+                },
+                itemcontextmenu:function (view, record, itemHTMLElement, index, eventObject, eOpts) {
+                    eventObject.preventDefault();
+                    console.log('itemcontextmenu');
+                    this.getGridView().showMenu(itemHTMLElement);
                 }
             },
             'dynamicgrid3 toolbar #sdfDownloadProxy_id':{
@@ -330,4 +341,5 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 //         
 //        })
 
-});
+})
+;

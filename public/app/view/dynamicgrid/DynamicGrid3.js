@@ -17,32 +17,25 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
     limit:100,
     recordsLoaded:0,
     csid_column:false,
-    selModel:{
-        mode:'SINGLE',
-        listeners:{
-            select:{
-                fn:function (a, b, c, d, e) {
-//                    this.contextMenu.show();
-                },
-                scope:this
-            }
-        }
-    },
-    selType:'cellmodel',
     contextMenu:null,
+
+    showMenu:function (elem) {
+        this.contextMenu.showBy(elem);
+    },
 
     initComponent:function () {
 
         this.contextMenu = new Ext.menu.Menu({
-            item:[
+
+            items:[
                 {
-                    text:'Copy value', handler:this.showCopyValueWindow
+                    text:'Copy value', handler:this.showCopyValueWindow, iconCls:'menu-copy'
                 },
                 {
-                    text:'Search for compound', handler:this.searchForCompound
+                    text:'Search for compound', handler:this.searchForCompound, iconCls:'menu-search-compound'
                 },
                 {
-                    text:'Search for target', handler:this.searchForTarget
+                    text:'Search for target', handler:this.searchForTarget, iconCls:'menu-search-target'
                 }
             ]
         });
