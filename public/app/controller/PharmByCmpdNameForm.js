@@ -80,9 +80,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             var form = button.up('form');
             button.disable();
             var values = form.getValues();
-            var grid = this.getGridView();
-            grid.store.proxy.extraParams = values;
-            grid.store.load({params:{ offset:0, limit:100}});
+            Ext.History.add('!p=PharmByCmpdNameForm&u=' + values.compound_uri);
         }
 
 

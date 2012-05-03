@@ -61,6 +61,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             grid_view.doLayout();
             grid_view.doComponentLayout();
         });
+        grid_view.store.proxy.params = {offset:0, limit:100};
     },
 
     createGridColumns:function () {
@@ -80,8 +81,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
-        var grid = this.getGridView();
-        grid.store.proxy.extraParams = values;
-        grid.store.load({params:{ offset:0, limit:100}});
+        Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
     }
 });
