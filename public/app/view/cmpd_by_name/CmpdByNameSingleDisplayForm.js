@@ -440,8 +440,22 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 var field = this.down('#' + prop);
                 if (field) {
 
-                    field.setValue(td[prop]);
-                    field.show();
+                    if (prop == 'alogp') {
+
+                        // set alogp value to 1 decimal place
+                        var alogpValue = new Number(td[prop]);
+                        alogpValue = alogpValue.toFixed(1);
+                        field.setValue(alogpValue);
+                        field.show();
+
+                    } else {
+
+                        field.setValue(td[prop]);
+                        field.show();
+
+                    }
+
+
 
                 } else {
 //                    console.log("No itemId for: " + prop);
