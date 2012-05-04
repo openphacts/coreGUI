@@ -28,9 +28,6 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=query]':{
                 click:this.submitQuery
-            },
-            'SimSearchForm button[action=data_view]':{
-                click:this.launchDataView
             }
         });
     },

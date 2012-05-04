@@ -20,6 +20,7 @@ Ext.define('LSP.view.Navigator', {
             {
                 title:'Navigation',
                 autoScroll:true,
+                layout:'fit',
                 border:false,
                 iconCls:'nav',
                 items:[
