@@ -61,8 +61,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 },
                 itemcontextmenu:function (view, record, itemHTMLElement, index, eventObject, eOpts) {
                     eventObject.preventDefault();
-                    console.log('itemcontextmenu');
-                    this.getGridView().showMenu(itemHTMLElement);
+//                    console.log('itemcontextmenu');
+                    this.getGridView().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
             },
             'dynamicgrid3 toolbar #sdfDownloadProxy_id':{

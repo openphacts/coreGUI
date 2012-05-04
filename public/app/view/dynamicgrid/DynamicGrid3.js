@@ -18,28 +18,76 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
     csid_column:false,
     contextMenu:null,
 
-    showMenu:function (elem) {
-        this.contextMenu.showBy(elem);
-    },
+    showMenu:function (x, y, record) {
+        var cmp = record.data.compound_name;
+        var tar = record.data.target_name;
+        var smi = record.data.smiles;
 
-    initComponent:function () {
-
-        this.contextMenu = new Ext.menu.Menu({
-
+        var cmpValueMenu = new Ext.menu.Menu({
+            layout:'fit',
             items:[
                 {
-                    text:'Copy value', handler:this.showCopyValueWindow, iconCls:'menu-copy'
+                    xtype:'textfield',
+                    value:cmp
                 },
                 {
-                    text:'Search for compound', handler:this.searchForCompound, iconCls:'menu-search-compound'
+                    xtype:'textfield',
+                    value:tar
                 },
                 {
-                    text:'Search for target', handler:this.searchForTarget, iconCls:'menu-search-target'
+                    xtype:'textfield',
+                    value:smi
                 }
             ]
         });
 
-        // initializing features for the grid
+        var contextMenu = new Ext.menu.Menu({
+            items:[
+                {
+                    text:'Search for compound by name',
+                    itemId:'searchForCompoundByName',
+                    iconCls:'menu-search-compound',
+                    handler:function () {
+//                        console.log('Search for compound by name');
+//                        console.log(cmp);
+                        Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+                    }
+                },
+                {
+                    text:'Search for compound by SMILES',
+                    itemId:'searchForCompoundBySMILES',
+                    iconCls:'menu-search-compound',
+                    handler:function () {
+//                        console.log('Search for compound by SMILES');
+//                        console.log(cmp);
+                        Ext.History.add('!p=SimSearchForm&s=' + smi + '&st=exact');
+                    }
+                },
+                {
+                    text:'Search for target by name',
+                    itemId:'searchForTarget',
+                    iconCls:'menu-search-target',
+                    handler:function () {
+//                        console.log('Search for target by name');
+//                        console.log(tar);
+                        Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                    }
+                },
+                {
+                    text:'Copy Data',
+                    menu:cmpValueMenu
+                }
+            ]
+        });
+        contextMenu.showAt(x, y);
+    },
+
+
+    initComponent:function () {
+
+
+
+// initializing features for the grid
         var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
             groupHeaderTpl:'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
         });
@@ -111,4 +159,5 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         this.callParent(arguments);
     }
 
-});
+})
+;
