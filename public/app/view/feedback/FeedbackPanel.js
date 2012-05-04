@@ -24,7 +24,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
             itemId:'fpUserMessage1',
             fieldCls:'fb-message',
             //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
+            value:'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
         },
         {
             xtype:'displayfield',
@@ -34,6 +34,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'textfield',
             anchor:'100%',
+            vtype:'email',
             cls:'fb-email',
             labelAlign:'top',
             itemId:'fpUserEmail',
@@ -55,6 +56,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
             cls:'fb-button',
             text:'Submit',
             handler:function () {
+
                 var userEmailField = Ext.ComponentQuery.query('#fpUserEmail')[0];
                 if (!userEmailField.isValid()) {
                     Ext.Msg.show({
@@ -80,11 +82,14 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                     feedbackText:feedbackTextArea.getValue(),
                     technicalInfo:Ext.History.getToken()
                 });
+                var fp = this.up('FeedbackPanel');
+                fp.setLoading(true);
                 Ext.Ajax.request({
                     url:'feedback.json',
                     method:'POST',
                     params:feedbackData.data,
                     success:function (response) {
+                        fp.setLoading(false);
                         var jsonObj = Ext.decode(response.responseText);
                         Ext.Msg.show({
                             title:'Feedback sent',
@@ -95,6 +100,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
 
                     },
                     failure:function (response) {
+                        fp.setLoading(false);
                         Ext.Msg.show({
                             title:'Error',
                             msg:'Your feedback could not be sent',
