@@ -61,6 +61,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     xtype:'displayfield',
                                     name:'compound_name',
                                     itemId:'compound_name',
+                                    width: 600,
                                     //text: 'Sorafenib',
                                     fieldCls:'x-cmpTitle'
                                 },
