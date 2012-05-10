@@ -28,9 +28,82 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm button[action=query]':{
                 click:this.submitQuery
+            },
+            'SimSearchForm':{
+                historyToken:this.handleHistoryToken,
+                afterrender:this.prepGrid
             }
         });
+
+
     },
+
+    prepGrid:function () {
+        console.log('prepGrid');
+        var grid = this.getStrucGrid();
+        grid.store.proxy.actionMethods = {read:'POST'};
+        grid.store.proxy.api.read = grid.readUrl;
+        grid.store.on('load', function (this_store, records, success) {
+            console.log('grid.store \'load\'');
+            this.getSubmitButton().enable();
+            var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+            grid_controller.storeLoad(grid, success);
+            this.getSsform().doLayout();
+            //       this.getStrucGrid().view.refresh();
+        }, this);
+    },
+
+    hitCoreAPI:function (csid_list) {
+        console.log('hitCoreAPI');
+        console.log(csid_list)
+        var grid = this.getStrucGrid();
+//        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
+        grid.store.proxy.extraParams = {csids:csid_list.join(',')};
+        grid.store.load({params:{ offset:0, limit:100}});
+    },
+
+    handleHistoryToken:function (historyTokenObject) {
+        console.log('handleHistoryToken');
+        console.log(historyTokenObject);
+        var me = this;
+        var searchEngine = Ext.create('CS.engine.search.Structure', {
+            listeners:{
+                finished:function (sender, rid) {
+                    searchEngine.loadCSIDs(function (csids) {
+                        me.hitCoreAPI(csids);
+                    });
+                }
+            }
+        });
+
+        var grid_title = '';
+        var search_type = '';
+        var params = {};
+        var values = this.getSsform().getValues();
+        params['searchOptions.Molecule'] = values.smiles;
+        if (values.search_type == '1') {    //  Exact structure search
+            grid_title = 'Exact structure match';
+            search_type = 'exact';
+        }
+        else if (values.search_type == '2') {   //  SubStructure search
+            grid_title = 'Substructure structure';
+            search_type = 'substructure';
+        }
+        else if (values.search_type == '3') {   //  Similarity search
+            grid_title = 'Similarity search';
+            search_type = 'similarity';
+            //  In the future this parameters should be taken from the UI.
+            //  But right now in order to make Similarity search more realistic they are entered manually.
+            params['searchOptions.Threshold'] = 0.99;
+            params['searchOptions.SimilarityType'] = 'Tanimoto';
+        }
+        else {
+            //  Unsupported search type...
+        }
+        this.getStrucGrid().setTitle(grid_title);
+        searchEngine.doSearch(search_type, params);
+    },
+
     // Launch ketcher window
     launchKetcher:function (button) {
         // Launch the window
@@ -69,72 +142,28 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     submitQuery:function (button) {
+        console.log('submitQuery');
         button.disable();
         var form = button.up('form');
-        var this_controller = this;
         var this_gridview = this.getStrucGrid();
         var current_records = this_gridview.store.getRange();
         this_gridview.store.remove(current_records);
 //        this.getStrucGrid().removeAll(true);
         this.getStrucGrid().recordsLoaded = 0;
-        values = form.getValues();
+        var values = form.getValues();
         if (values.smiles.length < 4) {
             button.enable();
             return;
         }
-        csid_string = "";
-        var searchEngine = Ext.create('CS.engine.search.Structure', {
-            listeners:{
-                finished:function (sender, rid) {
-                    searchEngine.loadCSIDs(function (csids) {
-                        this_controller.hitCoreAPI(csids);
-                    });
-                }
-            }
-        });
 
-        var grid_title = '';
-        var search_type = '';
-        var params = {};
-        params['searchOptions.Molecule'] = values.smiles;
-        if (values.search_type == '1') {    //  Exact structure search
-            grid_title = 'Exact structure match';
-            search_type = 'exact';
+        var searchType = 'exact';
+        if (values.search_type == 2) {
+            searchType = 'sub';
+        } else if (values.search_type == 3) {
+            searchType = 'sim';
         }
-        else if (values.search_type == '2') {   //  SubStructure search
-            grid_title = 'Substructure structure';
-            search_type = 'substructure';
-        }
-        else if (values.search_type == '3') {   //  Similarity search
-            grid_title = 'Similarity search';
-            search_type = 'similarity';
-            //  In the future this parameters should be taken from the UI. 
-            //  But right now in order to make Similarity search more realistic they are entered manually.
-            params['searchOptions.Threshold'] = 0.99;
-            params['searchOptions.SimilarityType'] = 'Tanimoto';
-        }
-        else {
-            //  Unsupported search type...
-        }
-        this.getStrucGrid().setTitle(grid_title);
-        searchEngine.doSearch(search_type, params);
-    },
 
-
-    hitCoreAPI:function (csid_list) {
-        var grid = this.getStrucGrid();
-//        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
-        grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        grid.store.proxy.actionMethods = {read:'POST'};
-        grid.store.proxy.extraParams = {csids:csid_list.join(',')};
-        grid.store.proxy.api.read = grid.readUrl;
-        grid.store.load({params:{ offset:0, limit:100}});
-        grid.store.on('load', function (this_store, records, success) {
-            this.getSubmitButton().enable();
-            grid_controller.storeLoad(grid, success);
-            this.getSsform().doLayout();
-            //       this.getStrucGrid().view.refresh();
-        }, this);
+        Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
     }
 
 //     addRecords: function (csids) {
