@@ -463,7 +463,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     showMessage:function (message) {
 
         var displayPanel = this.query('#displayPanel')[0];
-        displayPanel.hide();
+        displayPanel.show();
 
         var dp = this.query('#dataPanel')[0];
         dp.hide();
