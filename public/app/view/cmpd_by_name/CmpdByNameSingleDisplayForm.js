@@ -12,42 +12,43 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             {
                 // DISPLAY PANEL
                 xtype:'panel',
-                border: false,
-                layout: 'anchor',
-                autoScroll: true,
-                itemId: 'displayPanel',
-                bodyPadding: '20px',
+                border:false,
+                layout:'anchor',
+                autoScroll:true,
+                itemId:'displayPanel',
+                bodyPadding:'20px',
                 hidden:true,
 
                 items:[
                     {
                         // TOP PANEL
-                        xtype: 'panel',
-                        border: false,
-                        anchor: '100%',
-                        itemId: 'topPanelDetails',
-                        layout: 'column',
-                        autoScroll: true,
+                        xtype:'panel',
+                        border:false,
+                        anchor:'100%',
+                        itemId:'topPanelDetails',
+                        layout:'column',
+                        autoScroll:true,
 
                         items:[
                             {
                                 // IMAGE
-                                xtype: 'image',
-                                name: 'image',
-                                itemId: 'compound_form_imagepanel',
-                                width: 150,
-                                height: 150,
-                                src: '/images/target_placeholder.png'
+                                xtype:'image',
+                                name:'image',
+                                itemId:'compound_form_imagepanel',
+                                width:150,
+                                height:150,
+                                src:'/images/target_placeholder.png'
 
-                            },{
+                            },
+                            {
                                 // MAIN DETAILS
                                 xtype:'panel',
-                                bodyPadding: 30,
-                                columnWidth: 1.0,
-                                border: false,
-                                autoScroll: true,
-                                itemId: 'dataPanel',
-                                layout: 'anchor',
+                                bodyPadding:30,
+                                columnWidth:1.0,
+                                border:false,
+                                autoScroll:true,
+                                itemId:'dataPanel',
+                                layout:'anchor',
 
                                 items:[
                                     {
@@ -342,7 +343,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                     }
                 ]
 
-            }]
+            }
+        ]
 
         var store = Ext.data.StoreManager.lookup('Compounds');
         store.addListener('load', this.showData, this);
