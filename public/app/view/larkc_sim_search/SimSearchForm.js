@@ -52,7 +52,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                         itemId:'searchTypeRadio',
                         items:[
                             {boxLabel:'Exact structure search', name:'search_type', inputValue:1, checked:true},
-                            {boxLabel:'Substructure seach', name:'search_type', inputValue:2},
+                            {boxLabel:'Substructure search', name:'search_type', inputValue:2},
                             {boxLabel:'Structural similarity search', name:'search_type', inputValue:3}
                         ]
                     },
