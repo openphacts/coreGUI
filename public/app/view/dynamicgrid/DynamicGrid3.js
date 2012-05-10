@@ -115,7 +115,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
                         handler:function () {
 //                        console.log('Search for compound by SMILES');
 //                        console.log(cmp);
-                            Ext.History.add('!p=SimSearchForm&s=' + smi + '&st=exact');
+                            Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
                         }
                     },
                     {
