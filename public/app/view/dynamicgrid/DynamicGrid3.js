@@ -24,63 +24,110 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         var tar = record.data.target_name;
         var smi = record.data.smiles;
 
-        var cmpValueMenu = new Ext.menu.Menu({
-            layout:'fit',
-            items:[
-                {
-                    xtype:'textfield',
-                    value:cmp
-                },
-                {
-                    xtype:'textfield',
-                    value:tar
-                },
-                {
-                    xtype:'textfield',
-                    value:smi
-                }
-            ]
-        });
+        if (tar) {
+            var cmpValueMenu = new Ext.menu.Menu({
+                layout:'fit',
+                items:[
+                    {
+                        xtype:'textfield',
+                        value:cmp
+                    },
+                    {
+                        xtype:'textfield',
+                        value:tar
+                    },
+                    {
+                        xtype:'textfield',
+                        value:smi
+                    }
+                ]
+            });
 
-        var contextMenu = new Ext.menu.Menu({
-            items:[
-                {
-                    text:'Search for compound by name',
-                    itemId:'searchForCompoundByName',
-                    iconCls:'menu-search-compound',
-                    handler:function () {
+            var contextMenu = new Ext.menu.Menu({
+                items:[
+                    {
+                        text:'Search for compound by name',
+                        itemId:'searchForCompoundByName',
+                        iconCls:'menu-search-compound',
+                        handler:function () {
 //                        console.log('Search for compound by name');
 //                        console.log(cmp);
-                        Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
-                    }
-                },
-                {
-                    text:'Search for compound by SMILES',
-                    itemId:'searchForCompoundBySMILES',
-                    iconCls:'menu-search-compound',
-                    handler:function () {
+                            Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+                        }
+                    },
+                    {
+                        text:'Search for compound by SMILES',
+                        itemId:'searchForCompoundBySMILES',
+                        iconCls:'menu-search-compound',
+                        handler:function () {
 //                        console.log('Search for compound by SMILES');
 //                        console.log(cmp);
-                        Ext.History.add('!p=SimSearchForm&s=' + smi + '&st=exact');
-                    }
-                },
-                {
-                    text:'Search for target by name',
-                    itemId:'searchForTarget',
-                    iconCls:'menu-search-target',
-                    handler:function () {
+                            Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+                        }
+                    },
+                    {
+                        text:'Search for target by name',
+                        itemId:'searchForTarget',
+                        iconCls:'menu-search-target',
+                        handler:function () {
 //                        console.log('Search for target by name');
 //                        console.log(tar);
-                        Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                            Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                        }
+                    },
+                    {
+                        text:'Copy Data',
+                        menu:cmpValueMenu
                     }
-                },
-                {
-                    text:'Copy Data',
-                    menu:cmpValueMenu
-                }
-            ]
-        });
-        contextMenu.showAt(x, y);
+                ]
+            });
+            contextMenu.showAt(x, y);
+        } else {
+            var cmpValueMenu = new Ext.menu.Menu({
+                layout:'fit',
+                items:[
+                    {
+                        xtype:'textfield',
+                        value:cmp
+                    },
+                    {
+                        xtype:'textfield',
+                        value:smi
+                    }
+                ]
+            });
+
+            var contextMenu = new Ext.menu.Menu({
+                items:[
+                    {
+                        text:'Search for compound by name',
+                        itemId:'searchForCompoundByName',
+                        iconCls:'menu-search-compound',
+                        handler:function () {
+//                        console.log('Search for compound by name');
+//                        console.log(cmp);
+                            Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+                        }
+                    },
+                    {
+                        text:'Search for compound by SMILES',
+                        itemId:'searchForCompoundBySMILES',
+                        iconCls:'menu-search-compound',
+                        handler:function () {
+//                        console.log('Search for compound by SMILES');
+//                        console.log(cmp);
+                            Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+                        }
+                    },
+                    {
+                        text:'Copy Data',
+                        menu:cmpValueMenu
+                    }
+                ]
+            });
+            contextMenu.showAt(x, y);
+        }
+
     },
 
 

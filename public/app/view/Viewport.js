@@ -96,7 +96,8 @@ Ext.define('LSP.view.Viewport', {
             if (token.indexOf('!') == 0) {
 //            console.log('Viewport History change: ' + token);
                 //cut off shebang
-                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
+//                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
+                var historyTokenObject = this.parseHistoryToken(token.substring(1));
 //                console.dir(historyTokenObject);
                 if (historyTokenObject.p) {
                     var form = this.getFormByXtype(historyTokenObject.p);
@@ -106,8 +107,20 @@ Ext.define('LSP.view.Viewport', {
                 }
             }
         }
+    },
 
-
+    parseHistoryToken:function (stringToParse) {
+        var obj = {};
+        var andBits = stringToParse.split('&');
+        Ext.each(andBits, function (bit) {
+            var firstEquals = bit.indexOf('=');
+            if (firstEquals != -1) {
+                var key = bit.substring(0, firstEquals);
+                var value = bit.substring(firstEquals + 1, bit.length)
+                obj[key] = value;
+            }
+        });
+        return obj;
     },
 
     //this handles the changing of central ui panel
