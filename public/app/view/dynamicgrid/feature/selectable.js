@@ -25,7 +25,7 @@ Ext.getHead().insertHtml("beforeEnd",
 
 Ext.require('Ext.view.Table', function () {
     Ext.override(Ext.view.Table, {
-        afterRender:function () {
+        afterrender:function () {
             var me = this;
 
             me.callParent();

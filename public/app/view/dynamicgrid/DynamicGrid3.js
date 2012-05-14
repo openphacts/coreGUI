@@ -7,7 +7,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         'Ext.grid.RowNumberer',
         'Ext.form.*',
         'Ext.ux.grid.FiltersFeature',
-        'Ext.selection.CellModel'
+        'Ext.selection.CellModel',
+        'LSP.view.dynamicgrid.feature.selectable'
     ],
     autoScroll:true,
     layout:'fit',
@@ -96,6 +97,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
             encode:true, // json encode the filter query
             local:true   // defaults to false (remote filtering)
         };
+        // this feature allows for selection of text in the grid by changing the underlaying style for the cell
+        var cellTextSelector = {
+            ftype:'selectable',
+            id:'selectable'
+        };
         var grid_store = Ext.create('LSP.store.DynamicGrid');
         var config = {
 
@@ -151,7 +157,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
             ],
             rowNumberer:true,
             defaultWidth:200,
-            features:[groupingFeature, filters]
+            features:[groupingFeature, filters,cellTextSelector]
         };
 
         Ext.apply(this, config);

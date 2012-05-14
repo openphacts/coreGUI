@@ -136,9 +136,9 @@ class ResultsFormatter
          field_aofh.push({:name => field, :type => type})
       end 
       @col_objs = {
-            :objects => input_arr,
+            :ops_records => input_arr,
             :totalCount => input_arr.size,
-            :metaData => { :fields => field_aofh, :root => 'objects' },
+            :metaData => { :fields => field_aofh, :root => 'ops_records' },
             :columns => columns,
             :success => true }
       return @col_objs
