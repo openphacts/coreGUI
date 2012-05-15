@@ -17,6 +17,10 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 ref:'submitButton',
                 selector:'#TargetByNameSubmit_id'
 
+            },
+            {
+                ref:'lookup',
+                selector:'#targetByNameLookup'
             }
         ],
 
@@ -27,8 +31,25 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 },
                 'TargetByNameForm conceptWikiProteinLookup':{
                     select:this.enableSubmit
+                },
+                'TargetByNameForm':{
+                    historyToken:this.handleHistoryToken
                 }
             });
+        },
+
+        handleHistoryToken:function (historyTokenObject) {
+            if (historyTokenObject.u) {
+                var store = this.getTargetsStore();
+                if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                    store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                    store.load();
+                }
+            } else if (historyTokenObject.s) {
+                var lookup = this.getLookup();
+                lookup.setRawValue(historyTokenObject.s);
+                lookup.doQuery(historyTokenObject.s);
+            }
         },
 
         enableSubmit:function () {
@@ -48,4 +69,5 @@ Ext.define('LSP.controller.TargetByNameForm', {
             Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
         }
     }
-);
+)
+;
