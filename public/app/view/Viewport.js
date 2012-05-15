@@ -151,6 +151,8 @@ Ext.define('LSP.view.Viewport', {
         if (formData) {
             if (view.setFormData) {
                 view.setFormData(formData);
+            } else {
+                view.fireEvent('historyToken', formData);
             }
         }
     },
