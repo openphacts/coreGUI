@@ -60,12 +60,9 @@ Ext.define('LSP.controller.TargetByNameForm', {
 
         submitQuery:function (button) {
             button.disable();
-            var tp = this.getTargetPanel();
-            tp.startLoading();
-
             var form = this.getFormView();
+            form.setLoading();
             var target_uri = form.getValues().protein_uri;
-
             Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
         }
     }

@@ -131,7 +131,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         } else {
             this.showMessage('Server did not respond');
         }
-        this.endLoading();
+        this.up('TargetByNameForm').setLoading(false);
         var searchButton = Ext.ComponentQuery.query('#TargetByNameSubmit_id')[0].enable();
     },
 
@@ -224,7 +224,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var pharmButton = this.down('#pharmTargetButton');
         pharmButton.hide();
         pharmButton.setHandler(function () {
-//                console.log('Pharma button clicked: ' + '!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
                 Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
             }
         );
@@ -236,47 +235,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 this.setFieldValue(prop, td[prop]);
             }
         }
-
-//        if (td.target_name) {
-//            this.setFieldValue('#tn', td.target_name);
-//        }
-//
-//        if (td.target_type) {
-//            this.setFieldValue('#tt', td.target_type);
-//        }
-//
-//        var typeField = this.down('#tt');
-//        typeField.setValue(td.target_type);
-//
-//        var descField = this.down('#desc');
-//        descField.setValue(td.description);
-//
-//        var keyField = this.down('#key');
-//        this.addKeywords(td.keywords, keyField);
-//
-//        var orgField = this.down('#org');
-//        this.addOrganism(td.organism, orgField);
-//
-//        var synField = this.down('#syn');
-//        this.addSynonyms(td.synonyms, synField);
-//
-//        if (td.cellularLocation) {
-//            var cellLoc = this.down('#cl');
-//            cellLoc.setValue(td.cellularLocation);
-//            cellLoc.show();
-//        }
-
-
         this.doLayout();
-    },
-
-    startLoading:function () {
-        this.setLoading(true);
-    },
-
-    endLoading:function () {
-        this.setLoading(false);
     }
 
-})
-;
+});
