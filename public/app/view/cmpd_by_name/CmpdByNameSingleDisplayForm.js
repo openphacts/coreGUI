@@ -352,14 +352,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
     },
 
-    startLoading:function () {
-        this.setLoading(true);
-    },
-
-    endLoading:function () {
-        this.setLoading(false);
-    },
-
     showData:function (store, records, succesful) {
         if (succesful) {
             if (records.length > 0) {
@@ -394,7 +386,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         } else {
             this.showMessage('Server did not respond');
         }
-        this.endLoading();
+        this.up('CmpdByNameForm').setLoading(false);
         var searchButton = Ext.ComponentQuery.query('#CmpdByNameSubmit_id')[0].enable();
     },
 

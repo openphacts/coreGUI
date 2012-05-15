@@ -20,7 +20,10 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             {
                 ref:'submitButton',
                 selector:'#CmpdByNameSubmit_id'
-
+            },
+            {
+                ref:'lookup',
+                selector:'#compoundByNameLookup'
             }
         ],
 
@@ -31,8 +34,26 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 },
                 'CmpdByNameForm conceptWikiCompoundLookup':{
                     select:this.enableSubmit
+                },
+                'CmpdByNameForm':{
+                    historyToken:this.handleHistoryToken
                 }
             });
+        },
+
+        handleHistoryToken:function (historyTokenObject) {
+            console.log('CmpdByNameForm handleHistoryToken')
+            if (historyTokenObject.u) {
+                var store = this.getCompoundsStore();
+                if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
+                    store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                    store.load();
+                }
+            } else if (historyTokenObject.s) {
+                var lookup = this.getLookup();
+                lookup.setRawValue(historyTokenObject.s);
+                lookup.doQuery(historyTokenObject.s);
+            }
         },
 
         enableSubmit:function (compundLookup) {
@@ -43,12 +64,9 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 
         submitQuery:function (button) {
             button.disable();
-            var tp = this.getCmpdByNameSingleDisplayForm();
-            tp.startLoading();
-
             var form = this.getFormView();
+            form.setLoading(true);
             var compound_uri = form.getValues().compound_uri;
-
             Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
         }
     }
