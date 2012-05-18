@@ -60,8 +60,12 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             button.enable();
             grid_view.doLayout();
             grid_view.doComponentLayout();
+            form.setLoading(false);
+
         });
+        form.setLoading(true);
         grid_view.store.proxy.params = {offset:0, limit:100};
+
     },
 
     createGridColumns:function () {
