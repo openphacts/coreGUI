@@ -43,7 +43,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
                 store.proxy.extraParams.protein_uri = historyTokenObject.u;
                 this.getFormView().setLoading(true);
-                store.load({params:{ offset:0, limit:100}});
+                store.load();
             }
         } else if (historyTokenObject.s) {
             var lookup = this.down('conceptWikiProteinLookup');
