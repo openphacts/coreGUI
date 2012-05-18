@@ -48,7 +48,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                 {
                     xtype:'CmpdByNameSingleDisplayForm',
                     flex:1
-
                 }
             ]
         });

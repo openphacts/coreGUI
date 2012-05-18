@@ -47,6 +47,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 var store = this.getCompoundsStore();
                 if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
                     store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                    this.getFormView().setLoading();
                     store.load();
                 }
             } else if (historyTokenObject.s) {
@@ -65,7 +66,6 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         submitQuery:function (button) {
             button.disable();
             var form = this.getFormView();
-            form.setLoading(true);
             var compound_uri = form.getValues().compound_uri;
             Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
         }
