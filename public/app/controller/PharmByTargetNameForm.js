@@ -26,20 +26,36 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             },
             'PharmByTargetNameForm conceptWikiProteinLookup':{
                 select:this.enableSubmit
+            },
+            'PharmByTargetNameForm':{
+                afterrender:this.prepGrid,
+                historyToken:this.handleHistoryToken
             }
         });
     },
 
-    onLaunch:function () {
-        this.control(
-            {
-                'PharmByTargetNameForm':{
-                    afterrender:this.prepGrid
-                }
-            });
+
+    handleHistoryToken:function (historyTokenObject) {
+        if (historyTokenObject.u) {
+            //gets ref to
+            var dg = this.down('#pharmByTargetGrid_id');
+            var store = dg.store;
+            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                this.getFormView().setLoading(true);
+                store.load({params:{ offset:0, limit:100}});
+            }
+        } else if (historyTokenObject.s) {
+            var lookup = this.down('conceptWikiProteinLookup');
+            lookup.setRawValue(historyTokenObject.s);
+            lookup.doQuery(historyTokenObject.s);
+        }
+
+
     },
 
     prepGrid:function () {
+        console.log('PharmByTargetNameForm: prepGrid()');
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         var grid_view = this.getGridView();
         var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
@@ -47,24 +63,27 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             var form_values = add_next_button.up('form').getValues();
             grid_controller.addNextRecords(grid_view, form_values);
         });
+
         grid_view.store.proxy.actionMethods = {read:'POST'};
         grid_view.store.proxy.api.read = grid_view.readUrl;
-        //previously multiple 'load' event listeners were being added.
-        //one before every store load
-        //this was slowing everything down
-        var form = this.getFormView();
-        var button = this.getSubmitButton();
-        grid_view.store.on('load', function (this_store, records, success) {
-            grid_controller.storeLoad(grid_view, success);
-            form.doLayout();
-            button.enable();
-            grid_view.doLayout();
-            grid_view.doComponentLayout();
-            form.setLoading(false);
-
-        });
         grid_view.store.proxy.params = {offset:0, limit:100};
 
+        grid_view.store.on('load', this.storeLoadComplete, this);
+    },
+
+    storeLoadComplete:function (store, records, success) {
+        console.log('PharmByTargetNameForm: storeLoadComplete()');
+        var controller = this.getController('LSP.controller.grids.DynamicGrid');
+        var grid_view = this.getGridView();
+        var form = this.getFormView();
+        var button = this.getSubmitButton();
+
+        controller.storeLoad(grid_view, success);
+        form.doLayout();
+        button.enable();
+        grid_view.doLayout();
+        grid_view.doComponentLayout();
+        form.setLoading(false);
     },
 
     createGridColumns:function () {
@@ -84,7 +103,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         button.disable();
         var values = form.getValues();
         Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
-        form.setLoading(true);
-
     }
-});
+})
+;
