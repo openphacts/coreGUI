@@ -50,6 +50,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             grid_controller.storeLoad(grid, success);
             this.getSsform().doLayout();
             //       this.getStrucGrid().view.refresh();
+            this.getSsform().setLoading(false);
         }, this);
     },
 
@@ -101,6 +102,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             //  Unsupported search type...
         }
         this.getStrucGrid().setTitle(grid_title);
+        this.getSsform().setLoading();
         searchEngine.doSearch(search_type, params);
     },
 
