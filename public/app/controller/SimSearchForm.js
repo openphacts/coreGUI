@@ -170,7 +170,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 //       var this_gridview = this.getStrucGrid();
 //       var this_store = this_gridview.store;
 //       var this_controller = this;
-//       var temp_store = Ext.create('LSP.store.DynamicGrid');
+//       var temp_store =§ Ext.create('LSP.store.DynamicGrid');
 //       temp_store.proxy.actionMethods = {read: 'POST'};
 //       temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
 //       var offset = 0;
