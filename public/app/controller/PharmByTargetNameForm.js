@@ -38,7 +38,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     handleHistoryToken:function (historyTokenObject) {
         if (historyTokenObject.u) {
             //gets ref to
-            var dg = this.down('#pharmByTargetGrid_id');
+            var dg = this.getGridView();
             var store = dg.store;
             if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
                 store.proxy.extraParams.protein_uri = historyTokenObject.u;
