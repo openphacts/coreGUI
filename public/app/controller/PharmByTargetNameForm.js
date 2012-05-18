@@ -63,7 +63,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             form.setLoading(false);
 
         });
-        form.setLoading(true);
         grid_view.store.proxy.params = {offset:0, limit:100};
 
     },
@@ -76,7 +75,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
 
     enableSubmit:function (proteinLookup) {
-        var form = this.getFormView();
         var button = this.getSubmitButton();
         button.enable();
     },
@@ -86,5 +84,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         button.disable();
         var values = form.getValues();
         Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
+        form.setLoading(true);
+
     }
 });
