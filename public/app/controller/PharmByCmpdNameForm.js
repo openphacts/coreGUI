@@ -44,7 +44,6 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             console.log('PharmByCmpdNameForm: handleHistoryToken()');
             if (historyTokenObject.u) {
                 var dg = this.getGridView();
-                var form = this.getFormView();
                 var store = dg.store;
                 if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
                     store.proxy.extraParams.compound_uri = historyTokenObject.u;
