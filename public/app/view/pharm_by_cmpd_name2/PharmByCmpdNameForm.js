@@ -12,7 +12,6 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     },
 
     initComponent:function () {
-
         this.items = [
             {
                 xtype:'label',
@@ -62,7 +61,6 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 flex:1
             }
         ];
-
         this.callParent(arguments);
     }
 });

@@ -47,8 +47,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 var form = this.getFormView();
                 var store = dg.store;
                 if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
-                    form.setLoading(true);
                     store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                    this.getFormView().setLoading(true);
                     store.load({params:{ offset:0, limit:100}});
                 }
             } else if (historyTokenObject.s) {
@@ -67,13 +67,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 var form_values = add_next_button.up('form').getValues();
                 grid_controller.addNextRecords(grid_view, form_values);
             });
+
             grid_view.store.proxy.actionMethods = {read:'POST'};
             grid_view.store.proxy.api.read = grid_view.readUrl;
-            //previously multiple 'load' event listeners were being added.
-            //one before every store load
-            //this was slowing everything down
-            var form = this.getFormView();
-            var button = this.getSubmitButton();
+            grid_view.store.proxy.params = {offset:0, limit:100};
 
             grid_view.store.on('load', this.storeLoadComplete, this);
         },
