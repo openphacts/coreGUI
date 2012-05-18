@@ -44,12 +44,11 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         console.log('PharmEnzymeForm: handleHistoryToken()');
         if (historyTokenObject.ec) {
             var dg = this.getGridView();
-            var form = this.getFormView();
             var store = dg.store;
-            if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
-                store.proxy.extraParams.compound_uri = historyTokenObject.u;
+            if (historyTokenObject.u != store.proxy.extraParams.ec_number) {
+                store.proxy.extraParams.ec_number = historyTokenObject.ec;
                 this.getFormView().setLoading(true);
-                store.load({params:{ offset:0, limit:100}});
+                store.load();
             }
         } else if (historyTokenObject.s) {
             var lookup = this.getLookup();
@@ -141,8 +140,6 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
-        var grid = this.getGridView();
-        grid.store.proxy.extraParams = values;
-        grid.store.load({params:{ offset:0, limit:100}});
+        Ext.History.add('!p=PharmEnzymeForm&ec=' + values.ec_number);
     }
 });
