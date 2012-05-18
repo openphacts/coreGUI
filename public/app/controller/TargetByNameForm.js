@@ -43,7 +43,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 var store = this.getTargetsStore();
                 if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
                     store.proxy.extraParams.protein_uri = historyTokenObject.u;
-                    this.getFormView.setLoading(true);
+                    this.getFormView().setLoading(true);
                     store.load();
                 }
             } else if (historyTokenObject.s) {
