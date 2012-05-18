@@ -117,8 +117,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         msg.setVisible(true);
     },
 
-    showData:function (store, records, succesful) {
-        if (succesful) {
+    showData:function (store, records, successful) {
+        if (successful) {
             if (records.length > 0) {
                 var dp = this.down('#dp');
                 var msg = this.down('#msg');

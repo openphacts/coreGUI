@@ -43,6 +43,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 var store = this.getTargetsStore();
                 if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
                     store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                    this.getFormView.setLoading(true);
                     store.load();
                 }
             } else if (historyTokenObject.s) {
@@ -61,10 +62,8 @@ Ext.define('LSP.controller.TargetByNameForm', {
         submitQuery:function (button) {
             button.disable();
             var form = this.getFormView();
-            form.setLoading();
             var target_uri = form.getValues().protein_uri;
             Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
         }
     }
-)
-;
+);
