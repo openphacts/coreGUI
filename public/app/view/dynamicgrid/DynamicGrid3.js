@@ -18,6 +18,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
     recordsLoaded:0,
     csid_column:false,
     contextMenu:null,
+    viewConfig:{
+        loadMask:false
+    },
 
     showMenu:function (x, y, record) {
         var cmp = record.data.compound_name;
@@ -204,7 +207,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
             ],
             rowNumberer:true,
             defaultWidth:200,
-            features:[groupingFeature, filters,cellTextSelector]
+            features:[groupingFeature, filters, cellTextSelector]
         };
 
         Ext.apply(this, config);
