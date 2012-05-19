@@ -43,6 +43,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         var grid = this.getStrucGrid();
         grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.api.read = grid.readUrl;
+        grid.store.proxy.params = {offset:0, limit:100};
+
         grid.store.on('load', function (this_store, records, success) {
             console.log('grid.store \'load\'');
             this.getSubmitButton().enable();
@@ -60,7 +62,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
         grid.store.proxy.extraParams = {csids:csid_list.join(',')};
-        grid.store.load({params:{ offset:0, limit:100}});
+        grid.store.load();
     },
 
     handleHistoryToken:function (historyTokenObject) {
@@ -102,7 +104,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             //  Unsupported search type...
         }
         this.getStrucGrid().setTitle(grid_title);
-        this.getSsform().setLoading();
+        this.getSsform().setLoading(true);
         searchEngine.doSearch(search_type, params);
     },
 
