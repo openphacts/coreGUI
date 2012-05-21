@@ -119,6 +119,7 @@
 .x-cmpBottomfieldValue {
     text-align: center;
     color: black;
+    font-size: 16px;
 }
 
 .x-cmpTitle {
@@ -215,4 +216,10 @@
 
 .menu-search-target {
     background-image: url(/images/magnifier.png) !important;
+}
+
+sub {
+    font-size: xx-small;
+    position: relative;
+    bottom: -0.3em;
 }
