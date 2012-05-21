@@ -48,7 +48,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
             if (historyTokenObject.ec != store.proxy.extraParams.ec_number) {
                 store.proxy.extraParams.ec_number = historyTokenObject.ec;
                 this.getPEform().setLoading(true);
-                store.load();
+                store.load({params:{offset:0, limit:100}});
             }
         }
     },

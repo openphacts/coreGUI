@@ -62,7 +62,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
         grid.store.proxy.extraParams = {csids:csid_list.join(',')};
-        grid.store.load();
+        grid.store.load({params:{offset:0, limit:100}});
     },
 
     handleHistoryToken:function (historyTokenObject) {
