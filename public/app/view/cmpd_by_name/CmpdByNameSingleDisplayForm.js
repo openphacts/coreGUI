@@ -27,17 +27,127 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         anchor:'100%',
                         itemId:'topPanelDetails',
                         layout:'column',
-                        autoScroll:true,
+                        //autoScroll:true,
 
                         items:[
                             {
-                                // IMAGE
-                                xtype:'image',
-                                name:'image',
-                                itemId:'compound_form_imagepanel',
-                                width:150,
-                                height:150,
-                                src:'/images/target_placeholder.png'
+                                // IMAGE AND FIGURES
+                                xtype:'panel',
+                                //name:'imageAndFigures',
+                                itemId:'imageAndFigures',
+                                layout:'anchor',
+                                border: true,
+                                bodyPadding: '8px',
+
+                                items:[
+                                    {
+                                        // IMAGE
+                                        xtype:'image',
+                                        name:'image',
+                                        itemId:'compound_form_imagepanel',
+                                        width:150,
+                                        height:150,
+                                        src:'/images/target_placeholder.png'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'alogp',
+                                        itemId:'alogp',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'20px 0 12px 0',
+                                        fieldLabel:'ALogP',
+                                        labelAlign:'top',
+                                        columnWidth:.1
+
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'hha',
+                                        itemId:'hha',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label\
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'# H-Bond Receptors',
+                                        columnWidth:.13,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'hhd',
+                                        itemId:'hhd',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'# H-Bond Donors',
+                                        columnWidth:.13,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'molweight',
+                                        itemId:'molweight',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'Mol Weight',
+                                        columnWidth:.1,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'mw_freebase',
+                                        itemId:'mw_freebase',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'MW Freebase',
+                                        columnWidth:.1,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'num_ro5_violations',
+                                        itemId:'num_ro5_violations',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'# Rule of 5 Violations',
+                                        columnWidth:.14,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'psa',
+                                        itemId:'psa',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'Polar Surface Area',
+                                        columnWidth:.12,
+                                        labelAlign:'top'
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'rtb',
+                                        itemId:'rtb',
+                                        fieldCls:'x-cmpBottomfieldValue', // value
+                                        baseCls:'x-cmpBottomBase', // label
+                                        anchor:'100%',
+                                        padding:'0 0 12px 0',
+                                        fieldLabel:'# Rotatable Bonds',
+                                        columnWidth:.12,
+                                        labelAlign:'top'
+                                    }
+                                ]
+
 
                             },
                             {
@@ -46,7 +156,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 bodyPadding:30,
                                 columnWidth:1.0,
                                 border:false,
-                                autoScroll:true,
+                                //autoScroll:true,
                                 itemId:'dataPanel',
                                 layout:'anchor',
 
@@ -58,7 +168,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         //width:600,
                                         anchor:'100%',
                                         fieldCls:'x-cmpTitle'
+                                    },{
+                                        xtype:'displayfield',
+                                        //value:'<br>',
+                                        itemId:'spacer4'
                                     },
+
                                     {
                                         xtype:'button',
                                         text:'Pharmacology Data',
@@ -115,7 +230,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'molformula',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
-                                        //width:400,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -127,7 +242,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'smiles',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
-                                        //width:650,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -150,7 +265,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'inchiKey',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
-                                        //width:400,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -162,7 +277,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'affectedOrganism',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
-                                        //width:300,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -175,7 +290,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         cls:'x-cmpfield',
                                         fieldCls:'x-cmpDescriptions',
                                         labelWidth:120,
-                                        //width:650,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -188,7 +303,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         cls:'x-cmpfield',
                                         fieldCls:'x-cmpDescriptions',
                                         labelWidth:120,
-                                        //width:650,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -201,7 +316,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         cls:'x-cmpfield',
                                         fieldCls:'x-cmpDescriptions',
                                         labelWidth:120,
-                                        //width:650,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -214,7 +329,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         cls:'x-cmpfield',
                                         fieldCls:'x-cmpDescriptions',
                                         labelWidth:120,
-                                        //width:650,
+                                        padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
@@ -249,87 +364,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                         },
 
                         items:[
-                            {
-                                xtype:'displayfield',
-                                name:'alogp',
-                                itemId:'alogp',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'ALogP',
-                                labelAlign:'top',
-                                columnWidth:.1
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'hha',
-                                itemId:'hha',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'# H-Bond Receptors',
-                                columnWidth:.13,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'hhd',
-                                itemId:'hhd',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'# H-Bond Donors',
-                                columnWidth:.13,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'molweight',
-                                itemId:'molweight',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'Mol Weight',
-                                columnWidth:.1,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'mw_freebase',
-                                itemId:'mw_freebase',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'MW Freebase',
-                                columnWidth:.1,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'num_ro5_violations',
-                                itemId:'num_ro5_violations',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'# Rule of 5 Violations',
-                                columnWidth:.14,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'psa',
-                                itemId:'psa',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'Polar Surface Area',
-                                columnWidth:.12,
-                                labelAlign:'top'
-                            },
-                            {
-                                xtype:'displayfield',
-                                name:'rtb',
-                                itemId:'rtb',
-                                fieldCls:'x-cmpBottomfieldValue', // value
-                                baseCls:'x-cmpBottomBase', // label
-                                fieldLabel:'# Rotatable Bonds',
-                                columnWidth:.12,
-                                labelAlign:'top'
-                            }
+
+
                         ]
+
                     },
                     {
                         xtype:'displayfield',
@@ -405,6 +443,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         spacer.show();
         spacer = this.down('#spacer3');
         spacer.show();
+        spacer = this.down('#spacer4');
+        spacer.show();
     },
 
     setValues:function (compound) {
@@ -428,18 +468,26 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 var field = this.down('#' + prop);
                 if (field) {
 
-                    if (prop == 'alogp') {
+                    switch(prop) {
 
-                        // set alogp value to 1 decimal place
-                        var alogpValue = new Number(td[prop]);
-                        alogpValue = alogpValue.toFixed(1);
-                        field.setValue(alogpValue);
-                        field.show();
+                        case 'alogp':
+                            // change alogp value to 1 d.p
+                            var alogpValue = new Number(td[prop]);
+                            alogpValue = alogpValue.toFixed(1);
+                            field.setValue(alogpValue);
+                            field.show();
+                            break;
+                        case 'molformula':
 
-                    } else {
-
-                        field.setValue(td[prop]);
-                        field.show();
+                            // correctly format molecular formula
+                            var molValue = td[prop];
+                            molValue = molValue.replace(/(\d+)?\s*/g,"<sub>$1</sub>");
+                            field.setValue(molValue);
+                            field.show();
+                            break;
+                        default:
+                            field.setValue(td[prop]);
+                            field.show();
 
                     }
 
