@@ -29,7 +29,6 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 
         if (tar) {
             var cmpValueMenu = new Ext.menu.Menu({
-                layout:'fit',
                 items:[
                     {
                         xtype:'textfield',
@@ -87,7 +86,6 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
             contextMenu.showAt(x, y);
         } else {
             var cmpValueMenu = new Ext.menu.Menu({
-                layout:'fit',
                 items:[
                     {
                         xtype:'textfield',
