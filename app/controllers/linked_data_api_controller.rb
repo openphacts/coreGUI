@@ -21,6 +21,7 @@ class LinkedDataApiController < ApplicationController
   def compound_pharmacology_paginated
     options = Hash.new
     options[:uri] = params['uri']
+    options[:_page] = params['_page']
     req = LinkedDataAPICall.new('compound/pharmacology/pages')
     results = req.request_compound_pharmacology_paginated(options)
     render :json => results
