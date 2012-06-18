@@ -38,16 +38,28 @@ class LinkedDataAPICall
   end
 
   def request_compound_pharmacology(options)
-      http_resp = request(options)
-      json_resp = LinkedDataAPIResponseParser.parse_pharmacology_by_compound(http_resp.body)
-      return json_resp
-    end
+    http_resp = request(options)
+    json_resp = LinkedDataAPIResponseParser.parse_pharmacology_by_compound(http_resp.body)
+    return json_resp
+  end
+
+  def request_compound_pharmacology_count(options)
+    http_resp = request(options)
+    json_resp = LinkedDataAPIResponseParser.parse_pharmacology_by_compound_count(http_resp.body)
+    return json_resp
+  end
 
   def request_compound(options)
-      http_resp = request(options)
-      json_resp = LinkedDataAPIResponseParser.parse_compound(http_resp.body)
-      return json_resp
-    end
+    http_resp = request(options)
+    json_resp = LinkedDataAPIResponseParser.parse_compound(http_resp.body)
+    return json_resp
+  end
+
+  def request_target(options)
+    http_resp = request(options)
+    json_resp = LinkedDataAPIResponseParser.parse_target(http_resp.body)
+    return json_resp
+  end
 
   def request(options)
     puts "\nIssues call to coreAPI on #{@uri.inspect} with options: #{options.inspect}\n"

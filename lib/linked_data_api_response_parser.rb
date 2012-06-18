@@ -35,6 +35,9 @@ class LinkedDataAPIResponseParser
     b['label'] = result['label']
     b['label_src'] = result[IN_DATASET_PROP]
 
+    b['csid_uri'] = csData[CONCEPT_URI_PROP]
+    b['csid_uri_src'] = csData[IN_DATASET_PROP]
+
     b['inchi'] = csData['inchi']
     b['inchi_src'] = csData[IN_DATASET_PROP]
 
@@ -80,30 +83,43 @@ class LinkedDataAPIResponseParser
     b['toxicity'] = drugBankData['toxicity']
     b['toxicity_src'] = drugBankData[IN_DATASET_PROP]
 
+    resultArray.push(b)
 
-    finalResultHash['ops_records'] = resultArray
+    finalResultHash['objects'] = resultArray
 
     return finalResultHash
+  end
+
+  def self.parse_pharmacology_by_compound_count(response)
+    res = Hash.new
+    jsonObj = JSON.parse(response)
+    res['count'] = jsonObj['result']['primaryTopic']['compoundPharmacologyTotalResults']
+    return res
   end
 
   def self.parse_pharmacology_by_compound(response)
     finalResultHash = Hash.new
     resultArray = Array.new
     jsonObj = JSON.parse(response)
+
+    #drugBankData = jsonObj['result']['primaryTopic']['exactMatch'][0]
+    #chemspiderData = jsonObj['result']['primaryTopic']['exactMatch'][1]
+    chemblData = jsonObj['result']['primaryTopic']['exactMatch'][2]
+
     jsonObj['result']['primaryTopic']['exactMatch'][2]['activity'].each { |item|
       b = Hash.new
 
       b['type'] = item['type']
-      b['type_src'] =item[IN_DATASET_PROP]
+      b['type_src'] =chemblData[IN_DATASET_PROP]
       b['relation'] = item['relation']
-      b['relation_src']=item[IN_DATASET_PROP]
+      b['relation_src']=chemblData[IN_DATASET_PROP]
       b['standard_value'] = item['standardValue']
-      b['standard_value_src']= item[IN_DATASET_PROP]
+      b['standard_value_src']= chemblData[IN_DATASET_PROP]
       b['standard_units'] = item['standardUnits']
-      b['standard_units_src']=item[IN_DATASET_PROP]
+      b['standard_units_src']=chemblData[IN_DATASET_PROP]
 
       b['compound_uri'] = item['forMolecule']
-      b['compound_uri_src'] = item[IN_DATASET_PROP]
+      b['compound_uri_src'] = chemblData[IN_DATASET_PROP]
 
       #There is also target full_mwt, prefLabel, inchi, inchiKey, smiles, drugType, genericName
       #but these are in an array called exactMatch which has a loosely defined structure
@@ -121,13 +137,13 @@ class LinkedDataAPIResponseParser
         end
       end
 
-      #these are missing
-      #b['target_uris_src'] = item['onAssay'][IN_DATASET_PROP]
-      #b['target_name_src'] = item['onAssay'][IN_DATASET_PROP]
-      #b['target_organism_src'] = item['onAssay'][IN_DATASET_PROP]
+      b['target_uris_src'] = chemblData[IN_DATASET_PROP]
+      b['target_name_src'] = chemblData[IN_DATASET_PROP]
+      b['target_organism_src'] = chemblData[IN_DATASET_PROP]
 
       if item['onAssay'] != nil
         b['assay_uri'] = item['onAssay'][CONCEPT_URI_PROP]
+        b['assay_uri_src'] = chemblData[IN_DATASET_PROP]
       end
       #this is missing
       #b['assay_uri_src'] = item['onAssay'][IN_DATASET_PROP]
@@ -136,6 +152,18 @@ class LinkedDataAPIResponseParser
       resultArray.push(b)
     }
 
+    finalResultHash['objects'] = resultArray
+    return finalResultHash
+  end
+
+  def self.parse_target(response)
+    finalResultHash = Hash.new
+    resultArray = Array.new
+    jsonObj = JSON.parse(response)
+    puts jsonObj
+
+
+    resultArray.push(b)
     finalResultHash['objects'] = resultArray
     return finalResultHash
   end

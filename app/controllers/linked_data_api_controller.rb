@@ -6,10 +6,16 @@ class LinkedDataApiController < ApplicationController
     options[:uri] = params['uri']
     req = LinkedDataAPICall.new('compound')
     results = req.request_compound(options)
+    render :json => results
   end
 
   def target
-
+    #doesnt work yet
+    #options = Hash.new
+    #options[:uri] = params['uri']
+    #req = LinkedDataAPICall.new('target')
+    #results = req.request_target(options)
+    #render :json => results
   end
 
   def compound_pharmacology_paginated
@@ -21,15 +27,23 @@ class LinkedDataApiController < ApplicationController
   end
 
   def compound_pharmacology
-      options = Hash.new
-      options[:uri] = params['uri']
-      req = LinkedDataAPICall.new('compound/pharmacology')
-      results = req.request_compound_pharmacology(options)
-      render :json => results
-    end
+    options = Hash.new
+    options[:uri] = params['uri']
+    req = LinkedDataAPICall.new('compound/pharmacology')
+    results = req.request_compound_pharmacology(options)
+    render :json => results
+  end
 
   def target_pharmacology
+    #doesnt work yet
+  end
 
+  def compound_pharmacology_count
+    options = Hash.new
+    options[:uri] = params['uri']
+    req = LinkedDataAPICall.new('compound/pharmacology/count')
+    results = req.request_compound_pharmacology_count(options)
+    render :json => results
   end
 
 end
