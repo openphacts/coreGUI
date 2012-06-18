@@ -1,0 +1,2 @@
+module LinkedDataApiHelper
+end
