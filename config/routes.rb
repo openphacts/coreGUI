@@ -82,6 +82,12 @@ LSP4All::Application.routes.draw do
       post :compound_pharmacology_count
       post :compound_pharmacology
       post :target_pharmacology
+      get :compound
+      get :target
+      get :compound_pharmacology_paginated
+      get :compound_pharmacology_count
+      get :compound_pharmacology
+      get :target_pharmacology
     end
   end
 
