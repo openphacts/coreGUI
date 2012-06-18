@@ -76,11 +76,11 @@ LSP4All::Application.routes.draw do
 
   resources :linked_data_api do
     collection do
-      get :compound
-      get :target
-      get :compound_pharmacology_paginated
-      get :compound_pharmacology
-      get :target_pharmacology
+      post :compound
+      post :target
+      post :compound_pharmacology_paginated
+      post :compound_pharmacology
+      post :target_pharmacology
     end
   end
 
