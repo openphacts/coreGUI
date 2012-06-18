@@ -74,16 +74,6 @@ LSP4All::Application.routes.draw do
     end
   end
 
-  resources :linked_data_api do
-    collection do
-      post :compound
-      post :target
-      post :compound_pharmacology_paginated
-      post :compound_pharmacology
-      post :target_pharmacology
-    end
-  end
-
   root :to => "home#index"
 
   # The priority is based upon order of creation:
