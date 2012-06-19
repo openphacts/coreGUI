@@ -36,8 +36,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 //name:'imageAndFigures',
                                 itemId:'imageAndFigures',
                                 layout:'anchor',
-                                border: true,
-                                bodyPadding: '8px',
+                                border:true,
+                                bodyPadding:'8px',
 
                                 items:[
                                     {
@@ -168,7 +168,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         //width:600,
                                         anchor:'100%',
                                         fieldCls:'x-cmpTitle'
-                                    },{
+                                    },
+                                    {
                                         xtype:'displayfield',
                                         //value:'<br>',
                                         itemId:'spacer4'
@@ -180,6 +181,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'pharmCompoundButton'
 
                                     },
+                                    {
+                                        xtype:'button',
+                                        text:'View in ChemBioNavigator',
+                                        itemId:'cbnLinkout',
+                                        action:'cbn_linkout'
+                                    },
+
+
                                     {
                                         xtype:'displayfield',
                                         value:'<br>',
@@ -468,7 +477,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 var field = this.down('#' + prop);
                 if (field) {
 
-                    switch(prop) {
+                    switch (prop) {
 
                         case 'alogp':
                             // change alogp value to 1 d.p
@@ -481,7 +490,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                             // correctly format molecular formula
                             var molValue = td[prop];
-                            molValue = molValue.replace(/(\d+)?\s*/g,"<sub>$1</sub>");
+                            molValue = molValue.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
                             field.setValue(molValue);
                             field.show();
                             break;

@@ -37,8 +37,17 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 },
                 'CmpdByNameForm':{
                     historyToken:this.handleHistoryToken
+                },
+                'CmpdByNameForm button[action = cbn_linkout]':{
+                    click:this.firecbnLink
                 }
             });
+        },
+
+        firecbnLink:function () {
+            //            http://cbn.zbh.uni-hamburg.de/?ops_uris=http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413
+            var store = this.getCompoundsStore();
+            window.open('http://cbn.zbh.uni-hamburg.de/?ops_uris=' + store.proxy.extraParams.compound_uri, '_blank')
         },
 
         handleHistoryToken:function (historyTokenObject) {
@@ -70,4 +79,5 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
         }
     }
-);
+)
+;
