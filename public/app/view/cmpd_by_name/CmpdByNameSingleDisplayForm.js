@@ -177,12 +177,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                                     {
                                         xtype:'button',
+                                        margin:'0 10 0 0',
                                         text:'Pharmacology Data',
                                         itemId:'pharmCompoundButton'
 
                                     },
                                     {
                                         xtype:'button',
+                                        margin:'0 0 0 10',
                                         text:'View in ChemBioNavigator',
                                         itemId:'cbnLinkout',
                                         action:'cbn_linkout'
