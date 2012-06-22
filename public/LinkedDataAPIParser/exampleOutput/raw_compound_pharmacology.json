@@ -2,14 +2,14 @@
     "format": "linked-data-api",
     "version": "0.2",
     "result": {
-        "_about": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+        "_about": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_format=json",
         "definition": "http://ops.few.vu.nl/api-config",
-        "extendedMetadataVersion": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
-        "inDataset": "http://www.chemspider.com",
-        "label": "38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+        "extendedMetadataVersion": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_format=json&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
         "primaryTopic": {
             "_about": "http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+            "inDataset": "http://www.conceptwiki.org",
             "exactMatch": [
+                "http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
                 {
                     "_about": "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00398",
                     "inDataset": "http://linkedlifedata.com/resource/drugbank",
@@ -43,7 +43,7 @@
                             "relation": "=",
                             "standardUnits": "nM",
                             "standardValue": 360,
-                            "type": "Kd"
+                            "activity-type": "Kd"
                         },
                         {
                             "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650168",
@@ -60,41 +60,7 @@
                             "relation": "=",
                             "standardUnits": "nM",
                             "standardValue": 3400,
-                            "type": "Kd"
-                        },
-                        {
-                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650015",
-                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
-                            "onAssay": {
-                                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325057",
-                                "target": {
-                                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t12947",
-                                    "title": "Cyclin-dependent kinase 5",
-                                    "organism": "Homo sapiens"
-                                },
-                                "organism": "Homo sapiens"
-                            },
-                            "relation": "=",
-                            "standardUnits": "nM",
-                            "standardValue": 6200,
-                            "type": "Kd"
-                        },
-                        {
-                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650114",
-                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
-                            "onAssay": {
-                                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325017",
-                                "target": {
-                                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t30037",
-                                    "title": "MAP kinase signal-integrating kinase 2",
-                                    "organism": "Homo sapiens"
-                                },
-                                "organism": "Homo sapiens"
-                            },
-                            "relation": "=",
-                            "standardUnits": "nM",
-                            "standardValue": 250,
-                            "type": "Kd"
+                            "activity-type": "Kd"
                         },
                         {
                             "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650150",
@@ -111,12 +77,7 @@
                             "relation": "=",
                             "standardUnits": "nM",
                             "standardValue": 1700,
-                            "type": "Kd"
-                        },
-                        {
-                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650249",
-                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
-                            "type": "Kd"
+                            "activity-type": "Kd"
                         },
                         {
                             "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1442151",
@@ -140,7 +101,7 @@
                             "relation": "=",
                             "standardUnits": "nM",
                             "standardValue": 3300,
-                            "type": "IC50"
+                            "activity-type": "IC50"
                         },
                         {
                             "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1442152",
@@ -157,12 +118,52 @@
                             "relation": "=",
                             "standardUnits": "uM",
                             "standardValue": 5.4,
-                            "type": "GI50"
+                            "activity-type": "GI50"
+                        },
+                        {
+                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650015",
+                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+                            "onAssay": {
+                                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325057",
+                                "target": {
+                                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t12947",
+                                    "title": "Cyclin-dependent kinase 5",
+                                    "organism": "Homo sapiens"
+                                },
+                                "organism": "Homo sapiens"
+                            },
+                            "relation": "=",
+                            "standardUnits": "nM",
+                            "standardValue": 6200,
+                            "activity-type": "Kd"
+                        },
+                        {
+                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650114",
+                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+                            "onAssay": {
+                                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325017",
+                                "target": {
+                                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t30037",
+                                    "title": "MAP kinase signal-integrating kinase 2",
+                                    "organism": "Homo sapiens"
+                                },
+                                "organism": "Homo sapiens"
+                            },
+                            "relation": "=",
+                            "standardUnits": "nM",
+                            "standardValue": 250,
+                            "activity-type": "Kd"
+                        },
+                        {
+                            "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650249",
+                            "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+                            "activity-type": "Kd"
                         }
                     ]
                 }
             ],
-            "isPrimaryTopicOf": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5"
+            "prefLabel": "Sorafenib",
+            "isPrimaryTopicOf": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_format=json"
         }
     }
 }
