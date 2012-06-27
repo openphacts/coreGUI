@@ -76,6 +76,7 @@ LSP4All::Application.routes.draw do
 
   resources :linked_data_api do
     collection do
+      get :index
       post :compound
       post :target
       post :compound_pharmacology_paginated

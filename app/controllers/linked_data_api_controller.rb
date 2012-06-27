@@ -1,6 +1,10 @@
 class LinkedDataApiController < ApplicationController
 
 
+  def index
+
+  end
+
   def compound
     options = Hash.new
     options[:uri] = params['uri']

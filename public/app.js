@@ -1,11 +1,11 @@
 Ext.Loader.setConfig({enabled:true});
 Ext.create('Ext.app.Application', {
-    name: 'LSP',
+    name:'LSP',
 
-    appFolder: 'app',
+    appFolder:'app',
 
     // Define all the controllers that should initialize at boot up of your application
-    controllers: [
+    controllers:[
         'Users',
         'grids.DynamicGrid',
         'Grid',
@@ -13,21 +13,21 @@ Ext.create('Ext.app.Application', {
         'Queryform',
         'SimSearchForm',
         'CmpdByNameForm',
- 	'TargetByNameForm',
-	'PharmByTargetNameForm',
-	'PharmByCmpdNameForm',
-	'PharmEnzymeForm',
-	'SummeryForm',
-	'Settings',
-	'pmidTextMiningHitsForm',
-	'pathwayByCompoundForm', 
+        'TargetByNameForm',
+        'PharmByTargetNameForm',
+        'PharmByCmpdNameForm',
+        'PharmEnzymeForm',
+        'SummeryForm',
+        'Settings',
+        'pmidTextMiningHitsForm',
+        'pathwayByCompoundForm',
         'pathwayByProteinForm'
     ],
-    
-    autoCreateViewport: true,
-    
-    launch: function() {
-		Ext.Loader.setConfig({enabled:true, paths: { 'CS':'chemspider/lib' } });
-        
+
+    autoCreateViewport:true,
+
+    launch:function () {
+        Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib' } });
+        Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
     }
 });
