@@ -61,25 +61,39 @@ Ext.define('LDA.controller.LDAParserController', {
 
 
     logStoreDetails:function (data) {
-        console.log('logStoreDetails()');
+//        console.log('logStoreDetails()');
         var grid = this.getParserview().down('#lda' + data + 'g');
         var store = grid.store;
+        var logArea = Ext.ComponentQuery.query('#logarea')[0];
+        var sbuff = '';
+        logArea.setValue('');
         Ext.each(store.data.items, function (record, index, allRecords) {
             console.log(record.id);
+
+            sbuff = '';
+            sbuff = sbuff.concat(record.id + '\n');
             Ext.iterate(record.data,
                 function (key, value, originalObject) {
                     console.log(key + ': ' + value);
+                    sbuff = sbuff.concat(key + ': ' + value + '\n');
                 }
             );
+            var currValue = logArea.getValue();
+            logArea.setValue(currValue.concat('\n' + sbuff + '\n'));
         });
     },
 
 
     loadLDAData:function (data) {
-        console.log('loadLDAData()');
+//        console.log('loadLDAData()');
         var grid = this.getParserview().down('#lda' + data + 'g');
+        var uriField = this.getParserview().down('#lda' + data + 'u');
+        var uri = uriField.getValue();
+        var store = grid.getStore();
+
         grid.setLoading(true);
-        grid.store.load(function () {
+        store.setURI(uri);
+        store.load(function () {
             grid.setLoading(false);
         });
 

@@ -17,9 +17,20 @@ Ext.define('LDA.store.CompoundPharmacologyCountStore', {
         limitParam:undefined,
         pageParam:undefined,
         callbackKey:'_callback',
-        url:'http://ops.few.vu.nl/compound/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_format=json',
         reader:Ext.create('LDA.helper.CompoundPharmacologyCountReader')
 //        autoLoad:false
+    },
+    BASE_URL:'http://ops.few.vu.nl/compound/pharmacology/count?',
+    uri:'',
+
+    setURI:function (uri) {
+        this.uri = uri;
+        this.proxy.url = this.BASE_URL +
+            Ext.Object.toQueryString(
+                {
+                    uri:this.uri,
+                    _format:'json'
+                });
     }
 //    data:[
 //        {firstName:'Ed', lastName:'Spencer', count:'1'},

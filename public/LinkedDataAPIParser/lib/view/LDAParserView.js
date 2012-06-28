@@ -10,7 +10,9 @@ Ext.define('LDA.view.LDAParserView', {
     alias:'widget.LDAParserView',
     requires:[
         'LDA.view.grids.CompoundPharmacologyCountGrid',
-        'LDA.view.grids.CompoundGrid'
+        'LDA.view.grids.CompoundGrid'  ,
+        'LDA.view.grids.CompoundPharmacologyGrid',
+        'LDA.view.grids.CompoundPharmacologyPaginatedGrid'
     ],
     layout:{
         type:'vbox'
@@ -23,9 +25,13 @@ Ext.define('LDA.view.LDAParserView', {
 //        },
 
         {
-            xtype:'label',
-            text:'Compound'
+            xtype:'textfield',
+            fieldLabel:'Compound URI',
+            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
+            width:600,
+            itemId:'ldacu'
         },
+
         {
             xtype:'panel',
             layout:'hbox',
@@ -57,8 +63,11 @@ Ext.define('LDA.view.LDAParserView', {
             ]
         },
         {
-            xtype:'label',
-            text:'CompoundPharmacologyCount'
+            xtype:'textfield',
+            fieldLabel:'Compound Pharmacology Count URI',
+            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
+            width:600,
+            itemId:'ldacpcu'
         },
         {
             xtype:'panel',
@@ -66,7 +75,7 @@ Ext.define('LDA.view.LDAParserView', {
             items:[
                 {
                     xtype:'CompoundPharmacologyCountGrid',
-                    width:500,
+                    width:900,
                     height:300,
                     itemId:'ldacpcg'
                 },
@@ -90,20 +99,94 @@ Ext.define('LDA.view.LDAParserView', {
                 }
             ]
         },
-
-
         {
-            xtype:'textarea',
-            itemId:'textarea2',
-            height:200,
-            width:800
+            xtype:'textfield',
+            fieldLabel:'Compound Pharmacology URI',
+            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
+            width:600,
+            itemId:'ldacpu'
         },
         {
-            xtype:'textarea',
-            itemId:'textarea1',
-            height:200,
-            width:800
+            xtype:'panel',
+            layout:'hbox',
+            items:[
+                {
+                    xtype:'CompoundPharmacologyGrid',
+                    width:900,
+                    height:300,
+                    itemId:'ldacpg'
+                },
+                {
+                    xtype:'panel',
+                    layout:'vbox',
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'load',
+                            action:'load_cp',
+                            width:100
+                        },
+                        {
+                            xtype:'button',
+                            text:'Log Store Details',
+                            action:'log_cp',
+                            width:100
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            xtype:'textfield',
+            fieldLabel:'Compound Pharmacology Paginated URI',
+            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
+            width:600,
+            itemId:'ldacppu'
+        },
+        {
+            xtype:'panel',
+            layout:'hbox',
+            items:[
+                {
+                    xtype:'CompoundPharmacologyPaginatedGrid',
+                    width:900,
+                    height:300,
+                    itemId:'ldacppg'
+                },
+                {
+                    xtype:'panel',
+                    layout:'vbox',
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'load',
+                            action:'load_cpp',
+                            width:100
+                        },
+                        {
+                            xtype:'button',
+                            text:'Log Store Details',
+                            action:'log_cpp',
+                            width:100
+                        }
+                    ]
+                }
+            ]
         }
+
+
+//        {
+//            xtype:'textarea',
+//            itemId:'textarea2',
+//            height:200,
+//            width:800
+//        },
+//        {
+//            xtype:'textarea',
+//            itemId:'textarea1',
+//            height:200,
+//            width:800
+//        }
 //        {
 //            xtype:'radiogroup',
 //            itemId:'radio',

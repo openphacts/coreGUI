@@ -19,13 +19,27 @@ Ext.application({
 
     launch:function () {
         Ext.create('Ext.container.Viewport', {
+            layout:'border',
             items:[
                 {
                     xtype:'label',
+                    region:'north',
                     text:'Linked Data API Test Page'
                 },
                 {
-                    xtype:'LDAParserView'
+                    xtype:'textarea',
+                    fieldLabel:'log',
+                    labelAlign:'top',
+                    region:'south',
+                    width:'100%',
+                    height:200,
+                    itemId:'logarea',
+                    autoScroll:true
+                },
+                {
+                    region:'center',
+                    xtype:'LDAParserView',
+                    autoScroll:true
                 }
             ]
         });

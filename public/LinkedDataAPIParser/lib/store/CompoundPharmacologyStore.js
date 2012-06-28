@@ -1,14 +1,14 @@
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
- * Date: 26/06/2012
- * Time: 21:45
+ * Date: 27/06/2012
+ * Time: 20:28
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('LDA.store.CompoundStore', {
+Ext.define('LDA.store.CompoundPharmacologyStore', {
     extend:'Ext.data.Store',
-    model:'LDA.model.CompoundModel',
-    storeId:'CompoundStore',
+    model:'LDA.model.CompoundPharmacologyModel',
+    storeId:'CompoundPharmacologyStore',
     proxy:{
         type:'jsonp',
         noCache:false,
@@ -16,9 +16,9 @@ Ext.define('LDA.store.CompoundStore', {
         limitParam:undefined,
         pageParam:undefined,
         callbackKey:'_callback',
-        reader:Ext.create('LDA.helper.CompoundReader')
+        reader:Ext.create('LDA.helper.CompoundPharmacologyReader')
     },
-    BASE_URL:'http://ops.few.vu.nl/compound?',
+    BASE_URL:'http://ops.few.vu.nl/compound/pharmacology?',
     uri:'',
 
     setURI:function (uri) {
