@@ -13,7 +13,7 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
     readRecords:function (data) {
         var records = new Array();
 
-        var record = Ext.create('LDA.model.CompoundPharmacologyModel', {});
+        var record = Ext.create('LDA.model.PharmacologyModel', {});
 
         return new Ext.data.ResultSet(
             {

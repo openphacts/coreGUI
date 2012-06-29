@@ -1,13 +1,11 @@
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
- * Date: 27/06/2012
- * Time: 20:32
+ * Date: 26/06/2012
+ * Time: 15:23
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('LDA.model.CompoundPharmacologyPaginatedModel', {
+Ext.define('LDA.model.PharmacologyCountModel', {
     extend:'Ext.data.Model',
-    fields:[
-
-    ]
+    fields:['count', 'uri']
 });
