@@ -23,7 +23,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 
     setActivityValue:function (activityValue) {
         if (typeof activityValue == 'number') {
-            this.page = activityValue;
+            this.activity_value = activityValue;
         }
     },
 

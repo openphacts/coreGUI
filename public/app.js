@@ -1,4 +1,4 @@
-Ext.Loader.setConfig({enabled:true});
+Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
 Ext.create('Ext.app.Application', {
     name:'LSP',
 
@@ -6,6 +6,7 @@ Ext.create('Ext.app.Application', {
 
     // Define all the controllers that should initialize at boot up of your application
     controllers:[
+        'LDAParserController',
         'Users',
         'grids.DynamicGrid',
         'Grid',
@@ -28,6 +29,7 @@ Ext.create('Ext.app.Application', {
 
     launch:function () {
         Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib' } });
-        Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
+
+//        Ext.Loader.setPath('LDA', 'LinkedDataAPIParser/lib');
     }
 });
