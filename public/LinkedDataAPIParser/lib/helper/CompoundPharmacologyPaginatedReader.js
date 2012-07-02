@@ -30,6 +30,13 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             var chembl_src = item[LDA_IN_DATASET];
 
             var activityType = item['activity_type'];
+
+            var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
+
+            });
+
+            console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
+            console.log(JSON.stringify(record));
         });
 
         return new Ext.data.ResultSet(

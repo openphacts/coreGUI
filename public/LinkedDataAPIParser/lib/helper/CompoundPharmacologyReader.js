@@ -62,9 +62,11 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
 
                     //data values
                     var targetTitle = targetData['title'];
-                    var targetOrganism = targetData['organism'];
-                    var assayOrganism = assayData['organism'];
-                    var activityType = a['activity-type'];
+                    //the next two need changing in LDA query (values are correct but name is incorrect
+                    var targetOrganism = targetData['assay_organism'];
+                    var assayOrganism = assayData['assay_organism'];
+
+                    var activityType = a['activity_type'];
                     var relation = a['relation'];
                     var standardValue = a['standardValue'];
                     var standardUnits = a['standardUnits'];
@@ -138,6 +140,9 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
 
                         }
                     );
+                    console.log('LDA.model.PharmacologyModel: CompoundPharmacology');
+                    console.log(JSON.stringify(record));
+
                     records.push(record);
                 } else {
                     //assayData and activity data are missing nothing to report

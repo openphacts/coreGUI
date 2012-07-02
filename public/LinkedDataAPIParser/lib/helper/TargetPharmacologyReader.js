@@ -13,6 +13,9 @@ Ext.define('LDA.helper.TargetPharmacologyReader', {
 
         var record = Ext.create('LDA.model.PharmacologyModel', {});
 
+        console.log('LDA.model.PharmacologyModel: TargetPharmacology');
+        console.log(JSON.stringify(record));
+
         records.push(record);
 
         return new Ext.data.ResultSet(

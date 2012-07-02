@@ -20,6 +20,9 @@ Ext.define('LDA.helper.CompoundPharmacologyCountReader', {
 //        var record = new Ext.data.Model(undefined, undefined, {count:countVal}, convertedValues = {});
         var record = Ext.create('LDA.model.PharmacologyCountModel', {count:countVal, uri:uriVal});
 
+        console.log('LDA.model.PharmacologyCountModel: CompoundPharmacologyCount');
+        console.log(JSON.stringify(record));
+
         return new Ext.data.ResultSet(
             {
                 total:1,

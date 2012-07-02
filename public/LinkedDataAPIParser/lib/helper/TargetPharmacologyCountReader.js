@@ -14,6 +14,9 @@ Ext.define('LDA.helper.TargetPharmacologyCountReader', {
         var uriVal = data['result']['primaryTopic'][LDA_ABOUT];
         var record = Ext.create('LDA.model.PharmacologyCountModel', {count:countVal, uri:uriVal});
 
+        console.log('LDA.model.PharmacologyCountModel: TargetPharmacologyCount');
+        console.log(JSON.stringify(record));
+
         return new Ext.data.ResultSet(
             {
                 total:1,
