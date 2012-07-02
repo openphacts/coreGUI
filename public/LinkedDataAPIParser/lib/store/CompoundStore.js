@@ -9,8 +9,10 @@ Ext.define('LDA.store.CompoundStore', {
     extend:'LDA.store.basestores.BaseStore',
     model:'LDA.model.CompoundModel',
     storeId:'CompoundStore',
-    proxy:{
-        reader:Ext.create('LDA.helper.CompoundReader')
-    },
-    BASE_URL:'http://ops.few.vu.nl/compound?'
+    BASE_URL:'http://ops.few.vu.nl/compound?',
+
+    constructor:function (config, arguments) {
+        this.proxy.reader = Ext.create('LDA.helper.CompoundReader');
+        this.callParent(arguments);
+    }
 });

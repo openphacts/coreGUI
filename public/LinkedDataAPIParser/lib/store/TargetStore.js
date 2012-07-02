@@ -10,8 +10,10 @@ Ext.define('LDA.store.TargetStore', {
     extend:'LDA.store.basestores.BaseStore',
     model:'LDA.model.TargetModel',
     storeId:'TargetStore',
-    proxy:{
-        reader:Ext.create('LDA.helper.TargetReader')
-    },
-    BASE_URL:'http://ops.few.vu.nl/target?'
+    BASE_URL:'http://ops.few.vu.nl/target?',
+
+    constructor:function (config, arguments) {
+        this.proxy.reader = Ext.create('LDA.helper.TargetReader');
+        this.callParent(arguments);
+    }
 });

@@ -9,10 +9,10 @@ Ext.Loader.setConfig({enabled:true});
 Ext.Loader.setConfig({paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
 Ext.data.JsonP.disableCaching = false;
 Ext.application({
-    requires:['LDA.controller.LDAParserController',
+    requires:[
         'LDA.view.LDAParserView'],
-    appFolder:'/LinkedDataAPIParser/lib',
-    name:'LDA',
+    appFolder:'./app',
+    name:'LSP',
     controllers:[
         'LDAParserController'
     ],

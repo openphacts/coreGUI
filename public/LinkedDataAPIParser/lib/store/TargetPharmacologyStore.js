@@ -9,8 +9,10 @@ Ext.define('LDA.store.TargetPharmacologyStore', {
     extend:'LDA.store.basestores.FilteringStore',
     model:'LDA.model.PharmacologyModel',
     storeId:'TargetPharmacologyStore',
-    proxy:{
-        reader:Ext.create('LDA.helper.TargetPharmacologyReader')
-    },
-    BASE_URL:'http://ops.few.vu.nl/target/pharmacology?'
+    BASE_URL:'http://ops.few.vu.nl/target/pharmacology?',
+
+    constructor:function (config, arguments) {
+        this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyReader');
+        this.callParent(arguments);
+    }
 });

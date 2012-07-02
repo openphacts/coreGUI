@@ -10,8 +10,10 @@ Ext.define('LDA.store.TargetPharmacologyPaginatedStore', {
     extend:'LDA.store.basestores.PaginatedFilteringStore',
     model:'LDA.model.PharmacologyPaginatedModel',
     storeId:'TargetPharmacologyPaginatedStore',
-    proxy:{
-        reader:Ext.create('LDA.helper.TargetPharmacologyPaginatedReader')
-    },
-    BASE_URL:'http://ops.few.vu.nl/target/pharmacology/pages?'
+    BASE_URL:'http://ops.few.vu.nl/target/pharmacology/pages?',
+
+    constructor:function (config, arguments) {
+        this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyPaginatedReader');
+        this.callParent(arguments);
+    }
 });

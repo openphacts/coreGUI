@@ -10,8 +10,10 @@ Ext.define('LDA.store.TargetPharmacologyCountStore', {
     extend:'LDA.store.basestores.FilteringStore',
     model:'LDA.model.PharmacologyCountModel',
     storeId:'TargetPharmacologyCountStore',
-    proxy:{
-        reader:Ext.create('LDA.helper.TargetPharmacologyCountReader')
-    },
-    BASE_URL:'http://ops.few.vu.nl/target/pharmacology/count?'
+    BASE_URL:'http://ops.few.vu.nl/target/pharmacology/count?',
+
+    constructor:function (config, arguments) {
+        this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyCountReader');
+        this.callParent(arguments);
+    }
 });
