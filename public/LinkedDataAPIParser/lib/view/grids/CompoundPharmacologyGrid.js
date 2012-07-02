@@ -15,6 +15,11 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
             header:'ConceptWiki Compound URI',
             dataIndex:'cw_compound_uri',
             width:400
+        },
+        {
+            header:'Target title source',
+            dataIndex:'target_title_src',
+            width:400
         }
     ]
 });
