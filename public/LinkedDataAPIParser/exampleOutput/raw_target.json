@@ -1,0 +1,34 @@
+{
+  "format": "linked-data-api",
+  "version": "0.2",
+  "result": {
+    "_about": "http://ops.few.vu.nl/target?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+    "definition": "http://ops.few.vu.nl/api-config",
+    "extendedMetadataVersion": "http://ops.few.vu.nl/target?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+    "primaryTopic": {
+      "_about": "http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+      "inDataset": "http://www.conceptwiki.org",
+      "exactMatch": [
+        {
+          "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+          "description": "Alpha-2A adrenergic receptor",
+          "keyword": "3D-structure , Cell membrane , Complete proteome , Direct protein sequencing , Disulfide bond , G-protein coupled receptor , Glycoprotein , Lipoprotein , Membrane , Palmitate , Phosphoprotein , Polymorphism , Receptor , Reference proteome , Transducer , Transmembrane , Transmembrane helix",
+          "organism": "Homo sapiens",
+          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
+          "label": "CHEMBL1867 , Alpha-2A adrenergic receptor , Alpha-2 adrenergic receptor subtype C10 , Alpha-2A adrenoreceptor , Alpha-2A adrenoceptor , Alpha-2AAR",
+          "subClassOf": "http://purl.obolibrary.org/obo#PR_000000001"
+        },
+        {
+          "_about": "http://www4.wiwiss.fu-berlin.de/drugbank/resource/targets/318",
+          "molecularWeight": "48957",
+          "numberOfResidues": "457",
+          "pdbIdPage": "http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF",
+          "specificFunction": "Alpha-2 adrenergic receptors mediate the catecholamine- induced inhibition of adenylate cyclase through the action of G proteins. The rank order of potency for agonists of this receptor is oxymetazoline > clonidine > epinephrine > norepinephrine > phenylephrine > dopamine > p-synephrine > p-tyramine > serotonin = p-octopamine. For antagonists, the rank order is yohimbine > phentolamine = mianserine > chlorpromazine = spiperone = prazosin > propanolol > alprenolol = pindolol",
+          "theoreticalPi": "10.20"
+        },
+        "http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc"
+      ],
+      "isPrimaryTopicOf": "http://ops.few.vu.nl/target?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc"
+    }
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "format": "linked-data-api",
+  "version": "0.2",
+  "result": {
+    "_about": "http://ops.few.vu.nl/target/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+    "definition": "http://ops.few.vu.nl/api-config",
+    "extendedMetadataVersion": "http://ops.few.vu.nl/target/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+    "primaryTopic": {
+      "_about": "http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+      "inDataset": "http://www.conceptwiki.org",
+      "exactMatch": [
+        "http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+        {
+          "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+          "title": "Alpha-2A adrenergic receptor (Homo sapiens)",
+          "assay_organism": "Homo sapiens",
+          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
+          "targetOfAssay": [
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a200081",
+              "assay_organism": "Rattus norvegicus",
+              "assayOfActivity": [
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a271634",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m38",
+                    "full_mwt": 606.841,
+                    "num_ro5_violations": 2,
+                    "exactMatch": [
+                      {
+                        "_about": "http://rdf.chemspider.com/23089936",
+                        "inchi": "InChI=1S/C42H44N4/c1-2-4-6-12-28-44-40-26-30-46(42-16-10-8-14-38(40)42)32-34-19-23-36(24-20-34)35-21-17-33(18-22-35)31-45-29-25-39(43-27-11-5-3-1)37-13-7-9-15-41(37)45/h7-10,13-26,29-30H,1-6,11-12,27-28,31-32H2/p+2/b43-39+,44-40+",
+                        "smiles": "c1ccc2c(c1)c3cc[n+]2Cc4ccc(cc4)-c5ccc(cc5)C[n+]6ccc(c7c6cccc7)NCCCCCCCCCCN3",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      },
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/94344af0-60b3-4639-9d04-619bb79377ba",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "20,31-Diaza-1,12-diazoniaheptacyclo[30.6.2.2~3,6~.2~7,10~.2~12,19~.0~13,18~.0~33,38~]hexatetraconta-1(39),3,5,7,9,12,14,16,18,32(40),33,35,37,41,43,45-hexadecaenato(4-)"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 170,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                },
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a284903",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m10",
+                    "full_mwt": 606.841,
+                    "num_ro5_violations": 2,
+                    "exactMatch": [
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/ab43dca1-2499-4825-9922-346efd9e4e29",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "22,33-Diaza-1,14-diazoniaheptacyclo[32.6.2.2~14,21~.1~3,7~.1~8,12~.0~15,20~.0~35,40~]hexatetraconta-1(41),3(46),4,6,8(45),9,11,14(44),15,17,19,21(43),34(42),35,37,39-hexadecaene"
+                      },
+                      {
+                        "_about": "http://rdf.chemspider.com/8852289",
+                        "inchi": "InChI=1S/C42H44N4/c1-2-4-6-12-26-44-40-24-28-46(42-22-10-8-20-38(40)42)32-34-16-14-18-36(30-34)35-17-13-15-33(29-35)31-45-27-23-39(43-25-11-5-3-1)37-19-7-9-21-41(37)45/h7-10,13-24,27-30H,1-6,11-12,25-26,31-32H2/p+2/b43-39+,44-40+",
+                        "smiles": "c1ccc6cc1C[n+]3c2ccccc2c(cc3)NCCCCCCCCCCNc5c4c(cccc4)[n+](cc5)Cc7cccc6c7",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 110,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                },
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a275208",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m39",
+                    "full_mwt": 468.592,
+                    "num_ro5_violations": 1,
+                    "exactMatch": [
+                      {
+                        "_about": "http://rdf.chemspider.com/8945580",
+                        "inchi": "InChI=1S/C32H26N4/c33-29-15-17-35(31-13-3-1-11-27(29)31)21-23-7-5-9-25(19-23)26-10-6-8-24(20-26)22-36-18-16-30(34)28-12-2-4-14-32(28)36/h1-20,33-34H,21-22H2/p+2",
+                        "smiles": "c12ccccc1c(cc[n+]2Cc6cccc(c3cccc(c3)C[n+]5c4ccccc4c(N)cc5)c6)N",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      },
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/9614c31b-4321-435f-bb3e-0bf7b3c5fb22",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "1,1'-[3,3'-Biphenyldiylbis(methylene)]bis(4-aminoquinolinium)"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 290,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                },
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a270328",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m46",
+                    "full_mwt": 496.645,
+                    "num_ro5_violations": 1,
+                    "exactMatch": [
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/304f420f-ab72-4991-b630-9ed0ddb3e31b",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "1,1'-[1,2-Ethanediylbis(4,1-phenylenemethylene)]bis(4-aminoquinolinium)"
+                      },
+                      {
+                        "_about": "http://rdf.chemspider.com/8803459",
+                        "inchi": "InChI=1S/C34H30N4/c35-31-19-21-37(33-7-3-1-5-29(31)33)23-27-15-11-25(12-16-27)9-10-26-13-17-28(18-14-26)24-38-22-20-32(36)30-6-2-4-8-34(30)38/h1-8,11-22,35-36H,9-10,23-24H2/p+2",
+                        "smiles": "c12ccccc1c(cc[n+]2Cc3ccc(cc3)CCc4ccc(cc4)C[n+]6c5ccccc5c(N)cc6)N",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 410,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                }
+              ]
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a194200",
+              "assay_organism": "Rattus norvegicus",
+              "assayOfActivity": [
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a928332",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m39",
+                    "full_mwt": 468.592,
+                    "num_ro5_violations": 1,
+                    "exactMatch": [
+                      {
+                        "_about": "http://rdf.chemspider.com/8945580",
+                        "inchi": "InChI=1S/C32H26N4/c33-29-15-17-35(31-13-3-1-11-27(29)31)21-23-7-5-9-25(19-23)26-10-6-8-24(20-26)22-36-18-16-30(34)28-12-2-4-14-32(28)36/h1-20,33-34H,21-22H2/p+2",
+                        "smiles": "c12ccccc1c(cc[n+]2Cc6cccc(c3cccc(c3)C[n+]5c4ccccc4c(N)cc5)c6)N",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      },
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/9614c31b-4321-435f-bb3e-0bf7b3c5fb22",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "1,1'-[3,3'-Biphenyldiylbis(methylene)]bis(4-aminoquinolinium)"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 290,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                },
+                {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a912837",
+                  "forMolecule": {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m46",
+                    "full_mwt": 496.645,
+                    "num_ro5_violations": 1,
+                    "exactMatch": [
+                      {
+                        "_about": "http://www.conceptwiki.org/concept/304f420f-ab72-4991-b630-9ed0ddb3e31b",
+                        "inDataset": "http://www.conceptwiki.org/",
+                        "prefLabel": "1,1'-[1,2-Ethanediylbis(4,1-phenylenemethylene)]bis(4-aminoquinolinium)"
+                      },
+                      {
+                        "_about": "http://rdf.chemspider.com/8803459",
+                        "inchi": "InChI=1S/C34H30N4/c35-31-19-21-37(33-7-3-1-5-29(31)33)23-27-15-11-25(12-16-27)9-10-26-13-17-28(18-14-26)24-38-22-20-32(36)30-6-2-4-8-34(30)38/h1-8,11-22,35-36H,9-10,23-24H2/p+2",
+                        "smiles": "c12ccccc1c(cc[n+]2Cc3ccc(cc3)CCc4ccc(cc4)C[n+]6c5ccccc5c(N)cc6)N",
+                        "inDataset": "http://rdf.chemspider.com/"
+                      }
+                    ]
+                  },
+                  "relation": "=",
+                  "standardUnits": "nM",
+                  "standardValue": 410,
+                  "activity_type": "IC50",
+                  "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)",
+      "isPrimaryTopicOf": "http://ops.few.vu.nl/target/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc"
+    }
+  }
+}
