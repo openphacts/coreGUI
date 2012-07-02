@@ -15,6 +15,8 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
 
         var record = Ext.create('LDA.model.PharmacologyModel', {});
 
+        records.push(record);
+
         return new Ext.data.ResultSet(
             {
                 total:records.length,

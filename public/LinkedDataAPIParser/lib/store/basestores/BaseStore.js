@@ -23,7 +23,11 @@ Ext.define('LDA.store.basestores.BaseStore', {
     listeners:{
         //this is used to construct the proxy url before the load is done
         beforeload:{
-            fn:this.updateProxyURL
+
+            fn:function () {
+                var me = this;
+                me.updateProxyURL();
+            }
         }
     },
 
@@ -38,6 +42,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
                     _format:this._format,
                     uri:this.uri
                 });
+//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
     }
 
 });

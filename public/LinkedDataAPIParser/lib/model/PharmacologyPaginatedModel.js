@@ -8,8 +8,6 @@
 Ext.define('LDA.model.PharmacologyPaginatedModel', {
     extend:'Ext.data.Model',
     fields:[
-
-
-
+        'cw_compound_uri'
     ]
 });

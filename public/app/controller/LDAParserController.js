@@ -5,7 +5,7 @@
  * Time: 10:48
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('LDA.controller.LDAParserController', {
+Ext.define('LSP.controller.LDAParserController', {
     extend:'Ext.app.Controller',
     requires:['LDA.view.LDAParserView'],
     refs:[

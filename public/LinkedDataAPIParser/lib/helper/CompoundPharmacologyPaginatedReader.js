@@ -14,8 +14,9 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
         var records = new Array();
 
 
-
         var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {});
+
+        records.push(record);
 
         return new Ext.data.ResultSet(
             {

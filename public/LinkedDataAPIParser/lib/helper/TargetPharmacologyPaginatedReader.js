@@ -8,18 +8,20 @@
 Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
-        readRecords:function (data) {
-             var records = new Array();
+    readRecords:function (data) {
+        var records = new Array();
 
-             var record = Ext.create('LDA.model.PharmacologyModel', {});
+        var record = Ext.create('LDA.model.PharmacologyModel', {});
 
-             return new Ext.data.ResultSet(
-                 {
-                     total:records.length,
-                     count:records.length,
-                     records:records,
-                     success:true,
-                     message:'loaded'
-                 });
-         }
+        records.push(record);
+
+        return new Ext.data.ResultSet(
+            {
+                total:records.length,
+                count:records.length,
+                records:records,
+                success:true,
+                message:'loaded'
+            });
+    }
 });

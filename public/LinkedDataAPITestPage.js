@@ -11,7 +11,7 @@ Ext.data.JsonP.disableCaching = false;
 Ext.application({
     requires:[
         'LDA.view.LDAParserView'],
-    appFolder:'./app',
+    appFolder:'app',
     name:'LSP',
     controllers:[
         'LDAParserController'

@@ -38,6 +38,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                     _format:this._format,
                     uri:this.uri
                 });
+//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
     }
 
 });
