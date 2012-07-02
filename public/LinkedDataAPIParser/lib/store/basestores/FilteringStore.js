@@ -30,7 +30,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +
-            Ext.Object.toQueryString(
+            this.stringEncoder.toQueryString(
                 {
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,

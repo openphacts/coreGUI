@@ -19,6 +19,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
     _format:'json',
     uri:'',
     BASE_URL:'',
+    stringEncoder:Ext.create('LDA.helper.JamesQueryStringEncoder'),
 
     listeners:{
         //this is used to construct the proxy url before the load is done
@@ -37,7 +38,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +
-            Ext.Object.toQueryString(
+            this.stringEncoder.toQueryString(
                 {
                     _format:this._format,
                     uri:this.uri

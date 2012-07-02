@@ -17,7 +17,7 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +
-            Ext.Object.toQueryString(
+            this.stringEncoder.toQueryString(
                 {
                     _page:this._page,
                     assay_organism:this.assay_organism,
