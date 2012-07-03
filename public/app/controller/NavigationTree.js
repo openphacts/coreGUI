@@ -35,7 +35,7 @@
 Ext.define('LSP.controller.NavigationTree', {
     extend:'Ext.app.Controller',
 
-    stores:['NavigationTree'],
+    stores:['NavigationTree', 'GuiComponents'],
 
     views:[
         'Appmoduletree'

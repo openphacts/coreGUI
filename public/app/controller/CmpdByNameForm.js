@@ -20,7 +20,10 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             {
                 ref:'submitButton',
                 selector:'#CmpdByNameSubmit_id'
-
+            },
+            {
+                ref:'lookup',
+                selector:'#compoundByNameLookup'
             }
         ],
 
@@ -31,8 +34,36 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 },
                 'CmpdByNameForm conceptWikiCompoundLookup':{
                     select:this.enableSubmit
+                },
+                'CmpdByNameForm':{
+                    historyToken:this.handleHistoryToken
+                },
+                'CmpdByNameForm button[action = cbn_linkout]':{
+                    click:this.firecbnLink
                 }
             });
+        },
+
+        firecbnLink:function () {
+            //            http://cbn.zbh.uni-hamburg.de/?ops_uris=http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413
+            var store = this.getCompoundsStore();
+            window.open('http://cbn.zbh.uni-hamburg.de/?ops_uris=' + store.proxy.extraParams.compound_uri, '_blank')
+        },
+
+        handleHistoryToken:function (historyTokenObject) {
+//            console.log('CmpdByNameForm handleHistoryToken')
+            if (historyTokenObject.u) {
+                var store = this.getCompoundsStore();
+                if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
+                    store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                    this.getFormView().setLoading();
+                    store.load();
+                }
+            } else if (historyTokenObject.s) {
+                var lookup = this.getLookup();
+                lookup.setRawValue(historyTokenObject.s);
+                lookup.doQuery(historyTokenObject.s);
+            }
         },
 
         enableSubmit:function (compundLookup) {
@@ -42,38 +73,11 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         },
 
         submitQuery:function (button) {
-            var me = this;
-            var form = button.up('form');
             button.disable();
-            var tp = this.getCmpdByNameSingleDisplayForm();
-            tp.startLoading();
-            var values = form.getValues();
-            //var grid = this.getGridView();
-
-            var store = this.getCompoundsStore();
-            store.proxy.extraParams.compound_uri = values;
-
-            store.load({
-                scope:this,
-                callback:function (records, operation, success) {
-                    if (success) {
-                        if (records.length > 0) {
-                            var csid = records[0].data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                            me.getCompoundImagePanel().setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-                            tp.showRecord(records[0]);
-                        } else {
-                            tp.showNoDataMessage();
-                        }
-                    }
-                    else {
-                        tp.showErrorMessage();
-                    }
-                }
-            });
-            tp.endLoading();
-            button.enable();
-
-
+            var form = this.getFormView();
+            var compound_uri = form.getValues().compound_uri;
+            Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
         }
     }
-);
+)
+;

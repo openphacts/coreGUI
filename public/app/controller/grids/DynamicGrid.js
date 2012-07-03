@@ -41,6 +41,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     models:['DynamicGrid'],
 
+    refs:[
+        {
+            ref:'gridView',
+            selector:'dynamicgrid3'
+        }
+    ],
 
     init:function () {
         this.control({
@@ -52,6 +58,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                             Ext.create('CS.view.CompoundWindow').showCompound(csid);
                         }
                     }
+                },
+                itemcontextmenu:function (view, record, itemHTMLElement, index, eventObject, eOpts) {
+                    eventObject.preventDefault();
+//                    console.log('itemcontextmenu');
+                    this.getGridView().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
             },
             'dynamicgrid3 toolbar #sdfDownloadProxy_id':{
@@ -93,7 +104,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 return false;
             }
             var idx_start = offset - 1;
-            var row_count = 0
+            var row_count = 0;
             Ext.each(new_records, function (new_record) {
                 new_record.index = idx_start + row_count;
                 row_count++;
@@ -241,11 +252,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         });
         for (var csid in csid_hash) {
             var csid_records = csid_hash[csid]; // record indices with this csid
-            var has_molfile = (csid_molfile_hash[csid] !== undefined)   // true or false if molfile exists in store allready
+            var has_molfile = (csid_molfile_hash[csid] !== undefined);   // true or false if molfile exists in store allready
             if (has_molfile) {
                 var idx_len = csid_records.length;
                 for (i = 0; i < idx_len; i++) {
-                    var row = grid_store.getAt(csid_records[i])
+                    var row = grid_store.getAt(csid_records[i]);
                     if (row.molfile == undefined) {
                         row.molfile = csid_molfile_hash[csid];
                     }
@@ -331,3 +342,4 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 //        })
 
 })
+;

@@ -31,7 +31,7 @@ Ext.define('LSP.controller.pmidTextMiningHitsForm', {
         submitQuery:function (button) {
             var form = button.up('form');
             button.disable();
-            values = form.getValues();
+            var values = form.getValues();
 
             var grid = form.query('dynamicgrid2')[0];
             grid.store.proxy.extraParams = {pubmed_uri:values.pmid_uri};

@@ -14,9 +14,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
         this.items = [
             {
                 xtype:'form',
-                padding:'5 5 0 5',
+                padding:'5 5 5 5',
                 border:false,
-                height:'100%',
+//                height:'100%',
                 style:'background-color: #fff;',
                 items:[
                     {
@@ -33,6 +33,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                             {
                                 xtype:'textfield',
                                 name:'smiles',
+                                itemId:'smilesField',
                                 emptyText:'Enter SMILES here or use the molecular editor to draw structure - click button ->',
                                 fieldLabel:'Search for compounds similar to SMILES',
                                 labelWidth:230,
@@ -48,9 +49,10 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                     {
                         xtype:'radiogroup',
                         fieldLabel:'Search type',
+                        itemId:'searchTypeRadio',
                         items:[
                             {boxLabel:'Exact structure search', name:'search_type', inputValue:1, checked:true},
-                            {boxLabel:'Substructure seach', name:'search_type', inputValue:2},
+                            {boxLabel:'Substructure search', name:'search_type', inputValue:2},
                             {boxLabel:'Structural similarity search', name:'search_type', inputValue:3}
                         ]
                     },
@@ -59,17 +61,65 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                         action:'query',
                         itemId:'sim_sss_start_search_button_id',
                         text:'Start search...'
-                    },
-                    {
-                        xtype:'dynamicgrid3',
-                        readUrl:'/core_api_calls/get_chem_info4known_csids.json',
-                        title:'Structure search results',
-                        gridBaseTitle:'Structure search results',
-                        flex:1
                     }
-                ]}
+
+                ]},
+            {
+                xtype:'dynamicgrid3',
+                itemId:'simSearchGrid',
+                readUrl:'/core_api_calls/get_chem_info4known_csids.json',
+                title:'Structure search results',
+                gridBaseTitle:'Structure search results',
+                flex:1
+            }
         ];
 
         this.callParent(arguments);
+    },
+
+
+    setFormData:function (historyTokenObject) {
+//        console.log('SimSearchForm setFormData()');
+        //formdata comes directly from form via history
+        //load data
+        //this needs to be the function that does everything after clicking the button
+
+//        s = smiles string
+//        st = search type ['exact','substructure','structural']
+
+        if (historyTokenObject.sm) {
+            var smilesField = this.down('#smilesField');
+            smilesField.setValue(historyTokenObject.sm);
+            var searchTypeRadio = this.down('#searchTypeRadio');
+            if (historyTokenObject.st) {
+                if (historyTokenObject.st == 'exact') {
+                    searchTypeRadio.setValue({search_type:1});
+                } else if (historyTokenObject.st == 'sub') {
+                    searchTypeRadio.setValue({search_type:2});
+                } else if (historyTokenObject.st == 'sim') {
+                    searchTypeRadio.setValue({search_type:3});
+                }
+            } else {
+                searchTypeRadio.setValue({search_type:1});
+            }
+            this.fireEvent('historyToken', historyTokenObject);
+        }
+
+
+//        if (historyTokenObject.u) {
+//            //gets ref to
+//            var dg = this.down('#simSearchGrid');
+//            var store = dg.store;
+//            if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
+//                store.proxy.extraParams.compound_uri = historyTokenObject.u;
+//                store.load({params:{ offset:0, limit:100}});
+//            }
+//        } else if (historyTokenObject.s) {
+//            var lookup = this.down('conceptWikiCompoundLookup');
+//            lookup.setRawValue(historyTokenObject.s);
+//            lookup.doQuery(historyTokenObject.s);
+//        }
+
+
     }
 });

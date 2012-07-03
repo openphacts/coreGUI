@@ -25,5 +25,9 @@ Ext.define('LSP.view.Viewer', {
     initComponent:function () {
 
         this.callParent(arguments);
+        this.on('tabchange', function (tabPanel, newCard, oldCard) {
+            //this handles the user selecting a tab and updates the history token appropriately
+            Ext.History.add('!p=' + newCard.xtype);
+        });
     }
 });

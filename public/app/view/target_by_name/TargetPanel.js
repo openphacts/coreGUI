@@ -52,12 +52,13 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 layout:'anchor',
                                 items:[
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
+                                    {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocations', fieldLabel:'Cellular Locations', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
                                     {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {
@@ -91,7 +92,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                 fieldCls:'target-message',
                 value:'message here'
             }
-        ]
+        ];
 
         var store = Ext.data.StoreManager.lookup('Targets');
         store.addListener('load', this.showData, this);
@@ -105,7 +106,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }, this);
         var img = this.down('#target_image');
         img.setSrc('/images/target_placeholder.png');
-
         this.doLayout();
     },
 
@@ -117,8 +117,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         msg.setVisible(true);
     },
 
-    showData:function (store, records, succesful) {
-        if (succesful) {
+    showData:function (store, records, successful) {
+        if (successful) {
             if (records.length > 0) {
                 var dp = this.down('#dp');
                 var msg = this.down('#msg');
@@ -131,6 +131,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         } else {
             this.showMessage('Server did not respond');
         }
+        this.up('TargetByNameForm').setLoading(false);
+        var searchButton = Ext.ComponentQuery.query('#TargetByNameSubmit_id')[0].enable();
     },
 
     clearDomBelow:function (domElement) {
@@ -142,7 +144,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     addKeywords:function (keywords) {
-        var bits = keywords.split('; ');
+        var bits = keywords.split(' , ');
         var keywordDisplayField = this.down('#keywords');
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
@@ -165,7 +167,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     addSynonyms:function (synonyms) {
-        var bits = synonyms.split('; ');
+        var bits = synonyms.split(' , ');
         var synonymsField = this.down('#synonyms');
         var bodyEl = synonymsField.bodyEl;
         var domElem = bodyEl.dom;
@@ -204,10 +206,11 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             this.addOrganism(value);
         }
         else if (fieldId == 'pdbIdPage') {
+//            console.log('synonyms');
             this.addPDBImage(value);
         }
         else {
-//            console.log('standard field');
+//            console.log('standard field: ' + fieldId + ' : ' + value);
             var field = this.down('#' + fieldId);
             field.setValue(value);
             field.show();
@@ -219,53 +222,21 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.resetAllFields();
         var td = target.data;
 
+        var pharmButton = this.down('#pharmTargetButton');
+        pharmButton.hide();
+        pharmButton.setHandler(function () {
+                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+            }
+        );
+        pharmButton.show();
+
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
 //                console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
         }
-
-//        if (td.target_name) {
-//            this.setFieldValue('#tn', td.target_name);
-//        }
-//
-//        if (td.target_type) {
-//            this.setFieldValue('#tt', td.target_type);
-//        }
-//
-//        var typeField = this.down('#tt');
-//        typeField.setValue(td.target_type);
-//
-//        var descField = this.down('#desc');
-//        descField.setValue(td.description);
-//
-//        var keyField = this.down('#key');
-//        this.addKeywords(td.keywords, keyField);
-//
-//        var orgField = this.down('#org');
-//        this.addOrganism(td.organism, orgField);
-//
-//        var synField = this.down('#syn');
-//        this.addSynonyms(td.synonyms, synField);
-//
-//        if (td.cellularLocation) {
-//            var cellLoc = this.down('#cl');
-//            cellLoc.setValue(td.cellularLocation);
-//            cellLoc.show();
-//        }
-
-
         this.doLayout();
-    },
-
-    startLoading:function () {
-        this.setLoading(true);
-    },
-
-    endLoading:function () {
-        this.setLoading(false);
     }
 
-})
-;
+});

@@ -14,7 +14,7 @@ Ext.define('LSP.controller.Queryform', {
     submitQuery:function (button) {
         var form = button.up('form');
         button.disable();
-        values = form.getValues();
+        var values = form.getValues();
         var sparql_pane = form.up('queryform');
         var grid = sparql_pane.query('dynamicgrid3')[0];
         grid.store.proxy.actionMethods = {read:'POST'};

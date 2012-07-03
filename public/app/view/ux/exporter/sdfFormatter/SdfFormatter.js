@@ -33,8 +33,8 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
                 }
                 var stripped = this.stripTags(data);
                 var escapedText = this.escapeTextSeperator(stripped);
-                data_record = data_record + this.stripTags(column.text) + "> (" + csid + ")\n"
-                data_record = data_record + escapedText + "\n"
+                data_record = data_record + this.stripTags(column.text) + "> (" + csid + ")\n";
+                data_record = data_record + escapedText + "\n";
                 if (escapedText !== "") {
                     cols.push(data_record);
                 }

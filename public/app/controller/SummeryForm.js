@@ -49,11 +49,11 @@ Ext.define('LSP.controller.SummeryForm', {
         var form = button.up('form'),
             values = form.getValues();
         subject_grid.store.proxy.actionMethods = {read:'POST'};
-        subject_grid.store.proxy.extraParams = values
+        subject_grid.store.proxy.extraParams = values;
         subject_grid.store.proxy.api.read = '/sparql_endpoint/concept_subject_summery.json';
         subject_grid.store.load();
         object_grid.store.proxy.actionMethods = {read:'POST'};
-        object_grid.store.proxy.extraParams = values
+        object_grid.store.proxy.extraParams = values;
         object_grid.store.proxy.api.read = '/sparql_endpoint/concept_object_summery.json';
         object_grid.store.load();
     }

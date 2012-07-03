@@ -16,7 +16,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
         this.items = [
             {
                 xtype:'label',
-                html:'<font face="verdana" color="grey">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</font>',
+                html:'<span style="font-family: verdana; color: grey; ">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</span>',
                 labelWidth:400,
                 padding:'5 0 0 140'
             },
@@ -30,7 +30,8 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 style:'background-color: #fff;',
                 items:[
                     {
-                        xtype:'conceptWikiProteinLookup'
+                        xtype:'conceptWikiProteinLookup',
+                        itemId:'targetByNameLookup'
                     },
                     {
                         xtype:'button',
@@ -46,15 +47,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 xtype:'TargetPanel',
                 flex:1
             }
-//                       {
-//                        xtype: 'dynamicgrid3',
-//                        itemId: 'TargetByNameGrid_id',
-//                        readUrl: '/core_api_calls/protein_info.json',
-//                        title: 'Target by name search results',
-//                        gridBaseTitle: 'Target by name search results',
-//                        flex: 1
-//                        }
-        ]
+        ];
         this.callParent(arguments);
     }
 });

@@ -119,6 +119,7 @@
 .x-cmpBottomfieldValue {
     text-align: center;
     color: black;
+    font-size: 16px;
 }
 
 .x-cmpTitle {
@@ -132,6 +133,7 @@
 
 .x-cmpDescriptions {
     text-align: justify;
+    color: black;
 }
 
 .target-field-label {
@@ -150,7 +152,10 @@
 
 .target-title {
     font-size: 30px;
-    padding-bottom: 20px;
+}
+
+.target-pharm-button {
+    margin-bottom: 20px;
 }
 
 .target-data-panel {
@@ -180,4 +185,41 @@
 .organism {
     font-style: italic;
     color: rgb(0, 0, 0);
+}
+
+.fb-panel {
+    padding: 3px;
+    height: 450px;
+}
+
+.fb-message {
+    background-color: rgb(245, 245, 250);
+    text-align: justify;
+    padding: 3px;
+}
+
+.fb-button {
+}
+
+.fb-email {
+}
+
+.fb-text {
+}
+
+.fb-accordion {
+}
+
+.menu-search-compound {
+    background-image: url(/images/magnifier.png) !important;
+}
+
+.menu-search-target {
+    background-image: url(/images/magnifier.png) !important;
+}
+
+sub {
+    font-size: xx-small;
+    position: relative;
+    bottom: -0.3em;
 }

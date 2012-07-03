@@ -17,6 +17,10 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 ref:'submitButton',
                 selector:'#TargetByNameSubmit_id'
 
+            },
+            {
+                ref:'lookup',
+                selector:'#targetByNameLookup'
             }
         ],
 
@@ -27,8 +31,26 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 },
                 'TargetByNameForm conceptWikiProteinLookup':{
                     select:this.enableSubmit
+                },
+                'TargetByNameForm':{
+                    historyToken:this.handleHistoryToken
                 }
             });
+        },
+
+        handleHistoryToken:function (historyTokenObject) {
+            if (historyTokenObject.u) {
+                var store = this.getTargetsStore();
+                if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                    store.proxy.extraParams.protein_uri = historyTokenObject.u;
+                    this.getFormView().setLoading(true);
+                    store.load();
+                }
+            } else if (historyTokenObject.s) {
+                var lookup = this.getLookup();
+                lookup.setRawValue(historyTokenObject.s);
+                lookup.doQuery(historyTokenObject.s);
+            }
         },
 
         enableSubmit:function () {
@@ -39,38 +61,9 @@ Ext.define('LSP.controller.TargetByNameForm', {
 
         submitQuery:function (button) {
             button.disable();
-            var tp = this.getTargetPanel();
-            tp.startLoading();
-
             var form = this.getFormView();
             var target_uri = form.getValues().protein_uri;
-
-            var store = this.getTargetsStore();
-//            var tp = this.getTargetPanel();
-//            store.addListener('load', tp.showData, tp);
-
-            store.proxy.extraParams.protein_uri = target_uri;
-            store.load();
-//                {
-//                    scope:this,
-//                    callback:function (records, operation, success) {
-//                        if (success) {
-//                            if (records.length > 0) {
-//                                tp.showData(records[0]);
-//                            } else {
-//                                tp.showMessage('No records found within OPS for this search');
-//                            }
-//                        }
-//                        else {
-//                            tp.showMessage('Error contacting OPS core API');
-//                        }
-//                    }
-//                }
-//            );
-            tp.endLoading();
-            button.enable();
+            Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
         }
-
-
     }
 );

@@ -4,7 +4,8 @@ Ext.define('LSP.view.Navigator', {
 
     requires:[
         'LSP.view.Appmoduletree',
-        'Ext.layout.container.Accordion'
+        'Ext.layout.container.Accordion',
+        'LSP.view.feedback.FeedbackPanel'
     ],
 
     collapsible:true,
@@ -19,6 +20,7 @@ Ext.define('LSP.view.Navigator', {
             {
                 title:'Navigation',
                 autoScroll:true,
+                layout:'fit',
                 border:false,
                 iconCls:'nav',
                 items:[
@@ -28,15 +30,28 @@ Ext.define('LSP.view.Navigator', {
                     }
                 ]
             },
+            //Removed this because it isn't actually used any more
+//            {
+//                title:'Settings',
+//                border:false,
+//                autoScroll:true,
+//                iconCls:'settings',
+//                items:[
+//                    {
+//                        xtype:'settingsform',
+//                        id:'appSettings'
+//                    }
+//                ]
+//            },
             {
-                title:'Settings',
+                title:'Feedback',
                 border:false,
                 autoScroll:true,
-                iconCls:'settings',
+                iconCls:'fb-accordion',
+                bodyBorder:false,
                 items:[
                     {
-                        xtype:'settingsform',
-                        id:'appSettings'
+                        xtype:'FeedbackPanel'
                     }
                 ]
             }

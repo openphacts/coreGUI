@@ -19,7 +19,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
             items:[
                 {
                     xtype:'label',
-                    html:'<font face="verdana" color="grey">Hint: Type in compound name. E.g. \"Aspirin\"</font>',
+                    html:'<span style="font-family: verdana; color: grey; ">Hint: Type in compound name. E.g. \"Aspirin\"</span>',
                     labelWidth:400,
                     padding:'5 0 0 140'
                 },
@@ -34,12 +34,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                     items:[
                         {
                             xtype:'conceptWikiCompoundLookup',
-                            fieldLabel:'Compound name',
-                            forceSelection:true,
-                            allowBlank:false,
-                            typeAhead:true,
-                            typeAheadDelay:250,
-                            queryDelay:70
+                            itemId:'compoundByNameLookup'
                         },
                         {
                             xtype:'button',
@@ -53,7 +48,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                 {
                     xtype:'CmpdByNameSingleDisplayForm',
                     flex:1
-
                 }
             ]
         });

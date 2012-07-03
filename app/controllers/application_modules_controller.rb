@@ -34,54 +34,61 @@
 
 
 class ApplicationModulesController < ApplicationController
-  
+
   def index
-    
+
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => "" }
+      format.xml { render :xml => "" }
       format.json {
-        
+
         nodes = Array.new
-      
-        if params[:node] == "root"
+        if params[:type] == "grid"
+          puts("type=grid")
+          leafNodes = ApplicationModule.all(:joins => :application_type, :conditions => ["application_types.name = 'grid'"])
+          leafNodes.each { |d|
+            nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :xtype => d.xtype})
+          }
+        elsif params[:node] == "root"
+          puts("node=root")
           application_modules = UserApplication.root_applications
           unless application_modules.nil?
             application_modules.each { |d|
-              nodes.push( { :text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type, :xtype => d.application_module.xtype, :leaf => d.application_module.has_children? ? false : true, :cls => d.application_module.has_children? ? 'folder' : 'file' } )
+              nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type, :xtype => d.application_module.xtype, :leaf => d.application_module.has_children? ? false : true, :cls => d.application_module.has_children? ? 'folder' : 'file'})
             }
           end
         else
+          puts("node=id")
           node = ApplicationModule.find(params[:node])
           node.children.each { |d|
-            nodes.push( { :text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type.name, :xtype => d.xtype, :leaf => d.has_children? ? false : true, :cls => d.has_children? ? 'folder' : 'file' } )
+            nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type.name, :xtype => d.xtype, :leaf => d.has_children? ? false : true, :cls => d.has_children? ? 'folder' : 'file'})
           }
         end
-        
+
         render :json => nodes.to_json
-        
+
       }
     end
   end
-  
+
   def new
-    
+
   end
-  
+
   def create
-    
+
   end
-  
+
   def show
-    
+
   end
 
   def edit
-    
+
   end
-  
+
   def update
-    
+
   end
-  
+
 end
