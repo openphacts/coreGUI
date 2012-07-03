@@ -41,11 +41,15 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         },
 
         handleHistoryToken:function (historyTokenObject) {
-            console.log('PharmByCmpdNameForm: handleHistoryToken()');
+//            console.log('PharmByCmpdNameForm: handleHistoryToken()');
             if (historyTokenObject.u) {
                 var dg = this.getGridView();
                 var store = dg.store;
                 if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
+                    this.getFormView().getForm().setValues({
+                        protein_uri:historyTokenObject.u
+                    });
+//                    console.log(this.getFormView().getValues());
                     store.proxy.extraParams.compound_uri = historyTokenObject.u;
                     this.getFormView().setLoading(true);
                     store.load({params:{offset:0, limit:100}});
@@ -58,7 +62,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         },
 
         prepGrid:function () {
-            console.log('PharmByCmpdNameForm: prepGrid()');
+//            console.log('PharmByCmpdNameForm: prepGrid()');
             var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
             var grid_view = this.getGridView();
             var add_next_button = this.getNextRecordsButton();
@@ -75,7 +79,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         },
 
         storeLoadComplete:function (store, records, success) {
-            console.log('PharmByCmpdNameForm: storeLoadComplete()');
+//            console.log('PharmByCmpdNameForm: storeLoadComplete()');
             var controller = this.getController('LSP.controller.grids.DynamicGrid');
             var grid_view = this.getGridView();
             var form = this.getFormView();
