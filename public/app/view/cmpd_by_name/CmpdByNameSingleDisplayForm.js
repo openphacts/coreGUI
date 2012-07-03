@@ -64,8 +64,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'hha',
-                                        itemId:'hha',
+                                        name:'hba',
+                                        itemId:'hba',
                                         fieldCls:'x-cmpBottomfieldValue', // value
                                         baseCls:'x-cmpBottomBase', // label\
                                         anchor:'100%',
@@ -76,8 +76,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'hhd',
-                                        itemId:'hhd',
+                                        name:'hbd',
+                                        itemId:'hbd',
                                         fieldCls:'x-cmpBottomfieldValue', // value
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
@@ -272,15 +272,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'inchiKey',
-                                        itemId:'inchiKey',
+                                        name:'inchi_key',
+                                        itemId:'inchi_key',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
                                         padding:'10px 0 0 0',
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChlKey'
+                                        fieldLabel:'Standard InChiKey'
                                     },
                                     {
                                         xtype:'displayfield',

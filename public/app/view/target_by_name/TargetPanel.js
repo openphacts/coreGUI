@@ -58,7 +58,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                     {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocations', fieldLabel:'Cellular Locations', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
                                     {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {
@@ -144,7 +144,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     addKeywords:function (keywords) {
-        var bits = keywords.split('; ');
+        var bits = keywords.split(' , ');
         var keywordDisplayField = this.down('#keywords');
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
@@ -167,7 +167,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     addSynonyms:function (synonyms) {
-        var bits = synonyms.split('; ');
+        var bits = synonyms.split(' , ');
         var synonymsField = this.down('#synonyms');
         var bodyEl = synonymsField.bodyEl;
         var domElem = bodyEl.dom;
@@ -194,22 +194,23 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
-//            console.log('synonyms');
+            console.log('synonyms');
             this.addSynonyms(value);
         }
         else if (fieldId == 'keywords') {
-//            console.log('keywords');
+            console.log('keywords');
             this.addKeywords(value);
         }
         else if (fieldId == 'organism') {
-//            console.log('organism');
+            console.log('organism');
             this.addOrganism(value);
         }
         else if (fieldId == 'pdbIdPage') {
+            console.log('synonyms');
             this.addPDBImage(value);
         }
         else {
-//            console.log('standard field');
+            console.log('standard field: ' + fieldId + ' : ' + value);
             var field = this.down('#' + fieldId);
             field.setValue(value);
             field.show();
