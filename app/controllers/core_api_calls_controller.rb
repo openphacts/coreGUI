@@ -1,6 +1,7 @@
 require 'results_formatter'
 class CoreApiCallsController < ApplicationController
-   NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9188/opsapi"
+   #this has been changed to 9183 from 9188 on the recommendation of Antonis
+   NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
   
   def cmpd_name_lookup(substring = params[:query])
       options = Hash.new
