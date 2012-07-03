@@ -194,23 +194,23 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
-            console.log('synonyms');
+//            console.log('synonyms');
             this.addSynonyms(value);
         }
         else if (fieldId == 'keywords') {
-            console.log('keywords');
+//            console.log('keywords');
             this.addKeywords(value);
         }
         else if (fieldId == 'organism') {
-            console.log('organism');
+//            console.log('organism');
             this.addOrganism(value);
         }
         else if (fieldId == 'pdbIdPage') {
-            console.log('synonyms');
+//            console.log('synonyms');
             this.addPDBImage(value);
         }
         else {
-            console.log('standard field: ' + fieldId + ' : ' + value);
+//            console.log('standard field: ' + fieldId + ' : ' + value);
             var field = this.down('#' + fieldId);
             field.setValue(value);
             field.show();

@@ -41,7 +41,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     handleHistoryToken:function (historyTokenObject) {
-        console.log('PharmEnzymeForm: handleHistoryToken()');
+//        console.log('PharmEnzymeForm: handleHistoryToken()');
         if (historyTokenObject.ec) {
             var dg = this.getGridView();
             var store = dg.store;
@@ -70,7 +70,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     storeLoadComplete:function (store, records, success) {
-        console.log('PharmEnzymeForm: storeLoadComplete()');
+//        console.log('PharmEnzymeForm: storeLoadComplete()');
         var controller = this.getController('LSP.controller.grids.DynamicGrid');
         var grid_view = this.getGridView();
         var form = this.getPEform();

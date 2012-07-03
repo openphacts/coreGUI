@@ -51,7 +51,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         },
 
         handleHistoryToken:function (historyTokenObject) {
-            console.log('CmpdByNameForm handleHistoryToken')
+//            console.log('CmpdByNameForm handleHistoryToken')
             if (historyTokenObject.u) {
                 var store = this.getCompoundsStore();
                 if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {

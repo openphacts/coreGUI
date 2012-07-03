@@ -39,14 +39,14 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     prepGrid:function () {
-        console.log('prepGrid');
+//        console.log('prepGrid');
         var grid = this.getStrucGrid();
         grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.api.read = grid.readUrl;
         grid.store.proxy.params = {offset:0, limit:100};
 
         grid.store.on('load', function (this_store, records, success) {
-            console.log('grid.store \'load\'');
+//            console.log('grid.store \'load\'');
             this.getSubmitButton().enable();
             var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
             grid_controller.storeLoad(grid, success);
@@ -57,8 +57,8 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     hitCoreAPI:function (csid_list) {
-        console.log('hitCoreAPI');
-        console.log(csid_list)
+//        console.log('hitCoreAPI');
+//        console.log(csid_list)
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
         grid.store.proxy.extraParams = {csids:csid_list.join(',')};
@@ -66,8 +66,8 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     handleHistoryToken:function (historyTokenObject) {
-        console.log('handleHistoryToken');
-        console.log(historyTokenObject);
+//        console.log('handleHistoryToken');
+//        console.log(historyTokenObject);
         var me = this;
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners:{
@@ -146,7 +146,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     submitQuery:function (button) {
-        console.log('submitQuery');
+//        console.log('submitQuery');
         button.disable();
         var form = button.up('form');
         var this_gridview = this.getStrucGrid();

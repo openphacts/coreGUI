@@ -79,7 +79,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 
 
     setFormData:function (historyTokenObject) {
-        console.log('SimSearchForm setFormData()');
+//        console.log('SimSearchForm setFormData()');
         //formdata comes directly from form via history
         //load data
         //this needs to be the function that does everything after clicking the button
