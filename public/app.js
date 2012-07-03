@@ -20,14 +20,14 @@ Ext.create('Ext.app.Application', {
 	'SummeryForm',
 	'Settings',
 	'pmidTextMiningHitsForm',
-	'pathwayByCompoundForm', 
+	'pathwayByCompoundForm',
         'pathwayByProteinForm'
     ],
-    
+
     autoCreateViewport: true,
-    
+
     launch: function() {
 		Ext.Loader.setConfig({enabled:true, paths: { 'CS':'chemspider/lib' } });
-        
+
     }
 });
