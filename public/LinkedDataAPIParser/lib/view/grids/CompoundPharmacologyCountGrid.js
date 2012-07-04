@@ -17,7 +17,7 @@ Ext.define('LDA.view.grids.CompoundPharmacologyCountGrid', {
             width:400
         },
         {
-            header:'count',
+            header:'Pharmacology Count',
             dataIndex:'count',
             width:60
         }
