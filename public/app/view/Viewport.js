@@ -48,7 +48,8 @@ Ext.define('LSP.view.Viewport', {
         'LSP.view.user.Newbutton',
         'Ext.layout.container.Border',
         'Ext.toolbar.Spacer',
-        'LSP.store.GuiComponents'
+        'LSP.store.GuiComponents',
+        'LDA.helper.LDAConstants'
     ],
 
     layout:'border',
@@ -88,7 +89,7 @@ Ext.define('LSP.view.Viewport', {
 //        return obj;
 //    },
 
-    //all UI changes should come through this function
+//all UI changes should come through this function
     handleHistoryToken:function (token) {
         //not null
         if (token) {
@@ -123,7 +124,7 @@ Ext.define('LSP.view.Viewport', {
         return obj;
     },
 
-    //this handles the changing of central ui panel
+//this handles the changing of central ui panel
     changeView:function (record, formData) {
         var view;
         Ext.getCmp('centerView').items.each(function (curItem) {
@@ -159,6 +160,8 @@ Ext.define('LSP.view.Viewport', {
 
 
     initComponent:function () {
+        //set provenance to default of icon mode
+        LDAProvenanceMode = LDA_PROVENANCE_ICON;
         //init history, needs to be done first
         Ext.History.init();
         //add event listener for History 'change' event
@@ -237,4 +240,5 @@ Ext.define('LSP.view.Viewport', {
         ];
         this.callParent(arguments);
     }
-});
+})
+;
