@@ -14,8 +14,9 @@ Ext.define('LDA.model.TargetModel', {
         'chembl_target_uri',
         'drugbank_target_uri',
 
-        'preflabel',
-        'preflabel_src',
+        //chembl
+        'label',
+        'label_src',
 
         'keywords',
         'keywords_src',
@@ -27,7 +28,7 @@ Ext.define('LDA.model.TargetModel', {
         'target_type_src',
 
         'organism',
-        'organism',
+        'organism_src',
 
         'synonyms',
         'synonyms_src',
