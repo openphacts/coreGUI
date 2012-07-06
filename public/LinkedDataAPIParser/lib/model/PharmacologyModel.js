@@ -24,7 +24,7 @@ Ext.define('LDA.model.PharmacologyModel', {
 
         'chembl_activity_uri',
 
-        //for target pharma
+        //specific to target pharma
         'target_preflabel',
         'target_preflabel_src',
 
@@ -34,9 +34,9 @@ Ext.define('LDA.model.PharmacologyModel', {
         'target_organism',
         'target_organism_src',
 
-        //for compound pharma (is CW UUID)
-        'compound_label',
-        'compound_label_src',
+        //specific to compound pharma (is CW UUID)
+        'compound_uuid',
+        'compound_uuid_src',
 
         'compound_drug_type',
         'compound_drug_type_src',
