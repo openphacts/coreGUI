@@ -217,45 +217,45 @@ Ext.define('LDA.view.LDAParserView', {
             ]
         },
 
-//        {
-//            xtype:'textfield',
-//            fieldLabel:'Target Pharmacology URI',
-//            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
-//            width:600,
-//            itemId:'ldacu'
-//        },
-//
-//        {
-//            xtype:'panel',
-//            layout:'hbox',
-//            items:[
-//                {
-//                    xtype:'TargetPharmacologyGrid',
-//                    width:900,
-//                    height:300,
-//                    itemId:'ldatpg'
-//                },
-//                {
-//                    xtype:'panel',
-//                    layout:'vbox',
-//                    items:[
-//                        {
-//                            xtype:'button',
-//                            text:'load',
-//                            action:'load_tp',
-//                            width:100
-//                        },
-//                        {
-//                            xtype:'button',
-//                            text:'Log Store Details',
-//                            action:'log_tp',
-//                            width:100
-//                        }
-//                    ]
-//                }
-//            ]
-//        },
-//
+        {
+            xtype:'textfield',
+            fieldLabel:'Target Pharmacology URI',
+            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
+            width:600,
+            itemId:'ldatpu'
+        },
+
+        {
+            xtype:'panel',
+            layout:'hbox',
+            items:[
+                {
+                    xtype:'TargetPharmacologyGrid',
+                    width:900,
+                    height:300,
+                    itemId:'ldatpg'
+                },
+                {
+                    xtype:'panel',
+                    layout:'vbox',
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'load',
+                            action:'load_tp',
+                            width:100
+                        },
+                        {
+                            xtype:'button',
+                            text:'Log Store Details',
+                            action:'log_tp',
+                            width:100
+                        }
+                    ]
+                }
+            ]
+        },
+
 //        {
 //            xtype:'textfield',
 //            fieldLabel:'Target Pharmacology Paginated URI',
@@ -333,8 +333,8 @@ Ext.define('LDA.view.LDAParserView', {
 //                }
 //            ]
 //        }
-
-
+//
+//
 //        {
 //            xtype:'textarea',
 //            itemId:'textarea2',
