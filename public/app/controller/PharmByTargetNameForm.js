@@ -35,18 +35,24 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
 
-    handleHistoryToken:function (historyTokenObject) {
+    handleHistoryToken:function (historyTokenObject) {    
+//
         if (historyTokenObject.u) {
             //gets ref to
             var dg = this.getGridView();
             var store = dg.store;
             if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
+                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                // Setting the ops_uri for the core API search
                 store.proxy.extraParams.protein_uri = historyTokenObject.u;
                 this.getFormView().setLoading(true);
                 store.load({params:{offset:0, limit:100}});
             }
         } else if (historyTokenObject.s) {
-            var lookup = this.down('conceptWikiProteinLookupJSONP');
+            var lookup = this.down('conceptWikiLookup');
             lookup.setRawValue(historyTokenObject.s);
             lookup.doQuery(historyTokenObject.s);
         }
