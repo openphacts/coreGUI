@@ -48,8 +48,7 @@ Ext.define('LSP.view.Viewport', {
         'LSP.view.user.Newbutton',
         'Ext.layout.container.Border',
         'Ext.toolbar.Spacer',
-        'LSP.store.GuiComponents',
-        'LDA.helper.LDAConstants'
+        'LSP.store.GuiComponents'
     ],
 
     layout:'border',
