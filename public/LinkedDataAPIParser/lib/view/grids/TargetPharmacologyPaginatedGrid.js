@@ -1,14 +1,14 @@
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
- * Date: 27/06/2012
- * Time: 20:26
+ * Date: 04/07/2012
+ * Time: 16:44
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('LDA.view.grids.CompoundPharmacologyPaginatedGrid', {
+Ext.define('LDA.view.grids.TargetPharmacologyPaginatedGrid', {
     extend:'Ext.grid.Panel',
-    alias:'widget.CompoundPharmacologyPaginatedGrid',
-    store:Ext.create('LDA.store.CompoundPharmacologyPaginatedStore'),
+    alias:'widget.TargetPharmacologyPaginatedGrid',
+    store:Ext.create('LDA.store.TargetPharmacologyPaginatedStore'),
     loadMask:true,
     columns:{
         defaults:{
@@ -36,11 +36,8 @@ Ext.define('LDA.view.grids.CompoundPharmacologyPaginatedGrid', {
                 }
             }
         },
+
         items:[
-            { header:'ConceptWiki Compound URI',
-                dataIndex:'cw_compound_uri',
-                width:400
-            }
         ]
     }
 });

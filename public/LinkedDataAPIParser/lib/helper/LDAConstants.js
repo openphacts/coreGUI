@@ -18,3 +18,23 @@ LDA_ACTIVITY = 'activity';
 LDA_FOR_MOLECULE = 'forMolecule';
 LDA_ASSAY_TARGET = 'target';
 LDA_ITEMS = 'items';
+LDA_TARGET_OF_ASSAY = 'targetOfAssay';
+LDA_ASSAY_OF_ACTIVITY = 'assayOfActivity';
+LDA_SRC_CLS_MAPPINGS = {
+    'http://www.conceptwiki.org':'conceptWikiValue',
+    'http://www.conceptwiki.org/':'conceptWikiValue',
+    'http://data.kasabi.com/dataset/chembl-rdf':'chemblValue',
+    'http://www4.wiwiss.fu-berlin.de/drugbank':'drugbankValue',
+    'http://linkedlifedata.com/resource/drugbank':'drugbankValue',
+    'http://www.chemspider.com':'chemspiderValue',
+    'http://www.chemspider.com/':'chemspiderValue',
+    'http://rdf.chemspider.com':'chemspiderValue',
+    'http://rdf.chemspider.com/':'chemspiderValue'
+};
+LDA_PROVENANCE_OFF = 'Off';
+LDA_PROVENANCE_COLOUR = 'Colour';
+LDA_PROVENANCE_ICON = 'Icon';
+LDA_PROVENANCE_TEXT = 'Text';
+//this sets default provenance mode
+//this should be updated by user cookie, user choice or set in Viewport when running LSP.
+LDAProvenanceMode = LDA_PROVENANCE_COLOUR;

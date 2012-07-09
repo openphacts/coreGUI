@@ -1,14 +1,14 @@
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
- * Date: 27/06/2012
- * Time: 20:25
+ * Date: 04/07/2012
+ * Time: 16:44
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
+Ext.define('LDA.view.grids.TargetPharmacologyGrid', {
     extend:'Ext.grid.Panel',
-    alias:'widget.CompoundPharmacologyGrid',
-    store:Ext.create('LDA.store.CompoundPharmacologyStore'),
+    alias:'widget.TargetPharmacologyGrid',
+    store:Ext.create('LDA.store.TargetPharmacologyStore'),
     loadMask:true,
     columns:{
         defaults:{
@@ -34,14 +34,29 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
                 } else {
                     return value;
                 }
-            },
-            width:200
+            }
         },
+
         items:[
-//            'cs_compound_uri',
-//            'cw_compound_uri',
-//            'chembl_compound_uri',
-//            'drugbank_compound_uri',
+            //            'cw_target_uri',
+            //            'chembl_target_uri',
+            //            'drugbank_target_uri',
+            {
+                header:'ConceptWiki Target URI',
+                dataIndex:'cw_target_uri'
+            },
+            {
+                header:'ChEMBL Target URI',
+                dataIndex:'chembl_target_uri'
+            },
+            {
+                header:'DrugBank Target URI',
+                dataIndex:'drugbank_target_uri'
+            },
+            //            'cs_compound_uri',
+            //            'cw_compound_uri',
+            //            'chembl_compound_uri',
+            //            'drugbank_compound_uri',
             {
                 header:'ConceptWiki Compound URI',
                 dataIndex:'cw_compound_uri'
@@ -58,24 +73,8 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
                 header:'DrugBank Compound URI',
                 dataIndex:'drugbank_compound_uri'
             },
-
-//            'cw_target_uri',
-//            'chembl_target_uri',
-//            'drugbank_target_uri',
-            {
-                header:'ConceptWiki Target URI',
-                dataIndex:'cw_target_uri'
-            },
-            {
-                header:'ChEMBL Target URI',
-                dataIndex:'chembl_target_uri'
-            },
-            {
-                header:'DrugBank Target URI',
-                dataIndex:'drugbank_target_uri'
-            },
-//            'chembl_assay_uri',
-//            'chembl_activity_uri',
+            //            'chembl_assay_uri',
+            //            'chembl_activity_uri',
             {
                 header:'ChEMBL Assay URI',
                 dataIndex:'chembl_assay_uri'
@@ -84,8 +83,13 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
                 header:'ChEMBL Activity URI',
                 dataIndex:'chembl_activity_uri'
             },
-//            'target_title',
-//            'target_organism',
+            //            'target_preflabel',
+            //            'target_title',
+            //            'target_organism',
+            {
+                header:'Target Preferred Label',
+                dataIndex:'target_preflabel'
+            },
             {
                 header:'Target Label',
                 dataIndex:'target_title'
@@ -94,22 +98,17 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
                 header:'Target Organism',
                 dataIndex:'target_organism'
             },
-//            'compound_preflabel',
-//            'compound_uuid',
-//            'compound_drug_type',
-//            'compound_generic_name',
-//            'compound_full_mwt',
-//            'compound_num_ro5_violations',
-//            'compound_inchi',
-//            'compound_inchi_key',
-//            'compound_smiles',
+            //            'compound_preflabel',
+            //            'compound_drug_type',
+            //            'compound_generic_name',
+            //            'compound_full_mwt',
+            //            'compound_num_ro5_violations',
+            //            'compound_inchi',
+            //            'compound_inchi_key',
+            //            'compound_smiles',
             {
                 header:'Compound Label',
                 dataIndex:'compound_preflabel'
-            },
-            {
-                header:'Compound UUID',
-                dataIndex:'compound_uuid'
             },
             {
                 header:'Compound Drug Type',
@@ -140,13 +139,11 @@ Ext.define('LDA.view.grids.CompoundPharmacologyGrid', {
                 dataIndex:'compound_smiles'
             },
             //this is the good stuff (notice units and values are standardised by LDC)
-//            'assay_organism',
-//            'activity_activity_type',
-//            'activity_relation',
-//            'activity_standard_value',
-//            'activity_standard_units',
-
-
+            //            'assay_organism',
+            //            'activity_activity_type',
+            //            'activity_relation',
+            //            'activity_standard_value',
+            //            'activity_standard_units',
             {
                 header:'Assay Organism',
                 dataIndex:'assay_organism'

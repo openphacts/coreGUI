@@ -223,3 +223,55 @@ sub {
     position: relative;
     bottom: -0.3em;
 }
+
+.defaultValueOff .defaultValueColour .defaultValueIcon .defaultValueText {
+
+}
+
+.conceptWikiValueColour {
+    background-color: rgb(124, 163, 99);
+}
+
+.chemblValueColour {
+    background-color: rgb(187, 71, 73);
+}
+
+.drugbankValueColour {
+    background-color: rgb(222, 90, 251);
+}
+
+.chemspiderValueColour {
+    background-color: rgb(59, 173, 241);
+}
+
+.conceptWikiValueIcon {
+
+}
+
+.chemblValueIcon {
+
+}
+
+.drugbankValueIcon {
+
+}
+
+.chemspiderValueIcon {
+
+}
+
+.conceptWikiValueText {
+
+}
+
+.chemblValueText {
+
+}
+
+.drugbankValueText {
+
+}
+
+.chemspiderValueText {
+
+}
