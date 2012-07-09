@@ -24,7 +24,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm button[action=query_pharm_by_target_name]':{
                 click:this.submitQuery
             },
-            'PharmByTargetNameForm conceptWikiProteinLookup':{
+            'PharmByTargetNameForm conceptWikiLookup':{
                 select:this.enableSubmit
             },
             'PharmByTargetNameForm':{
@@ -46,7 +46,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 store.load({params:{offset:0, limit:100}});
             }
         } else if (historyTokenObject.s) {
-            var lookup = this.down('conceptWikiProteinLookup');
+            var lookup = this.down('conceptWikiProteinLookupJSONP');
             lookup.setRawValue(historyTokenObject.s);
             lookup.doQuery(historyTokenObject.s);
         }
@@ -55,7 +55,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
     prepGrid:function () {
-        console.log('PharmByTargetNameForm: prepGrid()');
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         var grid_view = this.getGridView();
         var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];

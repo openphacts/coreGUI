@@ -1,4 +1,6 @@
 Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
+Ext.Loader.setConfig({enabled:true, paths:{ 'CW':'conceptwiki/lib' } });
+
 Ext.create('Ext.app.Application', {
     name:'LSP',
 
@@ -7,28 +9,33 @@ Ext.create('Ext.app.Application', {
     // Define all the controllers that should initialize at boot up of your application
     controllers:[
         'LDAParserController',
-        'Users',
+//        'Users',
         'grids.DynamicGrid',
-        'Grid',
+   //     'grids.PharmaGridInf',
+//        'Grid',
         'NavigationTree',
-        'Queryform',
+//        'Queryform',
         'SimSearchForm',
         'CmpdByNameForm',
         'TargetByNameForm',
         'PharmByTargetNameForm',
         'PharmByCmpdNameForm',
         'PharmEnzymeForm',
-        'SummeryForm',
+//        'SummeryForm',
         'Settings',
-        'pmidTextMiningHitsForm',
-        'pathwayByCompoundForm',
-        'pathwayByProteinForm'
+//        'pmidTextMiningHitsForm',
+//        'pathwayByCompoundForm',
+//        'pathwayByProteinForm',
+//        'PharmByTargetNameFormInf',
+        'CW.controller.ConceptWikiLookup'
     ],
 
     autoCreateViewport:true,
 
     launch:function () {
-        Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib' } });
+        Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib','CW':'conceptwiki/lib' } });
+        
+   
 
 //        Ext.Loader.setPath('LDA', 'LinkedDataAPIParser/lib');
     }
