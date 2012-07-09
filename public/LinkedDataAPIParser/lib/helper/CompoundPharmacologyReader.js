@@ -95,9 +95,9 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
                             target_organism:targetOrganism,
                             target_organism_src:chembl_src,
 //
-//                        //for compound pharma (is CW UUID) (this seems to be missing in latest LDA 3/7/12)
-                            compound_uuid:undefined,
-                            compound_uuid_src:undefined,
+//                        //for compound pharma (is CW UUID)
+                            compound_label:undefined,
+                            compound_label_src:undefined,
 
                             compound_drug_type:drugType,
                             compound_drug_type_src:drugbank_src,

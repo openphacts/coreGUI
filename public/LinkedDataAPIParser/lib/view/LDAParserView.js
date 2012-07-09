@@ -12,11 +12,7 @@ Ext.define('LDA.view.LDAParserView', {
         'LDA.view.grids.CompoundPharmacologyCountGrid',
         'LDA.view.grids.CompoundGrid'  ,
         'LDA.view.grids.CompoundPharmacologyGrid',
-        'LDA.view.grids.CompoundPharmacologyPaginatedGrid',
-        'LDA.view.grids.TargetPharmacologyCountGrid',
-        'LDA.view.grids.TargetGrid'  ,
-        'LDA.view.grids.TargetPharmacologyGrid',
-        'LDA.view.grids.TargetPharmacologyPaginatedGrid'
+        'LDA.view.grids.CompoundPharmacologyPaginatedGrid'
     ],
     layout:{
         type:'vbox'
@@ -60,6 +56,43 @@ Ext.define('LDA.view.LDAParserView', {
                             xtype:'button',
                             text:'Log Store Details',
                             action:'log_c',
+                            width:100
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            xtype:'textfield',
+            fieldLabel:'Compound Pharmacology Count URI',
+            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
+            width:600,
+            itemId:'ldacpcu'
+        },
+        {
+            xtype:'panel',
+            layout:'hbox',
+            items:[
+                {
+                    xtype:'CompoundPharmacologyCountGrid',
+                    width:900,
+                    height:300,
+                    itemId:'ldacpcg'
+                },
+                {
+                    xtype:'panel',
+                    layout:'vbox',
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'load',
+                            action:'load_cpc',
+                            width:100
+                        },
+                        {
+                            xtype:'button',
+                            text:'Log Store Details',
+                            action:'log_cpc',
                             width:100
                         }
                     ]
@@ -139,202 +172,9 @@ Ext.define('LDA.view.LDAParserView', {
                     ]
                 }
             ]
-        },
-        {
-            xtype:'textfield',
-            fieldLabel:'Compound Pharmacology Count URI',
-            value:'http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5',
-            width:600,
-            itemId:'ldacpcu'
-        },
-        {
-            xtype:'panel',
-            layout:'hbox',
-            items:[
-                {
-                    xtype:'CompoundPharmacologyCountGrid',
-                    width:900,
-                    height:300,
-                    itemId:'ldacpcg'
-                },
-                {
-                    xtype:'panel',
-                    layout:'vbox',
-                    items:[
-                        {
-                            xtype:'button',
-                            text:'load',
-                            action:'load_cpc',
-                            width:100
-                        },
-                        {
-                            xtype:'button',
-                            text:'Log Store Details',
-                            action:'log_cpc',
-                            width:100
-                        }
-                    ]
-                }
-            ]
-        },
+        }
 
-        {
-            xtype:'textfield',
-            fieldLabel:'Target URI',
-            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
-            width:600,
-            itemId:'ldatu'
-        },
 
-        {
-            xtype:'panel',
-            layout:'hbox',
-            items:[
-                {
-                    xtype:'TargetGrid',
-                    width:900,
-                    height:300,
-                    itemId:'ldatg'
-                },
-                {
-                    xtype:'panel',
-                    layout:'vbox',
-                    items:[
-                        {
-                            xtype:'button',
-                            text:'load',
-                            action:'load_t',
-                            width:100
-                        },
-                        {
-                            xtype:'button',
-                            text:'Log Store Details',
-                            action:'log_t',
-                            width:100
-                        }
-                    ]
-                }
-            ]
-        },
-
-        {
-            xtype:'textfield',
-            fieldLabel:'Target Pharmacology URI',
-            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
-            width:600,
-            itemId:'ldatpu'
-        },
-
-        {
-            xtype:'panel',
-            layout:'hbox',
-            items:[
-                {
-                    xtype:'TargetPharmacologyGrid',
-                    width:900,
-                    height:300,
-                    itemId:'ldatpg'
-                },
-                {
-                    xtype:'panel',
-                    layout:'vbox',
-                    items:[
-                        {
-                            xtype:'button',
-                            text:'load',
-                            action:'load_tp',
-                            width:100
-                        },
-                        {
-                            xtype:'button',
-                            text:'Log Store Details',
-                            action:'log_tp',
-                            width:100
-                        }
-                    ]
-                }
-            ]
-        },
-
-//        {
-//            xtype:'textfield',
-//            fieldLabel:'Target Pharmacology Paginated URI',
-//            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
-//            width:600,
-//            itemId:'ldatppu'
-//        },
-//
-//        {
-//            xtype:'panel',
-//            layout:'hbox',
-//            items:[
-//                {
-//                    xtype:'TargetPharmacologyPaginatedGrid',
-//                    width:900,
-//                    height:300,
-//                    itemId:'ldatppg'
-//                },
-//                {
-//                    xtype:'panel',
-//                    layout:'vbox',
-//                    items:[
-//                        {
-//                            xtype:'button',
-//                            text:'load',
-//                            action:'load_tpp',
-//                            width:100
-//                        },
-//                        {
-//                            xtype:'button',
-//                            text:'Log Store Details',
-//                            action:'log_tpp',
-//                            width:100
-//                        }
-//                    ]
-//                }
-//            ]
-//        },
-//
-//        {
-//            xtype:'textfield',
-//            fieldLabel:'Target Pharmacology Count URI',
-//            value:'http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc',
-//            width:600,
-//            itemId:'ldatpcu'
-//        },
-//
-//        {
-//            xtype:'panel',
-//            layout:'hbox',
-//            items:[
-//                {
-//                    xtype:'CompoundGrid',
-//                    width:900,
-//                    height:300,
-//                    itemId:'ldatpcg'
-//                },
-//                {
-//                    xtype:'panel',
-//                    layout:'vbox',
-//                    items:[
-//                        {
-//                            xtype:'button',
-//                            text:'load',
-//                            action:'load_tpc',
-//                            width:100
-//                        },
-//                        {
-//                            xtype:'button',
-//                            text:'Log Store Details',
-//                            action:'log_tpc',
-//                            width:100
-//                        }
-//                    ]
-//                }
-//            ]
-//        }
-//
-//
 //        {
 //            xtype:'textarea',
 //            itemId:'textarea2',

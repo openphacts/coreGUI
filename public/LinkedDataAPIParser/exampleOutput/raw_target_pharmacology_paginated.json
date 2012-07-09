@@ -11,7 +11,7 @@
       "definition": "http://www.openphacts.org/api#targetPharmacologyListEndpoint",
       "type": "http://purl.org/linked-data/api/vocab#List"
     },
-    "modified": "Wednesday, 04-Jul-12 15:38:06 UTC",
+    "modified": "Monday, 02-Jul-12 15:32:54 UTC",
     "extendedMetadataVersion": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
     "items": [
       {

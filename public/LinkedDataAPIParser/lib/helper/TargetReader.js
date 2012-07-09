@@ -10,54 +10,46 @@ Ext.define('LDA.helper.TargetReader', {
     requires:['LDA.helper.LDAConstants'],
 
     readRecords:function (data) {
-        var pt = data[LDA_RESULT][LDA_PRIMARY_TOPIC];
-        var em = pt[LDA_EXACT_MATCH];
-        var chemblData = em[0];
-        var drugBankData = em[1];
-        var chembl_src = chemblData[LDA_IN_DATASET];
-        var drugBank_src = drugBankData[LDA_IN_DATASET];
+        var pt = data['result']['primaryTopic'];
+        var em = pt['exactMatch'];
 
         var record = Ext.create('LDA.model.TargetModel', {
-
-            cw_target_uri:pt[LDA_ABOUT],
-            chembl_target_uri:chemblData[LDA_ABOUT],
-            drugbank_target_uri:drugBankData[LDA_ABOUT],
-
-            label:chemblData['label'],
-            label_src:chembl_src,
-
-            keywords:chemblData['keywords'],
-            keywords_src:chembl_src,
-
-            description:chemblData['description'],
-            description_src:chembl_src,
-
-            target_type:chemblData['target_type'],
-            target_type_src:chembl_src,
-
-            organism:chemblData['organism'],
-            organism_src:chembl_src,
-
-            synonyms:chemblData['synonyms'],
-            synonyms_src:chembl_src,
-
-            cellular_location:drugBankData['cellularLocation'],
-            cellular_location_src:drugBank_src,
-
-            molecular_weight:drugBankData['molecularWeight'],
-            molecular_weight_src:drugBank_src,
-
-            number_of_residues:drugBankData['numberOfResidues'],
-            number_of_residues_src:drugBank_src,
-
-            pdb_id_page:drugBankData['pdbIdPage'],
-            pdb_id_page_src:drugBank_src,
-
-            specific_function:drugBankData['specificFunction'],
-            specific_function_src:drugBank_src,
-
-            theoretical_pi:drugBankData['theoreticalPi'],
-            theoretical_pi_src:drugBank_src
+            cw_uri:pt[LDA_ABOUT],
+            cs_uri:em[1][LDA_ABOUT],
+            chembl_uri:em[2][LDA_ABOUT],
+            drugbank_uri:em[3][LDA_ABOUT],
+            inchi:em[1]['inchi'],
+            inchi_src:em[1][LDA_IN_DATASET],
+            inchi_key:em[1]['inchikey'],
+            inchi_key_src:em[1][LDA_IN_DATASET],
+            smiles:em[1]['smiles'],
+            smiles_src:em[1][LDA_IN_DATASET],
+            alogp:em[2]['alogp'],
+            alogp_src:em[2][LDA_IN_DATASET],
+            full_mwt:em[2]['full_mwt'],
+            full_mwt_src:em[2][LDA_IN_DATASET],
+            hba:em[2]['hba'],
+            hba_src:em[2][LDA_IN_DATASET],
+            hbd:em[2]['hbd'],
+            hbd_src:em[2][LDA_IN_DATASET],
+            molform:em[2]['molform'],
+            molform_src:em[2][LDA_IN_DATASET],
+            mw_freebase:em[2]['mw_freebase'],
+            mw_freebase_src:em[2][LDA_IN_DATASET],
+            psa:em[2]['psa'],
+            psa_src:em[2][LDA_IN_DATASET],
+            rtb:em[2]['rtb'],
+            rtb_src:em[2][LDA_IN_DATASET],
+            biotransformation:em[3]['biotransformation'],
+            biotransformation_src:em[3][LDA_IN_DATASET],
+            description:em[3]['description'],
+            description_src:em[3][LDA_IN_DATASET],
+            proteinBinding:em[3]['proteinBinding'],
+            proteinBinding_src:em[3][LDA_IN_DATASET],
+            toxicity:em[3]['toxicity'],
+            toxicity_src:em[3][LDA_IN_DATASET],
+            prefLabel:pt['prefLabel'],
+            prefLabel_src:pt[LDA_IN_DATASET]
         });
 
         console.log('LDA.model.TargetModel: Target');
