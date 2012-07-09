@@ -1,8 +1,7 @@
-Ext.define('CW.helper.ConceptWikiJSONReader', {
+Ext.define('CW.helper.ConceptWikiJSONGetReader', {
     extend:'Ext.data.reader.Json',
     
     readRecords:function (data) {
-
         var records = [];
         var count = 0;
         Ext.each(data, function (item) {
@@ -38,7 +37,7 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
 
            // constructing the data record
         var record = Ext.create('CW.model.ConceptWikiLookup', {
-          match: item.match.replace(/\<\/em\>/g,"</b>").replace(/\<em\>/g,"<b>"),
+          match: "",
           uuid: item.uuid,
           ops_uri: CW.config.Settings.base_ops_uri + item.uuid,
           pref_label: pref_label,
