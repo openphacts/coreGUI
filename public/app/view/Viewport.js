@@ -169,7 +169,7 @@ Ext.define('LSP.view.Viewport', {
             }
         }, this);
 
-        var ops_logo = Ext.create('Ext.Img', {src:'images/ops_logo.png', bodyStyle:{background:'transparent'}});
+        var ops_logo = Ext.create('Ext.Img', {src:'images/ops_logo.png', bodyStyle:{background:'transparent'}, height: 50, width: 77});
         this.items = [
             {
                 region:'north',
