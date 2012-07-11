@@ -15,16 +15,54 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
         var records = new Array();
 
         //big chunk of data
-        var items = data[LDA_RESULT][LDA_ITEMS];
+        var result = data[LDA_RESULT];
+        var page_uri = result[LDA_ABOUT];
+        var next_page = result[LDA_PAGINATED_NEXT];
+        var previous_page = result[LDA_PAGINATED_PREVIOUS];
+        var page_size = result[LDA_PAGINATED_PAGE_SIZE];
+        var start_index = result[LDA_PAGINATED_START_INDEX];
+
+        var items = result[LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
+            var chembl_activity_uri = item[LDA_ABOUT];
+            var chembl_src = item[LDA_IN_DATASET];
+
             //big bits
             var forMolecule = item[LDA_FOR_MOLECULE];
-            var onAssay = item[LDA_ON_ASSAY];
+            var chembl_compound_uri = forMolecule[LDA_ABOUT];
+            var compound_full_mwt = forMolecule['full_mwt'];
 
-            //this is still not done
-            //problem with target data being concatenated
-            //dont understand why it is
+            var em = forMolecule[LDA_EXACT_MATCH];
+
+            Ext.each(em, function (match, index, matches) {
+                    var src = match[LDA_IN_DATASET];
+                    if (LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                        var cw_compound_uri = match[LDA_ABOUT];
+                        var compound_pref_label = match['prefLabel'];
+                        var cw_src = match[LDA_IN_DATASET];
+                    } else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                        var cs_compound_uri = match[LDA_ABOUT];
+                        var compound_inchi = match['inchi'];
+                        var compound_inchikey = match['inchikey'];
+                        var compound_smiles = match['smiles'];
+                        var cs_src = match[LDA_IN_DATASET];
+                    } else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                        var drugbank_compound_uri = match[LDA_ABOUT];
+                        var compound_drug_type = match['drugType'];
+                        var compound_generic_name = match['genericName'];
+                        var drugbank_src = match[LDA_ABOUT];
+                    }
+                }
+            );
+
+            var onAssay = item[LDA_ON_ASSAY];
+            var chembl_assay_uri = onAssay[LDA_ABOUT];
+
+            var target = onAssay['target'];
+            var target_title = target['title'];
+            var target_organism = target['assay_organism'];
+            var target_concatenated_uris = target['concatenatedURIs'];
 
 
             var chembl_src = item[LDA_IN_DATASET];
@@ -32,8 +70,63 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             var activityType = item['activity_type'];
 
             var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
+                //for page
+                page_uri:page_uri,
+                next_page:next_page,
+                previous_page:previous_page,
+                page_size:page_size,
+                start_index:start_index,
 
+                //for compound
+                compound_inchikey:,
+                compound_drug_type:,
+                compound_generic_name:,
+                target_title:,
+                target_concatenated_uris:,
+
+                compound_inchikey_src:,
+                compound_drug_type_src:,
+                compound_generic_name_src:,
+                target_title_src:,
+                target_concatenated_uris_src:,
+
+
+                //for target
+                chembl_activity_uri:,
+                chembl_compound_uri:,
+                compound_full_mwt:,
+                cw_compound_uri:,
+                compound_pref_label:,
+                cs_compound_uri:,
+                compound_inchi:,
+                compound_smiles:,
+                chembl_assay_uri:,
+                chembl_target_uri:,
+                //this is labelled assay_organism
+                target_organism:,
+                target_pref_label:,
+                //this value is missing totally from compound pharmacology paginated
+                assay_organism:,
+                activity_relation:,
+                activity_standard_units:,
+                activity_standard_value:,
+                activity_activity_type:,
+
+                compound_full_mwt_src:,
+                compound_pref_label_src:,
+                compound_inchi_src:,
+                compound_smiles_src:,
+                target_organism_src:,
+                target_pref_label_src:,
+                assay_organism_src:,
+                activity_relation_src:,
+                activity_standard_units_src:,
+                activity_standard_value_src:,
+                activity_activity_type_src:
             });
+
+
+            records.push(record);
 
             console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
             console.log(JSON.stringify(record));
@@ -49,7 +142,8 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             });
     }
 
-});
+})
+;
 
 //        var em = pt[LDA_EXACT_MATCH];
 //        var drugbankData = em[1];
