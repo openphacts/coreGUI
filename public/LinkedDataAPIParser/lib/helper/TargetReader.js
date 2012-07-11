@@ -60,8 +60,8 @@ Ext.define('LDA.helper.TargetReader', {
             theoretical_pi_src:drugBank_src
         });
 
-        console.log('LDA.model.TargetModel: Target');
-        console.log(JSON.stringify(record));
+//        console.log('LDA.model.TargetModel: Target');
+//        console.log(JSON.stringify(record));
 
         return new Ext.data.ResultSet(
             {

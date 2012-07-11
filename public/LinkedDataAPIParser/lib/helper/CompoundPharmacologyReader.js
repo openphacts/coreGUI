@@ -140,8 +140,8 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
 
                         }
                     );
-                    console.log('LDA.model.PharmacologyModel: CompoundPharmacology');
-                    console.log(JSON.stringify(record));
+//                    console.log('LDA.model.PharmacologyModel: CompoundPharmacology');
+//                    console.log(JSON.stringify(record));
 
                     records.push(record);
                 } else {

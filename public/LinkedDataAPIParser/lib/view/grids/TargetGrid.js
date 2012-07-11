@@ -23,7 +23,7 @@ Ext.define('LDA.view.grids.TargetGrid', {
                     if (!cls) {
                         cls = 'defaultValue';
                     }
-                    console.log(data + ' : ' + source + ' : ' + cls);
+//                    console.log(data + ' : ' + source + ' : ' + cls);
                     cls += LDAProvenanceMode;
                     if (LDAProvenanceMode == LDA_PROVENANCE_COLOUR) {
                         return '<div class="' + cls + '">' + value + '</div>';

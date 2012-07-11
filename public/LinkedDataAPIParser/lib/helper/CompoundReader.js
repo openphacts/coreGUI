@@ -52,8 +52,8 @@ Ext.define('LDA.helper.CompoundReader', {
             prefLabel_src:pt[LDA_IN_DATASET]
         });
 
-        console.log('LDA.model.CompoundModel: Compound');
-        console.log(JSON.stringify(record));
+//        console.log('LDA.model.CompoundModel: Compound');
+//        console.log(JSON.stringify(record));
 
         return new Ext.data.ResultSet(
             {

@@ -21,7 +21,7 @@ Ext.define('LDA.view.grids.TargetPharmacologyGrid', {
                     if (!cls) {
                         cls = 'defaultValue';
                     }
-                    console.log(data + ' : ' + source + ' : ' + cls);
+//                    console.log(data + ' : ' + source + ' : ' + cls);
                     cls += LDAProvenanceMode;
                     if (LDAProvenanceMode == LDA_PROVENANCE_COLOUR) {
                         return '<div class="' + cls + '">' + value + '</div>';
