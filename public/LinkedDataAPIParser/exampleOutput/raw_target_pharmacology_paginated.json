@@ -1,383 +1,383 @@
 {
-  "format": "linked-data-api",
-  "version": "0.2",
-  "result": {
-    "_about": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
-    "itemsPerPage": 10,
-    "startIndex": 0,
-    "isPartOf": {
-      "_about": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
-      "hasPart": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
-      "definition": "http://www.openphacts.org/api#targetPharmacologyListEndpoint",
-      "type": "http://purl.org/linked-data/api/vocab#List"
-    },
-    "modified": "Wednesday, 04-Jul-12 15:38:06 UTC",
-    "extendedMetadataVersion": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
-    "items": [
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1000147",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m83018",
-          "full_mwt": 419.476,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
+    "format":"linked-data-api",
+    "version":"0.2",
+    "result":{
+        "_about":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
+        "itemsPerPage":10,
+        "startIndex":0,
+        "isPartOf":{
+            "_about":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+            "hasPart":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
+            "definition":"http://www.openphacts.org/api#targetPharmacologyListEndpoint",
+            "type":"http://purl.org/linked-data/api/vocab#List"
+        },
+        "modified":"Wednesday, 04-Jul-12 15:38:06 UTC",
+        "extendedMetadataVersion":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+        "items":[
             {
-              "_about": "http://www.conceptwiki.org/concept/e977740a-d746-4123-af82-51f5e27df8b4",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "3-{2-[4-(2-Methoxyphenyl)piperazin-1-yl]ethyl}-1H-pyrimido[5,4-b]indole-2,4(3H,5H)-dione"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1000147",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m83018",
+                    "full_mwt":419.476,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/e977740a-d746-4123-af82-51f5e27df8b4",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"3-{2-[4-(2-Methoxyphenyl)piperazin-1-yl]ethyl}-1H-pyrimido[5,4-b]indole-2,4(3H,5H)-dione"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/3231561",
+                            "inchi":"InChI=1S/C23H25N5O3/c1-31-19-9-5-4-8-18(19)27-13-10-26(11-14-27)12-15-28-22(29)21-20(25-23(28)30)16-6-2-3-7-17(16)24-21/h2-9,24H,10-15H2,1H3,(H,25,30)",
+                            "smiles":"O=C2N(C(=O)Nc3c1ccccc1nc23)CCN5CCN(c4ccccc4OC)CC5",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33323",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Homo sapiens"
+                },
+                "relation":">=",
+                "standardUnits":"nM",
+                "standardValue":1000,
+                "activity_type":"Ki",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/3231561",
-              "inchi": "InChI=1S/C23H25N5O3/c1-31-19-9-5-4-8-18(19)27-13-10-26(11-14-27)12-15-28-22(29)21-20(25-23(28)30)16-6-2-3-7-17(16)24-21/h2-9,24H,10-15H2,1H3,(H,25,30)",
-              "smiles": "O=C2N(C(=O)Nc3c1ccccc1nc23)CCN5CCN(c4ccccc4OC)CC5",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33323",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Homo sapiens"
-        },
-        "relation": ">=",
-        "standardUnits": "nM",
-        "standardValue": 1000,
-        "activity_type": "Ki",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1001690",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45226",
-          "full_mwt": 246.305,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://rdf.chemspider.com/23128929",
-              "inchi": "InChI=1S/C14H18N2O2/c1-14(13-15-7-8-16-13)6-2-3-9-10(14)4-5-11(17)12(9)18/h4-5,17-18H,2-3,6-8H2,1H3,(H,15,16)/t14-/m0/s1",
-              "smiles": "C[C@@]1(CCCc2c1ccc(c2O)O)C3=NCCN3",
-              "inDataset": "http://rdf.chemspider.com/"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1001690",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45226",
+                    "full_mwt":246.305,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://rdf.chemspider.com/23128929",
+                            "inchi":"InChI=1S/C14H18N2O2/c1-14(13-15-7-8-16-13)6-2-3-9-10(14)4-5-11(17)12(9)18/h4-5,17-18H,2-3,6-8H2,1H3,(H,15,16)/t14-/m0/s1",
+                            "smiles":"C[C@@]1(CCCc2c1ccc(c2O)O)C3=NCCN3",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        },
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/34a27c00-158a-4946-816b-a9f5c04cfc6d",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(5S)-5-(4,5-dihydro-1H-imidazol-2-yl)-5-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":924,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://www.conceptwiki.org/concept/34a27c00-158a-4946-816b-a9f5c04cfc6d",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(5S)-5-(4,5-dihydro-1H-imidazol-2-yl)-5-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 924,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1001691",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45226",
-          "full_mwt": 246.305,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://rdf.chemspider.com/23128929",
-              "inchi": "InChI=1S/C14H18N2O2/c1-14(13-15-7-8-16-13)6-2-3-9-10(14)4-5-11(17)12(9)18/h4-5,17-18H,2-3,6-8H2,1H3,(H,15,16)/t14-/m0/s1",
-              "smiles": "C[C@@]1(CCCc2c1ccc(c2O)O)C3=NCCN3",
-              "inDataset": "http://rdf.chemspider.com/"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1001691",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45226",
+                    "full_mwt":246.305,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://rdf.chemspider.com/23128929",
+                            "inchi":"InChI=1S/C14H18N2O2/c1-14(13-15-7-8-16-13)6-2-3-9-10(14)4-5-11(17)12(9)18/h4-5,17-18H,2-3,6-8H2,1H3,(H,15,16)/t14-/m0/s1",
+                            "smiles":"C[C@@]1(CCCc2c1ccc(c2O)O)C3=NCCN3",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        },
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/34a27c00-158a-4946-816b-a9f5c04cfc6d",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(5S)-5-(4,5-dihydro-1H-imidazol-2-yl)-5-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":6100,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://www.conceptwiki.org/concept/34a27c00-158a-4946-816b-a9f5c04cfc6d",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(5S)-5-(4,5-dihydro-1H-imidazol-2-yl)-5-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 6100,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1004254",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m33373",
-          "full_mwt": 451.475,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/a1c47125-4347-4970-a04a-1d3ea4418f11",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "Doxazosin"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1004254",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m33373",
+                    "full_mwt":451.475,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/a1c47125-4347-4970-a04a-1d3ea4418f11",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"Doxazosin"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/3045",
+                            "inchi":"InChI=1S/C23H25N5O5/c1-30-18-11-14-15(12-19(18)31-2)25-23(26-21(14)24)28-9-7-27(8-10-28)22(29)20-13-32-16-5-3-4-6-17(16)33-20/h3-6,11-12,20H,7-10,13H2,1-2H3,(H2,24,25,26)",
+                            "smiles":"O=C(N3CCN(c2nc1cc(OC)c(OC)cc1c(n2)N)CC3)C4Oc5c(OC4)cccc5",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33634",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Oryctolagus cuniculus"
+                },
+                "relation":">",
+                "standardUnits":"nM",
+                "standardValue":3.0e-05,
+                "activity_type":"EC40",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/3045",
-              "inchi": "InChI=1S/C23H25N5O5/c1-30-18-11-14-15(12-19(18)31-2)25-23(26-21(14)24)28-9-7-27(8-10-28)22(29)20-13-32-16-5-3-4-6-17(16)33-20/h3-6,11-12,20H,7-10,13H2,1-2H3,(H2,24,25,26)",
-              "smiles": "O=C(N3CCN(c2nc1cc(OC)c(OC)cc1c(n2)N)CC3)C4Oc5c(OC4)cccc5",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33634",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Oryctolagus cuniculus"
-        },
-        "relation": ">",
-        "standardUnits": "nM",
-        "standardValue": 3.0e-05,
-        "activity_type": "EC40",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1005697",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45641",
-          "full_mwt": 234.251,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/ac953271-0c35-4e49-ba4c-aed646136d2e",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(4S)-4-(4,5-dihydro-1H-imidazol-2-yl)-3,4-dihydro-2H-chromene-7,8-diol"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1005697",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45641",
+                    "full_mwt":234.251,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/ac953271-0c35-4e49-ba4c-aed646136d2e",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(4S)-4-(4,5-dihydro-1H-imidazol-2-yl)-3,4-dihydro-2H-chromene-7,8-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/23129163",
+                            "inchi":"InChI=1S/C12H14N2O3/c15-9-2-1-7-8(12-13-4-5-14-12)3-6-17-11(7)10(9)16/h1-2,8,15-16H,3-6H2,(H,13,14)/t8-/m0/s1",
+                            "smiles":"c1cc(c(c2c1[C@H](CCO2)C3=NCCN3)O)O",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":720,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/23129163",
-              "inchi": "InChI=1S/C12H14N2O3/c15-9-2-1-7-8(12-13-4-5-14-12)3-6-17-11(7)10(9)16/h1-2,8,15-16H,3-6H2,(H,13,14)/t8-/m0/s1",
-              "smiles": "c1cc(c(c2c1[C@H](CCO2)C3=NCCN3)O)O",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 720,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1005698",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45641",
-          "full_mwt": 234.251,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/ac953271-0c35-4e49-ba4c-aed646136d2e",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(4S)-4-(4,5-dihydro-1H-imidazol-2-yl)-3,4-dihydro-2H-chromene-7,8-diol"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1005698",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45641",
+                    "full_mwt":234.251,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/ac953271-0c35-4e49-ba4c-aed646136d2e",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(4S)-4-(4,5-dihydro-1H-imidazol-2-yl)-3,4-dihydro-2H-chromene-7,8-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/23129163",
+                            "inchi":"InChI=1S/C12H14N2O3/c15-9-2-1-7-8(12-13-4-5-14-12)3-6-17-11(7)10(9)16/h1-2,8,15-16H,3-6H2,(H,13,14)/t8-/m0/s1",
+                            "smiles":"c1cc(c(c2c1[C@H](CCO2)C3=NCCN3)O)O",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":35,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/23129163",
-              "inchi": "InChI=1S/C12H14N2O3/c15-9-2-1-7-8(12-13-4-5-14-12)3-6-17-11(7)10(9)16/h1-2,8,15-16H,3-6H2,(H,13,14)/t8-/m0/s1",
-              "smiles": "c1cc(c(c2c1[C@H](CCO2)C3=NCCN3)O)O",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 35,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1005703",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45160",
-          "full_mwt": 246.305,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/99e089b8-ffdf-4ae1-9a99-80c2b93a442a",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(5S,6R)-5-(4,5-dihydro-1H-imidazol-2-yl)-6-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1005703",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45160",
+                    "full_mwt":246.305,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/99e089b8-ffdf-4ae1-9a99-80c2b93a442a",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(5S,6R)-5-(4,5-dihydro-1H-imidazol-2-yl)-6-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/23128885",
+                            "inchi":"InChI=1S/C14H18N2O2/c1-8-2-3-10-9(4-5-11(17)13(10)18)12(8)14-15-6-7-16-14/h4-5,8,12,17-18H,2-3,6-7H2,1H3,(H,15,16)/t8-,12+/m1/s1",
+                            "smiles":"C[C@@H]1CCc2c(ccc(c2O)O)[C@H]1C3=NCCN3",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":560,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/23128885",
-              "inchi": "InChI=1S/C14H18N2O2/c1-8-2-3-10-9(4-5-11(17)13(10)18)12(8)14-15-6-7-16-14/h4-5,8,12,17-18H,2-3,6-7H2,1H3,(H,15,16)/t8-,12+/m1/s1",
-              "smiles": "C[C@@H]1CCc2c(ccc(c2O)O)[C@H]1C3=NCCN3",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 560,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1005704",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m45160",
-          "full_mwt": 246.305,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/99e089b8-ffdf-4ae1-9a99-80c2b93a442a",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "(5S,6R)-5-(4,5-dihydro-1H-imidazol-2-yl)-6-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1005704",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m45160",
+                    "full_mwt":246.305,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/99e089b8-ffdf-4ae1-9a99-80c2b93a442a",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"(5S,6R)-5-(4,5-dihydro-1H-imidazol-2-yl)-6-methyl-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/23128885",
+                            "inchi":"InChI=1S/C14H18N2O2/c1-8-2-3-10-9(4-5-11(17)13(10)18)12(8)14-15-6-7-16-14/h4-5,8,12,17-18H,2-3,6-7H2,1H3,(H,15,16)/t8-,12+/m1/s1",
+                            "smiles":"C[C@@H]1CCc2c(ccc(c2O)O)[C@H]1C3=NCCN3",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":4500,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/23128885",
-              "inchi": "InChI=1S/C14H18N2O2/c1-8-2-3-10-9(4-5-11(17)13(10)18)12(8)14-15-6-7-16-14/h4-5,8,12,17-18H,2-3,6-7H2,1H3,(H,15,16)/t8-,12+/m1/s1",
-              "smiles": "C[C@@H]1CCc2c(ccc(c2O)O)[C@H]1C3=NCCN3",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 4500,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1010534",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m1956",
-          "full_mwt": 232.278,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/82dfc49a-2873-4543-9878-8b791c50ffb5",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "5-(4,5-Dihydro-1H-imidazol-2-yl)-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1010534",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m1956",
+                    "full_mwt":232.278,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/82dfc49a-2873-4543-9878-8b791c50ffb5",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"5-(4,5-Dihydro-1H-imidazol-2-yl)-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/113179",
+                            "inchi":"InChI=1S/C13H16N2O2/c16-11-5-4-8-9(12(11)17)2-1-3-10(8)13-14-6-7-15-13/h4-5,10,16-17H,1-3,6-7H2,(H,14,15)",
+                            "smiles":"Oc1ccc3c(c1O)CCCC3C/2=N/CCN\\2",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":720,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             },
             {
-              "_about": "http://rdf.chemspider.com/113179",
-              "inchi": "InChI=1S/C13H16N2O2/c16-11-5-4-8-9(12(11)17)2-1-3-10(8)13-14-6-7-15-13/h4-5,10,16-17H,1-3,6-7H2,(H,14,15)",
-              "smiles": "Oc1ccc3c(c1O)CCCC3C/2=N/CCN\\2",
-              "inDataset": "http://rdf.chemspider.com/"
+                "_about":"http://data.kasabi.com/dataset/chembl-rdf/activity/a1010535",
+                "forMolecule":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/molecule/m1956",
+                    "full_mwt":232.278,
+                    "inDataset":"http://data.kasabi.com/dataset/chembl-rdf",
+                    "exactMatch":[
+                        {
+                            "_about":"http://www.conceptwiki.org/concept/82dfc49a-2873-4543-9878-8b791c50ffb5",
+                            "inDataset":"http://www.conceptwiki.org/",
+                            "prefLabel":"5-(4,5-Dihydro-1H-imidazol-2-yl)-5,6,7,8-tetrahydronaphthalene-1,2-diol"
+                        },
+                        {
+                            "_about":"http://rdf.chemspider.com/113179",
+                            "inchi":"InChI=1S/C13H16N2O2/c16-11-5-4-8-9(12(11)17)2-1-3-10(8)13-14-6-7-15-13/h4-5,10,16-17H,1-3,6-7H2,(H,14,15)",
+                            "smiles":"Oc1ccc3c(c1O)CCCC3C/2=N/CCN\\2",
+                            "inDataset":"http://rdf.chemspider.com/"
+                        }
+                    ]
+                },
+                "onAssay":{
+                    "_about":"http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
+                    "target":{
+                        "_about":"http://data.kasabi.com/dataset/chembl-rdf/target/t52",
+                        "assay_organism":"Homo sapiens",
+                        "inDataset":"http://www.conceptwiki.org/",
+                        "prefLabel":"Alpha-2A adrenergic receptor (Homo sapiens)"
+                    },
+                    "assay_organism":"Canis lupus familiaris"
+                },
+                "relation":"=",
+                "standardUnits":"nM",
+                "standardValue":5,
+                "activity_type":"ED50",
+                "inDataset":"http://data.kasabi.com/dataset/chembl-rdf"
             }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33047",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 720,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      },
-      {
-        "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1010535",
-        "forMolecule": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m1956",
-          "full_mwt": 232.278,
-          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
-          "exactMatch": [
-            {
-              "_about": "http://www.conceptwiki.org/concept/82dfc49a-2873-4543-9878-8b791c50ffb5",
-              "inDataset": "http://www.conceptwiki.org/",
-              "prefLabel": "5-(4,5-Dihydro-1H-imidazol-2-yl)-5,6,7,8-tetrahydronaphthalene-1,2-diol"
-            },
-            {
-              "_about": "http://rdf.chemspider.com/113179",
-              "inchi": "InChI=1S/C13H16N2O2/c16-11-5-4-8-9(12(11)17)2-1-3-10(8)13-14-6-7-15-13/h4-5,10,16-17H,1-3,6-7H2,(H,14,15)",
-              "smiles": "Oc1ccc3c(c1O)CCCC3C/2=N/CCN\\2",
-              "inDataset": "http://rdf.chemspider.com/"
-            }
-          ]
-        },
-        "onAssay": {
-          "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a33048",
-          "target": {
-            "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t52",
-            "assay_organism": "Homo sapiens",
-            "inDataset": "http://www.conceptwiki.org/",
-            "prefLabel": "Alpha-2A adrenergic receptor (Homo sapiens)"
-          },
-          "assay_organism": "Canis lupus familiaris"
-        },
-        "relation": "=",
-        "standardUnits": "nM",
-        "standardValue": 5,
-        "activity_type": "ED50",
-        "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
-      }
-    ],
-    "type": "http://purl.org/linked-data/api/vocab#Page",
-    "first": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
-    "next": "http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=2",
-    "label": "Target Pharmacology Paginated"
-  }
+        ],
+        "type":"http://purl.org/linked-data/api/vocab#Page",
+        "first":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=1",
+        "next":"http://ops.few.vu.nl/target/pharmacology/pages?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_page=2",
+        "label":"Target Pharmacology Paginated"
+    }
 }
