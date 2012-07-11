@@ -119,12 +119,17 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     showData:function (store, records, successful) {
         if (successful) {
-            if (records.length > 0) {
+
+            var td = store.first().data;
+
+            if (records.length > 0 && td.hasOwnProperty('target_name')) { // TEMP FIX -- new coreAPI's returning an empty object
+
                 var dp = this.down('#dp');
                 var msg = this.down('#msg');
                 msg.setVisible(false);
                 this.setValues(store.first());
                 dp.setVisible(true);
+
             } else {
                 this.showMessage('No records found within OPS for this search');
             }
@@ -232,7 +237,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-//                console.log(prop);
+               console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
         }
