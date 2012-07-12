@@ -1,12 +1,13 @@
 Ext.define('LSP.controller.PharmByTargetNameForm', {
     extend:'Ext.app.Controller',
 
-    views:['pharm_by_target_name2.PharmByTargetNameForm'],
+    views:['pharm_by_target_name2.PharmByTargetNameGrid'],
+//    stores:['LDA.store.TargetPharmacologyPaginatedStore'],
 
     refs:[
         {
             ref:'gridView', // reference to the view
-            selector:'#pharmByTargetGrid_id'
+            selector:'#pharmByTargetNameGrid'
         },
         {
             ref:'formView',
@@ -35,22 +36,24 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
 
-    handleHistoryToken:function (historyTokenObject) {    
+    handleHistoryToken:function (historyTokenObject) {
 //
         if (historyTokenObject.u) {
             //gets ref to
             var dg = this.getGridView();
-            var store = dg.store;
-            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
-                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
-                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
-                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
-                // Setting the ops_uri for the core API search
-                store.proxy.extraParams.protein_uri = historyTokenObject.u;
-                this.getFormView().setLoading(true);
-                store.load({params:{offset:0, limit:100}});
-            }
+            var store = dg.getStore();
+//            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
+            // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+            var cw_controller = this.getController("CW.controller.ConceptWikiLookup");
+            var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+            cw_controller.setConcept(historyTokenObject.u, cw_dropdown);
+            // Setting the ops_uri for the core API search
+//            store.proxy.extraParams.protein_uri = historyTokenObject.u;
+            this.getFormView().setLoading(true);
+            store.setURI(historyTokenObject.u);
+            store.load();
+
+//            }
         } else if (historyTokenObject.s) {
             var lookup = this.down('conceptWikiLookup');
             lookup.setRawValue(historyTokenObject.s);
@@ -63,31 +66,35 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     prepGrid:function () {
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         var grid_view = this.getGridView();
-        var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
-        add_next_button.on('click', function () {
-            var form_values = add_next_button.up('form').getValues();
-            grid_controller.addNextRecords(grid_view, form_values);
-        });
+        var store = grid_view.getStore();
+        store.on('load', this.storeLoadComplete, this);
+        store.setPage(1);
 
-        grid_view.store.proxy.actionMethods = {read:'POST'};
-        grid_view.store.proxy.api.read = grid_view.readUrl;
-        grid_view.store.proxy.params = {offset:0, limit:100};
+//        var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
+//        add_next_button.on('click', function () {
+//            var form_values = add_next_button.up('form').getValues();
+//            grid_controller.addNextRecords(grid_view, form_values);
+//        });
 
-        grid_view.store.on('load', this.storeLoadComplete, this);
+//        grid_view.store.proxy.actionMethods = {read:'POST'};
+//        grid_view.store.proxy.api.read = grid_view.readUrl;
+//        grid_view.store.proxy.params = {offset:0, limit:100};
+
+
     },
 
     storeLoadComplete:function (store, records, success) {
-        console.log('PharmByTargetNameForm: storeLoadComplete()');
-        var controller = this.getController('LSP.controller.grids.DynamicGrid');
-        var grid_view = this.getGridView();
+//        console.log('PharmByTargetNameForm: storeLoadComplete()');
+//        var controller = this.getController('LSP.controller.grids.DynamicGrid');
+//        var grid_view = this.getGridView();
         var form = this.getFormView();
         var button = this.getSubmitButton();
 
-        controller.storeLoad(grid_view, success);
-        form.doLayout();
+//        controller.storeLoad(grid_view, success);
+//        form.doLayout();
         button.enable();
-        grid_view.doLayout();
-        grid_view.doComponentLayout();
+//        grid_view.doLayout();
+//        grid_view.doComponentLayout();
         form.setLoading(false);
     },
 

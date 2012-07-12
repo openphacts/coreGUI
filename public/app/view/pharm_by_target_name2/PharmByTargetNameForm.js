@@ -29,7 +29,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                       Ext.create('CW.view.ConceptWikiLookup', {
                         xtype:'conceptWikiLookup',
                         fieldLabel:'Protein name',
-                        itemId: 'pharmByProteinCWLookup',                        
+                        itemId: 'pharmByProteinCWLookup',
                         name: 'protein_uri',
                         cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1'   // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
                     }),
@@ -45,13 +45,20 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 ]
             },
 //                        dymgridwidget
+//            {
+//                xtype:'dynamicgrid3',
+//                itemId:'pharmByTargetGrid_id',
+//                title:'Pharmacology by Target name search results',
+//                gridBaseTitle:'Pharmacology by Target name search results',
+//                flex:1,
+//                readUrl:'/core_api_calls/pharm_by_protein_name.json'
+//    }
             {
-                xtype:'dynamicgrid3',
-                itemId:'pharmByTargetGrid_id',
+                xtype:'PharmByTargetNameGrid',
+                itemId:'pharmByTargetNameGrid',
                 title:'Pharmacology by Target name search results',
                 gridBaseTitle:'Pharmacology by Target name search results',
-                flex:1,
-                readUrl:'/core_api_calls/pharm_by_protein_name.json'
+                flex:1
             }
         ];
         this.callParent(arguments);

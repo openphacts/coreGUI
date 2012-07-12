@@ -8,6 +8,7 @@
 Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
     extend:'LDA.store.basestores.FilteringStore',
     _page:'',
+    _pageSize:'50',
 
     setPage:function (pageNumber) {
         if (typeof pageNumber == 'number') {
@@ -20,6 +21,7 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
             this.stringEncoder.toQueryString(
                 {
                     _page:this._page,
+                    _pageSize:this._pageSize,
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,
                     activity_value:this.activity_value,
