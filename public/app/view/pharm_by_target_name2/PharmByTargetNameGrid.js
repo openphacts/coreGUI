@@ -15,7 +15,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
         requires:[
 
         ],
-        store:Ext.create('LDA.store.TargetPharmacologyPaginatedStore'),
+        store:'TargetPharmacologyPaginatedStore',
         columns:{
             defaults:{
                 renderer:function (value, metaData, record, rowIndex, colIndex, store, view) {
