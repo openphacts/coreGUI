@@ -46,10 +46,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             if (historyTokenObject.u) {
                 var dg = this.getGridView();
                 var store = dg.store;
-                if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
-                    store.proxy.extraParams.compound_uri = historyTokenObject.u;
+                if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                    store.proxy.extraParams.uri = historyTokenObject.u;
                     this.getFormView().setLoading(true);
-                    store.load({params:{offset:0, limit:100}});
+                    store.load();
                 }
             } else if (historyTokenObject.s) {
                 var lookup = this.getLookup();

@@ -11,6 +11,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 //    alias:'reader.ldajson',
 
     readRecords:function (data) {
+	    console.log('LDA.helper.CompoundPharmacologyPaginatedReader: readRecords');
         var me = this;
         var records = new Array();
 
