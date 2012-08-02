@@ -11,6 +11,7 @@ Ext.define('LSP.view.pharm_by_enzyme.PharmByEnzyme', {
         align:'stretch'
     },
     initComponent:function () {
+	    console.log('PharmEnzymeForm view: initComponent()');
         var me = this;
         me.items = [
             {

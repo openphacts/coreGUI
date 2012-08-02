@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 12/07/2012
- * Time: 14:10
- * To change this template use File | Settings | File Templates.
- */
 Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
         extend:'Ext.grid.Panel',
         alias:'widget.PharmByCmpdNameGrid',

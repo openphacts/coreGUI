@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.PharmEnzymeForm', {
     extend:'Ext.app.Controller',
 
-    views:['pharm_by_enzyme_lda.PharmEnzymeForm', 'tree_selector_forms.EnzymeTreeForm'],
+    views:['pharm_by_enzyme_lda.PharmEnzymeGrid', 'tree_selector_forms.EnzymeTreeForm'],
 
     refs:[
         {
@@ -20,6 +20,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     ],
 
     init:function () {
+	    console.log('PharmEnzymeForm: init()');
         this.control({
             'PharmEnzymeForm button[action=enz_tree]':{
                 click:this.launchEnzyme
@@ -54,6 +55,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     prepGrid:function () {
+	    console.log('PharmEnzymeForm: prepGrid()');
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         var grid_view = this.getGridView();
         var add_next_button = Ext.ComponentQuery.query('PharmEnzymeForm dynamicgrid3 #nextRecords')[0];
@@ -86,6 +88,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
 
     // Launch Enzyme class selection window
     launchEnzyme:function (button) {
+	    console.log('PharmEnzymeForm: launchEnzyme()');
         // Launch the window
 //        var view = Ext.widget('EnzymeTreeForm');
         var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
@@ -100,6 +103,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     hideEnzyme:function (button) {
+	    console.log('PharmEnzymeForm: hideEnzyme()');
         var view = Ext.ComponentQuery.query('EnzymeTreeForm')[0];
         if (view) {
 //            console.log('enzyme hide');
@@ -110,6 +114,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
 
     // Get selection from the enzyme tree window
     getEnzyme:function (button) {
+	    console.log('PharmEnzymeForm: getEnzyme()');
         var tree = button.up().up().down('enzymeTree');
         var selected = tree.getView().getSelectionModel().getSelection();
         var sel_data = selected[0].data;
@@ -133,6 +138,7 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
     },
 
     submitQuery:function (button) {
+	    console.log('PharmEnzymeForm: submitQuery()');
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
