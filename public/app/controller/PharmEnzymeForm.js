@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.PharmEnzymeForm', {
     extend:'Ext.app.Controller',
 
-    views:['larkc_pharm_by_target.PharmEnzymeForm', 'tree_selector_forms.EnzymeTreeForm'],
+    views:['pharm_by_enzyme_lda.PharmEnzymeForm', 'tree_selector_forms.EnzymeTreeForm'],
 
     refs:[
         {
@@ -9,8 +9,8 @@ Ext.define('LSP.controller.PharmEnzymeForm', {
             selector:'PharmEnzymeForm'
         },
         {
-            ref:'gridView', // reference to the views grid
-            selector:'PharmEnzymeForm dynamicgrid3'
+            ref:'gridView', // reference to the view
+            selector:'#pharmEnzymeGrid'
         },
         {
             ref:'submitButton',
