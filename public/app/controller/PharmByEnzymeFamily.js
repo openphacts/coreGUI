@@ -10,7 +10,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             selector:'#pharmByEnzymeFamilyGrid'
         },
         {
-            ref:'formView',
+            ref:'PEForm',
             selector:'PharmEnzymeForm'
         },
         {
