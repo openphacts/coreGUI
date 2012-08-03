@@ -24,47 +24,48 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
 
             //big bits
             var forMolecule = item[LDA_FOR_MOLECULE];
-            var chembl_compound_uri = forMolecule[LDA_ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'];
-
-            var em = forMolecule[LDA_EXACT_MATCH];
-
+			if (forMolecule != null) {
+				var chembl_compound_uri = forMolecule[LDA_ABOUT];
+				var compound_full_mwt = forMolecule['full_mwt'];
+				var em = forMolecule[LDA_EXACT_MATCH];
+			}
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src;
-
-            Ext.each(em, function (match, index, matches) {
-                    var src = match[LDA_IN_DATASET];
-                    if (LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
-                        cw_compound_uri = match[LDA_ABOUT];
-                        compound_pref_label = match['prefLabel'];
-                        cw_src = match[LDA_IN_DATASET];
-                    } else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
-                        cs_compound_uri = match[LDA_ABOUT];
-                        compound_inchi = match['inchi'];
-                        compound_inchikey = match['inchikey'];
-                        compound_smiles = match['smiles'];
-                        cs_src = match[LDA_IN_DATASET];
-                    } else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
-                        drugbank_compound_uri = match[LDA_ABOUT];
-                        compound_drug_type = match['drugType'];
-                        compound_generic_name = match['genericName'];
-                        drugbank_src = match[LDA_ABOUT];
-                    }
-                }
-            );
+			if (forMolecule != null) {
+            	Ext.each(em, function (match, index, matches) {
+                    	var src = match[LDA_IN_DATASET];
+                    	if (LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                        	cw_compound_uri = match[LDA_ABOUT];
+                        	compound_pref_label = match['prefLabel'];
+                        	cw_src = match[LDA_IN_DATASET];
+                    	} else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                        	cs_compound_uri = match[LDA_ABOUT];
+                        	compound_inchi = match['inchi'];
+                        	compound_inchikey = match['inchikey'];
+                        	compound_smiles = match['smiles'];
+                        	cs_src = match[LDA_IN_DATASET];
+                    	} else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                        	drugbank_compound_uri = match[LDA_ABOUT];
+                        	compound_drug_type = match['drugType'];
+                        	compound_generic_name = match['genericName'];
+                        	drugbank_src = match[LDA_ABOUT];
+                    	}
+                	}
+            	);
+			}
 
             var onAssay = item[LDA_ON_ASSAY];
-            var chembl_assay_uri = onAssay[LDA_ABOUT];
-            var assay_organism = onAssay['assay_organism'];
-
-            var target = onAssay['target'];
-            var chembl_target_uri = target[LDA_ABOUT];
-            var target_pref_label = target['prefLabel'];
-            var target_title = target['title'];
-            var target_organism = target['assay_organism'];
-            var target_concatenated_uris = target['concatenatedURIs'];
-
+			if (onAssay != null) {
+            	var chembl_assay_uri = onAssay[LDA_ABOUT];
+            	var assay_organism = onAssay['assay_organism'];
+            	var target = onAssay['target'];
+            	var chembl_target_uri = target[LDA_ABOUT];
+            	var target_pref_label = target['prefLabel'];
+            	var target_title = target['title'];
+            	var target_organism = target['assay_organism'];
+            	var target_concatenated_uris = target['concatenatedURIs'];
+			}
 
             var activity_activity_type = item['activity_type'];
             var activity_standard_value = item['standardValue'];
