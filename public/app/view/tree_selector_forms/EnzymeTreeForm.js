@@ -72,6 +72,7 @@ Ext.define('LSP.view.tree_selector_forms.EnzymeTreeForm', {
     ],
 
     initComponent:function () {
+		console.log('EnzymeTreeForm: initComponent()');
         this.callParent(arguments);
     }
 })

@@ -12,7 +12,8 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pharm_by_target_name2.PharmByTargetNameForm',
         'LSP.view.concept.SummeryForm',
         'LSP.view.placeholder.temp',
-        'LSP.view.larkc_pharm_by_target.PharmEnzymeForm',
+        //'LSP.view.larkc_pharm_by_target.PharmEnzymeForm',
+        'LSP.view.pharm_by_enzyme_family.PharmEnzymeForm',
         'LSP.view.textmining.pmidTextMiningHitsForm',
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm'

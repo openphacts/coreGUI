@@ -20,7 +20,7 @@ Ext.create('Ext.app.Application', {
         'TargetByNameForm',
         'PharmByTargetNameForm',
         'PharmByCmpdNameForm',
-        'PharmEnzymeForm',
+        'PharmByEnzymeFamily',
 //        'SummeryForm',
         'Settings',
 //        'pmidTextMiningHitsForm',

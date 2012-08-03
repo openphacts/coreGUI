@@ -1,4 +1,4 @@
-Ext.define('LDA.helper.EnzymePaginatedReader', {
+Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
@@ -69,7 +69,7 @@ Ext.define('LDA.helper.EnzymePaginatedReader', {
             var activity_relation = item['relation'];
 
 
-            var record = Ext.create('LDA.model.EnzymePaginatedModel', {
+            var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
                 //for page
                 page_uri:page_uri,
                 next_page:next_page,

@@ -16,7 +16,8 @@ Ext.define('LDA.view.LDAParserView', {
         'LDA.view.grids.TargetPharmacologyCountGrid',
         'LDA.view.grids.TargetGrid'  ,
         'LDA.view.grids.TargetPharmacologyGrid',
-        'LDA.view.grids.TargetPharmacologyPaginatedGrid'
+        'LDA.view.grids.TargetPharmacologyPaginatedGrid',
+        'LDA.view.grids.EnzymeFamilyPaginatedGrid'
     ],
     layout:{
         type:'vbox'

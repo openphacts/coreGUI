@@ -69,6 +69,7 @@ Ext.define('LSP.view.Enzymetree', {
 
 
     initComponent:function () {
+	    console.log('EnzymeTree: initComponent()');
         var config = {
             store:{
                 fields:[
