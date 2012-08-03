@@ -84,21 +84,15 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
     storeLoadComplete:function (store, records, success) {
-//        console.log('PharmByTargetNameForm: storeLoadComplete()');
-//        var controller = this.getController('LSP.controller.grids.DynamicGrid');
-//        var grid_view = this.getGridView();
+        console.log('PharmByTargetNameForm: storeLoadComplete()');
         var form = this.getFormView();
         var button = this.getSubmitButton();
-
-//        controller.storeLoad(grid_view, success);
-//        form.doLayout();
         button.enable();
-//        grid_view.doLayout();
-//        grid_view.doComponentLayout();
         form.setLoading(false);
     },
 
     createGridColumns:function () {
+	    console.log('PharmByTargetNameForm: createGridColumns()');
         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
         var this_gridview = this.getGridView();
         grid_controller.storeLoad(this_gridview);

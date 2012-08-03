@@ -10,7 +10,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             selector:'#pharmByEnzymeFamilyGrid'
         },
         {
-            ref:'PEForm',
+            ref:'PEform',
             selector:'PharmEnzymeForm'
         },
         {
@@ -45,73 +45,37 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 
     handleHistoryToken:function (historyTokenObject) {
  	    console.log('PharmByEnzymeFamily: handleHistoryToken()');
-//         if (historyTokenObject.u) {
-//             //gets ref to
-//             var dg = this.getGridView();
-//             var store = dg.getStore();
-// //            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
-//             // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
-//             var cw_controller = this.getController("CW.controller.ConceptWikiLookup");
-//             var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-//             cw_controller.setConcept(historyTokenObject.u, cw_dropdown);
-//             // Setting the ops_uri for the core API search
-// //            store.proxy.extraParams.protein_uri = historyTokenObject.u;
-//             this.getFormView().setLoading(true);
-//             store.setURI(historyTokenObject.u);
-//             store.load();
-// 
-// //            }
-//         } else if (historyTokenObject.s) {
-//             var lookup = this.down('conceptWikiLookup');
-//             lookup.setRawValue(historyTokenObject.s);
-//             lookup.doQuery(historyTokenObject.s);
-//         }
-
-
+        if (historyTokenObject.ec) {
+            var dg = this.getGridView();
+            var store = dg.getStore();
+            this.getPEform().setLoading(true);
+            store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
+            store.load();
+        }
     },
 
     prepGrid:function () {
  		console.log('PharmByEnzymeFamily: prepGrid()');
-//         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-//         var grid_view = this.getGridView();
-//         var store = grid_view.getStore();
-//         store.on('load', this.storeLoadComplete, this);
-//         store.setPage(1);
-// 
-// //        var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
-// //        add_next_button.on('click', function () {
-// //            var form_values = add_next_button.up('form').getValues();
-// //            grid_controller.addNextRecords(grid_view, form_values);
-// //        });
-// 
-// //        grid_view.store.proxy.actionMethods = {read:'POST'};
-// //        grid_view.store.proxy.api.read = grid_view.readUrl;
-// //        grid_view.store.proxy.params = {offset:0, limit:100};
-
-
+        var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+        var grid_view = this.getGridView();
+        var store = grid_view.getStore();
+        store.on('load', this.storeLoadComplete, this);
+        store.setPage(1);
     },
 
     storeLoadComplete:function (store, records, success) {
-// 		console.log('PharmByEnzymeFamilyForm: storeLoadComplete()');
-// //        console.log('PharmByTargetNameForm: storeLoadComplete()');
-// //        var controller = this.getController('LSP.controller.grids.DynamicGrid');
-// //        var grid_view = this.getGridView();
-//         var form = this.getFormView();
-//         var button = this.getSubmitButton();
-// 
-// //        controller.storeLoad(grid_view, success);
-// //        form.doLayout();
-//         button.enable();
-// //        grid_view.doLayout();
-// //        grid_view.doComponentLayout();
-//         form.setLoading(false);
+		console.log('PharmByEnzymeFamily: storeLoadComplete()');
+        var form = this.getPEform();
+        var button = this.getSubmitButton();
+        button.enable();
+        form.setLoading(false);
     },
 
     createGridColumns:function () {
-		// console.log('PharmByEnzymeFamilyForm: createGridColumns()');
-		//         var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-		//         var this_gridview = this.getGridView();
-		//         grid_controller.storeLoad(this_gridview);
+		console.log('PharmByEnzymeFamily: createGridColumns()');
+		var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+		var this_gridview = this.getGridView();
+		grid_controller.storeLoad(this_gridview);
     },
 
 
@@ -142,6 +106,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 
 	    // Get selection from the enzyme tree window
 	    getEnzyme:function (button) {
+			console.log('PharmByEnzymeFamily: getEnzyme()');
 	        var tree = button.up().up().down('enzymeTree');
 	        var selected = tree.getView().getSelectionModel().getSelection();
 	        var sel_data = selected[0].data;
@@ -165,6 +130,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	    },
 
 	    submitQuery:function (button) {
+			console.log('PharmByEnzymeFamily: submitQuery()');
 	        var form = button.up('form');
 	        button.disable();
 	        var values = form.getValues();

@@ -2,6 +2,8 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
+	    console.log("LDA.helper.EnzymeFamilyPaginatedReader: readRecords()");
+	    console.log(data);
         var me = this;
         var records = new Array();
 
@@ -16,6 +18,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
         var items = result[LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
+	        console.log(index);
             var chembl_activity_uri = item[LDA_ABOUT];
             var chembl_src = item[LDA_IN_DATASET];
 
