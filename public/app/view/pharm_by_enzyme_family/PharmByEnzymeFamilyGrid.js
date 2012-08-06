@@ -16,36 +16,56 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
             items:[
 
                 {
-                    header:'Compound Label',
+                    header:'Structure',
                     dataIndex:'compound_pref_label'
                 },
                 {
-                    header:'ChemSpider Compound URI',
-                    dataIndex:'cs_compound_uri'
+                    header:'Smiles',
+                    dataIndex:'compound_smiles'
                 },
                 {
-                    header:'Activity Type',
-                    dataIndex:'activity_activity_type'
-                },
-                {
-                    header:'Activity Relation',
-                    dataIndex:'activity_relation'
-                },
-                {
-                    header:'Activity Value',
+                    header:'Std Value',
                     dataIndex:'activity_standard_value'
                 },
                 {
-                    header:'Activity Units',
-                    dataIndex:'activity_standard_units'
+                    header:'Chemspider ID',
+                    dataIndex:'cs_compound_uri'
                 },
                 {
-                    header:'Target Label',
-                    dataIndex:'target_pref_label'
+                    header:'Std Type',
+                    dataIndex:'activity_standard_type'
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism'
+                },
+                {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism'
+                },
+                {
+                    header:'Inchi key',
+                    dataIndex:'compound_inchikey'
+                },
+                {
+                    header:'Target Name',
+                    dataIndex:'target_title'
+                },
+                {
+                    header:'Relation',
+                    dataIndex:'activity_relation'
+                },
+                {
+                    header:'Molweight',
+                    dataIndex:'compound_full_mwt'
+                },
+                {
+                    header:'Inchi',
+                    dataIndex:'compound_inchikey_src'
+                },
+                {
+                    header:'Compound name',
+                    dataIndex:'compound_generic_name'
                 }
             ]
         }

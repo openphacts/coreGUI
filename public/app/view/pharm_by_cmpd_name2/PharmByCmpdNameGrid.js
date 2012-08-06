@@ -33,7 +33,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                 },
                 {
                     header:'Std Type',
-                    dataIndex:'activity_standard_value'
+                    dataIndex:'activity_standard_type'
                 },
                 {
                     header:'Inchi key',
