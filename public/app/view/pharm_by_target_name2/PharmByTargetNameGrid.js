@@ -13,7 +13,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
             xtype:'paginggridscroller'
         },
         requires:[
-
+		    'LSP.view.dynamicgrid.DynamicGrid3'
         ],
         store:'TargetPharmacologyPaginatedStore',
         columns:{

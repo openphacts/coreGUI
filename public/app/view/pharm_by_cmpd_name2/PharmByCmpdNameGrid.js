@@ -6,9 +6,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
             xtype:'paginggridscroller'
         },
         requires:[
-
         ],
         store:'CompoundPharmacologyPaginatedStore',
+        listeners: {
+            itemcontextmenu: function(view, record, node, index, event) {
+                event.stopEvent();
+				alert("right click");
+				// showMenu(event.browserEvent.clientX, event.browserEvent.clientY, record);
+                return false;
+            }
+        },
         columns:{
             defaults:{
             },
@@ -78,5 +85,5 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                 }
             ]
         }
-    }
+	}
 );
