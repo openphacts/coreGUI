@@ -60,7 +60,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 
         prepGrid:function () {
             console.log('PharmByCmpdNameForm: prepGrid()');
-            var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+            // var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
             var grid_view = this.getGridView();
 	        var store = grid_view.getStore();
 	        store.on('load', this.storeLoadComplete, this);

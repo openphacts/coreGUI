@@ -1,5 +1,5 @@
 Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
-        extend:'Ext.grid.Panel',
+        extend:'LSP.view.dynamicgrid.DynamicGrid3',
         alias:'widget.PharmByCmpdNameGrid',
         layout:'fit',
         verticalScroller:{
@@ -8,14 +8,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
         requires:[
         ],
         store:'CompoundPharmacologyPaginatedStore',
-        listeners: {
-            itemcontextmenu: function(view, record, node, index, event) {
-                event.stopEvent();
-				alert("right click");
-				// showMenu(event.browserEvent.clientX, event.browserEvent.clientY, record);
-                return false;
-            }
-        },
+        // listeners: {
+        //             itemcontextmenu: function(view, record, node, index, event) {
+        //                 event.stopEvent();
+        // 				alert("right click");
+        // 				// showMenu(event.browserEvent.clientX, event.browserEvent.clientY, record);
+        //                 return false;
+        //             }
+        //         },
         columns:{
             defaults:{
             },
