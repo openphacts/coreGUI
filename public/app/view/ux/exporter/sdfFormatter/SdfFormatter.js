@@ -21,7 +21,7 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
 
     buildRecord:function (columns, row, molfile) {
         var cols = [];
-        var csid = row.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+        var csid = row.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
         Ext.each(columns, function (column) {
             var data_record = ">  <";
             // todo: check hidden props

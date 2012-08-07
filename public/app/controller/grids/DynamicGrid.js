@@ -333,6 +333,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		} else {
 			this.getGridView().down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 	        this.getGridView().down('#sdfDownloadProxy_id').enable();
+			this.getGridView().down('#csvDownload_id').enable();
 		}
 }
 });

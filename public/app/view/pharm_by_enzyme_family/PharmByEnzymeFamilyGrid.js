@@ -33,7 +33,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                 },
                 {
                     header:'Std Type',
-                    dataIndex:'activity_standard_type'
+                    dataIndex:'activity_activity_type'
                 },
                 {
                     header:'Target Organism',
