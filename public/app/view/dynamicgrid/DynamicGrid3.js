@@ -10,6 +10,40 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         'Ext.selection.CellModel',
         'LSP.view.dynamicgrid.feature.selectable'
     ],
+	dockedItems: [{
+		xtype: 'toolbar',
+	    dock: 'top',
+	    items:[{ xtype:'exporterbutton',
+	                formatter:'csv',
+	                swfPath:'app/view/ux/exporter/downloadify.swf',
+	                downloadImage:'app/view/ux/exporter/csv_button.png',
+	                itemId:'csvDownload_id',
+	                width:117,
+	                height:22,
+	                hidden:false},
+		                            { xtype:'tbseparator' },
+		                            {
+		                                xtype:'button',
+		                                text:'Prepare SD-file download',
+		                                tooltip:'Starts a two steep process to download the SD-file. This may take a while...',
+		                                itemId:'sdfDownloadProxy_id',
+		                                iconCls:'icon-sdf',
+		                                hidden:false,
+		                                disabled:true
+		                            },
+						                            {
+						                                xtype:'exporterbutton',
+						                                formatter:'sdf',
+						                                swfPath:'app/view/ux/exporter/downloadify.swf',
+						                                downloadImage:'app/view/ux/exporter/sdf_button.png',
+						                                itemId:'sdfDownload_id',
+						                                width:111,
+						                                height:22,
+						                                hidden:false,
+						                                disabled:true
+						                            }
+		]
+	}],
     // autoScroll:true,
     // layout:'fit',
     // gridBaseTitle:'',
@@ -150,7 +184,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
         var grid_store = this.getStore();
         var config = {
 
-            store:grid_store// ,
+            // store:grid_store// ,
             
             // tbar:[
             //                 {
@@ -163,15 +197,15 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
             //                 },
             //                 { xtype:'tbseparator' },
             //                 {
-            //                     xtype:'exporterbutton',
-            //                     store:grid_store,
-            //                     formatter:'csv',
-            //                     swfPath:'app/view/ux/exporter/downloadify.swf',
-            //                     downloadImage:'app/view/ux/exporter/csv_button.png',
-            //                     itemId:'csvDownload_id',
-            //                     width:117,
-            //                     height:22,
-            //                     hidden:false
+                                // xtype:'exporterbutton',
+                                // store:grid_store,
+                                // formatter:'csv',
+                                // swfPath:'app/view/ux/exporter/downloadify.swf',
+                                // downloadImage:'app/view/ux/exporter/csv_button.png',
+                                // itemId:'csvDownload_id',
+                                // width:117,
+                                // height:22,
+                                // hidden:false
             //                 },
             //                 { xtype:'tbseparator' },
             //                 {

@@ -29,9 +29,12 @@ Ext.define("Ext.ux.exporter.Button", {
         Ext.ux.exporter.Button.superclass.constructor.call(this, config);
 
         var self = this;
-        this.store.on("load", function () { // We wait for the combo to be rendered, so we can look up to grab the component containing it
-            self.setComponent(self.up("dynamicgrid3"), config);
-        }, this, {delay:1000});
+        // this.store.on("load", function () { // We wait for the combo to be rendered, so we can look up to grab the component containing it
+        //     self.setComponent(self.up("dynamicgrid3"), config);
+        // }, this, {delay:1000});
+      this.on("afterrender", function() { // We wait for the combo to be rendered, so we can look up to grab the component containing it
+          self.setComponent(self.store || self.component || self.up("gridpanel") || self.up("treepanel"), config);
+      });
     },
 
     setComponent:function (component, config) {

@@ -309,37 +309,4 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }, this);
 
     }
-//         Ext.each(items, function(item) {
-//           var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-//           if (!isNaN(parseInt(csid))){
-//             if (item.molfile === undefined || item.molfile.length < 30) {
-//               compoundStore.load({
-//                     params: { 'csids[0]': csid },
-//                     callback: function (records, operation, success) {
-//                         if(success){
-//                             success_count++;
-//                             compound = compoundStore.first().raw.Mol;
-//                             item.molfile = compound;
-//                             sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
-//                             if (success_count === item_count) {
-//                               sdf_prep_button.setText('SD-File ready! Click ->');
-//                               gridview.down('#sdfDownload_id').enable();
-//                               }
-//                         }
-//                         else {
-//                           fail_count++;
-//                         }
-//                     }
-//                 },this);   
-//             }
-//           else {
-//              success_count++;
-//              sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
-//           }
-//          }   
-//         else {fail_count++}  
-//         
-//        })
-
-})
-;
+});
