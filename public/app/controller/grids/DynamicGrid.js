@@ -42,18 +42,19 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     models:['DynamicGrid'],
 
     refs:[
-        {
-            ref:'gridView',
-            selector:'dynamicgrid3'
-        }
-    ],
+            {
+                ref:'gridView',
+                selector:'dynamicgrid3'
+            }
+        ],
 
     init:function () {
+		console.log('DynamicGrid: init()');
         this.control({
             'dynamicgrid3':{
                 itemdblclick:function (view, record, item, index, e, opts) {
-                    if (record.data.csid_uri !== undefined) {
-                        var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                    if (record.data.cs_compound_uri !== undefined) {
+                        var csid = record.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
                         if (parseInt(csid) >= 1) {
                             Ext.create('CS.view.CompoundWindow').showCompound(csid);
                         }
@@ -78,6 +79,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     addNextRecords:function (this_gridview, extraParams) {
+		console.log('DynamicGrid: addNextRecords()');
         this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
         this_gridview.down('#sdfDownload_id').disable();
         var this_store = this_gridview.store;
@@ -124,6 +126,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     storeLoad:function (this_gridview, success) {
+		console.log('DynamicGrid: storeLoad()');
         if (success === false) {
             Ext.MessageBox.show({
                 title:'Error',
@@ -189,7 +192,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         var fail_count = 0;
         sdf_prep_button.setText('SD-file preparing...');
         Ext.each(items, function (item) {
-            var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+            var csid = item.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
             if (!isNaN(parseInt(csid))) {
                 if (item.molfile === undefined || item.molfile.length < 30) {
                     compoundStore.load({
@@ -237,7 +240,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         csid_hash = {};
         csid_molfile_hash = {};
         Ext.each(items, function (item) {
-            var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+            var csid = item.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
             if (!isNaN(parseInt(csid))) {
                 if (item.molfile !== undefined && item.molfile.length > 30) {
                     csid_molfile_hash[csid] = item.molfile;
@@ -308,5 +311,28 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             }
         }, this);
 
-    }
+    },
+
+    storeLoadComplete:function (store, records, success) {
+		console.log('DynamicGrid: storeLoadComplete()');
+		if (this.getGridView().getStore().getTotalCount() == 0) {
+            this.getGridView().getStore().setTitle(getGridView().gridBaseTitle + ' - No records found within OPS for this search!');
+            Ext.MessageBox.show({
+                title:'Info',
+                msg:'The OPS system does not contain any data that match this search.',
+                buttons:Ext.MessageBox.OK,
+                icon:Ext.MessageBox.INFO
+            });
+        } else {
+            this.getGridView().setTitle(this.getGridView().gridBaseTitle + ' - Records loaded: ' + this.getGridView().getStore().getCount() + ' - Total Records: ' + this.getGridView().getStore().getTotalCount());
+        }
+		if (this.getGridView().getStore().getTotalCount() == 0) {
+			this.getGridView().down('#sdfDownload_id').disable();
+			this.getGridView().down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+	        this.getGridView().down('#sdfDownloadProxy_id').disable();
+		} else {
+			this.getGridView().down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+	        this.getGridView().down('#sdfDownloadProxy_id').enable();
+		}
+}
 });

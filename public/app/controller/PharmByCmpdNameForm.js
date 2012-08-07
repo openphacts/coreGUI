@@ -1,5 +1,5 @@
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
-        extend:'Ext.app.Controller',
+        extend:'LSP.controller.grids.DynamicGrid',
         views:['pharm_by_cmpd_name2.PharmByCmpdNameGrid'],
 
         refs:[
@@ -91,6 +91,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             // grid_view.doLayout();
             // grid_view.doComponentLayout();
             form.setLoading(false);
+			this.callParent();
         },
 
         createGridColumns:function () {
