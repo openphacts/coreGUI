@@ -16,7 +16,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
 				{xtype: 'rownumberer'},
                 {
                     header:'Structure',
-                    dataIndex:'compound_pref_label'
+                    dataIndex:'cs_compound_uri'
                 },
                 {
                     header:'Smiles',
