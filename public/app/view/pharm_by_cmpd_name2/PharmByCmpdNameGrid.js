@@ -15,6 +15,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
             items:[
 				{xtype: 'rownumberer'},
                 {
+					//TODO: renderer for chemical structure image (from chemspider?)
                     header:'Structure',
                     dataIndex:'cs_compound_uri'
                 },
@@ -31,12 +32,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                     dataIndex:'cs_compound_uri'
                 },
                 {
-                    header:'Std Type',
-                    dataIndex:'activity_activity_type'
-                },
-                {
                     header:'Inchi key',
                     dataIndex:'compound_inchikey'
+                },
+                {
+                    header:'Std Type',
+                    dataIndex:'activity_activity_type'
                 },
                 {
                     header:'Target Organism',
@@ -47,33 +48,24 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                     dataIndex:'activity_standard_units'
                 },
                 {
-                    header:'Target Organism',
-                    dataIndex:'target_organism'
-                },
-                {
                     header:'Target Name',
                     dataIndex:'target_title'
+                },
+                {
+                    header:'Relation',
+                    dataIndex:'activity_relation'
                 },
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt'
                 },
                 {
-                    header:'Relation',
-                    dataIndex:'activity_relation'
-                },
-				//no idea what this refers to in the LDA.model.PharmacologyPaginatedModel
-                // {
-                //     header:'Num ro5 violations',
-                //     dataIndex:'target_organism'
-                // },
-                {
                     header:'Inchi',
-                    dataIndex:'compound_inchikey_src'
+                    dataIndex:'compound_inchi'
                 },
                 {
                     header:'Compound name',
-                    dataIndex:'compound_generic_name'
+                    dataIndex:'compound_pref_label'
                 }
             ]
         }
