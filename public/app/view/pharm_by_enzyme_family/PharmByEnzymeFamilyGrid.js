@@ -32,6 +32,10 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                     dataIndex:'cs_compound_uri'
                 },
                 {
+                    header:'Inchi key',
+                    dataIndex:'compound_inchikey'
+                },
+                {
                     header:'Std Type',
                     dataIndex:'activity_activity_type'
                 },
@@ -44,12 +48,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                     dataIndex:'assay_organism'
                 },
                 {
-                    header:'Inchi key',
-                    dataIndex:'compound_inchikey'
-                },
-                {
                     header:'Target Name',
-                    dataIndex:'target_pref_label'
+                    dataIndex:'target_title'
                 },
                 {
                     header:'Relation',
