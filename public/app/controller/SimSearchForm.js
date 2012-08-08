@@ -66,7 +66,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     handleHistoryToken:function (historyTokenObject) {
-        console.log('handleHistoryToken');
+	    console.log('SimSearchForm: handleHistoryToken()');
         console.log(historyTokenObject);
         var me = this;
         var searchEngine = Ext.create('CS.engine.search.Structure', {

@@ -1,5 +1,5 @@
 Ext.define('LSP.controller.PharmByTargetNameForm', {
-    extend:'Ext.app.Controller',
+        extend:'LSP.controller.grids.DynamicGrid',
 
     views:['pharm_by_target_name2.PharmByTargetNameGrid'],
 //    stores:['LDA.store.TargetPharmacologyPaginatedStore'],
@@ -89,6 +89,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var button = this.getSubmitButton();
         button.enable();
         form.setLoading(false);
+		this.callParent();
     },
 
     createGridColumns:function () {
