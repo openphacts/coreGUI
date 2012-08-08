@@ -1,5 +1,5 @@
 Ext.define('LSP.controller.PharmByEnzymeFamily', {
-    extend:'Ext.app.Controller',
+        extend:'LSP.controller.grids.DynamicGrid',
 
     views:['pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', 'tree_selector_forms.EnzymeTreeForm'],
     // stores:['LDA.store.EnzymeFamilyPaginatedStore'],
@@ -69,6 +69,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         var button = this.getSubmitButton();
         button.enable();
         form.setLoading(false);
+		this.callParent();
     },
 
     createGridColumns:function () {

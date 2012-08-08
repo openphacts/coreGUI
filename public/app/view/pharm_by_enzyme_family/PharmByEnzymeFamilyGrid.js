@@ -1,5 +1,5 @@
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
-        extend:'Ext.grid.Panel',
+    extend:'LSP.view.dynamicgrid.DynamicGrid3',
         alias:'widget.PharmByEnzymeFamilyGrid',
         layout:'fit',
         verticalScroller:{
@@ -17,7 +17,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
 
                 {
                     header:'Structure',
-                    dataIndex:'compound_pref_label'
+                    dataIndex:'cs_compound_uri'
                 },
                 {
                     header:'Smiles',
@@ -49,7 +49,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                 },
                 {
                     header:'Target Name',
-                    dataIndex:'target_title'
+                    dataIndex:'target_pref_label'
                 },
                 {
                     header:'Relation',
@@ -61,11 +61,11 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                 },
                 {
                     header:'Inchi',
-                    dataIndex:'compound_inchikey_src'
+                    dataIndex:'compound_inchi'
                 },
                 {
                     header:'Compound name',
-                    dataIndex:'compound_generic_name'
+                    dataIndex:'compound_pref_label'
                 }
             ]
         }
