@@ -15,6 +15,12 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
         requires:[
         ],
         store:'TargetPharmacologyPaginatedStore',
+		dockedItems: [
+		{
+		        xtype: 'pagingtoolbar',
+		        dock: 'bottom',
+		        displayInfo: true
+		    }],
         columns:{
 			//TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)
             // defaults:{
@@ -93,8 +99,11 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
             {
                 header:'Compound name',
                 dataIndex:'compound_pref_label'
-            }
-			//TODO: Compound cw in here?
+            },
+			{
+				header: 'Compound cw',
+				dataIndex: 'cw_compound_uri'
+			}
             ]
         }
     }

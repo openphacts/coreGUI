@@ -315,8 +315,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     storeLoadComplete:function (store, records, success) {
 		console.log('DynamicGrid: storeLoadComplete()');
-		if (this.getGridView().getStore().getTotalCount() == 0) {
-            this.getGridView().getStore().setTitle(getGridView().gridBaseTitle + ' - No records found within OPS for this search!');
+		gridView = this.getGridView();
+		if (gridView.getStore().getTotalCount() == 0) {
+            gridView.getStore().setTitle(getGridView().gridBaseTitle + ' - No records found within OPS for this search!');
+			gridView.down('#sdfDownload_id').disable();
+			gridView.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+	        gridView.down('#sdfDownloadProxy_id').disable();
             Ext.MessageBox.show({
                 title:'Info',
                 msg:'The OPS system does not contain any data that match this search.',
@@ -324,16 +328,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 icon:Ext.MessageBox.INFO
             });
         } else {
-            this.getGridView().setTitle(this.getGridView().gridBaseTitle + ' - Records loaded: ' + this.getGridView().getStore().getCount() + ' - Total Records: ' + this.getGridView().getStore().getTotalCount());
+			if (gridView.getStore().getCount() == gridView.getStore().getTotalCount()) {
+				gridView.setTitle(this.getGridView().gridBaseTitle + ' - All ' + gridView.getStore().getCount() + ' records loaded');            
+			} else {
+				gridView.setTitle(gridView.gridBaseTitle + ' - Records loaded: ' + gridView.getStore().getCount() + ' - Total Records: ' + gridView.getStore().getTotalCount());
+	            
+			}
+			gridView.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+	        gridView.down('#sdfDownloadProxy_id').enable();
+			gridView.down('#csvDownload_id').enable();
         }
-		if (this.getGridView().getStore().getTotalCount() == 0) {
-			this.getGridView().down('#sdfDownload_id').disable();
-			this.getGridView().down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-	        this.getGridView().down('#sdfDownloadProxy_id').disable();
-		} else {
-			this.getGridView().down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-	        this.getGridView().down('#sdfDownloadProxy_id').enable();
-			this.getGridView().down('#csvDownload_id').enable();
-		}
 }
 });
