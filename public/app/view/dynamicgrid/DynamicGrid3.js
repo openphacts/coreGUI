@@ -23,7 +23,17 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 	dockedItems: [{
 		xtype: 'toolbar',
 		dock: 'top',
-		items: [{
+		items: [
+		{
+            xtype:'button',
+            text:'Retrieve next 50 records',
+            tooltip:'On each click 50 additional records\nare added to the resultset',
+            itemId:'nextRecords',
+            iconCls:'icon-new',
+			hidden: true,
+            disabled:true
+        },
+{
 			xtype: 'exporterbutton',
 			formatter: 'csv',
 			swfPath: 'app/view/ux/exporter/downloadify.swf',
