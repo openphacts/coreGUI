@@ -76,7 +76,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
             },
             {
                 header:'Target Name',
-                dataIndex:'target_title'
+                dataIndex:'target_pref_label'
             },
             {
                 header:'Relation',

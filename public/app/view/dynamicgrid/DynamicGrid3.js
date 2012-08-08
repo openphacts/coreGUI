@@ -57,7 +57,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 	}],
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_generic_name;
-		var tar = record.data.target_title;
+		var tar = record.data.target_pref_label;
 		var smi = record.data.compound_smiles;
 
 		if (tar) {
