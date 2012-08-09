@@ -141,6 +141,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 
         return new Ext.data.ResultSet(
             {
+				// TODO: set the total by calling target pharm count from the Linked Data API and read the result
+				// records.length is just the number from the current call, not the total
                 total:records.length,
                 count:records.length,
                 records:records,

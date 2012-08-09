@@ -9,7 +9,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
         type:'vbox',
         align:'stretch'
     },
-
+	// Use a PagingGridScroller (this is interchangeable with a PagingToolbar)
+	    verticalScrollerType: 'paginggridscroller',
+	    // do not reset the scrollbar when the view refreshs
+	    invalidateScrollerOnRefresh: false,
+	    // infinite scrolling does not support selection
+	    disableSelection: true,
     initComponent:function () {
         this.items = [
             {

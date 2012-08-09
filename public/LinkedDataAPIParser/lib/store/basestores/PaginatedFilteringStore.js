@@ -7,8 +7,12 @@
  */
 Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
     extend:'LDA.store.basestores.FilteringStore',
-    _page:'',
+    // _page:'',
     _pageSize:'50',
+	pageSize: 50,
+	pageParam: '_page',
+	//limit = _pageSize in the Linked DataAPI??
+	limitParam: '_pageSize',
 
     setPage:function (pageNumber) {
         if (typeof pageNumber == 'number') {
