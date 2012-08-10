@@ -16,6 +16,13 @@ Ext.define('LDA.store.CompoundPharmacologyPaginatedStore', {
 		// this.proxy.limitParam = '_pageSize';
 		// this.proxy.pageParam = '_page';
         this.callParent(arguments);
+    },
+    /**
+     * Due to the asynchronous nature of the Linked Data API the total count is returned
+     * by a separate call. The total can then be set using this function.
+     */
+    setTotalCount: function(count) {
+        this.totalCount = count;
     }
 
 });
