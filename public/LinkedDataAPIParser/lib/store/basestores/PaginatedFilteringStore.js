@@ -7,25 +7,23 @@
  */
 Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
     extend:'LDA.store.basestores.FilteringStore',
-    // _page:'',
-    _pageSize:'50',
 	pageSize: 50,
-	pageParam: '_page',
-	//limit = _pageSize in the Linked DataAPI??
-	limitParam: '_pageSize',
-
-    setPage:function (pageNumber) {
-        if (typeof pageNumber == 'number') {
-            this._page = pageNumber;
-        }
-    },
+	    proxy:{
+	        type:'jsonp',
+	        noCache:false,
+	        startParam:undefined,
+	limitParam:'_pageSize',
+	pageParam:'_page',
+	        //this is the only query param handled natively by the proxy, all others are handled in store config below.
+	        callbackKey:'_callback'
+	    },
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +
             this.stringEncoder.toQueryString(
                 {
-                    _page:this._page,
-                    _pageSize:this._pageSize,
+                    // _page:this._page,
+                    // _pageSize:this._pageSize,
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,
                     activity_value:this.activity_value,

@@ -8,6 +8,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
         requires:[
         ],
         store:'CompoundPharmacologyPaginatedStore',
+		dockedItems: [{
+		        xtype: 'pagingtoolbar',
+		        dock: 'bottom',
+				store: 'CompoundPharmacologyPaginatedStore',
+		        displayInfo: true
+		    }],
         columns:{
             defaults:{
             },

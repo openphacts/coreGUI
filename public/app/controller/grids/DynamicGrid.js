@@ -317,7 +317,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		console.log('DynamicGrid: storeLoadComplete()');
 		gridView = this.getGridView();
 		if (gridView.getStore().getTotalCount() == 0) {
-            gridView.getStore().setTitle(getGridView().gridBaseTitle + ' - No records found within OPS for this search!');
+            gridView.setTitle(gridView.gridBaseTitle + ' - No records found within OPS for this search!');
 			gridView.down('#sdfDownload_id').disable();
 			gridView.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 	        gridView.down('#sdfDownloadProxy_id').disable();
@@ -329,7 +329,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             });
         } else {
 			if (gridView.getStore().getCount() == gridView.getStore().getTotalCount()) {
-				gridView.setTitle(this.getGridView().gridBaseTitle + ' - All ' + gridView.getStore().getCount() + ' records loaded');            
+				gridView.setTitle(gridView.gridBaseTitle + ' - All ' + gridView.getStore().getCount() + ' records loaded');            
 			} else {
 				gridView.setTitle(gridView.gridBaseTitle + ' - Records loaded: ' + gridView.getStore().getCount() + ' - Total Records: ' + gridView.getStore().getTotalCount());
 	            

@@ -6,65 +6,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid3',
 	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable'],
-	features: [Ext.create('Ext.grid.feature.Grouping', {
-		groupHeaderTpl: 'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
-	}),
-	{
-		ftype: 'filters',
-		encode: true,
-		// json encode the filter query
-		local: true // defaults to false (remote filtering)
-	}, {
-		ftype: 'selectable',
-		id: 'selectable'
-	}],
+
 	rowNumberer: true,
 	defaultWidth: 200,
-	dockedItems: [{
-		xtype: 'toolbar',
-		dock: 'top',
-		items: [
-		{
-            xtype:'button',
-            text:'Retrieve next 50 records',
-            tooltip:'On each click 50 additional records\nare added to the resultset',
-            itemId:'nextRecords',
-            iconCls:'icon-new',
-			hidden: true,
-            disabled:true
-        },
-{
-			xtype: 'exporterbutton',
-			formatter: 'csv',
-			swfPath: 'app/view/ux/exporter/downloadify.swf',
-			downloadImage: 'app/view/ux/exporter/csv_button.png',
-			itemId: 'csvDownload_id',
-			width: 117,
-			height: 22,
-			hidden: false,
-			disabled: true
-		}, {
-			xtype: 'tbseparator'
-		}, {
-			xtype: 'button',
-			text: 'Prepare SD-file download',
-			tooltip: 'Starts a two steep process to download the SD-file. This may take a while...',
-			itemId: 'sdfDownloadProxy_id',
-			iconCls: 'icon-sdf',
-			hidden: false,
-			disabled: true
-		}, {
-			xtype: 'exporterbutton',
-			formatter: 'sdf',
-			swfPath: 'app/view/ux/exporter/downloadify.swf',
-			downloadImage: 'app/view/ux/exporter/sdf_button.png',
-			itemId: 'sdfDownload_id',
-			width: 111,
-			height: 22,
-			hidden: false,
-			disabled: true
-		}]
-	}],
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
 		var tar = record.data.target_pref_label;
@@ -156,5 +100,64 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid3', {
 			contextMenu.showAt(x, y);
 		}
 
-	}
+	},
+	    initComponent:function () {
+
+			// initializing features for the grid
+	        var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
+	            groupHeaderTpl:'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+	        });
+	        var filters = {
+	            ftype:'filters',
+	            encode:true, // json encode the filter query
+	            local:true   // defaults to false (remote filtering)
+	        };
+	        // this feature allows for selection of text in the grid by changing the underlaying style for the cell
+	        var cellTextSelector = {
+	            ftype:'selectable',
+	            id:'selectable'
+	        };
+			//add the top bar here since the child may already have some docked items
+	        var config = {
+
+	            tbar:[
+	                {
+	                    xtype:'exporterbutton',
+	                    formatter:'csv',
+	                    swfPath:'app/view/ux/exporter/downloadify.swf',
+	                    downloadImage:'app/view/ux/exporter/csv_button.png',
+	                    itemId:'csvDownload_id',
+	                    width:117,
+	                    height:22,
+	                    hidden:false
+	                },
+	                { xtype:'tbseparator' },
+	                {
+	                    xtype:'button',
+	                    text:'Prepare SD-file download',
+	                    tooltip:'Starts a two steep process to download the SD-file. This may take a while...',
+	                    itemId:'sdfDownloadProxy_id',
+	                    iconCls:'icon-sdf',
+	                    hidden:false,
+	                    disabled:true
+	                },
+	                {
+	                    xtype:'exporterbutton',
+	                    formatter:'sdf',
+	                    swfPath:'app/view/ux/exporter/downloadify.swf',
+	                    downloadImage:'app/view/ux/exporter/sdf_button.png',
+	                    itemId:'sdfDownload_id',
+	                    width:111,
+	                    height:22,
+	                    hidden:false,
+	                    disabled:true
+	                }
+	            ],
+	            features:[groupingFeature, filters, cellTextSelector]
+	        };
+
+	        Ext.apply(this, config);
+	        Ext.apply(this.initialConfig, config);
+	        this.callParent(arguments);
+	    }
 });

@@ -13,6 +13,8 @@ Ext.define('LDA.store.CompoundPharmacologyPaginatedStore', {
 
     constructor:function (config, arguments) {
         this.proxy.reader = Ext.create('LDA.helper.CompoundPharmacologyPaginatedReader');
+		// this.proxy.limitParam = '_pageSize';
+		// this.proxy.pageParam = '_page';
         this.callParent(arguments);
     }
 

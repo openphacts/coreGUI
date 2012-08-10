@@ -48,6 +48,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 var store = dg.store;
                 if (historyTokenObject.u != store.proxy.extraParams.uri) {
                     store.proxy.extraParams.uri = historyTokenObject.u;
+					store.proxy.reader.uri = historyTokenObject.u;
                     this.getFormView().setLoading(true);
                     store.load();
                 }
@@ -64,7 +65,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             var grid_view = this.getGridView();
 	        var store = grid_view.getStore();
 	        store.on('load', this.storeLoadComplete, this);
-	        store.setPage(1);
+	        // store.setPage(1);
             // var add_next_button = this.getNextRecordsButton();
             // add_next_button.on('click', function () {
             //     var form_values = add_next_button.up('form').getValues();

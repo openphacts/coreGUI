@@ -11,6 +11,15 @@ Ext.define('LDA.store.TargetPharmacologyCountStore', {
     model:'LDA.model.PharmacologyCountModel',
     storeId:'TargetPharmacologyCountStore',
     BASE_URL:'http://ops.few.vu.nl/target/pharmacology/count?',
+    proxy:{
+        type:'jsonp',
+        noCache:false,
+        startParam:undefined,
+		limitParam:undefined,
+		pageParam:undefined,
+        //this is the only query param handled natively by the proxy, all others are handled in store config below.
+        callbackKey:'_callback'
+    },
 
     constructor:function (config, arguments) {
         this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyCountReader');
