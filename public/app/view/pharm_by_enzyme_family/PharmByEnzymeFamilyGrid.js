@@ -1,5 +1,5 @@
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
-    extend:'LSP.view.dynamicgrid.DynamicGrid3',
+    extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByEnzymeFamilyGrid',
         layout:'fit',
         verticalScroller:{
@@ -9,12 +9,22 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
 
         ],
         store:'EnzymeFamilyPaginatedStore',
+		dockedItems: [{
+		        xtype: 'dynamicpagingtoolbar',
+				itemId: 'pager_id',
+		        dock: 'bottom',
+				store: 'EnzymeFamilyPaginatedStore',
+		        displayInfo: true
+		    }],
         columns:{
             defaults:{
             },
 
             items:[
-
+				{
+					xtype: 'rownumberer',
+					width: 40
+				},
                 {
                     header:'Structure',
                     dataIndex:'cs_compound_uri'

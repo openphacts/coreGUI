@@ -31,6 +31,13 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
                     uri:this.uri
                 });
         console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
+    },
+    /**
+     * Due to the asynchronous nature of the Linked Data API the total count is returned
+     * by a separate call. The total can then be set using this function.
+     */
+    setTotalCount: function(count) {
+        this.totalCount = count;
     }
 
 });

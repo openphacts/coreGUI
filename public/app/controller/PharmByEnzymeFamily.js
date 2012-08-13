@@ -60,7 +60,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         var grid_view = this.getGridView();
         var store = grid_view.getStore();
         store.on('load', this.storeLoadComplete, this);
-        store.setPage(1);
+        // store.setPage(1);
     },
 
     storeLoadComplete:function (store, records, success) {

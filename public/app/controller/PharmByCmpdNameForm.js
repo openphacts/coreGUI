@@ -92,6 +92,21 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             // grid_view.doLayout();
             // grid_view.doComponentLayout();
             form.setLoading(false);
+			var grid_view = this.getGridView();
+			var grid_store = grid_view.getStore();
+			countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
+			countStore.uri = this.getGridView().getStore().proxy.reader.uri;
+			//if the proxy does not have a total count then we need to fetch it from the LDA
+			//only need to do this the first time
+			if (this.getGridView().getStore().proxy.total_count == null) {
+				countStore.load(function(records, operation, success) {
+			    	console.log('loaded records ' + success);
+					total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
+					grid_store.setTotalCount(total);
+					grid_store.proxy.reader.total_count = total;
+					grid_view.down('#pager_id').updatePager();		
+				});
+			}
 			this.callParent();
         },
 

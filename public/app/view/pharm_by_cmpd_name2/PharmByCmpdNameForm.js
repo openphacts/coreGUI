@@ -3,14 +3,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     alias:'widget.PharmByCmpdNameForm',
     closable:true,
     requires:[
-        'LSP.view.dropdowns.conceptWikiCompoundLookup'
+        'LSP.view.dropdowns.conceptWikiCompoundLookup', 'LDA.helper.DynamicPagingToolbar'
     ],
     layout:{
         type:'vbox',
         align:'stretch'
     },
 	// Use a PagingGridScroller (this is interchangeable with a PagingToolbar)
-	    verticalScrollerType: 'paginggridscroller',
+	    // verticalScrollerType: 'dynamicpagingtoolbar',
 	    // do not reset the scrollbar when the view refreshs
 	    invalidateScrollerOnRefresh: false,
 	    // infinite scrolling does not support selection

@@ -4,7 +4,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     closable:true,
     requires:[
         'LSP.view.dropdowns.conceptWikiCompoundLookup',
-        'LSP.view.dynamicgrid.DynamicGrid3',
+        'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm'
     ],
     layout:{

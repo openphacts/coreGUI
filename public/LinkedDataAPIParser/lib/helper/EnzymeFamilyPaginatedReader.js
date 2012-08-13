@@ -60,11 +60,13 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             	var chembl_assay_uri = onAssay[LDA_ABOUT];
             	var assay_organism = onAssay['assay_organism'];
             	var target = onAssay['target'];
-            	var chembl_target_uri = target[LDA_ABOUT];
-            	var target_pref_label = target['prefLabel'];
-            	var target_title = target['title'];
-            	var target_organism = target['assay_organism'];
-            	var target_concatenated_uris = target['concatenatedURIs'];
+				if (target != null) {
+            		var chembl_target_uri = target[LDA_ABOUT];
+            		var target_pref_label = target['prefLabel'];
+            		var target_title = target['title'];
+            		var target_organism = target['assay_organism'];
+            		var target_concatenated_uris = target['concatenatedURIs'];
+				}
 			}
 
             var activity_activity_type = item['activity_type'];

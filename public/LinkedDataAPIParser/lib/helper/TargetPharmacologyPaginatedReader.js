@@ -138,11 +138,13 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 //            console.log('LDA.model.TargetPaginatedModel: TargetPharmacologyPaginated');
 //            console.log(JSON.stringify(record));
         });
+		total_count = this.total_count;
+		if (total_count == null) {
+			total_count = 50; //default number of records to retrieve. Pagination details will be fetched separately be the controller
+		}
 
         return new Ext.data.ResultSet(
             {
-				// TODO: set the total by calling target pharm count from the Linked Data API and read the result
-				// records.length is just the number from the current call, not the total
                 total:records.length,
                 count:records.length,
                 records:records,

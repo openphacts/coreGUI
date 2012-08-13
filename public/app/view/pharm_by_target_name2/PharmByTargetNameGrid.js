@@ -6,16 +6,23 @@
  * To change this template use File | Settings | File Templates.
  */
 Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
-        extend:'LSP.view.dynamicgrid.DynamicGrid3',
+        extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByTargetNameGrid',
         layout:'fit',
         requires:[
         ],
+		refs:[
+			{
+				ref:'pager',
+        		selector:'#pager_id'
+			}
+		],
         store:'TargetPharmacologyPaginatedStore',
 		// TODO this dock overrides the parent class which means all the buttons are missing(!), I put it here because you need to tell the paging toolbar what the store is
 		// Maybe you can add the paging toolbar to the parent and add the store programatically at initComponent time?
 		dockedItems: [{
-		        xtype: 'pagingtoolbar',
+		        xtype: 'dynamicpagingtoolbar',
+				itemId: 'pager_id',
 		        dock: 'bottom',
 				store: 'TargetPharmacologyPaginatedStore',
 		        displayInfo: true
@@ -49,7 +56,10 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameGrid', {
             //             },
 
             items:[
-			{xtype: 'rownumberer'},
+			{
+				xtype: 'rownumberer',
+				width: 40
+			},
             {
 				//TODO: renderer for chemical structure image (from chemspider?)
                 header:'Structure',

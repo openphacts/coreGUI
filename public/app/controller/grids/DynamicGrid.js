@@ -36,7 +36,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     extend:'Ext.app.Controller',
 
     views:[
-        'dynamicgrid.DynamicGrid3'
+        'dynamicgrid.DynamicGrid'
     ],
 
     models:['DynamicGrid'],
@@ -44,14 +44,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     refs:[
             {
                 ref:'gridView',
-                selector:'dynamicgrid3'
+                selector:'dynamicgrid'
             }
         ],
 
     init:function () {
 		console.log('DynamicGrid: init()');
         this.control({
-            'dynamicgrid3':{
+            'dynamicgrid':{
                 itemdblclick:function (view, record, item, index, e, opts) {
                     if (record.data.cs_compound_uri !== undefined) {
                         var csid = record.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
@@ -66,7 +66,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     this.getGridView().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
             },
-            'dynamicgrid3 toolbar #sdfDownloadProxy_id':{
+            'dynamicgrid toolbar #sdfDownloadProxy_id':{
                 click:this.prepSDFile
             }
         })
@@ -182,7 +182,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     prepSDFile2:function (sdf_prep_button) {
-        var gridview = sdf_prep_button.up('dynamicgrid3');
+        var gridview = sdf_prep_button.up('dynamicgrid');
         var grid_store = gridview.store;
         var items = grid_store.data.items;
 
@@ -192,6 +192,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         var fail_count = 0;
         sdf_prep_button.setText('SD-file preparing...');
         Ext.each(items, function (item) {
+			//TODO some of these items can be null, catch them and ignore (or report?) 
             var csid = item.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
             if (!isNaN(parseInt(csid))) {
                 if (item.molfile === undefined || item.molfile.length < 30) {
@@ -228,7 +229,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     prepSDFile:function (sdf_prep_button) {
-        var gridview = sdf_prep_button.up('dynamicgrid3');
+        var gridview = sdf_prep_button.up('dynamicgrid');
         var grid_store = gridview.store;
         var items = grid_store.data.items;
 

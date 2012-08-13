@@ -3,7 +3,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
     alias:'widget.PharmByTargetNameForm',
     closable:true,
     requires:[
-        'LSP.view.dynamicgrid.DynamicGrid3'
+        'LSP.view.dynamicgrid.DynamicGrid'
     ],
     layout:{
         type:'vbox',

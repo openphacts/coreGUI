@@ -1,5 +1,5 @@
 Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
-        extend:'LSP.view.dynamicgrid.DynamicGrid3',
+        extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByCmpdNameGrid',
         layout:'fit',
         verticalScroller:{
@@ -7,9 +7,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
         },
         requires:[
         ],
+		refs:[
+			{
+				ref:'pager',
+        		selector:'#pager_id'
+			}
+		],
         store:'CompoundPharmacologyPaginatedStore',
 		dockedItems: [{
-		        xtype: 'pagingtoolbar',
+		        xtype: 'dynamicpagingtoolbar',
+				itemId: 'pager_id',
 		        dock: 'bottom',
 				store: 'CompoundPharmacologyPaginatedStore',
 		        displayInfo: true
@@ -19,7 +26,10 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
             },
 
             items:[
-				{xtype: 'rownumberer'},
+				{
+					xtype: 'rownumberer',
+					width: 40
+				},
                 {
 					//TODO: renderer for chemical structure image (from chemspider?)
                     header:'Structure',

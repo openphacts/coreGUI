@@ -4,7 +4,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
     closable:true,
     requires:[
         'LSP.view.tree_selector_forms.EnzymeTreeForm',
-	        'LSP.view.dynamicgrid.DynamicGrid3'
+	        'LSP.view.dynamicgrid.DynamicGrid'
     ],
     layout:{
         type:'vbox',

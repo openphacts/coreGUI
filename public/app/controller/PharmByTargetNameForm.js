@@ -37,30 +37,20 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
 
     handleHistoryToken:function (historyTokenObject) {
-//
-        if (historyTokenObject.u) {
-            //gets ref to
+	    if (historyTokenObject.u) {
             var dg = this.getGridView();
-            var store = dg.getStore();
-//            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
-            // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
-            var cw_controller = this.getController("CW.controller.ConceptWikiLookup");
-            var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-            cw_controller.setConcept(historyTokenObject.u, cw_dropdown);
-            // Setting the ops_uri for the core API search
-//            store.proxy.extraParams.protein_uri = historyTokenObject.u;
-            this.getFormView().setLoading(true);
-            store.setURI(historyTokenObject.u);
-            store.load();
-
-//            }
+            var store = dg.store;
+            if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                store.proxy.extraParams.uri = historyTokenObject.u;
+				store.proxy.reader.uri = historyTokenObject.u;
+                this.getFormView().setLoading(true);
+                store.load();
+            }
         } else if (historyTokenObject.s) {
-            var lookup = this.down('conceptWikiLookup');
+            var lookup = this.getLookup();
             lookup.setRawValue(historyTokenObject.s);
             lookup.doQuery(historyTokenObject.s);
         }
-
-
     },
 
     prepGrid:function () {
@@ -68,7 +58,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var grid_view = this.getGridView();
         var store = grid_view.getStore();
         store.on('load', this.storeLoadComplete, this);
-        store.setPage(1);
+        // store.setPage(1);
 
 //        var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
 //        add_next_button.on('click', function () {
@@ -89,6 +79,21 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var button = this.getSubmitButton();
         button.enable();
         form.setLoading(false);
+		var grid_view = this.getGridView();
+		var grid_store = grid_view.getStore();
+		countStore = Ext.create('LDA.store.TargetPharmacologyCountStore');
+		countStore.uri = this.getGridView().getStore().proxy.reader.uri;
+		//if the proxy does not have a total count then we need to fetch it from the LDA
+		//only need to do this the first time
+		if (this.getGridView().getStore().proxy.total_count == null) {
+			countStore.load(function(records, operation, success) {
+		    	console.log('loaded records ' + success);
+				total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
+				grid_store.setTotalCount(total);
+				grid_store.proxy.reader.total_count = total;
+				grid_view.down('#pager_id').updatePager();		
+			});
+		}
 		this.callParent();
     },
 

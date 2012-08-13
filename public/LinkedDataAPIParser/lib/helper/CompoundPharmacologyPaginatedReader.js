@@ -31,10 +31,11 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
             //big bits
             var forMolecule = item[LDA_FOR_MOLECULE];
-            var chembl_compound_uri = forMolecule[LDA_ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'];
-
-            var em = forMolecule[LDA_EXACT_MATCH];
+			if (forMolecule != null) {
+            	var chembl_compound_uri = forMolecule[LDA_ABOUT];
+            	var compound_full_mwt = forMolecule['full_mwt'];
+            	var em = forMolecule[LDA_EXACT_MATCH];
+			}
 
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
@@ -62,12 +63,15 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             );
 
             var onAssay = item[LDA_ON_ASSAY];
-            var chembl_assay_uri = onAssay[LDA_ABOUT];
-
-            var target = onAssay['target'];
-            var target_title = target['title'];
-            var target_organism = target['assay_organism'];
-            var target_concatenated_uris = target['concatenatedURIs'];
+			if (onAssay != null) {
+            	var chembl_assay_uri = onAssay[LDA_ABOUT];
+            	var target = onAssay['target'];
+			}
+			if (target != null) {
+            	var target_title = target['title'];
+            	var target_organism = target['assay_organism'];
+            	var target_concatenated_uris = target['concatenatedURIs'];
+			}
 
 
             var activity_activity_type = item['activity_type'];
@@ -138,17 +142,13 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 //            console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
 //            console.log(JSON.stringify(record));
         });
-		// countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
-		// // countStore.load(function(records, operation, success) {
-		// //     console.log('count records');
-		// // });
-		// countStore.uri = me.uri
-		// countStore.load(function(records, operation, success) {
-		//     console.log('loaded records ' + success);
-		// });
+		total_count = this.total_count;
+		if (total_count == null) {
+			total_count = 50; //default number of records to retrieve. Pagination details will be fetched separately be the controller
+		}
         return new Ext.data.ResultSet(
             {
-                total:records.length,
+                total:total_count,
                 count:records.length,
                 records:records,
                 success:true,
