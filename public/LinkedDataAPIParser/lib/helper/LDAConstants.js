@@ -8,9 +8,9 @@
 LDA_IN_DATASET = 'inDataset';
 LDA_ABOUT = '_about';
 LDA_COMPOUND_PHARMACOLOGY_COUNT = 'compoundPharmacologyTotalResults';
-//LDA_TARGET_PHARMACOLOGY_COUNT = 'targetPharmacologyTotalResults';
-//this is the correct string but really it should be the one above
-LDA_TARGET_PHARMACOLOGY_COUNT = 'compoundPharmacologyTotalResults';
+LDA_TARGET_PHARMACOLOGY_COUNT = 'targetPharmacologyTotalResults';
+//TODO change to enzymePharmacologyTotalResults
+LDA_ENZYME_FAMILY_COUNT = 'compoundPharmacologyTotalResults';
 LDA_PERMITTED_ACTIVITY_TYPES = ['IC50', 'Activity'];
 LDA_ON_ASSAY = 'onAssay';
 LDA_EXACT_MATCH = 'exactMatch';
