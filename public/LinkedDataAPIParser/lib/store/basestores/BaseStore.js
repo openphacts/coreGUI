@@ -23,7 +23,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 
     listeners:{
         //this is used to construct the proxy url before the load is done
-        beforeload:{
+        beforeprefetch:{
 
             fn:function () {
                 var me = this;

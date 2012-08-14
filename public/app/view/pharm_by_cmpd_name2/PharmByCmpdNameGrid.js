@@ -2,25 +2,29 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
         extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByCmpdNameGrid',
         layout:'fit',
-        verticalScroller:{
-            xtype:'paginggridscroller'
-        },
+		//         verticalScroller: Ext.create('LDA.helper.DynamicPagingToolbar', {
+		// 					itemId: 'pager_id',
+		// 					store: 'CompoundPharmacologyPaginatedStore'
+		// }),
+		verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+        disableSelection: true,
+        invalidateScrollerOnRefresh: false,
         requires:[
         ],
 		refs:[
-			{
-				ref:'pager',
-        		selector:'#pager_id'
-			}
+			// {
+			// 	ref:'pager',
+			//         		selector:'#pager_id'
+			// }
 		],
         store:'CompoundPharmacologyPaginatedStore',
-		dockedItems: [{
-		        xtype: 'dynamicpagingtoolbar',
-				itemId: 'pager_id',
-		        dock: 'bottom',
-				store: 'CompoundPharmacologyPaginatedStore',
-		        displayInfo: true
-		    }],
+		// dockedItems: [{
+		//         xtype: 'dynamicpagingtoolbar',
+		// 		itemId: 'pager_id',
+		//         dock: 'bottom',
+		// 		store: 'CompoundPharmacologyPaginatedStore',
+		//         displayInfo: true
+		//     }],
         columns:{
             defaults:{
             },

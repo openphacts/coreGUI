@@ -8,6 +8,7 @@
 Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
     extend:'LDA.store.basestores.FilteringStore',
 	pageSize: 50,
+	buffered: true,
 	    proxy:{
 	        type:'jsonp',
 	        noCache:false,

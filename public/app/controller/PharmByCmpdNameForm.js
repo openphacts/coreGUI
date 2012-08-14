@@ -50,7 +50,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                     store.proxy.extraParams.uri = historyTokenObject.u;
 					store.proxy.reader.uri = historyTokenObject.u;
                     this.getFormView().setLoading(true);
-                    store.load();
+					store.guaranteeRange(0,49);
+                    // store.load();
                 }
             } else if (historyTokenObject.s) {
                 var lookup = this.getLookup();
@@ -64,7 +65,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             // var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
             var grid_view = this.getGridView();
 	        var store = grid_view.getStore();
-	        store.on('load', this.storeLoadComplete, this);
+	        store.on('prefetch', this.storeLoadComplete, this);
 	        // store.setPage(1);
             // var add_next_button = this.getNextRecordsButton();
             // add_next_button.on('click', function () {
@@ -94,24 +95,24 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             form.setLoading(false);
 			var grid_view = this.getGridView();
 			var grid_store = grid_view.getStore();
-			countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
-			countStore.uri = this.getGridView().getStore().proxy.reader.uri;
-			//if the proxy does not have a total count then we need to fetch it from the LDA
-			//only need to do this the first time
-			if (this.getGridView().getStore().proxy.total_count == null) {
-				countStore.load(function(records, operation, success) {
-			    	console.log('loaded records ' + success);
-					total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
-					grid_store.setTotalCount(total);
-					grid_store.proxy.reader.total_count = total;
-					grid_view.down('#pager_id').updatePager();
-					if (grid_store.getCount() == grid_store.getTotalCount()) {
-						gridView.setTitle(grid_view.gridBaseTitle + ' - All ' + grid_store.getCount() + ' records loaded');            
-					} else {
-						grid_view.setTitle(grid_view.gridBaseTitle + ' - Records loaded: ' + grid_store.getCount() + ' - Total Records: ' + grid_store.getTotalCount());
-					}		
-				});
-			}
+			// countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
+			// 			countStore.uri = this.getGridView().getStore().proxy.reader.uri;
+			// 			//if the proxy does not have a total count then we need to fetch it from the LDA
+			// 			//only need to do this the first time
+			// 			if (this.getGridView().getStore().proxy.total_count == null) {
+			// 				countStore.load(function(records, operation, success) {
+			// 			    	console.log('loaded records ' + success);
+			// 					total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
+			// 					grid_store.setTotalCount(total);
+			// 					grid_store.proxy.reader.total_count = total;
+			// 					grid_view.down('#pager_id').updatePager();
+			// 					if (grid_store.getCount() == grid_store.getTotalCount()) {
+			// 						gridView.setTitle(grid_view.gridBaseTitle + ' - All ' + grid_store.getCount() + ' records loaded');            
+			// 					} else {
+			// 						grid_view.setTitle(grid_view.gridBaseTitle + ' - Records loaded: ' + grid_store.getCount() + ' - Total Records: ' + grid_store.getTotalCount());
+			// 					}		
+			// 				});
+			// 			}
 			this.callParent();
         },
 
