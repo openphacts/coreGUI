@@ -95,6 +95,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             form.setLoading(false);
 			var grid_view = this.getGridView();
 			var grid_store = grid_view.getStore();
+			//TODO total count for infinite grid
 			// countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
 			// 			countStore.uri = this.getGridView().getStore().proxy.reader.uri;
 			// 			//if the proxy does not have a total count then we need to fetch it from the LDA
