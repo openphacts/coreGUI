@@ -102,7 +102,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 	},
 	    initComponent:function () {
-
+			console.log('DynamicGrid: initComponent()');
 			// initializing features for the grid
 	        var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
 	            groupHeaderTpl:'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'

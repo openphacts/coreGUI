@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.PharmByEnzymeFamily', {
         extend:'LSP.controller.grids.DynamicGrid',
 
-    views:['pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', 'tree_selector_forms.EnzymeTreeForm'],
+    views:['pharm_by_enzyme_family.PharmEnzymeForm','pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', 'tree_selector_forms.EnzymeTreeForm'],
     // stores:['LDA.store.EnzymeFamilyPaginatedStore'],
 
     refs:[
@@ -80,11 +80,15 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 		if (this.getGridView().getStore().proxy.total_count == null) {
 			countStore.load(function(records, operation, success) {
 		    	console.log('loaded records ' + success);
-				//this should change to enzymePharmacologyTotalResults
-				total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
+				total = operation.response.result.primaryTopic.enzymePharmacologyTotalResults;
 				grid_store.setTotalCount(total);
 				grid_store.proxy.reader.total_count = total;
-				grid_view.down('#pager_id').updatePager();		
+				grid_view.down('#pager_id').updatePager();
+				if (grid_store.getCount() == grid_store.getTotalCount()) {
+					gridView.setTitle(grid_view.gridBaseTitle + ' - All ' + grid_store.getCount() + ' records loaded');            
+				} else {
+					grid_view.setTitle(grid_view.gridBaseTitle + ' - Records loaded: ' + grid_store.getCount() + ' - Total Records: ' + grid_store.getTotalCount());
+				}		
 			});
 		}
 		this.callParent();

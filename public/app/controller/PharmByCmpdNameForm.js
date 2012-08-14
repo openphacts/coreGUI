@@ -1,6 +1,6 @@
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
         extend:'LSP.controller.grids.DynamicGrid',
-        views:['pharm_by_cmpd_name2.PharmByCmpdNameGrid'],
+        views:['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameGrid'],
 
         refs:[
             {
@@ -104,7 +104,12 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 					total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
 					grid_store.setTotalCount(total);
 					grid_store.proxy.reader.total_count = total;
-					grid_view.down('#pager_id').updatePager();		
+					grid_view.down('#pager_id').updatePager();
+					if (grid_store.getCount() == grid_store.getTotalCount()) {
+						gridView.setTitle(grid_view.gridBaseTitle + ' - All ' + grid_store.getCount() + ' records loaded');            
+					} else {
+						grid_view.setTitle(grid_view.gridBaseTitle + ' - Records loaded: ' + grid_store.getCount() + ' - Total Records: ' + grid_store.getTotalCount());
+					}		
 				});
 			}
 			this.callParent();

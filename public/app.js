@@ -3,7 +3,6 @@ Ext.Loader.setConfig({enabled:true, paths:{ 'CW':'conceptwiki/lib' } });
 
 Ext.create('Ext.app.Application', {
     name:'LSP',
-
     appFolder:'app',
 
     // Define all the controllers that should initialize at boot up of your application
@@ -30,13 +29,13 @@ Ext.create('Ext.app.Application', {
         'CW.controller.ConceptWikiLookup'
     ],
 
-    autoCreateViewport:true,
+    // autoCreateViewport:true,
 
     launch:function () {
+		console.log('Application: launch()');
         Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib','CW':'conceptwiki/lib' } });
-        
-   
-
-//        Ext.Loader.setPath('LDA', 'LinkedDataAPIParser/lib');
+		// firefox seems to have some issues with autocreateviewport so create the view after launch is called.
+		// no idea why this is not working, maybe some asynch classloader issue in ff with the new lda views? Chrome has no problems with it.
+		Ext.create('LSP.view.Viewport');
     }
 });

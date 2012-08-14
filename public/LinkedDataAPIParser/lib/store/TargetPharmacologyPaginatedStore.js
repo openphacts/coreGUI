@@ -13,6 +13,7 @@ Ext.define('LDA.store.TargetPharmacologyPaginatedStore', {
     BASE_URL:'http://ops.few.vu.nl/target/pharmacology/pages?',
 
     constructor:function (config, arguments) {
+		console.log('TargetPharmacologyPaginatedStore: constructor()');
         this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyPaginatedReader');
         this.callParent(arguments);
     }

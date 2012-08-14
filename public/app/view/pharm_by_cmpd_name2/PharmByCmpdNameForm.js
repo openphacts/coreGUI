@@ -16,6 +16,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 	    // infinite scrolling does not support selection
 	    disableSelection: true,
     initComponent:function () {
+		console.log('PharmByCmpdNameForm: constructor()');
         this.items = [
             {
                 xtype:'label',

@@ -159,10 +159,12 @@ Ext.define('LSP.view.Viewport', {
 
 
     initComponent:function () {
+		console.log("Viewport: initComponent()");
         //set provenance to default of icon mode
         LDAProvenanceMode = LDA_PROVENANCE_COLOUR;
         //init history, needs to be done first
         Ext.History.init();
+		console.log("Viewport: 1");
         //add event listener for History 'change' event
         //listener sends new history token to handleHistoryToken function with Viewport scope
         Ext.History.on('change', function (token) {

@@ -3,6 +3,7 @@ Ext.define('LSP.view.Viewer', {
     alias:'widget.viewer',
 
     requires:[
+		'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.usergrid.UserGrid',
         'LSP.view.sparqlform.Queryform',
         'LSP.view.larkc_sim_search.SimSearchForm',
@@ -23,7 +24,7 @@ Ext.define('LSP.view.Viewer', {
     //cls: 'preview',
 
     initComponent:function () {
-
+		console.log('Viewer: initComponent()');
         this.callParent(arguments);
         this.on('tabchange', function (tabPanel, newCard, oldCard) {
             //this handles the user selecting a tab and updates the history token appropriately

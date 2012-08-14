@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.PharmByTargetNameForm', {
         extend:'LSP.controller.grids.DynamicGrid',
 
-    views:['pharm_by_target_name2.PharmByTargetNameGrid'],
+    views:['pharm_by_target_name2.PharmByTargetNameForm', 'pharm_by_target_name2.PharmByTargetNameGrid'],
 //    stores:['LDA.store.TargetPharmacologyPaginatedStore'],
 
     refs:[
@@ -21,6 +21,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     ],
 
     init:function () {
+		console.log('PharmByTargetNameForm: init()');
         this.control({
             'PharmByTargetNameForm button[action=query_pharm_by_target_name]':{
                 click:this.submitQuery
@@ -91,7 +92,12 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 				total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
 				grid_store.setTotalCount(total);
 				grid_store.proxy.reader.total_count = total;
-				grid_view.down('#pager_id').updatePager();		
+				grid_view.down('#pager_id').updatePager();	
+				if (grid_store.getCount() == grid_store.getTotalCount()) {
+					gridView.setTitle(grid_view.gridBaseTitle + ' - All ' + grid_store.getCount() + ' records loaded');            
+				} else {
+					grid_view.setTitle(grid_view.gridBaseTitle + ' - Records loaded: ' + grid_store.getCount() + ' - Total Records: ' + grid_store.getTotalCount());
+				}	
 			});
 		}
 		this.callParent();
