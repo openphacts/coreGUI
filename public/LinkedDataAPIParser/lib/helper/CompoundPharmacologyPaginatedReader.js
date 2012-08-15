@@ -143,9 +143,6 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 //            console.log(JSON.stringify(record));
         });
 		total_count = this.total_count;
-		if (total_count == null) {
-			total_count = 50; //default number of records to retrieve. Pagination details will be fetched separately be the controller
-		}
         return new Ext.data.ResultSet(
             {
                 total:total_count,

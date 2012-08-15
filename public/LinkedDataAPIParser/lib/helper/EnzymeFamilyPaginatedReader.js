@@ -137,10 +137,10 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
 //            console.log('LDA.model.TargetPaginatedModel: TargetPharmacologyPaginated');
 //            console.log(JSON.stringify(record));
         });
-
+		total_count = this.total_count;
         return new Ext.data.ResultSet(
             {
-                total:records.length,
+                total:total_count,
                 count:records.length,
                 records:records,
                 success:true,
