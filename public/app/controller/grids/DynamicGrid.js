@@ -317,27 +317,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     storeLoadComplete:function (store, records, success) {
 		console.log('DynamicGrid: storeLoadComplete()');
 		gridView = this.getGridView();
-		if (gridView.getStore().getTotalCount() == 0) {
-            gridView.setTitle(gridView.gridBaseTitle + ' - No records found within OPS for this search!');
-			gridView.down('#sdfDownload_id').disable();
-			gridView.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-	        gridView.down('#sdfDownloadProxy_id').disable();
-            Ext.MessageBox.show({
-                title:'Info',
-                msg:'The OPS system does not contain any data that match this search.',
-                buttons:Ext.MessageBox.OK,
-                icon:Ext.MessageBox.INFO
-            });
-        } else {
-			if (gridView.getStore().getCount() == gridView.getStore().getTotalCount()) {
-				gridView.setTitle(gridView.gridBaseTitle + ' - All ' + gridView.getStore().getCount() + ' records loaded');            
-			} else {
-				gridView.setTitle(gridView.gridBaseTitle + ' - Records loaded: ' + gridView.getStore().getCount() + ' - Total Records: ' + gridView.getStore().getTotalCount());
-	            
-			}
-			gridView.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-	        gridView.down('#sdfDownloadProxy_id').enable();
-			gridView.down('#csvDownload_id').enable();
-        }
+		gridView.setTitle(gridView.gridBaseTitle + ' - Total Records: ' + gridView.getStore().getTotalCount());
 }
 });

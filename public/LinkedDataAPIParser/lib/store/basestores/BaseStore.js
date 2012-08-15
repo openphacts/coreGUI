@@ -29,6 +29,13 @@ Ext.define('LDA.store.basestores.BaseStore', {
                 var me = this;
                 me.updateProxyURL();
             }
+        },
+        beforeload:{
+
+            fn:function () {
+                var me = this;
+                me.updateProxyURL();
+            }
         }
     },
 

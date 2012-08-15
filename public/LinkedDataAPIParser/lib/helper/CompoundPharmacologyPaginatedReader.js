@@ -142,9 +142,10 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 //            console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
 //            console.log(JSON.stringify(record));
         });
+		var total_count = this.total_count;
         return new Ext.data.ResultSet(
             {
-                total:800,
+                total:total_count,
                 count:records.length,
                 records:records,
                 success:true,
