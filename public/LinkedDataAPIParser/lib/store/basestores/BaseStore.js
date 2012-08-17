@@ -10,6 +10,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
     _format:'json',
     uri:'',
     BASE_URL:'',
+	remoteSort: true,
     stringEncoder:Ext.create('LDA.helper.JamesQueryStringEncoder'),
 		//     proxy:{
 		//         type:'jsonp',

@@ -15,6 +15,7 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
 	        startParam:undefined,
 	limitParam:'_pageSize',
 	pageParam:'_page',
+	sortParam:'_sort',
 	        //this is the only query param handled natively by the proxy, all others are handled in store config below.
 	        callbackKey:'_callback'
 	    },
@@ -39,6 +40,21 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
      */
     setTotalCount: function(count) {
         this.totalCount = count;
+    },
+    sort: function() {
+        var me = this,
+            prefetchData = me.pageMap;
+
+        if (me.buffered) {
+            if (me.remoteSort) {
+                prefetchData.clear();
+                me.callParent(arguments);
+            } else {
+                me.callParent(arguments);
+            }
+        } else {
+            me.callParent(arguments);
+        }
     }
 
 });
