@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
         extend:'LSP.controller.grids.DynamicGrid',
-        views:['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameGrid'],
-
+        views:['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid'],
+        // views:['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameGrid'],
         refs:[
             {
                 ref:'gridView', // reference to the view
@@ -86,6 +86,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 							                icon:Ext.MessageBox.INFO
 							            });
 							        } else {
+						// for pagianted grid use this
+						// grid_store.load();
 						grid_store.guaranteeRange(0,49);
 					}		
 				});
@@ -113,6 +115,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 
         storeLoadComplete:function (store, records, success) {
             console.log('PharmByCmpdNameForm: storeLoadComplete()');
+			grid_view = this.getGridView();
+			grid_view.down('#sdfDownload_id').disable();
+			grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+	        grid_view.down('#sdfDownloadProxy_id').enable();
             // var controller = this.getController('LSP.controller.grids.DynamicGrid');
             // var grid_view = this.getGridView();
             var form = this.getFormView();

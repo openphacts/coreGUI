@@ -16,7 +16,7 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pharm_by_enzyme_family.PharmEnzymeForm',
         'LSP.view.textmining.pmidTextMiningHitsForm',
         'LSP.view.pathways.pathwayByCompoundForm',
-        'LSP.view.pathways.pathwayByProteinForm'
+        'LSP.view.pathways.pathwayByProteinForm',
     ],
 
     activeItem:0,

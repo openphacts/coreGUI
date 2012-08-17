@@ -61,7 +61,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 //                readUrl:'/core_api_calls/pharm_by_protein_name.json'
 //    }
             {
-                xtype:'PharmByTargetNameGrid',
+	            // xtype:'PharmByTargetNameGrid',
+                xtype:'PharmByTargetNameScrollingGrid',
                 itemId:'pharmByTargetNameGrid',
                 title:'Pharmacology by Target name search results',
                 gridBaseTitle:'Pharmacology by Target name search results',
