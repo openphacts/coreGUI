@@ -40,6 +40,27 @@ Ext.define('LDA.store.basestores.BaseStore', {
         }
     },
 
+    // because prefetchData is stored by index
+    // this invalidates all of the prefetchedData
+    sort: function() {
+        var me = this,
+            prefetchData = me.pageMap;
+
+        if (me.buffered) {
+            if (me.remoteSort) {
+                prefetchData.clear();
+				//get the specific store to sort the column
+                this.sortColumn(arguments);
+				this.currentPage = 1;
+				this.guaranteeRange(0,49);
+            } else {
+                me.callParent(arguments);
+            }
+        } else {
+            me.callParent(arguments);
+        }
+    },
+
     setURI:function (uri) {
         this.uri = uri;
     },

@@ -10,6 +10,11 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     assay_organism:'',
     activity_type:'',
     activity_value:'',
+	sort_column:'',
+
+	setSortColumn:function(sortColumn) {
+		this.sort_column = sortColumn;
+	},
 
     setAssayOrganism:function (assayOrganism) {
         this.assay_organism = assayOrganism;

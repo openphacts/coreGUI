@@ -81,7 +81,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 						                icon:Ext.MessageBox.INFO
 						            });
 						        } else {
-					// for pagianted grid use this
+					// for paginated grid use this
 					// grid_store.load();
 					grid_store.guaranteeRange(0,49);
 				}		
