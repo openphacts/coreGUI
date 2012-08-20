@@ -51,7 +51,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
             {
 				//TODO: renderer for chemical structure image (from chemspider?)
                 header:'Structure',
-                dataIndex:'cs_compound_uri'
+                dataIndex:'cs_compound_uri',
+				sortable:false
             },
             {
                 header:'Smiles',
@@ -63,7 +64,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
             },
             {
                 header:'Chemspider ID',
-                dataIndex:'cs_compound_uri'
+                dataIndex:'cs_compound_uri',
+				sortable:false
             },
             {
                 header:'Inchi key',

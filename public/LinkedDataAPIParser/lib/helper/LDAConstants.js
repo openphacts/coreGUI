@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 26/06/2012
- * Time: 21:55
- * To change this template use File | Settings | File Templates.
- */
 LDA_IN_DATASET = 'inDataset';
 LDA_ABOUT = '_about';
 LDA_COMPOUND_PHARMACOLOGY_COUNT = 'compoundPharmacologyTotalResults';
@@ -26,15 +19,15 @@ LDA_PAGINATED_START_INDEX = 'startIndex';
 LDA_TARGET_OF_ASSAY = 'targetOfAssay';
 LDA_ASSAY_OF_ACTIVITY = 'assayOfActivity';
 LDA_SRC_CLS_MAPPINGS = {
-    'http://www.conceptwiki.org':'conceptWikiValue',
-    'http://www.conceptwiki.org/':'conceptWikiValue',
-    'http://data.kasabi.com/dataset/chembl-rdf':'chemblValue',
-    'http://www4.wiwiss.fu-berlin.de/drugbank':'drugbankValue',
-    'http://linkedlifedata.com/resource/drugbank':'drugbankValue',
-    'http://www.chemspider.com':'chemspiderValue',
-    'http://www.chemspider.com/':'chemspiderValue',
-    'http://rdf.chemspider.com':'chemspiderValue',
-    'http://rdf.chemspider.com/':'chemspiderValue'
+	'http://www.conceptwiki.org': 'conceptWikiValue',
+	'http://www.conceptwiki.org/': 'conceptWikiValue',
+	'http://data.kasabi.com/dataset/chembl-rdf': 'chemblValue',
+	'http://www4.wiwiss.fu-berlin.de/drugbank': 'drugbankValue',
+	'http://linkedlifedata.com/resource/drugbank': 'drugbankValue',
+	'http://www.chemspider.com': 'chemspiderValue',
+	'http://www.chemspider.com/': 'chemspiderValue',
+	'http://rdf.chemspider.com': 'chemspiderValue',
+	'http://rdf.chemspider.com/': 'chemspiderValue'
 };
 LDA_PROVENANCE_OFF = 'Off';
 LDA_PROVENANCE_COLOUR = 'Colour';
@@ -43,4 +36,16 @@ LDA_PROVENANCE_TEXT = 'Text';
 //this sets default provenance mode
 //this should be updated by user cookie, user choice or set in Viewport when running LSP.
 LDAProvenanceMode = LDA_PROVENANCE_COLOUR;
-LDADataItems={"compound_smiles":"smiles"};
+LDADataItems = {
+	"compound_smiles": "smiles",
+	"activity_standard_value": "std_value",
+	"compound_inchikey": "inchikey",
+	"activity_activity_type": "std_type",
+	"activity_standard_units": "std_unit",
+	"target_pref_label": "target_name",
+	"activity_relation": "relation",
+	"compound_inchi": "inchi",
+	"compound_full_mwt": "molweight",
+	"cw_compound_uri": "compound_cw",
+	"compound_pref_label": "compound_name"
+};
