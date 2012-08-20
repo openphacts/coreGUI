@@ -1,30 +1,14 @@
-Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
-        extend:'LSP.view.dynamicgrid.DynamicGrid',
-        alias:'widget.PharmByCmpdNameGrid',
+Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
+    extend:'LSP.view.dynamicgrid.DynamicGrid',
+        alias:'widget.PharmByEnzymeFamilyScrollingGrid',
         layout:'fit',
-		//         verticalScroller: Ext.create('LDA.helper.DynamicPagingToolbar', {
-		// 					itemId: 'pager_id',
-		// 					store: 'CompoundPharmacologyPaginatedStore'
-		// }),
-		verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+ 		verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
         disableSelection: true,
         invalidateScrollerOnRefresh: false,
         requires:[
+
         ],
-		refs:[
-			// {
-			// 	ref:'pager',
-			//         		selector:'#pager_id'
-			// }
-		],
-        store:'CompoundPharmacologyPaginatedStore',
-		// dockedItems: [{
-		//         xtype: 'dynamicpagingtoolbar',
-		// 		itemId: 'pager_id',
-		//         dock: 'bottom',
-		// 		store: 'CompoundPharmacologyPaginatedStore',
-		//         displayInfo: true
-		//     }],
+        store:'EnzymeFamilyPaginatedStore',
         columns:{
             defaults:{
             },
@@ -35,7 +19,6 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
 					width: 40
 				},
                 {
-					//TODO: renderer for chemical structure image (from chemspider?)
                     header:'Structure',
                     dataIndex:'cs_compound_uri'
                 },
@@ -64,8 +47,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                     dataIndex:'target_organism'
                 },
                 {
-                    header:'Std Unit',
-                    dataIndex:'activity_standard_units'
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism'
                 },
                 {
                     header:'Target Name',
@@ -89,5 +72,5 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
                 }
             ]
         }
-	}
+    }
 );

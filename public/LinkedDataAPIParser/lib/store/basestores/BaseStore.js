@@ -10,6 +10,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
     _format:'json',
     uri:'',
     BASE_URL:'',
+	remoteSort: true,
     stringEncoder:Ext.create('LDA.helper.JamesQueryStringEncoder'),
 		//     proxy:{
 		//         type:'jsonp',
@@ -23,6 +24,13 @@ Ext.define('LDA.store.basestores.BaseStore', {
 
     listeners:{
         //this is used to construct the proxy url before the load is done
+        beforeprefetch:{
+
+            fn:function () {
+                var me = this;
+                me.updateProxyURL();
+            }
+        },
         beforeload:{
 
             fn:function () {

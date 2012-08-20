@@ -58,7 +58,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                     }
                 ]},
             {
-                xtype:'PharmByCmpdNameGrid',
+                xtype:'PharmByCmpdNameScrollingGrid',
                 itemId:'pharmByCmpdNameGrid',
                 title:'Pharmacology by Compound name search results',
                 gridBaseTitle:'Pharmacology by Compound name search results',

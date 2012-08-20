@@ -1,6 +1,6 @@
-Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameGrid', {
+Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
         extend:'LSP.view.dynamicgrid.DynamicGrid',
-        alias:'widget.PharmByCmpdNameGrid',
+        alias:'widget.PharmByCmpdNameScrollingGrid',
         layout:'fit',
 		//         verticalScroller: Ext.create('LDA.helper.DynamicPagingToolbar', {
 		// 					itemId: 'pager_id',
