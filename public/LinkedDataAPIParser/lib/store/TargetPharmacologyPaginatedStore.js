@@ -22,10 +22,10 @@ Ext.define('LDA.store.TargetPharmacologyPaginatedStore', {
 	// '-' if required
 	sortColumn:function(arguments) {
 		console.log('TargetPharmacologyPaginatedStore: sortColumn()');
-		var sort_column = arguments[0].property;
+		var sort_column = "?" + LDADataItems[arguments[0].property];
 		var sort_direction = arguments[0].direction;
 		if (sort_direction == "DESC") {
-			sort_column = "-" + sort_column;
+			sort_column = "DESC(" + sort_column + ")";
 		}
 		this.setSortColumn(sort_column);
 	}

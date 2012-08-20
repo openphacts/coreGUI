@@ -43,3 +43,4 @@ LDA_PROVENANCE_TEXT = 'Text';
 //this sets default provenance mode
 //this should be updated by user cookie, user choice or set in Viewport when running LSP.
 LDAProvenanceMode = LDA_PROVENANCE_COLOUR;
+LDADataItems={"compound_smiles":"smiles"};

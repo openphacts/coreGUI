@@ -29,7 +29,7 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,
                     activity_value:this.activity_value,
-					_sort:this.sort_column,
+					_orderBy:this.sort_column,
                     _format:this._format,
                     uri:this.uri
                 });
