@@ -49,7 +49,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 if (historyTokenObject.u != store.proxy.extraParams.uri) {
                     store.proxy.extraParams.uri = historyTokenObject.u;
 					store.proxy.reader.uri = historyTokenObject.u;
-                    // this.getFormView().setLoading(true);
+                    dg.setLoading(true);
 					//loading the store is done after the total results are fetched
 					this.fetchTotalResults();
                     // store.load();
@@ -79,7 +79,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 						grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 				        grid_view.down('#sdfDownloadProxy_id').disable();
 				        button.enable();
-				        // form.setLoading(false);
+				        grid_view.setLoading(false);
 							            Ext.MessageBox.show({
 							                title:'Info',
 							                msg:'The OPS system does not contain any data that match this search.',
@@ -129,7 +129,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             button.enable();
             // grid_view.doLayout();
             // grid_view.doComponentLayout();
-            // form.setLoading(false);
+            grid_view.setLoading(false);
 			this.callParent();
         },
 

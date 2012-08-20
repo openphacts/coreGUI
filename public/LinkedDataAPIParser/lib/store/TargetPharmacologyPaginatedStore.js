@@ -16,17 +16,6 @@ Ext.define('LDA.store.TargetPharmacologyPaginatedStore', {
 		console.log('TargetPharmacologyPaginatedStore: constructor()');
         this.proxy.reader = Ext.create('LDA.helper.TargetPharmacologyPaginatedReader');
         this.callParent(arguments);
-    },
+    }
 	
-	// Set up the sort properties, check the direction of sort and prepend with
-	// '-' if required
-	sortColumn:function(arguments) {
-		console.log('TargetPharmacologyPaginatedStore: sortColumn()');
-		var sort_column = "?" + LDADataItems[arguments[0].property];
-		var sort_direction = arguments[0].direction;
-		if (sort_direction == "DESC") {
-			sort_column = "DESC(" + sort_column + ")";
-		}
-		this.setSortColumn(sort_column);
-	}
 });

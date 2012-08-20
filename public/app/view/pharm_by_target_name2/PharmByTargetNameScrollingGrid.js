@@ -14,6 +14,12 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
         invalidateScrollerOnRefresh: false,
         requires:[
         ],
+		listeners: {
+		    'sortchange': function(ct, column, direction, eOpts ) {
+				console.log('PharmByTargetNameGrid: sortchange');
+				this.setLoading(true);
+		    }
+		},
         store:'TargetPharmacologyPaginatedStore',
         columns:{
 			//TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)

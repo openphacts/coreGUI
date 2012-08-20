@@ -2,15 +2,15 @@ Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } })
 Ext.Loader.setConfig({enabled:true, paths:{ 'CW':'conceptwiki/lib' } });
 // loader mask for all grids backed by store, avoids having to call setLoading(true) and then
 // setLoading(false)
-Ext.define("Ext.view.AbstractView.LoadMask", {
-    override: "Ext.view.AbstractView",
-    onRender: function() { 
-        this.callParent(); 
-        if (this.loadMask && Ext.isObject(this.store)) { 
-            this.setMaskBind(this.store); 
-        } 
-    } 
-});
+// Ext.define("Ext.view.AbstractView.LoadMask", {
+//     override: "Ext.view.AbstractView",
+//     onRender: function() { 
+//         this.callParent(); 
+//         if (this.loadMask && Ext.isObject(this.store)) { 
+//             this.setMaskBind(this.store); 
+//         } 
+//     } 
+// });
 
 Ext.create('Ext.app.Application', {
     name:'LSP',

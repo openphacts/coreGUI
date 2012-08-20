@@ -20,7 +20,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 				},
                 {
                     header:'Structure',
-                    dataIndex:'cs_compound_uri'
+                    dataIndex:'cs_compound_uri',
+					sortable:false
                 },
                 {
                     header:'Smiles',
@@ -32,7 +33,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 },
                 {
                     header:'Chemspider ID',
-                    dataIndex:'cs_compound_uri'
+                    dataIndex:'cs_compound_uri',
+					sortable:false
                 },
                 {
                     header:'Inchi key',

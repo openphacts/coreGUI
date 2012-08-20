@@ -47,5 +47,6 @@ LDADataItems = {
 	"compound_inchi": "inchi",
 	"compound_full_mwt": "molweight",
 	"cw_compound_uri": "compound_cw",
-	"compound_pref_label": "compound_name"
+	"compound_pref_label": "compound_name",
+	"target_organism": "assay_organism"
 };

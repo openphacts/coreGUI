@@ -50,7 +50,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         if (historyTokenObject.ec) {
             var dg = this.getGridView();
             var store = dg.getStore();
-            // this.getPEform().setLoading(true);
+            dg.setLoading(true);
             store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
 			//use the reader uri when retrieving the count after store load
 			store.proxy.reader.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
@@ -77,7 +77,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 					grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 			        grid_view.down('#sdfDownloadProxy_id').disable();
 			        button.enable();
-			        // form.setLoading(false);
+			        grid_view.setLoading(false);
 						            Ext.MessageBox.show({
 						                title:'Info',
 						                msg:'The OPS system does not contain any data that match this search.',
@@ -111,7 +111,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         var form = this.getPEform();
         var button = this.getSubmitButton();
         button.enable();
-        // form.setLoading(false);
+        grid_view.setLoading(false);
 		this.callParent();
     },
 
