@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.CmpdByNameForm', {
         extend:'Ext.app.Controller',
-        models:['Compound'],
-        stores:['Compounds'],
+        models:['LDA.model.CompoundModel'],
+        stores:['LDA.store.CompoundStore'],
         views:['cmpd_by_name.CmpdByNameSingleDisplayForm'],
 
         refs:[
@@ -42,13 +42,26 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         },
 
         handleHistoryToken:function (historyTokenObject) {
-            console.log('CmpdByNameForm handleHistoryToken')
+            console.log('CmpdByNameForm: handleHistoryToken()');
+			var me = this;
+			var target_panel = me.getFormView().down("CmpdByNameSingleDisplayForm");
             if (historyTokenObject.u) {
-                var store = this.getCompoundsStore();
-                if (historyTokenObject.u != store.proxy.extraParams.compound_uri) {
-                    store.proxy.extraParams.compound_uri = historyTokenObject.u;
-                    this.getFormView().setLoading();
-                    store.load();
+                var store = this.getLDAStoreCompoundStoreStore();
+                if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                    store.proxy.extraParams.uri = historyTokenObject.u;
+                    me.getFormView().setLoading(true);
+                    store.load(function(records, operation, success) {
+						console.log('LSP.controller.CmpdByNameForm: store is loaded ' + success);
+						if (success) {
+							me.getSubmitButton().enable();
+							target_panel.setValues(records[0]);
+							target_panel.down("#displayPanel").setVisible(true);
+							target_panel.down('#msg').setVisible(false);
+							me.getFormView().setLoading(false);
+				        } else {
+				            me.getFormView().down("TargetPanel").showMessage('Server did not respond');
+				        }
+					});
                 }
             } else if (historyTokenObject.s) {
                 var lookup = this.getLookup();

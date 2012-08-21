@@ -41,7 +41,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
         handleHistoryToken:function (historyTokenObject) {
 			console.log('LSP.controller.TargetByNameForm: handleHistoryToken()');
 			var me = this;
-			var target_panel = me.getFormView().down("TargetPanel")
+			var target_panel = me.getFormView().down("TargetPanel");
             if (historyTokenObject.u) {
                 var store = this.getLDAStoreTargetStoreStore();
                 if (historyTokenObject.u != store.proxy.extraParams.uri) {
