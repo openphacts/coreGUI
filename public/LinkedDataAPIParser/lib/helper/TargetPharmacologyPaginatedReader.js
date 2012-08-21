@@ -45,6 +45,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                         cw_src = match[LDA_IN_DATASET];
                     } else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         cs_compound_uri = match[LDA_ABOUT];
+						csid = cs_compound_uri.split('/').last();
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
@@ -105,6 +106,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 cw_compound_uri:cw_compound_uri,
                 compound_pref_label:compound_pref_label,
                 cs_compound_uri:cs_compound_uri,
+				csid:csid,
                 compound_inchi:compound_inchi,
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,

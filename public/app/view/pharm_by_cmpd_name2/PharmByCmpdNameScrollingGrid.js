@@ -25,11 +25,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 		// 		store: 'CompoundPharmacologyPaginatedStore',
 		//         displayInfo: true
 		//     }],
-        columns:{
-            defaults:{
-            },
-
-            items:[
+        columns:[
 				{
 					xtype: 'rownumberer',
 					width: 40
@@ -38,6 +34,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 					//TODO: renderer for chemical structure image (from chemspider?)
                     header:'Structure',
                     dataIndex:'cs_compound_uri',
+					xtype: 'templatecolumn',
+					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
 					sortable:false
                 },
                 {
@@ -90,6 +88,5 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                     dataIndex:'compound_pref_label'
                 }
             ]
-        }
 	}
 );

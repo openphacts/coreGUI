@@ -21,7 +21,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 		    }
 		},
         store:'TargetPharmacologyPaginatedStore',
-        columns:{
+        columns:
 			//TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)
             // defaults:{
             //                 renderer:function (value, metaData, record, rowIndex, colIndex, store, view) {
@@ -49,7 +49,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
             //                 }
             //             },
 
-            items:[
+            [
 			{
 				xtype: 'rownumberer',
 				width: 40
@@ -58,6 +58,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 				//TODO: renderer for chemical structure image (from chemspider?)
                 header:'Structure',
                 dataIndex:'cs_compound_uri',
+				xtype: 'templatecolumn',
+				tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
 				sortable:false
             },
             {
@@ -110,6 +112,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 				dataIndex: 'cw_compound_uri'
 			}
             ]
-        }
+        
     }
 );
