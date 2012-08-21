@@ -21,6 +21,15 @@
   <%= javascript_include_tag '/app/view/ux/exporter/Exporter.js' %>
   <%= javascript_include_tag '/downloadify/downloadify.min.js' %>
   <%= javascript_include_tag '/downloadify/swfobject.js' %>
+  
+  <!-- Add string trim function for any browsers that don't support it -->
+  <script type="text/javascript">
+    if (!String.prototype.trim) {
+      String.prototype.trim = function() {
+        return this.replace(/^\s+|\s+$/g,'');
+      }
+    }
+  </script>
 
   <%= csrf_meta_tag %>
 </head>

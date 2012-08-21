@@ -12,11 +12,21 @@ Ext.define('LDA.helper.TargetReader', {
     readRecords:function (data) {
         var pt = data[LDA_RESULT][LDA_PRIMARY_TOPIC];
         var em = pt[LDA_EXACT_MATCH];
-        var chemblData = em[0];
-        var drugBankData = em[1];
+        // var chemblData = em[0];
+        // var drugBankData = em[1];
+        var chemblData;
+        var drugBankData;
+        Ext.each(em, function (match, index, matches) {
+                var src = match[LDA_IN_DATASET];
+                if (LDA_SRC_CLS_MAPPINGS[src] == 'chemblValue') {
+                    chemblData = match;
+                } else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                   drugBankData = match;
+                }
+            }
+        );
         var chembl_src = chemblData[LDA_IN_DATASET];
         var drugBank_src = drugBankData[LDA_IN_DATASET];
-
         var record = Ext.create('LDA.model.TargetModel', {
 
             cw_target_uri:pt[LDA_ABOUT],
@@ -26,7 +36,7 @@ Ext.define('LDA.helper.TargetReader', {
             label:chemblData['label'],
             label_src:chembl_src,
 
-            keywords:chemblData['keywords'],
+            keywords:chemblData['keyword'],
             keywords_src:chembl_src,
 
             description:chemblData['description'],

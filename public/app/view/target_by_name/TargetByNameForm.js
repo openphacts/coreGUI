@@ -4,7 +4,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
     closable:true,
     requires:[
         'LSP.view.dropdowns.conceptWikiProteinLookup',
-        'LSP.view.dynamicgrid.DynamicGrid',
+        // 'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.target_by_name.TargetPanel'
     ],
     layout:{

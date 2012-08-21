@@ -51,16 +51,16 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'textDataPanel',
                                 layout:'anchor',
                                 items:[
-                                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'label', fieldCls:'target-title'},
                                     {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocation', fieldLabel:'Cellular Location', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'specific_function', fieldLabel:'Specific Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'cellular_function', fieldLabel:'Cellular Function', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
-                                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'pdb_id_page', fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {
                                         xtype:'panel',
                                         border:0,
@@ -69,9 +69,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                         layout:'column',
                                         bodyPadding:30,
                                         items:[
-                                            {xtype:'displayfield', itemId:'molecularWeight', columnWidth:0.33, fieldLabel:'Molecular Weight', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'numberOfResidues', columnWidth:0.33, fieldLabel:'Number of Residues', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoreticalPi', columnWidth:0.33, fieldLabel:'Theoretical Pi', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
                                         ]
                                     }
                                 ]
@@ -94,8 +94,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             }
         ];
 
-        var store = Ext.data.StoreManager.lookup('Targets');
-        store.addListener('load', this.showData, this);
+        // var store = Ext.create('LDA.store.TargetStore');
+        // store.addListener('load', this.showData, this);
         this.callParent(arguments);
     },
 
@@ -118,6 +118,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     showData:function (store, records, successful) {
+		console.log('LSP.view.target_by_name.TargetPanel: showData()');
         if (successful) {
             if (records.length > 0) {
                 var dp = this.down('#dp');
@@ -144,14 +145,14 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     addKeywords:function (keywords) {
-        var bits = keywords.split('; ');
+        var bits = keywords.split(',');
         var keywordDisplayField = this.down('#keywords');
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
         var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:'{kw}'});
         Ext.each(bits, function (keyword) {
-            tpl.append(bodyEl, {kw:keyword});
+            tpl.append(bodyEl, {kw:keyword.trim()});
         }, this);
         keywordDisplayField.show();
     },
@@ -205,14 +206,18 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 //            console.log('organism');
             this.addOrganism(value);
         }
-        else if (fieldId == 'pdbIdPage') {
-            this.addPDBImage(value);
+        else if (fieldId == 'pdb_id_page') {
+			if (value != "") {
+				this.addPDBImage(value);
+			}
         }
         else {
 //            console.log('standard field');
             var field = this.down('#' + fieldId);
-            field.setValue(value);
-            field.show();
+			if (field != null) {
+				field.setValue(value);
+	            field.show();
+			}
         }
     },
 
@@ -224,7 +229,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var pharmButton = this.down('#pharmTargetButton');
         pharmButton.hide();
         pharmButton.setHandler(function () {
-                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.uri);
             }
         );
         pharmButton.show();
