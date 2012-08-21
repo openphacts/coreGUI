@@ -25,10 +25,14 @@ Ext.define('LDA.helper.TargetReader', {
                 }
             }
         );
-        var chembl_src = chemblData[LDA_IN_DATASET];
-        var drugBank_src = drugBankData[LDA_IN_DATASET];
+		var chembl_src;
+		if (chemblData != null) {			
+        	chembl_src = chemblData[LDA_IN_DATASET];
+		}
+		if (drugBankData != null) {
+        	var drugBank_src = drugBankData[LDA_IN_DATASET];			
+		}
         var record = Ext.create('LDA.model.TargetModel', {
-
             cw_target_uri:pt[LDA_ABOUT],
             chembl_target_uri:chemblData[LDA_ABOUT],
             drugbank_target_uri:drugBankData[LDA_ABOUT],
