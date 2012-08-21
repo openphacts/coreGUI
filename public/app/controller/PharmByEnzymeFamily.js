@@ -67,6 +67,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 		countStore = Ext.create('LDA.store.EnzymeFamilyCountStore');
 		countStore.uri = grid_store.proxy.reader.uri;
 			countStore.load(function(records, operation, success) {
+				if (success) {
 				total = operation.response.result.primaryTopic.enzymePharmacologyTotalResults;
 				grid_store.proxy.reader.total_count = total;
 				// we have the total number of results now and the proxy reader knows what it is so
@@ -88,6 +89,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 					// for pagianted grid use this
 					// grid_store.load();
 					grid_store.guaranteeRange(0,49);
+				}
 				}		
 			});
 	},
