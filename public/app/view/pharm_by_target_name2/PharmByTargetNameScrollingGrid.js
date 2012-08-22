@@ -16,7 +16,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
         ],
 		listeners: {
 		    'sortchange': function(ct, column, direction, eOpts ) {
-				console.log('PharmByTargetNameGrid: sortchange');
+				console.log('PharmByTargetNameGrid: sortchange()');
 				this.setLoading(true);
 		    }
 		},

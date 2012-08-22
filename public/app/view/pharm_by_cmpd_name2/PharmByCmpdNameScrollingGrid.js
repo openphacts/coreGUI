@@ -11,6 +11,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
         invalidateScrollerOnRefresh: false,
         requires:[
         ],
+		listeners: {
+		    'sortchange': function(ct, column, direction, eOpts ) {
+				console.log('PharmByCmpdNameScrollingGrid: sortchange()');
+				this.setLoading(true);
+		    }
+		},
 		refs:[
 			// {
 			// 	ref:'pager',

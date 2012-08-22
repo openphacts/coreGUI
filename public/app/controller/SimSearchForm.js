@@ -10,7 +10,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         },
         {
             ref:'strucGrid',
-            selector:'SimSearchForm dynamicgrid3'
+            selector:'SimSearchForm dynamicgrid'
         },
         {
             ref:'submitButton',
@@ -19,6 +19,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     ],
 
     init:function () {
+	    console.log('LSP.controller.SimSearchForm: init()');
         this.control({
             'SimSearchForm button[action=ketcher_editor]':{
                 click:this.launchKetcher
@@ -39,7 +40,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     prepGrid:function () {
-        console.log('prepGrid');
+        console.log('LSP.controller.SimSearchForm: prepGrid()');
         var grid = this.getStrucGrid();
         grid.store.proxy.actionMethods = {read:'POST'};
         grid.store.proxy.api.read = grid.readUrl;

@@ -159,5 +159,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	        Ext.apply(this, config);
 	        Ext.apply(this.initialConfig, config);
 	        this.callParent(arguments);
+			console.log('DynamicGrid: initComponent() 2');
+	
 	    }
 });

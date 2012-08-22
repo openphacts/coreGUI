@@ -8,6 +8,12 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
         requires:[
 
         ],
+		listeners: {
+		    'sortchange': function(ct, column, direction, eOpts ) {
+				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
+				this.setLoading(true);
+		    }
+		},
         store:'EnzymeFamilyPaginatedStore',
         columns:{
             defaults:{
