@@ -22,6 +22,10 @@
   <%= javascript_include_tag '/downloadify/downloadify.min.js' %>
   <%= javascript_include_tag '/downloadify/swfobject.js' %>
   
+<!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
+  <script type="text/javascript">
+    var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>';
+  </script>
   <!-- Add string trim function for any browsers that don't support it -->
   <script type="text/javascript">
     if (!String.prototype.trim) {

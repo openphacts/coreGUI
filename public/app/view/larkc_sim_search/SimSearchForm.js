@@ -66,9 +66,8 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 
                 ]},
             {
-                xtype:'dynamicgrid',
+                xtype:'SimSearchScrollingGrid',
                 itemId:'simSearchGrid',
-                readUrl:'/core_api_calls/get_chem_info4known_csids.json',
                 title:'Structure search results',
                 gridBaseTitle:'Structure search results',
                 flex:1
