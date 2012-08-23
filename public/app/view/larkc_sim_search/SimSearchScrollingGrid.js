@@ -23,8 +23,6 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 			//         		selector:'#pager_id'
 			// }
 		],
-		// remember that referring to this store as juse 'CompoundPharmacologyPaginatedStore' means
-		// it will reuse the same one from a different view eg Pharma by Compound
         store:Ext.create('LDA.store.SimSearchStore', {}),
 		// dockedItems: [{
 		//         xtype: 'dynamicpagingtoolbar',
