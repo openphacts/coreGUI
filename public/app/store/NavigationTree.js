@@ -34,8 +34,19 @@
 
 Ext.define('LSP.store.NavigationTree', {
     extend:'Ext.data.TreeStore',
-    proxy:{
-        type:'ajax',
-        url:'application_modules.json'
-    }
+    // proxy:{
+    //         type:'ajax',
+    //         url:'application_modules.json'
+    //     }
+	root: {
+	        expanded: true,
+	        children: [
+	            { text: "detention", leaf: true },
+	            { text: "homework", expanded: true, children: [
+	                { text: "book report", leaf: true },
+	                { text: "alegrbra", leaf: true}
+	            ] },
+	            { text: "buy lottery tickets", leaf: true }
+	        ]
+	    }
 });

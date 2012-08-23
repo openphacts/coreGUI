@@ -45,18 +45,20 @@ class ApplicationModulesController < ApplicationController
         nodes = Array.new
         if params[:type] == "grid"
           puts("type=grid")
-          leafNodes = ApplicationModule.all(:joins => :application_type, :conditions => ["application_types.name = 'grid'"])
-          leafNodes.each { |d|
-            nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :xtype => d.xtype})
-          }
+          nodes = YAML.load_file(File.join(Rails.root,'config','application_modules.yml'))
+          # leafNodes = ApplicationModule.all(:joins => :application_type, :conditions => ["application_types.name = 'grid'"])
+          # leafNodes.each { |d|
+          #   nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :xtype => d.xtype})
+          # }
         elsif params[:node] == "root"
           puts("node=root")
-          application_modules = UserApplication.root_applications
-          unless application_modules.nil?
-            application_modules.each { |d|
-              nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type, :xtype => d.application_module.xtype, :leaf => d.application_module.has_children? ? false : true, :cls => d.application_module.has_children? ? 'folder' : 'file'})
-            }
-          end
+          nodes = YAML.load_file(File.join(Rails.root,'config','user_applications.yml'))
+          # application_modules = UserApplication.root_applications
+          # unless application_modules.nil?
+          #   application_modules.each { |d|
+          #     nodes.push({:text => d.name, :id => d.id, :url => d.url, :home => d.home, :application_type => d.application_type, :xtype => d.application_module.xtype, :leaf => d.application_module.has_children? ? false : true, :cls => d.application_module.has_children? ? 'folder' : 'file'})
+          #   }
+          # end
         else
           puts("node=id")
           node = ApplicationModule.find(params[:node])
