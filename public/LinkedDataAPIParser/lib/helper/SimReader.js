@@ -8,7 +8,7 @@
 Ext.define('LDA.helper.SimReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
-
+// TODO check the format of the result and change this reader and the SimModel accordingly
     readRecords:function (data) {
         var pt = data['result']['primaryTopic'];
         var em = pt['exactMatch'];
