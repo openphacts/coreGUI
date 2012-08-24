@@ -15,8 +15,8 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
         var records = new Array();
 
         //big chunks of data
-        var pt = data[LDA_RESULT][LDA_PRIMARY_TOPIC];
-        var em = pt[LDA_EXACT_MATCH];
+        var pt = data[LDA.helper.LDAConstants.LDA_RESULT][LDA.helper.LDAConstants.LDA_PRIMARY_TOPIC];
+        var em = pt[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
         var drugbankData = em[1];
         var chemspiderData = em[2];
         var chemblData = em[3];
@@ -24,41 +24,41 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
         //shared data in all records
 
         //uris
-        var cw_compound_uri = pt[LDA_ABOUT];
-        var drugbank_compound_uri = drugbankData[LDA_ABOUT];
-        var cs_compound_uri = chemspiderData[LDA_ABOUT];
-        var chembl_compound_uri = chemblData[LDA_ABOUT];
+        var cw_compound_uri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
+        var drugbank_compound_uri = drugbankData[LDA.helper.LDAConstants.LDA_ABOUT];
+        var cs_compound_uri = chemspiderData[LDA.helper.LDAConstants.LDA_ABOUT];
+        var chembl_compound_uri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
 
         //data with sources
-        var conceptwiki_src = pt[LDA_IN_DATASET];
+        var conceptwiki_src = pt[LDA.helper.LDAConstants.LDA_IN_DATASET];
         var prefLabel = pt['prefLabel'];
 
-        var drugbank_src = drugbankData[LDA_IN_DATASET];
+        var drugbank_src = drugbankData[LDA.helper.LDAConstants.LDA_IN_DATASET];
         var drugType = drugbankData['drugType'];
         var genericName = drugbankData['genericName'];
 
-        var chemspider_src = chemspiderData[LDA_IN_DATASET];
+        var chemspider_src = chemspiderData[LDA.helper.LDAConstants.LDA_IN_DATASET];
         var inchi = chemspiderData['inchi'];
         var inchikey = chemspiderData['inchikey'];
         var smiles = chemspiderData['smiles'];
 
-        var chembl_src = chemblData[LDA_IN_DATASET];
+        var chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
         var full_mwt = chemblData['full_mwt']
 
-        Ext.each(chemblData[LDA_ACTIVITY],
+        Ext.each(chemblData[LDA.helper.LDAConstants.LDA_ACTIVITY],
 
             function (a, index, array) {
                 //assay is inside activity
-                var assayData = a[LDA_ON_ASSAY];
+                var assayData = a[LDA.helper.LDAConstants.LDA_ON_ASSAY];
                 if (assayData != undefined) {
-                    var targetData = assayData[LDA_ASSAY_TARGET];
+                    var targetData = assayData[LDA.helper.LDAConstants.LDA_ASSAY_TARGET];
 
                     //record instance specific data
 
                     //uris
-                    var chembl_activity_uri = a[LDA_ABOUT];
-                    var chembl_assay_uri = assayData[LDA_ABOUT];
-                    var chembl_target_uri = targetData[LDA_ABOUT];
+                    var chembl_activity_uri = a[LDA.helper.LDAConstants.LDA_ABOUT];
+                    var chembl_assay_uri = assayData[LDA.helper.LDAConstants.LDA_ABOUT];
+                    var chembl_target_uri = targetData[LDA.helper.LDAConstants.LDA_ABOUT];
 
                     //data values
                     var targetTitle = targetData['title'];

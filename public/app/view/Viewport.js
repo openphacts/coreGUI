@@ -161,7 +161,7 @@ Ext.define('LSP.view.Viewport', {
     initComponent:function () {
 		console.log("Viewport: initComponent()");
         //set provenance to default of icon mode
-        LDAProvenanceMode = LDA_PROVENANCE_COLOUR;
+        LDAProvenanceMode = LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR;
         //init history, needs to be done first
         Ext.History.init();
         //add event listener for History 'change' event

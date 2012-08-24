@@ -13,14 +13,14 @@ Ext.define('LDA.helper.TargetPharmacologyReader', {
         var records = new Array();
 
         //big chunks of data
-        var pt = data[LDA_RESULT][LDA_PRIMARY_TOPIC];
-        var em = pt[LDA_EXACT_MATCH];
+        var pt = data[LDA.helper.LDAConstants.LDA_RESULT][LDA.helper.LDAConstants.LDA_PRIMARY_TOPIC];
+        var em = pt[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
         var chemblData = em[1];
 
-        var cw_target_uri = pt[LDA_ABOUT];
-        var chembl_target_uri = chemblData[LDA_ABOUT];
+        var cw_target_uri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
+        var chembl_target_uri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
 
-        var chembl_src = chemblData[LDA_IN_DATASET];
+        var chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
         var targetTitle = chemblData['title'];
         //this is labelled assay_organism in lda but is actually target organism
@@ -29,32 +29,32 @@ Ext.define('LDA.helper.TargetPharmacologyReader', {
         var targetPrefLabel = pt['prefLabel'];
 
 
-        var targetOfAssay = chemblData[LDA_TARGET_OF_ASSAY];
+        var targetOfAssay = chemblData[LDA.helper.LDAConstants.LDA_TARGET_OF_ASSAY];
 
         Ext.each(targetOfAssay, function (assay, index, assays) {
-            var chembl_assay_uri = assay[LDA_ABOUT];
+            var chembl_assay_uri = assay[LDA.helper.LDAConstants.LDA_ABOUT];
             var assayOrganism = assay['assay_organism'];
 
-            var assayOfActivity = assay[LDA_ASSAY_OF_ACTIVITY];
+            var assayOfActivity = assay[LDA.helper.LDAConstants.LDA_ASSAY_OF_ACTIVITY];
 
             Ext.each(assayOfActivity, function (activity, index, activities) {
-                var chembl_activity_uri = activity[LDA_ABOUT];
+                var chembl_activity_uri = activity[LDA.helper.LDAConstants.LDA_ABOUT];
                 var activity_type = activity['activity_type'];
                 var relation = activity['relation'];
                 var standardValue = activity['standardValue'];
                 var standardUnits = activity['standardUnits'];
 
-                var forMolecule = activity[LDA_FOR_MOLECULE];
-                var forMoleculeExactMatch = forMolecule[LDA_EXACT_MATCH];
+                var forMolecule = activity[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
+                var forMoleculeExactMatch = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
 
-                var chembl_compound_uri = forMolecule[LDA_ABOUT];
+                var chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
 
                 var chemspiderData = undefined;
                 var conceptWikiData = undefined;
 
                 if (forMoleculeExactMatch.length == 2) {
-                    var src = forMoleculeExactMatch[0][LDA_IN_DATASET];
-                    if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                    var src = forMoleculeExactMatch[0][LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         chemspiderData = forMoleculeExactMatch[0];
                         conceptWikiData = forMoleculeExactMatch[1];
                     } else {
@@ -69,16 +69,16 @@ Ext.define('LDA.helper.TargetPharmacologyReader', {
 
                 //chemspider bit
                 if (chemspiderData) {
-                    var cs_compound_uri = chemspiderData[LDA_ABOUT];
-                    var chemspider_src = chemspiderData[LDA_IN_DATASET];
+                    var cs_compound_uri = chemspiderData[LDA.helper.LDAConstants.LDA_ABOUT];
+                    var chemspider_src = chemspiderData[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     var inchi = chemspiderData['inchi'];
                     var smiles = chemspiderData['smiles'];
                 }
 
                 //conceptwiki bit
                 if (conceptWikiData) {
-                    var cw_compound_uri = conceptWikiData[LDA_ABOUT];
-                    var conceptwiki_src = conceptWikiData[LDA_IN_DATASET];
+                    var cw_compound_uri = conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT];
+                    var conceptwiki_src = conceptWikiData[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     var compoundPrefLabel = conceptWikiData['prefLabel'];
                 }
 

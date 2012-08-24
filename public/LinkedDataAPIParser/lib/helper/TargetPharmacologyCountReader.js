@@ -10,8 +10,8 @@ Ext.define('LDA.helper.TargetPharmacologyCountReader', {
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
 
-        var countVal = data['result']['primaryTopic'][LDA_TARGET_PHARMACOLOGY_COUNT];
-        var uriVal = data['result']['primaryTopic'][LDA_ABOUT];
+        var countVal = data['result']['primaryTopic'][LDA.helper.LDAConstants.LDA_TARGET_PHARMACOLOGY_COUNT];
+        var uriVal = data['result']['primaryTopic'][LDA.helper.LDAConstants.LDA_ABOUT];
         var record = Ext.create('LDA.model.PharmacologyCountModel', {count:countVal, uri:uriVal});
 
 //        console.log('LDA.model.PharmacologyCountModel: TargetPharmacologyCount');

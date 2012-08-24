@@ -16,53 +16,53 @@ Ext.define('LDA.helper.SimReader', {
         var drugBankData;
 		var chemblValue;
         Ext.each(em, function (match, index, matches) {
-                var src = match[LDA_IN_DATASET];
-                if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                     chemspiderValue = match;
-                } else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                    drugBankData = match;
-                } else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemblValue') {
+                } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemblValue') {
                    chemblValue = match;
                 }
             }
         );
         var record = Ext.create('LDA.model.SimModel', {
-            cw_uri:pt[LDA_ABOUT],
-            cs_uri:chemspiderValue[LDA_ABOUT],
-            chembl_uri:chemblValue[LDA_ABOUT],
-            drugbank_uri:drugBankData[LDA_ABOUT],
+            cw_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
+            cs_uri:chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT],
+            chembl_uri:chemblValue[LDA.helper.LDAConstants.LDA_ABOUT],
+            drugbank_uri:drugBankData[LDA.helper.LDAConstants.LDA_ABOUT],
             inchi:chemspiderValue['inchi'],
-            inchi_src:chemspiderValue[LDA_IN_DATASET],
+            inchi_src:chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             inchi_key:chemspiderValue['inchikey'],
-            inchi_key_src:chemspiderValue[LDA_IN_DATASET],
+            inchi_key_src:chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             smiles:chemspiderValue['smiles'],
-            smiles_src:chemspiderValue[LDA_IN_DATASET],
+            smiles_src:chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             alogp:chemblValue['alogp'],
-            alogp_src:chemblValue[LDA_IN_DATASET],
+            alogp_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             full_mwt:chemblValue['full_mwt'],
-            full_mwt_src:chemblValue[LDA_IN_DATASET],
+            full_mwt_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             hba:chemblValue['hba'],
-            hba_src:chemblValue[LDA_IN_DATASET],
+            hba_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             hbd:chemblValue['hbd'],
-            hbd_src:chemblValue[LDA_IN_DATASET],
+            hbd_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             molform:chemblValue['molform'],
-            molform_src:chemblValue[LDA_IN_DATASET],
+            molform_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             mw_freebase:chemblValue['mw_freebase'],
-            mw_freebase_src:chemblValue[LDA_IN_DATASET],
+            mw_freebase_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             psa:chemblValue['psa'],
-            psa_src:chemblValue[LDA_IN_DATASET],
+            psa_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             rtb:chemblValue['rtb'],
-            rtb_src:chemblValue[LDA_IN_DATASET],
+            rtb_src:chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET],
             biotransformation:drugBankData['biotransformation'],
-            biotransformation_src:drugBankData[LDA_IN_DATASET],
+            biotransformation_src:drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET],
             description:drugBankData['description'],
-            description_src:drugBankData[LDA_IN_DATASET],
+            description_src:drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET],
             proteinBinding:drugBankData['proteinBinding'],
-            proteinBinding_src:drugBankData[LDA_IN_DATASET],
+            proteinBinding_src:drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET],
             toxicity:drugBankData['toxicity'],
-            toxicity_src:drugBankData[LDA_IN_DATASET],
+            toxicity_src:drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET],
             prefLabel:pt['prefLabel'],
-            prefLabel_src:pt[LDA_IN_DATASET]
+            prefLabel_src:pt[LDA.helper.LDAConstants.LDA_IN_DATASET]
         });
 
 //        console.log('LDA.model.CompoundModel: Compound');

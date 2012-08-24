@@ -8,8 +8,8 @@ Ext.define('LDA.helper.EnzymeFamilyCountReader', {
 //        console.log('readRecords');
 //        console.log(data);
 
-        var countVal = data['result']['primaryTopic'][LDA_ENZYME_FAMILY_COUNT];
-        var uriVal = data['result']['primaryTopic'][LDA_ABOUT];
+        var countVal = data['result']['primaryTopic'][LDA.helper.LDAConstants.LDA_ENZYME_FAMILY_COUNT];
+        var uriVal = data['result']['primaryTopic'][LDA.helper.LDAConstants.LDA_ABOUT];
 
 //        var record = new Ext.data.Model(undefined, undefined, {count:countVal}, convertedValues = {});
         var record = Ext.create('LDA.model.PharmacologyCountModel', {count:countVal, uri:uriVal});

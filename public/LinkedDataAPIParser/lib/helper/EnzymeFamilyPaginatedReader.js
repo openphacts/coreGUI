@@ -8,61 +8,61 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
         var records = new Array();
 
         //big chunk of data
-        var result = data[LDA_RESULT];
-        var page_uri = result[LDA_ABOUT];
-        var next_page = result[LDA_PAGINATED_NEXT];
-        var previous_page = result[LDA_PAGINATED_PREVIOUS];
-        var page_size = result[LDA_PAGINATED_PAGE_SIZE];
-        var start_index = result[LDA_PAGINATED_START_INDEX];
+        var result = data[LDA.helper.LDAConstants.LDA_RESULT];
+        var page_uri = result[LDA.helper.LDAConstants.LDA_ABOUT];
+        var next_page = result[LDA.helper.LDAConstants.LDA_PAGINATED_NEXT];
+        var previous_page = result[LDA.helper.LDAConstants.LDA_PAGINATED_PREVIOUS];
+        var page_size = result[LDA.helper.LDAConstants.LDA_PAGINATED_PAGE_SIZE];
+        var start_index = result[LDA.helper.LDAConstants.LDA_PAGINATED_START_INDEX];
 
-        var items = result[LDA_ITEMS];
+        var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
 	        console.log(index);
-            var chembl_activity_uri = item[LDA_ABOUT];
-            var chembl_src = item[LDA_IN_DATASET];
+            var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
+            var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
             //big bits
-            var forMolecule = item[LDA_FOR_MOLECULE];
+            var forMolecule = item[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
 			if (forMolecule != null) {
-				var chembl_compound_uri = forMolecule[LDA_ABOUT];
+				var chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
 				var compound_full_mwt = forMolecule['full_mwt'];
-				var em = forMolecule[LDA_EXACT_MATCH];
+				var em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
 			}
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src;
 			if (forMolecule != null) {
             	Ext.each(em, function (match, index, matches) {
-                    	var src = match[LDA_IN_DATASET];
-                    	if (LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
-                        	cw_compound_uri = match[LDA_ABOUT];
+                    	var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    	if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                        	cw_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
                         	compound_pref_label = match['prefLabel'];
-                        	cw_src = match[LDA_IN_DATASET];
-                    	} else if (LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
-                        	cs_compound_uri = match[LDA_ABOUT];
+                        	cw_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    	} else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                        	cs_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
 							csid = cs_compound_uri.split('/').last();
                         	compound_inchi = match['inchi'];
                         	compound_inchikey = match['inchikey'];
                         	compound_smiles = match['smiles'];
-                        	cs_src = match[LDA_IN_DATASET];
-                    	} else if (LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
-                        	drugbank_compound_uri = match[LDA_ABOUT];
+                        	cs_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    	} else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                        	drugbank_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
                         	compound_drug_type = match['drugType'];
                         	compound_generic_name = match['genericName'];
-                        	drugbank_src = match[LDA_ABOUT];
+                        	drugbank_src = match[LDA.helper.LDAConstants.LDA_ABOUT];
                     	}
                 	}
             	);
 			}
 
-            var onAssay = item[LDA_ON_ASSAY];
+            var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
 			if (onAssay != null) {
-            	var chembl_assay_uri = onAssay[LDA_ABOUT];
+            	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
             	var assay_organism = onAssay['assay_organism'];
             	var target = onAssay['target'];
 				if (target != null) {
-            		var chembl_target_uri = target[LDA_ABOUT];
+            		var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
             		var target_pref_label = target['prefLabel'];
             		var target_title = target['title'];
             		var target_organism = target['assay_organism'];
