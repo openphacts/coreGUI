@@ -69,9 +69,18 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             	var target = onAssay['target'];
 			}
 			if (target != null) {
-            	var target_title = target['title'];
-            	var target_organism = target['assay_organism'];
-            	var target_concatenated_uris = target['concatenatedURIs'];
+				// sometimes an array, sometimes a hash
+				var target_inner;
+				try {
+					target_inner = target.pop();
+				} catch (err) {
+					// not an array this time
+					// not very nice but we have to deal with the inconsistency somehow
+					target_inner = target;
+				}
+            	var target_title = target_inner['title'];
+            	var target_organism = target_inner['target_organisms'];
+            	var target_concatenated_uris = target_inner['concatenatedURIs'];
 			}
 
 
@@ -115,7 +124,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,
                 chembl_target_uri:undefined,
-                //this is labelled assay_organism
+                //this is labelled assay_organism - actually now seems to be target_organisms
                 target_organism:target_organism,
                 target_pref_label:undefined,
                 //this value is missing totally from compound pharmacology paginated
