@@ -68,7 +68,7 @@ Ext.define('LSP.controller.Users', {
     },
 
     onLaunch:function () {
-        this.checkCoreAPI();
+        // this.checkCoreAPI();
     },
 
     checkCoreAPI:function () {

@@ -203,7 +203,8 @@ Ext.define('LSP.view.Viewport', {
                         value:'Testing connection to OPS API...',
                         width:400,
                         name:'ops_api_staus',
-                        id:'ops_api_staus_id'
+                        id:'ops_api_staus_id',
+						hidden: true
                     },
                     {
                         xtype:'tbspacer',
