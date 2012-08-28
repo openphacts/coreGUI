@@ -22,7 +22,11 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             {
                 ref:'lookup',
                 selector:'#pharmByCmpdLookup'
-            }
+            },
+			{
+				ref:'filterContainer',
+				selector:'#filterContainer_id'
+			}
         ],
 
         init:function () {
@@ -37,9 +41,23 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 'PharmByCmpdNameForm':{
                     historyToken:this.handleHistoryToken,
                     afterrender:this.prepGrid
-                }
+                },
+				'PharmByCmpdNameForm button[action=add_filter_form]':{
+					click:this.addFilterForm
+				}
             });
         },
+
+		addFilterForm:function(button) {
+			console.log('PharmByCmpdNameForm: addFilterForm()');
+			// view = Ext.widget('FilterPanel');
+			hide = this.getFilterContainer().hidden;
+			if (hide) {
+				this.getFilterContainer().setVisible(true);	
+			} else {
+				this.getFilterContainer().setVisible(false);
+			}
+		},
 
         handleHistoryToken:function (historyTokenObject) {
             console.log('PharmByCmpdNameForm: handleHistoryToken()');
