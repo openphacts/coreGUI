@@ -49,7 +49,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                         cw_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         cs_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
-						csid = cs_compound_uri.split('/').last();
+						csid = cs_compound_uri.split('/').pop();
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
