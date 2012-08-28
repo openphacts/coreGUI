@@ -4,7 +4,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Open PHACTS</title>
   <link rel="icon" type="image/png" href="/images/ops_favicon.png">
-  <%= stylesheet_link_tag :all %>
+
+  <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag '/ext/resources/css/ext-all.css' %>
 <!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
   <script type="text/javascript">
@@ -12,19 +13,19 @@
   </script>
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>
-      <%= javascript_include_tag 'prototype.js' %>
-      <%= javascript_include_tag '/app.js' %>
+      <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag 'app.js' %>
   <% else %>
       <%= javascript_include_tag '/ext/ext-all.js' %>
-      <%= javascript_include_tag 'prototype.js' %>
-      <%= javascript_include_tag '/all-classes.js' %>
-      <%= javascript_include_tag '/app-all.js' %>
+      <%= javascript_include_tag "application" %>
+      <%= javascript_include_tag 'all-classes.js' %>
+      <%= javascript_include_tag 'app-all.js' %>
   <% end %>
 
   <%= javascript_include_tag '/app/view/ux/exporter/Exporter.js' %>
   <%= javascript_include_tag '/downloadify/downloadify.min.js' %>
   <%= javascript_include_tag '/downloadify/swfobject.js' %>
-  
+
   <!-- Add string trim function for any browsers that don't support it -->
   <script type="text/javascript">
     if (!String.prototype.trim) {
