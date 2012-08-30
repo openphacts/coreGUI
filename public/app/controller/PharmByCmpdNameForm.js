@@ -28,6 +28,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				selector:'#filterContainer_id'
 			}
         ],
+	filters:[],
 
         init:function () {
 			console.log('PharmByCmpdNameForm: init()');
@@ -42,14 +43,26 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                     historyToken:this.handleHistoryToken,
                     afterrender:this.prepGrid
                 },
-				'PharmByCmpdNameForm button[action=add_filter_form]':{
-					click:this.addFilterForm
-				}
+		'PharmByCmpdNameForm button[action=add_filter_form]':{
+		    click:this.addFilterForm
+		},
+		'PharmByCmpdNameForm button[action=add_completed_filter]':{
+		    click:this.addCompletedFilter
+		},
             });
         },
 
+		addCompletedFilter:function(button) {
+		    activity = this.getFilterContainer().down('#activity_combobox_id').getValue();
+		    conditions = this.getFilterContainer().down('#conditions_combobox_id').getValue();
+		    value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		    unit = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		    //TODO assign these values to an object, store them with this controller and display them
+		},
+
 		addFilterForm:function(button) {
 			console.log('PharmByCmpdNameForm: addFilterForm()');
+			value = this.getFilterContainer().down('#activity_combobox_id').getValue();
 			// view = Ext.widget('FilterPanel');
 			hide = this.getFilterContainer().hidden;
 			if (hide) {

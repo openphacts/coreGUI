@@ -66,11 +66,30 @@ Ext.define('LSP.view.filter.FilterForm', {
 	layout: {
 		type: 'hbox'
 	},
+	refs:[
+            {
+                ref:'activity_combobox', // reference to the view
+                selector:'#activity_combobox_id'
+            },
+            {
+                ref:'conditions_combobox',
+                selector:'#conditions_combobox_id'
+            },
+            {
+                ref:'value_textfield',
+                selector:'#value_textfield_id'
+            },
+            {
+                ref:'unit_combobox',
+                selector:'#unit_combobox_id'
+            }
+        ],
 	headerPosition: 'right',
 	frame: true,
 	padding: '0 0 5 0',
 	items: [{
 		xtype: 'combobox',
+		itemId: 'activity_combobox_id',
 		fieldLabel: 'Activity Type',
 		store: activity_type,
 		queryMode: 'local',
@@ -81,6 +100,7 @@ Ext.define('LSP.view.filter.FilterForm', {
 		padding: '0 2 0 0'
 	}, {
 		xtype: 'combobox',
+		itemId: 'conditions_combobox_id',
 		fieldLabel: 'Conditions',
 		store: condition,
 		queryMode: 'local',
@@ -91,6 +111,7 @@ Ext.define('LSP.view.filter.FilterForm', {
 		padding: '0 2 0 0'
 	}, {
 		xtype: 'textfield',
+		itemId: 'value_textfield_id',
 		name: 'value',
 		fieldLabel: 'Value',
 		allowBlank: false,
@@ -100,6 +121,7 @@ Ext.define('LSP.view.filter.FilterForm', {
 		// requires a non-empty value
 	}, {
 		xtype: 'combobox',
+		itemId: 'unit_combobox_id',
 		fieldLabel: 'Unit',
 		store: unit,
 		queryMode: 'local',
