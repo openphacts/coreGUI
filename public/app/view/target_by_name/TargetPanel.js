@@ -196,18 +196,24 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
 //            console.log('synonyms');
-            this.addSynonyms(value);
+	    if (value != null) {
+            	this.addSynonyms(value);
+	    }
         }
         else if (fieldId == 'keywords') {
 //            console.log('keywords');
-            this.addKeywords(value);
+	    if (value != null) {
+	    	this.addKeywords(value);
+	    }
         }
         else if (fieldId == 'organism') {
 //            console.log('organism');
-            this.addOrganism(value);
+	    if (value != null) {
+            	this.addOrganism(value);
+	    }
         }
         else if (fieldId == 'pdb_id_page') {
-			if (value != "") {
+			if (value != "" && value != null) {
 				this.addPDBImage(value);
 			}
         }
