@@ -1,6 +1,6 @@
 Ext.define('LSP.model.Filter', {
     extend:'Ext.data.Model',
-    fields:['activity', 'condition', 'value', 'unit']
+    fields:['activity', 'condition', 'value', 'unit','filterView','controller'],
 });
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
         extend:'LSP.controller.grids.DynamicGrid',
@@ -65,16 +65,32 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 
 			filter = Ext.create('LSP.model.Filter', {activity: activity_value, condition: conditions_value, value: value_value, unit: unit_value});
 		    this.filters.push(filter);
+			// this is the only way I could find to reference the controller from the model and the view
+			filter.controller = this;
 		
 			filter_view = Ext.create('LSP.view.filter.CompletedFilter',{});
 			filter_view.down('#activityLabel_id').setText(activity_value);
 			filter_view.down('#conditionsLabel_id').setText(conditions_value);
 			filter_view.down('#valueLabel_id').setText(value_value);
 			filter_view.down('#unitLabel_id').setText(unit_value);
-			
+			// tell the filter what model it is using so we can get back to the controller when the
+			// filter is removed from the view
+			filter.filterView = filter_view;
 			this.getFormView().down('#completedFilterContainer_id').add(filter_view);
 			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+			filter_view.filterModel = filter;
+			filter_view.on({close: this.filterClosed});
 			//TODO assign these values to an object, store them with this controller and display them
+		},
+		
+		/* When a filter is removed from the view also
+		// remove the model from the controller
+		*/
+		filterClosed:function(filter) {
+			console.log('PharmByCmpdNameForm: filterClosed()');	
+			controller = filter.filterModel.controller;
+			var index = controller.filters.indexOf(filter.filterModel);
+			controller.filters.splice(index, 1);
 		},
 
 		addFilterForm:function(button) {
