@@ -6,41 +6,41 @@ var activity_type = Ext.create('Ext.data.Store', {
 		"name": "potency"
 	}, {
 		"abbr": "IC50",
-		"name": "ic"
+		"name": "IC50"
 	}, {
 		"abbr": "activity",
 		"name": "activity"
 	}, {
 		"abbr": "Ki",
-		"name": "ki"
+		"name": "Ki"
 	}, {
 		"abbr": "Ec50",
-		"name": "ec"
+		"name": "Ec50"
 	}, {
 		"abbr": "Logki",
-		"name": "lk"
+		"name": "Logki"
 	}, {
 		"abbr": "id50",
-		"name": "id"
+		"name": "id50"
 	}, {
 		"abbr": "logIC50",
-		"name": "lic"
+		"name": "logIC50"
 	}, {
 		"abbr": "Ac50",
-		"name": "ac"
+		"name": "Ac50"
 	}]
 });
 var condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
 		"symbol": "=",
-		"name": "equals"
+		"name": "="
 	}, {
 		"symbol": ">",
-		"name": "greater"
+		"name": ">"
 	}, {
 		"symbol": "<",
-		"name": "less"
+		"name": "<"
 	}, {
 		"symbol": "all",
 		"name": "all"
@@ -50,13 +50,13 @@ var unit = Ext.create('Ext.data.Store', {
 	fields: ['unit', 'name'],
 	data: [{
 		"unit": "nM",
-		"name": "nano"
+		"name": "nM"
 	}, {
 		"unit": "mM",
-		"name": "mili"
+		"name": "mM"
 	}, {
 		"unit": "µM",
-		"name": "pico"
+		"name": "µM"
 	}]
 });
 Ext.define('LSP.view.filter.FilterForm', {

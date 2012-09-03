@@ -76,7 +76,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 			margin: '0 5 5 5',
 			name: 'filter_fields',
 			hidden: true
-		}, {
+		}, 
+		 {
+			xtype: 'container',
+			itemId: 'completedFilterContainer_id',
+			margin: '0 5 5 5',
+			name: 'completed_filter_container',
+			hidden: true
+		},{
 			xtype: 'PharmByCmpdNameScrollingGrid',
 			itemId: 'pharmByCmpdNameGrid',
 			title: 'Pharmacology by Compound name search results',

@@ -1,3 +1,7 @@
+Ext.define('LSP.model.Filter', {
+    extend:'Ext.data.Model',
+    fields:['activity', 'condition', 'value', 'unit']
+});
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
         extend:'LSP.controller.grids.DynamicGrid',
         views:['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid'],
@@ -53,11 +57,24 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         },
 
 		addCompletedFilter:function(button) {
-		    activity = this.getFilterContainer().down('#activity_combobox_id').getValue();
-		    conditions = this.getFilterContainer().down('#conditions_combobox_id').getValue();
-		    value = this.getFilterContainer().down('#value_textfield_id').getValue();
-		    unit = this.getFilterContainer().down('#unit_combobox_id').getValue();
-		    //TODO assign these values to an object, store them with this controller and display them
+			console.log('PharmByCmpdNameForm: addCompletedFilter()');
+		    activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
+		    conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
+		    value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		    unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+
+			filter = Ext.create('LSP.model.Filter', {activity: activity_value, condition: conditions_value, value: value_value, unit: unit_value});
+		    this.filters.push(filter);
+		
+			filter_view = Ext.create('LSP.view.filter.CompletedFilter',{});
+			filter_view.down('#activityLabel_id').setText(activity_value);
+			filter_view.down('#conditionsLabel_id').setText(conditions_value);
+			filter_view.down('#valueLabel_id').setText(value_value);
+			filter_view.down('#unitLabel_id').setText(unit_value);
+			
+			this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+			//TODO assign these values to an object, store them with this controller and display them
 		},
 
 		addFilterForm:function(button) {
