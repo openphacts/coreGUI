@@ -59,13 +59,14 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
 		conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
 		value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
-		unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
-		if (activity_value != null && conditions_value != null && value_value != "" && unit_value != null) {
+		//unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		// TODO unit value check && unit_value != null
+		if (activity_value != null && conditions_value != null && value_value != "") {
 			filter = Ext.create('LSP.model.Filter', {
 				activity: activity_value,
 				condition: conditions_value,
-				value: value_value,
-				unit: unit_value
+				value: value_value//,
+				//unit: unit_value
 			});
 			this.filters.push(filter);
 			// this is the only way I could find to reference the controller from the model and the view
@@ -75,7 +76,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			filter_view.down('#activityLabel_id').setText(activity_value);
 			filter_view.down('#conditionsLabel_id').setText(conditions_value);
 			filter_view.down('#valueLabel_id').setText(value_value);
-			filter_view.down('#unitLabel_id').setText(unit_value);
+			//filter_view.down('#unitLabel_id').setText(unit_value);
 			// tell the filter what model it is using so we can get back to the controller when the
 			// filter is removed from the view
 			filter.filterView = filter_view;
@@ -85,6 +86,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			filter_view.on({
 				close: this.filterClosed
 			});
+			this.setActivityFilters(activity_value, conditions_value, value_value);
 		} else {
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -93,7 +95,14 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				icon: Ext.MessageBox.ERROR
 			});
 		}
-		//TODO assign these values to an object, store them with this controller and display them
+	},
+
+	setActivityFilters: function(activity_value, conditions_value, value_value) {
+			var dg = this.getGridView();
+			var store = dg.store;
+			store.setActivityType(activity_value);
+			store.setActivityValue(value_value);
+			store.setActivityCondition(conditions_value);
 	},
 
 /* When a filter is removed from the view also
@@ -145,6 +154,13 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		var button = this.getSubmitButton();
 		countStore = Ext.create('LDA.store.CompoundPharmacologyCountStore');
 		countStore.uri = grid_store.proxy.reader.uri;
+		// TODO only one filter can be used at the moment, need to change code for multiple
+		// at some point
+		if (this.filters.length>0) {
+			countStore.setActivityType(this.filters[0].data.activity);
+			countStore.setActivityValue(this.filters[0].data.value);
+			countStore.setActivityCondition(this.filters[0].data.condition);		
+		}
 		countStore.load(function(records, operation, success) {
 			total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
 			grid_store.proxy.reader.total_count = total;

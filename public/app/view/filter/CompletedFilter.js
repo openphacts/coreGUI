@@ -23,8 +23,9 @@ Ext.define('LSP.view.filter.CompletedFilter', {
 		xtype: 'label',
 		itemId: 'valueLabel_id',
 		padding: '0 5 0 0'
-	}, {
-		xtype: 'label',
-		itemId: 'unitLabel_id'
-	}]
+	}//, {
+	//	xtype: 'label',
+	//	itemId: 'unitLabel_id'
+	//}
+	]
 });

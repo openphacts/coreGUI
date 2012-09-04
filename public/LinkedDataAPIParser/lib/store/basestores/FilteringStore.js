@@ -1,15 +1,9 @@
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 29/06/2012
- * Time: 11:04
- * To change this template use File | Settings | File Templates.
- */
 Ext.define('LDA.store.basestores.FilteringStore', {
     extend:'LDA.store.basestores.BaseStore',
     assay_organism:'',
     activity_type:'',
     activity_value:'',
+    activity_condition:'',
 	sort_column:'',
 	
 	// Set up the sort properties, check the direction of sort and prepend with
@@ -33,15 +27,22 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     },
 
     setActivityType:function (activityType) {
-        if (LDA_PERMITTED_ACTIVITY_TYPES.indexOf(activityType) != -1) {
+	//TODO fix LDA_PERMITTED_ACTIVITY_TYPES
+        //if (LDA_PERMITTED_ACTIVITY_TYPES.indexOf(activityType) != -1) {
             this.activity_type = activityType;
-        }
+        //}
     },
 
     setActivityValue:function (activityValue) {
-        if (typeof activityValue == 'number') {
+	//TODO check for valid value, it's going to be a string really
+        //if (typeof activityValue == 'number') {
             this.activity_value = activityValue;
-        }
+        //}
+    },
+
+    setActivityCondition:function (activityCondition) {
+	//TODO check whether condition is valid
+            this.activity_condition = activityCondition;
     },
 
 
@@ -51,11 +52,37 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                 {
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,
-                    activity_value:this.activity_value,
+                    //activity_value:this.activity_value,
+                    //activity_condition:this.activity_condition,
                     _format:this._format,
                     uri:this.uri
                 });
-//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
+
+        this.setAllConditions();
+        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
+    },
+
+    setAllConditions: function() {
+ 	// add the conditions property to the url
+	switch(this.activity_condition)
+	{
+	case '>':
+  	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('minEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '<':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('maxEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+  	  break;
+	case '=':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '<=':
+	  this.proxy.url = this.proxy.url  + '&' + encodeURIComponent('max-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '>=':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('min-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	}
     }
+
 
 });
