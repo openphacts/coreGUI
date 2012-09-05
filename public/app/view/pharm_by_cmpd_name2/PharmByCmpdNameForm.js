@@ -14,7 +14,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 	// infinite scrolling does not support selection
 	disableSelection: true,
 	initComponent: function() {
-		console.log('PharmByCmpdNameForm: constructor()');
+		console.log('PharmByCmpdNameForm: initComponent()');
 		this.items = [{
 			xtype: 'label',
 			html: '<span style="font-family: verdana; color: grey; ">Hint: Type in compound name. E.g. \"Aspirin\"</span>',

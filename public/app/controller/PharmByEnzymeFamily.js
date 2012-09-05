@@ -12,14 +12,17 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             selector:'#pharmByEnzymeFamilyGrid'
         },
         {
-            ref:'PEform',
+            ref:'formView',
             selector:'PharmEnzymeForm'
         },
         {
             ref:'submitButton',
             selector:'#submitEnzymePharm_id'
         
-        }
+        }, {
+		ref: 'filterContainer',
+		selector: '#filterContainer_id'
+	}
     ],
 
     init:function () {
@@ -40,7 +43,13 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm':{
                 afterrender:this.prepGrid,
                 historyToken:this.handleHistoryToken
-            }
+            },
+	    'PharmEnzymeForm button[action=add_filter_form]': {
+		click: this.addFilterForm
+	     },
+	     'PharmEnzymeForm button[action=add_completed_filter]': {
+		click: this.addCompletedFilter
+	     }
         });
     },
 
@@ -62,10 +71,15 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 		console.log('PharmByEnzymeFamily: fetchTotalResults()');
 		var grid_view = this.getGridView();
 		var grid_store = grid_view.getStore();
-		var form = this.getPEform();
+		var form = this.getFormView();
         var button = this.getSubmitButton();
 		countStore = Ext.create('LDA.store.EnzymeFamilyCountStore');
 		countStore.uri = grid_store.proxy.reader.uri;
+		if (this.filters.length>0) {
+			countStore.setActivityType(this.filters[0].data.activity);
+			countStore.setActivityValue(this.filters[0].data.value);
+			countStore.setActivityCondition(this.filters[0].data.condition);
+		}
 			countStore.load(function(records, operation, success) {
 				if (success) {
 				total = operation.response.result.primaryTopic.enzymePharmacologyTotalResults;
@@ -110,7 +124,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 		grid_view.down('#sdfDownload_id').disable();
 		grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
         grid_view.down('#sdfDownloadProxy_id').enable();
-        var form = this.getPEform();
+        var form = this.getFormView();
         var button = this.getSubmitButton();
         button.enable();
         grid_view.setLoading(false);
@@ -165,11 +179,11 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	                icon:Ext.MessageBox.INFO
 	            });
 	        } else {
-	            var disp_field = this.getPEform().getForm().findField('enzyme_family');
+	            var disp_field = this.getFormView().getForm().findField('enzyme_family');
 	            disp_field.setValue('<b>' + sel_data.ec_number + ' : ' + sel_data.name + '</b>');
-	            var ec_num_field = this.getPEform().getForm().findField('ec_number');
+	            var ec_num_field = this.getFormView().getForm().findField('ec_number');
 	            ec_num_field.setValue(sel_data.ec_number);
-	            var enz_name_field = this.getPEform().getForm().findField('enz_name');
+	            var enz_name_field = this.getFormView().getForm().findField('enz_name');
 	            enz_name_field.setValue(sel_data.name);
 	            this.hideEnzyme('');
 	        }

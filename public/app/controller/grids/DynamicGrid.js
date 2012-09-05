@@ -42,11 +42,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     models:['DynamicGrid'],
 
     refs:[
-            {
-                ref:'gridView',
-                selector:'dynamicgrid'
-            }
+            //{
+              //  ref:'gridView',
+              //  selector:'dynamicgrid'
+            //}
         ],
+    filters: [],
 
     init:function () {
 		console.log('DynamicGrid: init()');
@@ -78,108 +79,79 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     testThis:function (args) {
     },
 
-    addNextRecords:function (this_gridview, extraParams) {
-		console.log('DynamicGrid: addNextRecords()');
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-        this_gridview.down('#sdfDownload_id').disable();
-        var this_store = this_gridview.store;
-        var this_controller = this;
-        var temp_store = Ext.create('LSP.store.DynamicGrid');
-        // configure copy store:
-        temp_store.proxy.extraParams = extraParams;
-        temp_store.proxy.api.read = this_gridview.readUrl;
-        temp_store.proxy.actionMethods = this_store.proxy.actionMethods;
-        var offset = this_store.data.length + 1;
-        // We load the copy store to get the new records
-        this_gridview.setLoading(true);
-        temp_store.load({params:{ offset:offset, limit:100}});
-        temp_store.on('load', function (temp_store, new_records, success) {
-            if (success === false) {
-                Ext.MessageBox.show({
-                    title:'Error',
-                    msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.ERROR
-                });
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-                this_gridview.setLoading(false);
-                return false;
-            }
-            var idx_start = offset - 1;
-            var row_count = 0;
-            Ext.each(new_records, function (new_record) {
-                new_record.index = idx_start + row_count;
-                row_count++;
-            });
-            this_store.loadRecords(new_records, {addRecords:true});
-            this_gridview.setLoading(false);
-            this_gridview.recordsLoaded = this_store.data.length;
-            if (temp_store.data.length < 100) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                this_gridview.down('#nextRecords').disable();
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_store.data.length);
-            }
-        });
+	addCompletedFilter: function(button) {
+		console.log('DynamicGrid: addCompletedFilter()');
+		activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
+		conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
+		value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		//unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		// TODO unit value check && unit_value != null
+		if (activity_value != null && conditions_value != null && value_value != "") {
+			filter = Ext.create('LSP.model.Filter', {
+				activity: activity_value,
+				condition: conditions_value,
+				value: value_value//,
+				//unit: unit_value
+			});
+			this.filters.push(filter);
+			// this is the only way I could find to reference the controller from the model and the view
+			filter.controller = this;
 
-    },
+			filter_view = Ext.create('LSP.view.filter.CompletedFilter', {});
+			filter_view.down('#activityLabel_id').setText(activity_value);
+			filter_view.down('#conditionsLabel_id').setText(conditions_value);
+			filter_view.down('#valueLabel_id').setText(value_value);
+			//filter_view.down('#unitLabel_id').setText(unit_value);
+			// tell the filter what model it is using so we can get back to the controller when the
+			// filter is removed from the view
+			filter.filterView = filter_view;
+			this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+			filter_view.filterModel = filter;
+			filter_view.on({
+				close: this.filterClosed
+			});
+			this.setActivityFilters(activity_value, conditions_value, value_value);
+		} else {
+			Ext.MessageBox.show({
+				title: 'Error',
+				msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.ERROR
+			});
+		}
+	},
 
-    storeLoad:function (this_gridview, success) {
-		console.log('DynamicGrid: storeLoad()');
-        if (success === false) {
-            Ext.MessageBox.show({
-                title:'Error',
-                msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                buttons:Ext.MessageBox.OK,
-                icon:Ext.MessageBox.ERROR
-            });
-            this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-            return false;
-        }
+	setActivityFilters: function(activity_value, conditions_value, value_value) {
+		console.log('DynamicGrid: setActivityFilters()');
+			var dg = this.getGridView();
+			var store = dg.store;
+			store.setActivityType(activity_value);
+			store.setActivityValue(value_value);
+			store.setActivityCondition(conditions_value);
+	},
 
+/* When a filter is removed from the view also
+		// remove the model from the controller
+		*/
+	filterClosed: function(filter) {
+		console.log('DynamicGrid: filterClosed()');
+		controller = filter.filterModel.controller;
+		var index = controller.filters.indexOf(filter.filterModel);
+		controller.filters.splice(index, 1);
+	},
 
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-
-        var this_controller = this;
-        var dynamicgridStore = this_gridview.store;
-        if (typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {
-            var columns = [];
-            if (this_gridview.rowNumberer) {
-                columns.push(Ext.create('Ext.grid.RowNumberer', {width:40}));
-            }
-            Ext.each(dynamicgridStore.proxy.reader.jsonData.columns, function (column) {
-                columns.push(column);
-                if (column.text == 'csid_uri') {
-                    this_gridview.csid_column = true;
-                    this_gridview.down('#sdfDownloadProxy_id').enable();
-                }
-            });
-            this_gridview.reconfigure(dynamicgridStore, columns);
-            this_gridview.recordsLoaded = dynamicgridStore.data.length;
-            if (this_gridview.recordsLoaded == 0) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - No records found within OPS for this search!');
-                Ext.MessageBox.show({
-                    title:'Info',
-                    msg:'The OPS system does not contain any data that match this search.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.INFO
-                });
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
-                if (this_gridview.recordsLoaded == this_gridview.limit) {
-                    this_gridview.down('#nextRecords').enable();
-                    //                     this_gridview.down('#csvDownloadProxy_id').enable();
-
-                }
-                else {
-                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                }
-            }
-
-        }
-    },
+	addFilterForm: function(button) {
+		console.log('DynamicGrid: addFilterForm()');
+		value = this.getFilterContainer().down('#activity_combobox_id').getValue();
+		// view = Ext.widget('FilterPanel');
+		hide = this.getFilterContainer().hidden;
+		if (hide) {
+			this.getFilterContainer().setVisible(true);
+		} else {
+			this.getFilterContainer().setVisible(false);
+		}
+	},
 
     prepSDFile2:function (sdf_prep_button) {
         var gridview = sdf_prep_button.up('dynamicgrid');

@@ -16,7 +16,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             ref:'submitButton',
             selector:'#pharmByTargetSubmit_id'
 
-        }
+        }, {
+		ref: 'filterContainer',
+		selector: '#filterContainer_id'
+	}
     ],
 
     init:function () {
@@ -31,7 +34,13 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm':{
                 afterrender:this.prepGrid,
                 historyToken:this.handleHistoryToken
-            }
+            },
+	    'PharmByTargetNameForm button[action=add_filter_form]': {
+		click: this.addFilterForm
+	     },
+	     'PharmByTargetNameForm button[action=add_completed_filter]': {
+		click: this.addCompletedFilter
+	     }
         });
     },
 
@@ -62,6 +71,11 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         var button = this.getSubmitButton();
 		countStore = Ext.create('LDA.store.TargetPharmacologyCountStore');
 		countStore.uri = grid_store.proxy.reader.uri;
+		if (this.filters.length>0) {
+			countStore.setActivityType(this.filters[0].data.activity);
+			countStore.setActivityValue(this.filters[0].data.value);
+			countStore.setActivityCondition(this.filters[0].data.condition);
+		}
 			countStore.load(function(records, operation, success) {
 				total = operation.response.result.primaryTopic.targetPharmacologyTotalResults;
 				grid_store.proxy.reader.total_count = total;
