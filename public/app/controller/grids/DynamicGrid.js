@@ -42,10 +42,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     models:['DynamicGrid'],
 
     refs:[
-            //{
-              //  ref:'gridView',
-              //  selector:'dynamicgrid'
-            //}
+            {
+                ref:'gridView',
+                selector:'dynamicgrid'
+            }
         ],
     filters: [],
 
@@ -143,7 +143,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
 	addFilterForm: function(button) {
 		console.log('DynamicGrid: addFilterForm()');
-		value = this.getFilterContainer().down('#activity_combobox_id').getValue();
 		// view = Ext.widget('FilterPanel');
 		hide = this.getFilterContainer().hidden;
 		if (hide) {

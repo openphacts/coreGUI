@@ -23,7 +23,8 @@ Ext.define('LDA.model.EnzymeFamilyModel', {
         'description', 'description_src',
         'proteinBinding', 'proteinBinding_src',
         'toxicity', 'toxicity_src',
-        'prefLabel', 'prefLabel_src'
+        'prefLabel', 'prefLabel_src',
+	'target_title', 'target_organism'
 //        '', '_src',
     ]
 });

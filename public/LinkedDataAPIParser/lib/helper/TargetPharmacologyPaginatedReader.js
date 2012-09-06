@@ -66,7 +66,9 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             var target = onAssay['target'];
             var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
             var target_pref_label = target['prefLabel'];
-            var target_title = target['title'];
+	    // There seems to be no title so pref_label will have to do
+            var target_title = target_pref_label;
+            //var target_title = target['title'];
             var target_organism = target['assay_organism'];
             var target_concatenated_uris = target['concatenatedURIs'];
 
