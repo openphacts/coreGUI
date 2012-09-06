@@ -112,6 +112,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 				close: this.filterClosed
 			});
 			this.setActivityFilters(activity_value, conditions_value, value_value);
+			// currently only 1 filter can be added at a time
+			this.getFormView().down('#addCompletedFilter_id').setDisabled(true);
 		} else {
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -139,6 +141,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		controller = filter.filterModel.controller;
 		var index = controller.filters.indexOf(filter.filterModel);
 		controller.filters.splice(index, 1);
+		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);
 	},
 
 	addFilterForm: function(button) {
