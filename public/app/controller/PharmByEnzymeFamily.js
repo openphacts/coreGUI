@@ -21,7 +21,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         
         }, {
 		ref: 'filterContainer',
-		selector: '#filterContainer_id'
+		selector: 'PharmEnzymeForm #filterContainer_id'
 	}
     ],
 

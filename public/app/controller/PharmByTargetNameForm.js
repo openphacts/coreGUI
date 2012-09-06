@@ -18,7 +18,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
         }, {
 		ref: 'filterContainer',
-		selector: '#filterContainer_id'
+		selector: 'PharmByTargetNameForm #filterContainer_id'
 	}
     ],
 
