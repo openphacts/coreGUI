@@ -104,7 +104,20 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 					// grid_store.load();
 					grid_store.guaranteeRange(0,49);
 				}
-				}		
+				}  else {
+				grid_view.setTitle(grid_view.gridBaseTitle + ' - We are sorry but the OPS system returned an error!');
+				grid_view.down('#sdfDownload_id').disable();
+				grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+				grid_view.down('#sdfDownloadProxy_id').disable();
+				button.enable();
+				grid_view.setLoading(false);
+				Ext.MessageBox.show({
+					title: 'Info',
+					msg: 'We are sorry but the OPS system returned an error.',
+					buttons: Ext.MessageBox.OK,
+					icon: Ext.MessageBox.INFO
+				});
+			}		
 			});
 	},
 	

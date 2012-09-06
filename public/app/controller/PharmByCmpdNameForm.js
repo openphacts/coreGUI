@@ -122,12 +122,31 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		//	});	
 		//} else {
 		countStore.load(function(records, operation, success) {
-			total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
-			grid_store.proxy.reader.total_count = total;
-			// we have the total number of results now and the proxy reader knows what it is so
-			// fetch the first page of results
-			if (total == 0) {
-				grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+			if (success) {
+				total = operation.response.result.primaryTopic.compoundPharmacologyTotalResults;
+				grid_store.proxy.reader.total_count = total;
+				// we have the total number of results now and the proxy reader knows what it is so
+				// fetch the first page of results
+				if (total == 0) {
+					grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+					grid_view.down('#sdfDownload_id').disable();
+					grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+					grid_view.down('#sdfDownloadProxy_id').disable();
+					button.enable();
+					grid_view.setLoading(false);
+					Ext.MessageBox.show({
+						title: 'Info',
+						msg: 'The OPS system does not contain any data that match this search.',
+						buttons: Ext.MessageBox.OK,
+						icon: Ext.MessageBox.INFO
+					});
+				} else {
+					// for pagianted grid use this
+					// grid_store.load();
+					grid_store.guaranteeRange(0, 49);
+				}
+			} else {
+				grid_view.setTitle(grid_view.gridBaseTitle + ' - We are sorry but the OPS system returned an error!');
 				grid_view.down('#sdfDownload_id').disable();
 				grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 				grid_view.down('#sdfDownloadProxy_id').disable();
@@ -135,14 +154,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				grid_view.setLoading(false);
 				Ext.MessageBox.show({
 					title: 'Info',
-					msg: 'The OPS system does not contain any data that match this search.',
+					msg: 'We are sorry but the OPS system returned an error.',
 					buttons: Ext.MessageBox.OK,
 					icon: Ext.MessageBox.INFO
 				});
-			} else {
-				// for pagianted grid use this
-				// grid_store.load();
-				grid_store.guaranteeRange(0, 49);
 			}
 		});
 		//}
