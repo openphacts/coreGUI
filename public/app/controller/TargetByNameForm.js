@@ -45,16 +45,11 @@ Ext.define('LSP.controller.TargetByNameForm', {
 				store.load(function(records, operation, success) {
 					if (success) {
 						console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
-						if (success) {
-							me.getSubmitButton().enable();
-							target_panel.setValues(records[0]);
-							target_panel.down("#dp").setVisible(true);
-							target_panel.down('#msg').setVisible(false);
-							me.getFormView().setLoading(false);
-						} else {
-							me.getFormView().down("TargetPanel").showMessage('Server did not respond');
-						}
-
+						me.getSubmitButton().enable();
+						target_panel.setValues(records[0]);
+						target_panel.down("#dp").setVisible(true);
+						target_panel.down('#msg').setVisible(false);
+						me.getFormView().setLoading(false);
 					} else {
 						Ext.MessageBox.show({
 							title: 'Info',
