@@ -22,5 +22,18 @@ LSP4All::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        :address => AppSettings.config["mail"]["address"],
+        :port => AppSettings.config["mail"]["port"],
+        :user_name => AppSettings.config["mail"]["user"],
+        :password => AppSettings.config["mail"]["password"],
+        :authentication => :plain,
+        :enable_starttls_auto => true
+    }
+    #change if you want it to send emails in development mode
+    config.action_mailer.perform_deliveries = false
+    config.action_mailer.raise_delivery_errors = true
 end
 
