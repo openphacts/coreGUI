@@ -1,7 +1,8 @@
 Ext.define('LDA.store.EnzymeFamilyCountStore', {
     extend:'LDA.store.basestores.FilteringStore',
     model:'LDA.model.PharmacologyCountModel',
-    storeId:'CompoundPharmacologyCountStore',
+    storeId:'EnzymeFamilyCountStore',
+    countNode: 'enzymePharmacologyTotalResults',
     BASE_URL:'http://ops.few.vu.nl/target/enzyme/pharmacology/count?',
 		    proxy:{
 		        type:'jsonp',

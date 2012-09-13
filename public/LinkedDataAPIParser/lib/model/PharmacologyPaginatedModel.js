@@ -37,7 +37,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'cw_compound_uri',
         'compound_pref_label',
         'cs_compound_uri',
-		'csid',
+	'csid',
         'compound_inchi',
         'compound_smiles',
         'chembl_assay_uri',
