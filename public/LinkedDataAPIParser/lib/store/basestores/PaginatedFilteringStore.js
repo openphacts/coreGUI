@@ -9,9 +9,32 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
 	limitParam:'_pageSize',
 	pageParam:'_page',
 	// sortParam:'_sort',
-	        //this is the only query param handled natively by the proxy, all others are handled in store config below.
-	        callbackKey:'_callback'
-	    },
+        //this is the only query param handled natively by the proxy, all others are handled in store config below.
+        callbackKey:'_callback',
+	    listeners : {         // configure listener
+                exception : function(proxy, type, action, options,
+        	response, arg) {
+        	    // this block is reached on any exception
+        	    if (!response.isTimeout) {
+        	        // check if response didn't timed out
+        	        Ext.Msg.show({
+        	        	title : '',
+       	             		msg : "We are sorry but the OPS system returned an error.",
+                    		buttons : Ext.Msg.OK,
+                    		icon : Ext.MessageBox.INFO
+                	});
+            	} else {
+                	// this block is called on response timeout
+                	Ext.Msg.show({
+                    		title : '',
+                    		msg : "The OPS server is taking too long to respond. Response timed out.",
+                    		buttons : Ext.Msg.OK,
+                    	icon : Ext.MessageBox.INFO
+                	});
+            	}
+            }
+    	}
+    },
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +

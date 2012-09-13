@@ -32,16 +32,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 				name: 'cmpd_uuid',
 				xtype: 'hidden',
 				value: ''
-			}, {
-				xtype: 'conceptWikiCompoundLookup',
-				itemId: 'pharmByCmpdLookup',
-				fieldLabel: 'Compound name',
-				forceSelection: true,
-				allowBlank: false,
-				typeAhead: true,
-				typeAheadDelay: 250,
-				queryDelay: 200
-			}, {
+			}, Ext.create('CW.view.ConceptWikiLookup', {
+	                        xtype:'conceptWikiLookup',
+	                        fieldLabel:'Compound name',
+	                        itemId: 'compoundByNameLookup',
+	                        name: 'compound_uri',
+	                        cwTagUuid: '07a84994-e464-4bbf-812a-a4b96fa3d197'   // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+	                }),
+{
 				xtype: 'button',
 				itemId: 'pharmByCmpdSubmit_id',
 				padding: '5 5 5 5',
