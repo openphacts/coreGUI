@@ -43,7 +43,7 @@ module LSP4All
     config.active_record.include_root_in_json = false
     config.active_record.schema_format = :sql
 
-    require 'lib/app_settings'
+    require File.expand_path(File.join(File.dirname(__FILE__), '../lib/app_settings'))
     AppSettings.config = YAML.load_file("config/app_settings.yml")[Rails.env]
   end
 end
