@@ -50,22 +50,26 @@ Ext.define('LSP.view.Viewport', {
         'Ext.toolbar.Spacer',
         'LSP.store.GuiComponents'
     ],
+	listeners: {
+		afterrender: {
+			//check for an initial history token
+			fn: function() {
+				console.log("Viewport: afterrender()");
+				var currentToken = Ext.History.getToken();
+				if (currentToken) {
+					if (currentToken.length > 0) {
+						this.handleHistoryToken(currentToken);
+					}
+				}
+			}
+		}
+		},
 
     layout:'border',
 
     //gets a record from GuiComponents store by its xtype
     getFormByXtype:function (token) {
-        var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
-        var records = appModStore.queryBy(
-            function (record, id) {
-                return record.raw.xtype == token;
-            }
-        );
-        if (records) {
-            if (records.getCount() > 0) {
-                return records.first();
-            }
-        }
+        return Ext.data.StoreManager.lookup('GuiComponents').findRecord("xtype", token);
     },
 
 //    getObjectFromString:function (queryString) {
@@ -90,7 +94,7 @@ Ext.define('LSP.view.Viewport', {
 
 //all UI changes should come through this function
     handleHistoryToken:function (token) {
-		 console.log("Viewport: handleHistoryToken()");
+		console.log("Viewport: handleHistoryToken()");
         //not null
         if (token) {
             //must start with ! (shebang/hashbang can help with googlebot indexing, some people hate this kind of thing, personally i don't care)
@@ -130,16 +134,16 @@ Ext.define('LSP.view.Viewport', {
 		console.log("Viewport: changeView()");
         var view;
         Ext.getCmp('centerView').items.each(function (curItem) {
-            if (curItem.gridId == record.raw.id) {
+            if (curItem.gridId == record.data.id) {
                 view = curItem;
                 return;
             }
         });
         if (!view) {
-            view = Ext.widget(record.raw.xtype);
-            view.setTitle(record.raw.home);
-            view.url = record.raw.url;
-            view.gridId = record.raw.id;
+            view = Ext.widget(record.data.xtype);
+            view.setTitle(record.data.home);
+            view.url = record.data.url;
+            view.gridId = record.data.id;
             Ext.getCmp('centerView').add(view);
         }
         var centreView = Ext.getCmp('centerView');
