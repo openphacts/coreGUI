@@ -17,13 +17,16 @@ To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
 wiki.openphacts.org and follow the instructions there.
 In case of problems contact Sune Askjaer on suap@lundbeck.com.
 
-== Adding a new tab to the Navigation three
+== Adding a new tab and form to the Navigation tree
 
 To add a new tab to the Navigation tree you need to change LSP.store.NavigationTree store in the 
 main public/app folder. A node has leaf set to "true" if it has no children. Set 
 leaf to "false" and add an array of children if the node has any leaf nodes. Refer to the embedded
 JSON in the Navigation Tree store to see the the default tree that is rendered. 
 The xtype defines what form will be loaded when the node is clicked on.
+
+When the tree is clicked on the GuiComponents store is asked to return data about that form. Add some
+details about the new form to the json data in store/GuiComponent.js 
       
 In case you are only building a stand alone widget that goes on an existing page
 you can skip the above steps and just create the javascript view, controller,
