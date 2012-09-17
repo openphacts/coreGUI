@@ -11,7 +11,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-		var tar = record.data.target_pref_label;
+		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
 
 		if (tar) {
@@ -158,8 +158,6 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 	        Ext.apply(this, config);
 	        Ext.apply(this.initialConfig, config);
-	        this.callParent(arguments);
-			console.log('DynamicGrid: initComponent() 2');
-	
+	        this.callParent(arguments);	
 	    }
 });

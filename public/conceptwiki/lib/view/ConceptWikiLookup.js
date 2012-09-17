@@ -34,7 +34,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
         loadingText:'Searching...',
         emptyText:'No matching entities found.',
         getInnerTpl:function () {
-            return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://staging.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
+            return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
     }
 });

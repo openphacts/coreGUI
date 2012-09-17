@@ -10,6 +10,7 @@ Ext.define('LDA.store.CompoundPharmacologyCountStore', {
     extend:'LDA.store.basestores.FilteringStore',
     model:'LDA.model.PharmacologyCountModel',
     storeId:'CompoundPharmacologyCountStore',
+    countNode: 'compoundPharmacologyTotalResults',
     BASE_URL:'http://ops.few.vu.nl/compound/pharmacology/count?',
 		    proxy:{
 		        type:'jsonp',

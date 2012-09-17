@@ -32,7 +32,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 'CmpdByNameForm button[action=query_cmpd_by_name]':{
                     click:this.submitQuery
                 },
-                'CmpdByNameForm conceptWikiCompoundLookup':{
+                'CmpdByNameForm conceptWikiLookup':{
                     select:this.enableSubmit
                 },
                 'CmpdByNameForm':{
@@ -44,7 +44,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         handleHistoryToken:function (historyTokenObject) {
             console.log('CmpdByNameForm: handleHistoryToken()');
 			var me = this;
-			var target_panel = me.getFormView().down("CmpdByNameSingleDisplayForm");
+			var compound_panel = me.getFormView().down("CmpdByNameSingleDisplayForm");
             if (historyTokenObject.u) {
                 var store = this.getLDAStoreCompoundStoreStore();
                 if (historyTokenObject.u != store.proxy.extraParams.uri) {
@@ -54,12 +54,21 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 						console.log('LSP.controller.CmpdByNameForm: store is loaded ' + success);
 						if (success) {
 							me.getSubmitButton().enable();
-							target_panel.setValues(records[0]);
-							target_panel.down("#displayPanel").setVisible(true);
-							target_panel.down('#msg').setVisible(false);
+							compound_panel.setValues(records[0]);
+							compound_panel.down("#displayPanel").setVisible(true);
+							compound_panel.down('#msg').setVisible(false);
 							me.getFormView().setLoading(false);
 				        } else {
-				            me.getFormView().down("TargetPanel").showMessage('Server did not respond');
+							Ext.MessageBox.show({
+								title: 'Info',
+								msg: 'We are sorry but the OPS system returned an error.',
+								buttons: Ext.MessageBox.OK,
+								icon: Ext.MessageBox.INFO
+							});
+							me.getSubmitButton().enable();
+							compound_panel.down("#displayPanel").setVisible(false);
+							compound_panel.down('#msg').setVisible(true);
+							me.getFormView().setLoading(false);
 				        }
 					});
                 }

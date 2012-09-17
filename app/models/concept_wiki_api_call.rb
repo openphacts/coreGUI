@@ -5,10 +5,10 @@ class ConceptWikiApiCall
   include ActiveModel::Validations
   extend ActiveModel::Naming
 
-   CONCEPT_WIKI_API_SEARCH_URL = "http://staging.conceptwiki.org/web-ws/concept/search/"
-   CONCEPT_WIKI_API_GET_URL = "http://staging.conceptwiki.org/web-ws/concept/search/get"
-   CONCEPT_WIKI_API_BY_TAG_URL = "http://staging.conceptwiki.org/web-ws/concept/search/byTag"
-   CONCEPT_WIKI_API_FOR_URL_URL = "http://staging.conceptwiki.org/web-ws/concept/search/forUrl"
+   CONCEPT_WIKI_API_SEARCH_URL = "http://ops.conceptwiki.org/web-ws/concept/search/"
+   CONCEPT_WIKI_API_GET_URL = "http://ops.conceptwiki.org/web-ws/concept/search/get"
+   CONCEPT_WIKI_API_BY_TAG_URL = "http://ops.conceptwiki.org/web-ws/concept/search/byTag"
+   CONCEPT_WIKI_API_FOR_URL_URL = "http://ops.conceptwiki.org/web-ws/concept/search/forUrl"
   
   def initialize()
      # For timing the transaction   
@@ -132,7 +132,7 @@ puts results.inspect
         if concept['urls'].nil? then
           next
         else
-          result[:define_url] = 'http://staging.conceptwiki.org/wiki/#/concept/' + concept['uuid'] + '/view'
+          result[:define_url] = 'http://ops.conceptwiki.org/wiki/#/concept/' + concept['uuid'] + '/view'
         end
         
         # labels

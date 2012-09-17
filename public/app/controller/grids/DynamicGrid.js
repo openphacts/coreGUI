@@ -47,6 +47,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 selector:'dynamicgrid'
             }
         ],
+    filters: [],
 
     init:function () {
 		console.log('DynamicGrid: init()');
@@ -78,108 +79,81 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     testThis:function (args) {
     },
 
-    addNextRecords:function (this_gridview, extraParams) {
-		console.log('DynamicGrid: addNextRecords()');
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-        this_gridview.down('#sdfDownload_id').disable();
-        var this_store = this_gridview.store;
-        var this_controller = this;
-        var temp_store = Ext.create('LSP.store.DynamicGrid');
-        // configure copy store:
-        temp_store.proxy.extraParams = extraParams;
-        temp_store.proxy.api.read = this_gridview.readUrl;
-        temp_store.proxy.actionMethods = this_store.proxy.actionMethods;
-        var offset = this_store.data.length + 1;
-        // We load the copy store to get the new records
-        this_gridview.setLoading(true);
-        temp_store.load({params:{ offset:offset, limit:100}});
-        temp_store.on('load', function (temp_store, new_records, success) {
-            if (success === false) {
-                Ext.MessageBox.show({
-                    title:'Error',
-                    msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.ERROR
-                });
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-                this_gridview.setLoading(false);
-                return false;
-            }
-            var idx_start = offset - 1;
-            var row_count = 0;
-            Ext.each(new_records, function (new_record) {
-                new_record.index = idx_start + row_count;
-                row_count++;
-            });
-            this_store.loadRecords(new_records, {addRecords:true});
-            this_gridview.setLoading(false);
-            this_gridview.recordsLoaded = this_store.data.length;
-            if (temp_store.data.length < 100) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                this_gridview.down('#nextRecords').disable();
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_store.data.length);
-            }
-        });
+	addCompletedFilter: function(button) {
+		console.log('DynamicGrid: addCompletedFilter()');
+		activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
+		conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
+		value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		//unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		// TODO unit value check && unit_value != null
+		if (activity_value != null && conditions_value != null && value_value != "") {
+			filter = Ext.create('LSP.model.Filter', {
+				activity: activity_value,
+				condition: conditions_value,
+				value: value_value//,
+				//unit: unit_value
+			});
+			this.filters.push(filter);
+			// this is the only way I could find to reference the controller from the model and the view
+			filter.controller = this;
 
-    },
+			filter_view = Ext.create('LSP.view.filter.CompletedFilter', {});
+			filter_view.down('#activityLabel_id').setText(activity_value);
+			filter_view.down('#conditionsLabel_id').setText(conditions_value);
+			filter_view.down('#valueLabel_id').setText(value_value);
+			//filter_view.down('#unitLabel_id').setText(unit_value);
+			// tell the filter what model it is using so we can get back to the controller when the
+			// filter is removed from the view
+			filter.filterView = filter_view;
+			this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+			filter_view.filterModel = filter;
+			filter_view.on({
+				close: this.filterClosed
+			});
+			this.setActivityFilters(activity_value, conditions_value, value_value);
+			// currently only 1 filter can be added at a time
+			this.getFormView().down('#addCompletedFilter_id').setDisabled(true);
+		} else {
+			Ext.MessageBox.show({
+				title: 'Error',
+				msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.ERROR
+			});
+		}
+	},
 
-    storeLoad:function (this_gridview, success) {
-		console.log('DynamicGrid: storeLoad()');
-        if (success === false) {
-            Ext.MessageBox.show({
-                title:'Error',
-                msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                buttons:Ext.MessageBox.OK,
-                icon:Ext.MessageBox.ERROR
-            });
-            this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-            return false;
-        }
+	setActivityFilters: function(activity_value, conditions_value, value_value) {
+		console.log('DynamicGrid: setActivityFilters()');
+			var dg = this.getGridView();
+			var store = dg.store;
+			store.setActivityType(activity_value);
+			store.setActivityValue(value_value);
+			store.setActivityCondition(conditions_value);
+	},
 
+/* When a filter is removed from the view also
+		// remove the model from the controller
+		*/
+	filterClosed: function(filter) {
+		console.log('DynamicGrid: filterClosed()');
+		controller = filter.filterModel.controller;
+		var index = controller.filters.indexOf(filter.filterModel);
+		controller.filters.splice(index, 1);
+		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);
+	},
 
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-
-        var this_controller = this;
-        var dynamicgridStore = this_gridview.store;
-        if (typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {
-            var columns = [];
-            if (this_gridview.rowNumberer) {
-                columns.push(Ext.create('Ext.grid.RowNumberer', {width:40}));
-            }
-            Ext.each(dynamicgridStore.proxy.reader.jsonData.columns, function (column) {
-                columns.push(column);
-                if (column.text == 'csid_uri') {
-                    this_gridview.csid_column = true;
-                    this_gridview.down('#sdfDownloadProxy_id').enable();
-                }
-            });
-            this_gridview.reconfigure(dynamicgridStore, columns);
-            this_gridview.recordsLoaded = dynamicgridStore.data.length;
-            if (this_gridview.recordsLoaded == 0) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - No records found within OPS for this search!');
-                Ext.MessageBox.show({
-                    title:'Info',
-                    msg:'The OPS system does not contain any data that match this search.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.INFO
-                });
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
-                if (this_gridview.recordsLoaded == this_gridview.limit) {
-                    this_gridview.down('#nextRecords').enable();
-                    //                     this_gridview.down('#csvDownloadProxy_id').enable();
-
-                }
-                else {
-                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                }
-            }
-
-        }
-    },
+	addFilterForm: function(button) {
+		console.log('DynamicGrid: addFilterForm()');
+		// view = Ext.widget('FilterPanel');
+		hide = this.getFilterContainer().hidden;
+		if (hide) {
+			this.getFilterContainer().setVisible(true);
+		} else {
+			this.getFilterContainer().setVisible(false);
+		}
+	},
 
     prepSDFile2:function (sdf_prep_button) {
         var gridview = sdf_prep_button.up('dynamicgrid');
@@ -314,9 +288,136 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     },
 
+    prepGrid:function () {
+	console.log(this.$className + ': prepGrid()');
+        var grid_view = this.getGridView();
+        var store = grid_view.getStore();
+        store.on('prefetch', this.storeLoadComplete, this);
+    },
+
     storeLoadComplete:function (store, records, success) {
-		console.log('DynamicGrid: storeLoadComplete()');
-		gridView = this.getGridView();
-		gridView.setTitle(gridView.gridBaseTitle + ' - Total Records: ' + gridView.getStore().getTotalCount());
-}
+		console.log(this.$className + ': storeLoadComplete()');
+		grid_view = this.getGridView();
+		grid_store = grid_view.getStore();
+		if (success) {
+			grid_view.down('#sdfDownload_id').disable();
+			grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+			grid_view.down('#sdfDownloadProxy_id').enable();
+			this.getSubmitButton().enable();
+			grid_view.setLoading(false);
+			grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
+		} else {
+			console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.uri);
+			Ext.MessageBox.show({
+				title: 'Info',
+				msg: 'We are sorry but the OPS system returned an error.',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.INFO
+			});
+		}
+    },
+
+	fetchTotalResults: function() {
+		console.log('DynamicGrid: fetchTotalResults() for ' + this.$className);
+		try {
+			var grid_view = this.getGridView();
+		var grid_store = grid_view.getStore();
+		var form = this.getFormView();
+		var button = this.getSubmitButton();
+		countStore = this.getCountStore();
+		countStore.uri = grid_store.proxy.reader.uri;
+		// TODO only one filter can be used at the moment, need to change code for multiple
+		// at some point
+		// Count with filters was slow, easier to grab all the results and count them here
+		// code kept in case needed in future
+		if (this.filters.length>0) {
+			countStore.setActivityType(this.filters[0].data.activity);
+			countStore.setActivityValue(this.filters[0].data.value);
+			countStore.setActivityCondition(this.filters[0].data.condition);
+		}
+		//	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
+		//	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
+		//	allResultsStore.setActivityType(this.filters[0].data.activity);
+		//	allResultsStore.setActivityValue(this.filters[0].data.value);
+		//	allResultsStore.setActivityCondition(this.filters[0].data.condition);	
+		//	allResultsStore.load(function(records, operation, success) {
+		//		total = records.length;
+		//		grid_store.proxy.reader.total_count = total;
+		//	// we have the total number of results now and the proxy reader knows what it is so
+		//	// fetch the first page of results
+		//	if (total == 0) {
+		//		grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+		//		grid_view.down('#sdfDownload_id').disable();
+		//		grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+		//		grid_view.down('#sdfDownloadProxy_id').disable();
+		//		button.enable();
+		//		grid_view.setLoading(false);
+		//		Ext.MessageBox.show({
+		//			title: 'Info',
+		//			msg: 'The OPS system does not contain any data that match this search.',
+		//			buttons: Ext.MessageBox.OK,
+		//			icon: Ext.MessageBox.INFO
+		//		});
+		//	} else {
+		//		// for pagianted grid use this
+		//		// grid_store.load();
+		//		grid_store.guaranteeRange(0, 49);
+		//	}
+		//	});	
+		//} else {
+		countStore.load(function(records, operation, success) {
+			if (success) {
+				total = operation.response.result.primaryTopic[this.countNode];
+				grid_store.proxy.reader.total_count = total;
+				// we have the total number of results now and the proxy reader knows what it is so
+				// fetch the first page of results
+				if (total == 0) {
+					grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+					grid_view.down('#sdfDownload_id').disable();
+					grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+					grid_view.down('#sdfDownloadProxy_id').disable();
+					button.enable();
+					grid_view.setLoading(false);
+					Ext.MessageBox.show({
+						title: 'Info',
+						msg: 'The OPS system does not contain any data that match this search.',
+						buttons: Ext.MessageBox.OK,
+						icon: Ext.MessageBox.INFO
+					});
+				} else {
+					// for paginated grid use this
+					// grid_store.load();
+					grid_store.guaranteeRange(0, 49);
+				}
+			} else {
+				grid_view.setTitle(grid_view.gridBaseTitle + ' - We are sorry but the OPS system returned an error!');
+				grid_view.down('#sdfDownload_id').disable();
+				grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+				grid_view.down('#sdfDownloadProxy_id').disable();
+				button.enable();
+				grid_view.setLoading(false);
+				Ext.MessageBox.show({
+					title: 'Info',
+					msg: 'We are sorry but the OPS system returned an error.',
+					buttons: Ext.MessageBox.OK,
+					icon: Ext.MessageBox.INFO
+				});
+			}
+		});
+		//}
+		} catch (exception) {
+			console.log('DynamicGrid: exception fetching results for ' + this.$className + 'with uri ' + grid_store.proxy.uri);
+			Ext.MessageBox.show({
+				title: 'Info',
+				msg: 'We are sorry but the OPS system returned an error.',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.INFO
+			});
+		}
+		
+	},
+
+    enableSubmit:function (lookup) {
+        this.getSubmitButton().enable();
+    }
 });

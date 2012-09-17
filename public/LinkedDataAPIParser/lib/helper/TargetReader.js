@@ -34,43 +34,43 @@ Ext.define('LDA.helper.TargetReader', {
 		}
         var record = Ext.create('LDA.model.TargetModel', {
             cw_target_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
-            chembl_target_uri:chemblData[LDA.helper.LDAConstants.LDA_ABOUT],
-            drugbank_target_uri:drugBankData[LDA.helper.LDAConstants.LDA_ABOUT],
+            chembl_target_uri: chemblData != null ? chemblData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
+            drugbank_target_uri: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
 
-            label:chemblData['label'],
+            label: chemblData != null ? chemblData['label'] : null,
             label_src:chembl_src,
 
-            keywords:chemblData['keyword'],
+            keywords: chemblData != null ? chemblData['keyword'] : null,
             keywords_src:chembl_src,
 
-            description:chemblData['description'],
+            description: chemblData != null ? chemblData['description'] : null,
             description_src:chembl_src,
 
-            target_type:chemblData['target_type'],
+            target_type: chemblData != null ? chemblData['target_type'] : null,
             target_type_src:chembl_src,
 
-            organism:chemblData['organism'],
+            organism: chemblData != null ? chemblData['organism'] : null,
             organism_src:chembl_src,
 
-            synonyms:chemblData['synonyms'],
+            synonyms: chemblData != null ? chemblData['synonyms'] : null,
             synonyms_src:chembl_src,
 
-            cellular_location:drugBankData['cellularLocation'],
+            cellular_location: drugBankData != null ? drugBankData['cellularLocation'] : null,
             cellular_location_src:drugBank_src,
 
-            molecular_weight:drugBankData['molecularWeight'],
+            molecular_weight: drugBankData != null ? drugBankData['molecularWeight'] : null,
             molecular_weight_src:drugBank_src,
 
-            number_of_residues:drugBankData['numberOfResidues'],
+            number_of_residues: drugBankData != null ? drugBankData['numberOfResidues'] : null,
             number_of_residues_src:drugBank_src,
 
-            pdb_id_page:drugBankData['pdbIdPage'],
+            pdb_id_page: drugBankData != null ? drugBankData['pdbIdPage'] : null,
             pdb_id_page_src:drugBank_src,
 
-            specific_function:drugBankData['specificFunction'],
+            specific_function: drugBankData != null ? drugBankData['specificFunction'] : null,
             specific_function_src:drugBank_src,
 
-            theoretical_pi:drugBankData['theoreticalPi'],
+            theoretical_pi: drugBankData != null ? drugBankData['theoreticalPi'] : null,
             theoretical_pi_src:drugBank_src
         });
 

@@ -15,6 +15,9 @@ LSP4All::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+  
+  #change if you want it to send emails in development mode
+  config.action_mailer.perform_deliveries = false
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -35,5 +38,14 @@ LSP4All::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :address => AppSettings.config["mail"]["address"],
+      :port => AppSettings.config["mail"]["port"],
+      :user_name => AppSettings.config["mail"]["user"],
+      :password => AppSettings.config["mail"]["password"],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+  }
 end
 

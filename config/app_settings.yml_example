@@ -1,0 +1,19 @@
+# config/application.yml
+defaults: &defaults
+  mail:
+    #change to whatever is appropriate for your organisation
+    :to = ["a_developer@somewhere.com", "another_developer@somewhere.com",]
+    :password = "password"
+    :user = "whoisitfrom@somewhere.com"
+    :address = "smtp.somewhere.com"
+    :port = 587
+
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

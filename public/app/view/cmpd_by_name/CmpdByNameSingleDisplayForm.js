@@ -408,7 +408,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 bp.show();
 
                 var ip = this.query('#compound_form_imagepanel')[0];
-                var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                var csid = record.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
                 ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
                 ip.show();
 
@@ -483,6 +483,11 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             field.setValue(molValue);
                             field.show();
                             break;
+						case 'psa':
+							var psaValue = td[prop];
+							field.setValue(psaValue);
+							field.show();
+							break;
                         default:
                             field.setValue(td[prop]);
                             field.show();
@@ -495,6 +500,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 }
             }
         }
+        var ip = this.query('#compound_form_imagepanel')[0];
+        var csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+        ip.show();
         this.doLayout();
     },
 

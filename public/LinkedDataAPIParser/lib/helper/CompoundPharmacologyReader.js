@@ -1,14 +1,6 @@
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 25/06/2012
- * Time: 15:05
- * To change this template use File | Settings | File Templates.
- */
 Ext.define('LDA.helper.CompoundPharmacologyReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
-//    alias:'reader.ldajson',
 
     readRecords:function (data) {
         var me = this;
@@ -17,33 +9,58 @@ Ext.define('LDA.helper.CompoundPharmacologyReader', {
         //big chunks of data
         var pt = data[LDA.helper.LDAConstants.LDA_RESULT][LDA.helper.LDAConstants.LDA_PRIMARY_TOPIC];
         var em = pt[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
-        var drugbankData = em[1];
-        var chemspiderData = em[2];
-        var chemblData = em[3];
-
+	//no guarantee of the order of results
+        var drugbankData = null;
+        var chemspiderData = null;
+        var chemblData = null;
+        Ext.each(em, function (match, index, matches) {
+        	var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+        	        drugbankData = match;
+                 } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                        chemspiderData = match;
+                 } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemblValue') {
+                        chemblData = match;
+                 }
+            }
+        );
         //shared data in all records
+	var drugbank_compound_uri = null;
+	var drugbank_src = null;
+	var drugType = null;
+	var genericName = null;
+	var cs_compound_uri = null;
+	var chemspider_src = null;
+	var inchi = null;
+	var inchikey = null;
+	var smiles = null;
+	var chembl_compound_uri = null;
+	var chembl_src = null;
+	var full_mwt = null;
 
-        //uris
+        if (drugbankData != null) {
+        	drugbank_compound_uri = drugbankData[LDA.helper.LDAConstants.LDA_ABOUT];
+        	drugbank_src = drugbankData[LDA.helper.LDAConstants.LDA_IN_DATASET];
+        	drugType = drugbankData['drugType'];
+       		genericName = drugbankData['genericName'];
+	}
+	if (chemspiderData != null) {
+        	cs_compound_uri = chemspiderData[LDA.helper.LDAConstants.LDA_ABOUT];
+        	chemspider_src = chemspiderData[LDA.helper.LDAConstants.LDA_IN_DATASET];
+        	inchi = chemspiderData['inchi'];
+        	inchikey = chemspiderData['inchikey'];
+        	smiles = chemspiderData['smiles'];
+	}
+	if (chemblData != null) {
+        	chembl_compound_uri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
+        	chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
+        	full_mwt = chemblData['full_mwt']
+	}
         var cw_compound_uri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
-        var drugbank_compound_uri = drugbankData[LDA.helper.LDAConstants.LDA_ABOUT];
-        var cs_compound_uri = chemspiderData[LDA.helper.LDAConstants.LDA_ABOUT];
-        var chembl_compound_uri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
 
         //data with sources
         var conceptwiki_src = pt[LDA.helper.LDAConstants.LDA_IN_DATASET];
         var prefLabel = pt['prefLabel'];
-
-        var drugbank_src = drugbankData[LDA.helper.LDAConstants.LDA_IN_DATASET];
-        var drugType = drugbankData['drugType'];
-        var genericName = drugbankData['genericName'];
-
-        var chemspider_src = chemspiderData[LDA.helper.LDAConstants.LDA_IN_DATASET];
-        var inchi = chemspiderData['inchi'];
-        var inchikey = chemspiderData['inchikey'];
-        var smiles = chemspiderData['smiles'];
-
-        var chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
-        var full_mwt = chemblData['full_mwt']
 
         Ext.each(chemblData[LDA.helper.LDAConstants.LDA_ACTIVITY],
 

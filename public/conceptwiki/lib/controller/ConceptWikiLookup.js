@@ -19,6 +19,7 @@ Ext.define('CW.controller.ConceptWikiLookup', {
     
    
     setConcept:function (concept_url, cw_lookup) {
+	  console.log('CW.controller.ConceptWikiLookup: setConcept()');
       var concept_uuid = concept_url.match(/http:\/\/www.conceptwiki.org\/concept\/([a-f0-9\-]+)/)[1];
       var store = Ext.create('Ext.data.Store', {
         model: 'CW.model.ConceptWikiLookup',

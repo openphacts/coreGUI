@@ -69,16 +69,7 @@ module LSP4All
     config.active_record.include_root_in_json = false
     config.active_record.schema_format = :sql
 
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-        :address => "smtp.gmail.com",
-        :port => 587,
-        :user_name => 'openphactscoregui@gmail.com',
-        :password => 'onTheF1rstOfMay',
-        :authentication => :plain,
-        :enable_starttls_auto => true
-    }
-
-    config.action_mailer.raise_delivery_errors = true
+    require File.expand_path(File.join(File.dirname(__FILE__), '../lib/app_settings'))
+    AppSettings.config = YAML.load_file("config/app_settings.yml")[Rails.env]
   end
 end

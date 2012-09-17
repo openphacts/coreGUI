@@ -9,6 +9,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
     extend:'Ext.data.reader.Json',
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
+
         var me = this;
         var records = new Array();
 
@@ -21,21 +22,29 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
         var start_index = result[LDA.helper.LDAConstants.LDA_PAGINATED_START_INDEX];
 
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
-
+	if (items == null) {
+		Ext.Error.raise({
+                	msg: 'There are no items in the response'
+            	});
+	}
         Ext.each(items, function (item, index, items) {
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
             //big bits
             var forMolecule = item[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
-            var chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'];
-
-            var em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
+	    var chembl_compound_uri;
+	    var compound_full_mwt;
+	    var em;
+	    if (forMolecule != null) {
+		chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
+		compound_full_mwt = forMolecule['full_mwt'];
+		em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
+	    }
 
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
-                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src;
+                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid;
 
             Ext.each(em, function (match, index, matches) {
                     var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
@@ -45,7 +54,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                         cw_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         cs_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
-						csid = cs_compound_uri.split('/').pop();
+			csid = cs_compound_uri.split('/').pop();
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
@@ -60,15 +69,28 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             );
 
             var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
-            var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
-            var assay_organism = onAssay['assay_organism'];
-
-            var target = onAssay['target'];
-            var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
-            var target_pref_label = target['prefLabel'];
-            var target_title = target['title'];
-            var target_organism = target['assay_organism'];
-            var target_concatenated_uris = target['concatenatedURIs'];
+	    var chembl_assay_uri;
+	    var assay_organism;
+	    var target;
+	    if (onAssay != null) {
+		chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
+		assay_organism = onAssay['assay_organism'];
+		target = onAssay['target'];
+	    }
+	   var chembl_target_uri; 
+	   var target_pref_label;
+	   var target_title;
+	   var target_organism; 
+	   var target_concatenated_uris;
+	    if (target != null) {
+		chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
+		target_pref_label = target['prefLabel'];
+	    	// There seems to be no title so pref_label will have to do
+		target_title = target_pref_label;
+            	//var target_title = target['title'];
+		target_organism = target['assay_organism'];
+		target_concatenated_uris = target['concatenatedURIs'];
+	    }
 
 
             var activity_activity_type = item['activity_type'];
@@ -86,7 +108,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 start_index:start_index,
 
                 //for compound
-                compound_inchikey:compound_inchikey,
+                compound_inchikey: compound_inchikey,
                 compound_drug_type:compound_drug_type,
                 compound_generic_name:compound_generic_name,
                 target_title:target_title,

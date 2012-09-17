@@ -50,7 +50,41 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                         action:'query_pharm_by_target_name'
                     }
                 ]
-            },
+            }, {
+			xtype: 'container',
+			margin: '0 5 5 5',
+			name: 'filter_fields',
+			layout: {
+				type: 'column'
+			},
+			style: 'background-color: #fff;',
+			items: [{
+				xtype: 'button',
+				itemId: 'addFilterButton_id',
+				iconCls: 'icon-new',
+				padding: '5 5 5 5',
+				tooltip: 'Show or hide filter selector',
+				action: 'add_filter_form'
+			}, {
+				xtype: 'label',
+				forId: 'addFilterButton_id',
+				text: 'Filter',
+				margin: '5 5 5 5'
+			}]
+		}, {
+			xtype: 'FilterPanel',
+			itemId: 'filterContainer_id',
+			margin: '0 5 5 5',
+			name: 'filter_fields',
+			hidden: true
+		}, 
+		 {
+			xtype: 'container',
+			itemId: 'completedFilterContainer_id',
+			margin: '0 5 5 5',
+			name: 'completed_filter_container',
+			hidden: true
+		},
 //                        dymgridwidget
 //            {
 //                xtype:'dynamicgrid3',
