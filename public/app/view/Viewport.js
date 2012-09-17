@@ -90,6 +90,7 @@ Ext.define('LSP.view.Viewport', {
 
 //all UI changes should come through this function
     handleHistoryToken:function (token) {
+		 console.log("Viewport: handleHistoryToken()");
         //not null
         if (token) {
             //must start with ! (shebang/hashbang can help with googlebot indexing, some people hate this kind of thing, personally i don't care)
@@ -110,6 +111,7 @@ Ext.define('LSP.view.Viewport', {
     },
 
     parseHistoryToken:function (stringToParse) {
+		console.log("Viewport: parseHistoryToken()");
         var obj = {};
         var andBits = stringToParse.split('&');
         Ext.each(andBits, function (bit) {
@@ -125,6 +127,7 @@ Ext.define('LSP.view.Viewport', {
 
 //this handles the changing of central ui panel
     changeView:function (record, formData) {
+		console.log("Viewport: changeView()");
         var view;
         Ext.getCmp('centerView').items.each(function (curItem) {
             if (curItem.gridId == record.raw.id) {
