@@ -7,47 +7,47 @@
 }
 
 .icon-new {
-    background-image: url(/images/icon-new.gif) !important;
+    background-image: url(/assets/icon-new.gif) !important;
 }
 
 .icon-edit {
-    background-image: url(/images/icon-edit.png) !important;
+    background-image: url(/assets/icon-edit.png) !important;
 }
 
 .icon-delete {
-    background-image: url(/images/icon-delete.gif) !important;
+    background-image: url(/assets/icon-delete.gif) !important;
 }
 
 .icon-filter {
-    background-image: url(/images/icon-filter.png) !important;
+    background-image: url(/assets/icon-filter.png) !important;
 }
 
 .icon-reload {
-    background-image: url(/images/icon-reload.png) !important;
+    background-image: url(/assets/icon-reload.png) !important;
 }
 
 .icon-mol_dv {
-    background-image: url(/images/icon-mol_dataview.png) !important;
+    background-image: url(/assets/icon-mol_dataview.png) !important;
 }
 
 .icon-csv {
-    background-image: url(/images/icon-csv.png) !important;
+    background-image: url(/assets/icon-csv.png) !important;
 }
 
 .icon-sdf {
-    background-image: url(/images/export_sd_icon.png) !important;
+    background-image: url(/assets/export_sd_icon.png) !important;
 }
 
 .ux-rangemenu-gt {
-    background-image: url(/images/greater_than.png) !important;
+    background-image: url(/assets/greater_than.png) !important;
 }
 
 .ux-rangemenu-lt {
-    background-image: url(/images/less_than.png) !important;
+    background-image: url(/assets/less_than.png) !important;
 }
 
 .ux-rangemenu-eq {
-    background-image: url(/images/equals.png) !important;
+    background-image: url(/assets/equals.png) !important;
 }
 
 .ux-filtered-column {
@@ -56,7 +56,7 @@
 }
 
 .ux-gridfilter-text-icon {
-    background-image: url(/images/find.png) !important;
+    background-image: url(/assets/find.png) !important;
 }
 
 .structure_data_view-wrap {
@@ -95,15 +95,15 @@
 
 /*buttons*/
 .x-btn-default-small .icon-add {
-    background-image: url(/images/add16.gif) !important;
+    background-image: url(/assets/add16.gif) !important;
 }
 
 .x-btn-default-medium .icon-add {
-    background-image: url(/images/add24.gif) !important;
+    background-image: url(/assets/add24.gif) !important;
 }
 
 .x-btn-default-large .icon-add {
-    background-image: url(/images/add.gif) !important;
+    background-image: url(/assets/add.gif) !important;
 }
 
 /*compound by name styling*/
@@ -211,11 +211,11 @@
 }
 
 .menu-search-compound {
-    background-image: url(/images/magnifier.png) !important;
+    background-image: url(/assets/magnifier.png) !important;
 }
 
 .menu-search-target {
-    background-image: url(/images/magnifier.png) !important;
+    background-image: url(/assets/magnifier.png) !important;
 }
 
 sub {

@@ -47,7 +47,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'compound_form_imagepanel',
                                         width:150,
                                         height:150,
-                                        src:'/images/target_placeholder.png'
+                                        src:'./assets/target_placeholder.png'
                                     },
                                     {
                                         xtype:'displayfield',
@@ -408,9 +408,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 bp.show();
 
                 var ip = this.query('#compound_form_imagepanel')[0];
-                var csid = record.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-                ip.show();
+				var csid;
+				if (record.data.cs_uri) {
+					csid = record.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+	                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+	                ip.show();
+				}
 
                 var msg = this.down('#msg');
                 msg.hide();
@@ -501,8 +504,11 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             }
         }
         var ip = this.query('#compound_form_imagepanel')[0];
-        var csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+		var csid;
+		if (compound.data.cs_uri) {
+			csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+	        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+		}
         ip.show();
         this.doLayout();
     },

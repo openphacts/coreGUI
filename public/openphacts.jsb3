@@ -10,11 +10,6 @@
             },
             "files": [
                 {
-                    "clsName": "LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm",
-                    "name": "CmpdByNameSingleDisplayForm.js",
-                    "path": "app/view/cmpd_by_name/"
-                },
-                {
                     "clsName": "LSP.view.Appmoduletree",
                     "name": "Appmoduletree.js",
                     "path": "app/view/"
@@ -25,24 +20,29 @@
                     "path": "app/store/"
                 },
                 {
+                    "clsName": "LDA.model.TargetModel",
+                    "name": "TargetModel.js",
+                    "path": "LinkedDataAPIParser/lib/model/"
+                },
+                {
                     "clsName": "LDA.model.CompoundModel",
                     "name": "CompoundModel.js",
                     "path": "LinkedDataAPIParser/lib/model/"
                 },
                 {
+                    "clsName": "LSP.view.target_by_name.TargetPanel",
+                    "name": "TargetPanel.js",
+                    "path": "app/view/target_by_name/"
+                },
+                {
+                    "clsName": "LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm",
+                    "name": "CmpdByNameSingleDisplayForm.js",
+                    "path": "app/view/cmpd_by_name/"
+                },
+                {
                     "clsName": "LSP.view.mol_editor_forms.KetcherForm",
                     "name": "KetcherForm.js",
                     "path": "app/view/mol_editor_forms/"
-                },
-                {
-                    "clsName": "LSP.model.DynamicGrid",
-                    "name": "DynamicGrid.js",
-                    "path": "app/model/"
-                },
-                {
-                    "clsName": "LDA.model.TargetModel",
-                    "name": "TargetModel.js",
-                    "path": "LinkedDataAPIParser/lib/model/"
                 },
                 {
                     "clsName": "LDA.helper.DynamicPagingToolbar",
@@ -75,6 +75,11 @@
                     "path": "LinkedDataAPIParser/lib/store/"
                 },
                 {
+                    "clsName": "LDA.store.TargetStore",
+                    "name": "TargetStore.js",
+                    "path": "LinkedDataAPIParser/lib/store/"
+                },
+                {
                     "clsName": "LDA.store.CompoundStore",
                     "name": "CompoundStore.js",
                     "path": "LinkedDataAPIParser/lib/store/"
@@ -95,9 +100,59 @@
                     "path": "LinkedDataAPIParser/lib/helper/"
                 },
                 {
+                    "clsName": "LSP.model.DynamicGrid",
+                    "name": "DynamicGrid.js",
+                    "path": "app/model/"
+                },
+                {
+                    "clsName": "LSP.view.Settings",
+                    "name": "Settings.js",
+                    "path": "app/view/"
+                },
+                {
                     "clsName": "CW.model.ConceptWikiLookup",
                     "name": "ConceptWikiLookup.js",
                     "path": "conceptwiki/lib/model/"
+                },
+                {
+                    "clsName": "LDA.store.basestores.FilteringStore",
+                    "name": "FilteringStore.js",
+                    "path": "LinkedDataAPIParser/lib/store/basestores/"
+                },
+                {
+                    "clsName": "LDA.model.PharmacologyCountModel",
+                    "name": "PharmacologyCountModel.js",
+                    "path": "LinkedDataAPIParser/lib/model/"
+                },
+                {
+                    "clsName": "LDA.store.CompoundPharmacologyCountStore",
+                    "name": "CompoundPharmacologyCountStore.js",
+                    "path": "LinkedDataAPIParser/lib/store/"
+                },
+                {
+                    "clsName": "LSP.controller.Settings",
+                    "name": "Settings.js",
+                    "path": "app/controller/"
+                },
+                {
+                    "clsName": "LDA.helper.CompoundPharmacologyCountReader",
+                    "name": "CompoundPharmacologyCountReader.js",
+                    "path": "LinkedDataAPIParser/lib/helper/"
+                },
+                {
+                    "clsName": "LDA.view.grids.CompoundPharmacologyCountGrid",
+                    "name": "CompoundPharmacologyCountGrid.js",
+                    "path": "LinkedDataAPIParser/lib/view/grids/"
+                },
+                {
+                    "clsName": "LDA.helper.CompoundReader",
+                    "name": "CompoundReader.js",
+                    "path": "LinkedDataAPIParser/lib/helper/"
+                },
+                {
+                    "clsName": "LDA.view.grids.CompoundGrid",
+                    "name": "CompoundGrid.js",
+                    "path": "LinkedDataAPIParser/lib/view/grids/"
                 },
                 {
                     "clsName": "CW.config.Settings",
@@ -120,18 +175,13 @@
                     "path": "conceptwiki/lib/view/"
                 },
                 {
-                    "clsName": "LDA.store.basestores.FilteringStore",
-                    "name": "FilteringStore.js",
-                    "path": "LinkedDataAPIParser/lib/store/basestores/"
-                },
-                {
-                    "clsName": "LDA.model.PharmacologyCountModel",
-                    "name": "PharmacologyCountModel.js",
+                    "clsName": "LDA.model.PharmacologyModel",
+                    "name": "PharmacologyModel.js",
                     "path": "LinkedDataAPIParser/lib/model/"
                 },
                 {
-                    "clsName": "LDA.store.CompoundPharmacologyCountStore",
-                    "name": "CompoundPharmacologyCountStore.js",
+                    "clsName": "LDA.store.CompoundPharmacologyStore",
+                    "name": "CompoundPharmacologyStore.js",
                     "path": "LinkedDataAPIParser/lib/store/"
                 },
                 {
@@ -140,53 +190,13 @@
                     "path": "conceptwiki/lib/controller/"
                 },
                 {
-                    "clsName": "LDA.helper.CompoundPharmacologyCountReader",
-                    "name": "CompoundPharmacologyCountReader.js",
+                    "clsName": "LDA.helper.CompoundPharmacologyReader",
+                    "name": "CompoundPharmacologyReader.js",
                     "path": "LinkedDataAPIParser/lib/helper/"
                 },
                 {
-                    "clsName": "LDA.view.grids.CompoundPharmacologyCountGrid",
-                    "name": "CompoundPharmacologyCountGrid.js",
-                    "path": "LinkedDataAPIParser/lib/view/grids/"
-                },
-                {
-                    "clsName": "LSP.view.target_by_name.TargetPanel",
-                    "name": "TargetPanel.js",
-                    "path": "app/view/target_by_name/"
-                },
-                {
-                    "clsName": "LDA.store.TargetStore",
-                    "name": "TargetStore.js",
-                    "path": "LinkedDataAPIParser/lib/store/"
-                },
-                {
-                    "clsName": "LSP.view.Settings",
-                    "name": "Settings.js",
-                    "path": "app/view/"
-                },
-                {
-                    "clsName": "LDA.model.PharmacologyModel",
-                    "name": "PharmacologyModel.js",
-                    "path": "LinkedDataAPIParser/lib/model/"
-                },
-                {
-                    "clsName": "LDA.store.TargetPharmacologyStore",
-                    "name": "TargetPharmacologyStore.js",
-                    "path": "LinkedDataAPIParser/lib/store/"
-                },
-                {
-                    "clsName": "LSP.controller.Settings",
-                    "name": "Settings.js",
-                    "path": "app/controller/"
-                },
-                {
-                    "clsName": "LDA.helper.TargetPharmacologyReader",
-                    "name": "TargetPharmacologyReader.js",
-                    "path": "LinkedDataAPIParser/lib/helper/"
-                },
-                {
-                    "clsName": "LDA.view.grids.TargetPharmacologyGrid",
-                    "name": "TargetPharmacologyGrid.js",
+                    "clsName": "LDA.view.grids.CompoundPharmacologyGrid",
+                    "name": "CompoundPharmacologyGrid.js",
                     "path": "LinkedDataAPIParser/lib/view/grids/"
                 },
                 {
@@ -230,31 +240,6 @@
                     "path": "LinkedDataAPIParser/lib/view/grids/"
                 },
                 {
-                    "clsName": "LDA.store.CompoundPharmacologyStore",
-                    "name": "CompoundPharmacologyStore.js",
-                    "path": "LinkedDataAPIParser/lib/store/"
-                },
-                {
-                    "clsName": "LDA.helper.CompoundPharmacologyReader",
-                    "name": "CompoundPharmacologyReader.js",
-                    "path": "LinkedDataAPIParser/lib/helper/"
-                },
-                {
-                    "clsName": "LDA.view.grids.CompoundPharmacologyGrid",
-                    "name": "CompoundPharmacologyGrid.js",
-                    "path": "LinkedDataAPIParser/lib/view/grids/"
-                },
-                {
-                    "clsName": "LDA.helper.CompoundReader",
-                    "name": "CompoundReader.js",
-                    "path": "LinkedDataAPIParser/lib/helper/"
-                },
-                {
-                    "clsName": "LDA.view.grids.CompoundGrid",
-                    "name": "CompoundGrid.js",
-                    "path": "LinkedDataAPIParser/lib/view/grids/"
-                },
-                {
                     "clsName": "LDA.helper.TargetReader",
                     "name": "TargetReader.js",
                     "path": "LinkedDataAPIParser/lib/helper/"
@@ -263,11 +248,6 @@
                     "clsName": "LDA.view.grids.TargetGrid",
                     "name": "TargetGrid.js",
                     "path": "LinkedDataAPIParser/lib/view/grids/"
-                },
-                {
-                    "clsName": "Ext.ux.grid.FiltersFeature",
-                    "name": "FiltersFeature.js",
-                    "path": "ext/examples/ux/grid/"
                 },
                 {
                     "clsName": "LDA.store.TargetPharmacologyPaginatedStore",
@@ -282,6 +262,21 @@
                 {
                     "clsName": "LDA.view.grids.TargetPharmacologyPaginatedGrid",
                     "name": "TargetPharmacologyPaginatedGrid.js",
+                    "path": "LinkedDataAPIParser/lib/view/grids/"
+                },
+                {
+                    "clsName": "LDA.store.TargetPharmacologyStore",
+                    "name": "TargetPharmacologyStore.js",
+                    "path": "LinkedDataAPIParser/lib/store/"
+                },
+                {
+                    "clsName": "LDA.helper.TargetPharmacologyReader",
+                    "name": "TargetPharmacologyReader.js",
+                    "path": "LinkedDataAPIParser/lib/helper/"
+                },
+                {
+                    "clsName": "LDA.view.grids.TargetPharmacologyGrid",
+                    "name": "TargetPharmacologyGrid.js",
                     "path": "LinkedDataAPIParser/lib/view/grids/"
                 },
                 {
@@ -300,14 +295,19 @@
                     "path": "LinkedDataAPIParser/lib/view/grids/"
                 },
                 {
+                    "clsName": "LSP.model.GuiComponent",
+                    "name": "GuiComponent.js",
+                    "path": "app/model/"
+                },
+                {
                     "clsName": "LSP.view.dropdowns.conceptWikiProteinLookup",
                     "name": "conceptWikiProteinLookup.js",
                     "path": "app/view/dropdowns/"
                 },
                 {
-                    "clsName": "LSP.model.GuiComponent",
-                    "name": "GuiComponent.js",
-                    "path": "app/model/"
+                    "clsName": "Ext.ux.DataView.Animated",
+                    "name": "Animated.js",
+                    "path": "/ext/examples/ux/DataView//"
                 },
                 {
                     "clsName": "LSP.view.dynamicgrid.feature.selectable",
@@ -315,9 +315,9 @@
                     "path": "app/view/dynamicgrid/feature/"
                 },
                 {
-                    "clsName": "Ext.ux.DataView.Animated",
-                    "name": "Animated.js",
-                    "path": "/ext/examples/ux/DataView//"
+                    "clsName": "Ext.ux.grid.FiltersFeature",
+                    "name": "FiltersFeature.js",
+                    "path": "ext/examples/ux/grid/"
                 },
                 {
                     "clsName": "LDA.view.LDAParserView",
@@ -350,6 +350,11 @@
                     "path": "app/controller/"
                 },
                 {
+                    "clsName": "LSP.view.dataview.StructureViewer",
+                    "name": "StructureViewer.js",
+                    "path": "app/view/dataview/"
+                },
+                {
                     "clsName": "LSP.view.dynamicgrid.DynamicGrid",
                     "name": "DynamicGrid.js",
                     "path": "app/view/dynamicgrid/"
@@ -358,11 +363,6 @@
                     "clsName": "LSP.controller.grids.DynamicGrid",
                     "name": "DynamicGrid.js",
                     "path": "app/controller/grids/"
-                },
-                {
-                    "clsName": "LSP.view.dataview.StructureViewer",
-                    "name": "StructureViewer.js",
-                    "path": "app/view/dataview/"
                 },
                 {
                     "clsName": "LSP.view.larkc_sim_search.SimSearchScrollingGrid",
@@ -400,6 +400,11 @@
                     "path": "app/view/dropdowns/"
                 },
                 {
+                    "clsName": "LSP.view.filter.FilterForm",
+                    "name": "FilterForm.js",
+                    "path": "app/view/filter/"
+                },
+                {
                     "clsName": "LSP.view.Enzymetree",
                     "name": "Enzymetree.js",
                     "path": "app/view/"
@@ -435,6 +440,11 @@
                     "path": "app/controller/"
                 },
                 {
+                    "clsName": "Ext.ux.exporter.Base64",
+                    "name": "Base64.js",
+                    "path": "/app/view/ux/exporter/"
+                },
+                {
                     "clsName": "Ext.ux.exporter.Button",
                     "name": "Button.js",
                     "path": "/app/view/ux/exporter/"
@@ -445,14 +455,14 @@
                     "path": "ext/examples/ux/grid/menu/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.Base64",
-                    "name": "Base64.js",
-                    "path": "/app/view/ux/exporter/"
-                },
-                {
                     "clsName": "Ext.ux.grid.menu.RangeMenu",
                     "name": "RangeMenu.js",
                     "path": "ext/examples/ux/grid/menu/"
+                },
+                {
+                    "clsName": "Ext.ux.exporter.Formatter",
+                    "name": "Formatter.js",
+                    "path": "/app/view/ux/exporter/"
                 },
                 {
                     "clsName": "Ext.ux.grid.filter.Filter",
@@ -460,9 +470,9 @@
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.Formatter",
-                    "name": "Formatter.js",
-                    "path": "/app/view/ux/exporter/"
+                    "clsName": "Ext.ux.exporter.csvFormatter.CsvFormatter",
+                    "name": "CsvFormatter.js",
+                    "path": "/app/view/ux/exporter/csvFormatter/"
                 },
                 {
                     "clsName": "Ext.ux.exporter.sdfFormatter.SdfFormatter",
@@ -475,18 +485,8 @@
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.csvFormatter.CsvFormatter",
-                    "name": "CsvFormatter.js",
-                    "path": "/app/view/ux/exporter/csvFormatter/"
-                },
-                {
                     "clsName": "Ext.ux.grid.filter.BooleanFilter",
                     "name": "BooleanFilter.js",
-                    "path": "ext/examples/ux/grid/filter/"
-                },
-                {
-                    "clsName": "Ext.ux.grid.filter.DateFilter",
-                    "name": "DateFilter.js",
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
@@ -495,13 +495,18 @@
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
+                    "clsName": "Ext.ux.grid.filter.StringFilter",
+                    "name": "StringFilter.js",
+                    "path": "ext/examples/ux/grid/filter/"
+                },
+                {
                     "clsName": "Ext.ux.grid.filter.ListFilter",
                     "name": "ListFilter.js",
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
-                    "clsName": "Ext.ux.grid.filter.StringFilter",
-                    "name": "StringFilter.js",
+                    "clsName": "Ext.ux.grid.filter.DateFilter",
+                    "name": "DateFilter.js",
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
@@ -510,13 +515,13 @@
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.excelFormatter.Worksheet",
-                    "name": "Worksheet.js",
+                    "clsName": "Ext.ux.exporter.excelFormatter.Style",
+                    "name": "Style.js",
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.excelFormatter.Style",
-                    "name": "Style.js",
+                    "clsName": "Ext.ux.exporter.excelFormatter.Worksheet",
+                    "name": "Worksheet.js",
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {

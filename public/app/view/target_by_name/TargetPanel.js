@@ -40,7 +40,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'target_image',
                                 width:150,
                                 height:150,
-                                src:'/images/target_placeholder.png'
+                                src:'./assets/target_placeholder.png'
                             },
                             {
                                 xtype:'panel',
@@ -105,7 +105,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             field.hide();
         }, this);
         var img = this.down('#target_image');
-        img.setSrc('/images/target_placeholder.png');
+        img.setSrc('./assets/target_placeholder.png');
         this.doLayout();
     },
 

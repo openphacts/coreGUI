@@ -1,5 +1,6 @@
-Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
-Ext.Loader.setConfig({enabled:true, paths:{ 'CW':'conceptwiki/lib' } });
+// Ext-js api recommends setting all loaders after ext-*.js is loaded, so this bit is moved to application.html.erb
+//Ext.Loader.setConfig({enabled:true, paths:{ 'LDA':'LinkedDataAPIParser/lib' } });
+//Ext.Loader.setConfig({enabled:true, paths:{ 'CW':'conceptwiki/lib' } });
 // loader mask for all grids backed by store, avoids having to call setLoading(true) and then
 // setLoading(false)
 // Ext.define("Ext.view.AbstractView.LoadMask", {
@@ -44,7 +45,7 @@ Ext.create('Ext.app.Application', {
 
     launch:function () {
 		console.log('Application: launch()');
-        Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib','CW':'conceptwiki/lib' } });
+        //Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib','CW':'conceptwiki/lib' } });
 		// firefox seems to have some issues with autocreateviewport so create the view after launch is called.
 		// no idea why this is not working, maybe some asynch classloader issue in ff with the new lda views? Chrome has no problems with it.
 		Ext.create('LSP.view.Viewport');

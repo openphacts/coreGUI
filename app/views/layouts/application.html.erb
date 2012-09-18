@@ -13,13 +13,29 @@
   </script>
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>
+	<script type="text/javascript">
+	    Ext.Loader.setConfig({
+	      enabled: true,
+	      paths: {
+	          'CS':'chemspider/lib','CW':'conceptwiki/lib','LDA':'LinkedDataAPIParser/lib'
+	      }
+	    });
+	</script>
       <%= javascript_include_tag "application" %>
-      <%= javascript_include_tag 'app.js' %>
+      <%= javascript_include_tag '/app.js' %>
   <% else %>
       <%= javascript_include_tag '/ext/ext-all.js' %>
+	<script type="text/javascript">
+	    Ext.Loader.setConfig({
+	      enabled: true,
+	      paths: {
+	          'CS':'chemspider/lib','CW':'conceptwiki/lib','LDA':'LinkedDataAPIParser/lib'
+	      }
+	    });
+	</script>
       <%= javascript_include_tag "application" %>
-      <%= javascript_include_tag 'all-classes.js' %>
-      <%= javascript_include_tag 'app-all.js' %>
+      <%= javascript_include_tag '/all-classes.js' %>
+      <%= javascript_include_tag '/app-all.js' %>
   <% end %>
 
   <%= javascript_include_tag '/app/view/ux/exporter/Exporter.js' %>
