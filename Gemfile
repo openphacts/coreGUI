@@ -30,6 +30,8 @@ gem 'ancestry'
 gem 'pg'
 gem 'rdf'
 gem 'sparql-client'
+#needed for some linux deploys
+gem 'therubyracer', :platforms => :ruby
 ##########################
 # end of OPS explorer gems
 ##########################
