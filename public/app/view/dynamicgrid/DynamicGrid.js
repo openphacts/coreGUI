@@ -6,8 +6,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid',
 	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable'],
-
-	rowNumberer: true,
+  exportStore: null,
+	exportCSVReady: false,
+	exportSDFReady: false,
+  rowNumberer: true,
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
@@ -121,15 +123,25 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	        var config = {
 
 	            tbar:[
+	                 {
+	                    xtype:'button',
+	                    text:'Prepare full result set download',
+	                    tooltip:'Starts a two steep process to download the CSV and SD-files.',
+	                    itemId:'csvDownloadProxy_id',
+	                    iconCls:'icon-csv',
+	                    hidden:false
+	                },
 	                {
 	                    xtype:'exporterbutton',
 	                    formatter:'csv',
 	                    swfPath:'app/view/ux/exporter/downloadify.swf',
 	                    downloadImage:'app/view/ux/exporter/csv_button.png',
 	                    itemId:'csvDownload_id',
+	                    downloadName: 'ops_pharmacology_data.csv',
 	                    width:117,
 	                    height:22,
-	                    hidden:false
+	                    hidden:false,
+	                    disabled:true
 	                },
 	                { xtype:'tbseparator' },
 	                {
@@ -147,7 +159,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    swfPath:'app/view/ux/exporter/downloadify.swf',
 	                    downloadImage:'app/view/ux/exporter/sdf_button.png',
 	                    itemId:'sdfDownload_id',
-	                    width:111,
+	                    downloadName: 'ops_pharmacology_data.sdf',	                    
+                      width:111,
 	                    height:22,
 	                    hidden:false,
 	                    disabled:true
