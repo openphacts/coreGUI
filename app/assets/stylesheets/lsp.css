@@ -1,0 +1,277 @@
+#lsp-header {
+    color: #596F8F;
+    font-size: 17px;
+    font-weight: 200;
+    padding: 2px 8px;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.icon-new {
+    background-image: url(/assets/icon-new.gif) !important;
+}
+
+.icon-edit {
+    background-image: url(/assets/icon-edit.png) !important;
+}
+
+.icon-delete {
+    background-image: url(/assets/icon-delete.gif) !important;
+}
+
+.icon-filter {
+    background-image: url(/assets/icon-filter.png) !important;
+}
+
+.icon-reload {
+    background-image: url(/assets/icon-reload.png) !important;
+}
+
+.icon-mol_dv {
+    background-image: url(/assets/icon-mol_dataview.png) !important;
+}
+
+.icon-csv {
+    background-image: url(/assets/icon-csv.png) !important;
+}
+
+.icon-sdf {
+    background-image: url(/assets/export_sd_icon.png) !important;
+}
+
+.ux-rangemenu-gt {
+    background-image: url(/assets/greater_than.png) !important;
+}
+
+.ux-rangemenu-lt {
+    background-image: url(/assets/less_than.png) !important;
+}
+
+.ux-rangemenu-eq {
+    background-image: url(/assets/equals.png) !important;
+}
+
+.ux-filtered-column {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.ux-gridfilter-text-icon {
+    background-image: url(/assets/find.png) !important;
+}
+
+.structure_data_view-wrap {
+    float: left;
+    padding: 8px 17px;
+    margin: 5px;
+    /*    margin: 10px 0 0 25px;*/
+    text-align: center;
+    line-height: 14px;
+    color: #333;
+    height: 158px;
+    width: 140px;
+    font-size: 10px;
+    /* font-family: "Helvetica Neue",sans-serif;   */
+    overflow: hidden;
+    border-top: 1px solid transparent;
+}
+
+.structure_data_view-wrap span {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+}
+
+.x-view-over_structure_dv {
+    border: 1px solid #dddddd;
+}
+
+.x-item-selected_structure_dv {
+    background: #DFEDFF;
+}
+
+.x-item-selected_structure_dv span {
+    color: #1A4D8F;
+}
+
+/*buttons*/
+.x-btn-default-small .icon-add {
+    background-image: url(/assets/add16.gif) !important;
+}
+
+.x-btn-default-medium .icon-add {
+    background-image: url(/assets/add24.gif) !important;
+}
+
+.x-btn-default-large .icon-add {
+    background-image: url(/assets/add.gif) !important;
+}
+
+/*compound by name styling*/
+.x-cmpfield {
+    color: #808080;
+}
+
+.x-cmpBottomfield {
+    text-align: center;
+    color: #808080;
+}
+
+.x-cmpBottomfieldValue {
+    text-align: center;
+    color: black;
+    font-size: 16px;
+}
+
+.x-cmpTitle {
+    font-size: 30px;
+}
+
+.x-cmpBottomBase {
+    color: #808080;
+    text-align: center;
+}
+
+.x-cmpDescriptions {
+    text-align: justify;
+    color: black;
+}
+
+.target-field-label {
+    color: rgb(128, 128, 128);
+}
+
+.target-field-bottom {
+    color: rgb(128, 128, 128);
+    text-align: center;
+}
+
+.target-field-bottom-field {
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.target-title {
+    font-size: 30px;
+}
+
+.target-pharm-button {
+    margin-bottom: 20px;
+}
+
+.target-data-panel {
+    border: none;
+}
+
+.keyword {
+    background: rgb(200, 200, 200);
+    color: rgb(0, 0, 0);
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    padding: 3px;
+    float: left;
+}
+
+.synonym {
+    background: rgb(200, 200, 200);
+    color: rgb(0, 0, 0);
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    padding: 3px;
+    float: left;
+}
+
+.organism {
+    font-style: italic;
+    color: rgb(0, 0, 0);
+}
+
+.fb-panel {
+    padding: 3px;
+    height: 450px;
+}
+
+.fb-message {
+    background-color: rgb(245, 245, 250);
+    text-align: justify;
+    padding: 3px;
+}
+
+.fb-button {
+}
+
+.fb-email {
+}
+
+.fb-text {
+}
+
+.fb-accordion {
+}
+
+.menu-search-compound {
+    background-image: url(/assets/magnifier.png) !important;
+}
+
+.menu-search-target {
+    background-image: url(/assets/magnifier.png) !important;
+}
+
+sub {
+    font-size: xx-small;
+    position: relative;
+    bottom: -0.3em;
+}
+
+.defaultValueOff .defaultValueColour .defaultValueIcon .defaultValueText {
+
+}
+
+.conceptWikiValueColour {
+    background-color: rgb(124, 163, 99);
+}
+
+.chemblValueColour {
+    background-color: rgb(187, 71, 73);
+}
+
+.drugbankValueColour {
+    background-color: rgb(222, 90, 251);
+}
+
+.chemspiderValueColour {
+    background-color: rgb(59, 173, 241);
+}
+
+.conceptWikiValueIcon {
+
+}
+
+.chemblValueIcon {
+
+}
+
+.drugbankValueIcon {
+
+}
+
+.chemspiderValueIcon {
+
+}
+
+.conceptWikiValueText {
+
+}
+
+.chemblValueText {
+
+}
+
+.drugbankValueText {
+
+}
+
+.chemspiderValueText {
+
+}

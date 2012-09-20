@@ -4,7 +4,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
     closable:true,
     requires:[
         'LSP.view.dropdowns.conceptWikiProteinLookup',
-        'LSP.view.dynamicgrid.DynamicGrid3',
+        // 'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.target_by_name.TargetPanel'
     ],
     layout:{
@@ -29,10 +29,13 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 },
                 style:'background-color: #fff;',
                 items:[
-                    {
-                        xtype:'conceptWikiProteinLookup',
-                        itemId:'targetByNameLookup'
-                    },
+                  Ext.create('CW.view.ConceptWikiLookup', {
+                    xtype:'conceptWikiLookup',
+                    fieldLabel:'Protein name',
+                    itemId: 'targetByNameLookup',
+                    name: 'protein_uri',
+                    cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1'   // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+                }),
                     {
                         xtype:'button',
                         padding:'5 5 5 5',

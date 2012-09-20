@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.SimSearchForm', {
     extend:'Ext.app.Controller',
 
-    views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer'],
+    views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer','larkc_sim_search.SimSearchScrollingGrid'],
 
     refs:[
         {
@@ -10,7 +10,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         },
         {
             ref:'strucGrid',
-            selector:'SimSearchForm dynamicgrid3'
+            selector:'#simSearchGrid'
         },
         {
             ref:'submitButton',
@@ -19,6 +19,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     ],
 
     init:function () {
+	    console.log('LSP.controller.SimSearchForm: init()');
         this.control({
             'SimSearchForm button[action=ketcher_editor]':{
                 click:this.launchKetcher
@@ -39,21 +40,33 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     prepGrid:function () {
-//        console.log('prepGrid');
+        console.log('LSP.controller.SimSearchForm: prepGrid()');
         var grid = this.getStrucGrid();
-        grid.store.proxy.actionMethods = {read:'POST'};
-        grid.store.proxy.api.read = grid.readUrl;
-        grid.store.proxy.params = {offset:0, limit:100};
+        var store = grid.getStore();
+        store.on('prefetch', this.storeLoadComplete, this);
 
-        grid.store.on('load', function (this_store, records, success) {
-//            console.log('grid.store \'load\'');
-            this.getSubmitButton().enable();
-            var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-            grid_controller.storeLoad(grid, success);
-            this.getSsform().doLayout();
-            //       this.getStrucGrid().view.refresh();
-            this.getSsform().setLoading(false);
-        }, this);
+        // var grid = this.getStrucGrid();
+        // grid.store.proxy.actionMethods = {read:'POST'};
+        // grid.store.proxy.api.read = grid.readUrl;
+        // grid.store.proxy.params = {offset:0, limit:100};
+        // 
+        // grid.store.on('load', function (this_store, records, success) {
+        //     console.log('grid.store \'load\'');
+        //     this.getSubmitButton().enable();
+        //     var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
+        //     grid_controller.storeLoad(grid, success);
+        //     this.getSsform().doLayout();
+        //     //       this.getStrucGrid().view.refresh();
+        //     this.getSsform().setLoading(false);
+        // }, this);
+    },
+
+    storeLoadComplete:function (store, records, success) {
+        console.log('PharmByTargetNameForm: storeLoadComplete()');
+        this.getSubmitButton().enable();
+        this.getSsform().doLayout();
+		this.getSsform().setLoading(false);
+		this.callParent();
     },
 
     hitCoreAPI:function (csid_list) {
@@ -66,8 +79,8 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     handleHistoryToken:function (historyTokenObject) {
-//        console.log('handleHistoryToken');
-//        console.log(historyTokenObject);
+	    console.log('SimSearchForm: handleHistoryToken()');
+        console.log(historyTokenObject);
         var me = this;
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners:{

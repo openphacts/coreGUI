@@ -1,0 +1,66 @@
+---
+    - :xtype: dynamicgrid
+      :home: Users grid
+      :text: Users
+      :url: users.json
+      :id: 3
+    - :xtype: queryform
+      :home: SPARQL form
+      :text: SPARQL
+      :url: rdf.json
+      :id: 5
+    - :xtype: CmpdByNameForm
+      :home: Compound by name
+      :text: Compound by name
+      :url: ""
+      :id: 18
+    - :xtype: SimSearchForm
+      :home: Compound Structure Search
+      :text: Compound by structure
+      :url: ""
+      :id: 23
+    - :xtype: TargetByNameForm
+      :home: Target by name
+      :text: Target by name
+      :url: ""
+      :id: 24
+    - :xtype: temp
+      :home: ""
+      :text: X-Target by sequence
+      :url: ""
+      :id: 25
+    - :xtype: PharmByTargetNameForm
+      :home: Pharmacology by Target Name
+      :text: Pharmacology by Target
+      :url: ""
+      :id: 26
+    - :xtype: PharmByCmpdNameForm
+      :home: Pharmacology by Compound name
+      :text: Pharmacology by Compound
+      :url: ""
+      :id: 27
+    - :xtype: PharmEnzymeForm
+      :home: Compounds active against enzyme family
+      :text: Pharmacology by Enzyme family
+      :url: ""
+      :id: 28
+    # - :xtype: SummeryForm
+    #   :home: Concept properties and relations
+    #   :text: Summery
+    #   :url: ""
+    #   :id: 32
+    - :xtype: temp
+      :home: ""
+      :text: X-Polypharmacology Browser
+      :url: ""
+      :id: 34
+    - :xtype: temp
+      :home: ""
+      :text: X-Target Dossier
+      :url: ""
+      :id: 35
+    - :xtype: temp
+      :home: ""
+      :text: X-Chem-Bio Navigator
+      :url: ""
+      :id: 36

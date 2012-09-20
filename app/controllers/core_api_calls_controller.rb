@@ -165,7 +165,8 @@ class CoreApiCallsController < ApplicationController
         return
       end      
       col_results = compound_info_list(results)
-      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json, :layout => false     
+      results = ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json
+      render :json => results, :layout => false     
    end
    
    def compound_info_list(csid_array)

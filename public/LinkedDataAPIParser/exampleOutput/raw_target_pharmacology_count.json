@@ -1,0 +1,14 @@
+{
+  "format": "linked-data-api",
+  "version": "0.2",
+  "result": {
+    "_about": "http://ops.few.vu.nl/target/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+    "definition": "http://ops.few.vu.nl/api-config",
+    "extendedMetadataVersion": "http://ops.few.vu.nl/target/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+    "primaryTopic": {
+      "_about": "http://www.conceptwiki.org/concept/59aabd64-bee9-45b7-bbe0-9533f6a1f6bc",
+      "compoundPharmacologyTotalResults": 1341,
+      "isPrimaryTopicOf": "http://ops.few.vu.nl/target/pharmacology/count?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F59aabd64-bee9-45b7-bbe0-9533f6a1f6bc"
+    }
+  }
+}

@@ -51,6 +51,7 @@ Ext.define('LSP.view.Appmoduletree', {
 
     listeners:{
         itemclick:function (tree, record, item, index, e, options) {
+			console.log("AppmoduleTree: itemclick()");
             if (record.raw.application_type == 'grid') {
                 // Check if panel with that ID exists, then switch
                 Ext.History.add('!p=' + record.raw.xtype);

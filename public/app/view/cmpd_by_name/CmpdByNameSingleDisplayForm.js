@@ -47,7 +47,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'compound_form_imagepanel',
                                         width:150,
                                         height:150,
-                                        src:'/images/target_placeholder.png'
+                                        src:'./assets/target_placeholder.png'
                                     },
                                     {
                                         xtype:'displayfield',
@@ -395,8 +395,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             }
         ]
 
-        var store = Ext.data.StoreManager.lookup('Compounds');
-        store.addListener('load', this.showData, this);
         this.callParent(arguments);
 
     },
@@ -421,9 +419,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 bp.show();
 
                 var ip = this.query('#compound_form_imagepanel')[0];
-                var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-                ip.show();
+				var csid;
+				if (record.data.cs_uri) {
+					csid = record.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+	                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+	                ip.show();
+				}
 
                 var msg = this.down('#msg');
                 msg.hide();
@@ -467,7 +468,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         pharmButton.hide();
         pharmButton.setHandler(function () {
                 //                console.log('Pharma button clicked: ' + '!p=PharmByCmpdNameForm&u=' + target.store.proxy.extraParams.protein_uri);
-                Ext.History.add('!p=PharmByCmpdNameForm&u=' + compound.store.proxy.extraParams.compound_uri);
+                Ext.History.add('!p=PharmByCmpdNameForm&u=' + compound.store.proxy.extraParams.uri);
             }
         );
         pharmButton.show();
@@ -496,6 +497,11 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             field.setValue(molValue);
                             field.show();
                             break;
+						case 'psa':
+							var psaValue = td[prop];
+							field.setValue(psaValue);
+							field.show();
+							break;
                         default:
                             field.setValue(td[prop]);
                             field.show();
@@ -508,6 +514,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 }
             }
         }
+        var ip = this.query('#compound_form_imagepanel')[0];
+		var csid;
+		if (compound.data.cs_uri) {
+			csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+	        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+		}
+        ip.show();
         this.doLayout();
     },
 

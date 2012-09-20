@@ -3,14 +3,20 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
     alias:'widget.PharmByTargetNameForm',
     closable:true,
     requires:[
-        'LSP.view.dropdowns.conceptWikiProteinLookup',
-        'LSP.view.dynamicgrid.DynamicGrid3'
+        'LSP.view.dynamicgrid.DynamicGrid'
     ],
     layout:{
         type:'vbox',
         align:'stretch'
     },
+	// Use a PagingGridScroller (this is interchangeable with a PagingToolbar)
+	    verticalScrollerType: 'paginggridscroller',
+	    // do not reset the scrollbar when the view refreshs
+	    invalidateScrollerOnRefresh: false,
+	    // infinite scrolling does not support selection
+	    disableSelection: true,
     initComponent:function () {
+		console.log('PharmByTargetNameForm: constructor()');
         this.items = [
             {
                 xtype:'label',
@@ -27,16 +33,13 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 },
                 style:'background-color: #fff;',
                 items:[
-
-                    {
-                        xtype:'conceptWikiProteinLookup',
+                      Ext.create('CW.view.ConceptWikiLookup', {
+                        xtype:'conceptWikiLookup',
                         fieldLabel:'Protein name',
-                        forceSelection:true,
-                        allowBlank:false,
-                        typeAhead:true,
-                        typeAheadDelay:250,
-                        queryDelay:70
-                    },
+                        itemId: 'pharmByProteinCWLookup',
+                        name: 'protein_uri',
+                        cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1'   // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+                    }),
                     {
                         xtype:'button',
                         itemId:'pharmByTargetSubmit_id',
@@ -47,15 +50,57 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                         action:'query_pharm_by_target_name'
                     }
                 ]
-            },
+            }, {
+			xtype: 'container',
+			margin: '0 5 5 5',
+			name: 'filter_fields',
+			layout: {
+				type: 'column'
+			},
+			style: 'background-color: #fff;',
+			items: [{
+				xtype: 'button',
+				itemId: 'addFilterButton_id',
+				iconCls: 'icon-new',
+				padding: '5 5 5 5',
+				tooltip: 'Show or hide filter selector',
+				action: 'add_filter_form'
+			}, {
+				xtype: 'label',
+				forId: 'addFilterButton_id',
+				text: 'Filter',
+				margin: '5 5 5 5'
+			}]
+		}, {
+			xtype: 'FilterPanel',
+			itemId: 'filterContainer_id',
+			margin: '0 5 5 5',
+			name: 'filter_fields',
+			hidden: true
+		}, 
+		 {
+			xtype: 'container',
+			itemId: 'completedFilterContainer_id',
+			margin: '0 5 5 5',
+			name: 'completed_filter_container',
+			hidden: true
+		},
 //                        dymgridwidget
+//            {
+//                xtype:'dynamicgrid3',
+//                itemId:'pharmByTargetGrid_id',
+//                title:'Pharmacology by Target name search results',
+//                gridBaseTitle:'Pharmacology by Target name search results',
+//                flex:1,
+//                readUrl:'/core_api_calls/pharm_by_protein_name.json'
+//    }
             {
-                xtype:'dynamicgrid3',
-                itemId:'pharmByTargetGrid_id',
+	            // xtype:'PharmByTargetNameGrid',
+                xtype:'PharmByTargetNameScrollingGrid',
+                itemId:'pharmByTargetNameGrid',
                 title:'Pharmacology by Target name search results',
                 gridBaseTitle:'Pharmacology by Target name search results',
-                flex:1,
-                readUrl:'/core_api_calls/pharm_by_protein_name.json'
+                flex:1
             }
         ];
         this.callParent(arguments);

@@ -49,8 +49,8 @@ Ext.define("Ext.ux.exporter.Exporter", {
                 title:grid.title,
                 columns:columns
             });
-
-            return formatter.format(grid.store, config);
+console.log(grid.exportStore);
+            return formatter.format(grid.exportStore, config);
         },
 
         exportStore:function (store, formatter, config) {

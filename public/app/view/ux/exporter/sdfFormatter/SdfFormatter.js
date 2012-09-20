@@ -13,7 +13,9 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
         var me = this;
         var sd_rows = [];
         store.each(function (record, index) {
+            if(record.molfile !== undefined){
             sd_rows.push(this.buildRecord(config.columns, record, record.molfile));
+            }
         }, this);
 
         return sd_rows.join("\n") + "\n";
@@ -21,7 +23,7 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
 
     buildRecord:function (columns, row, molfile) {
         var cols = [];
-        var csid = row.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+        var csid = row.data.csid;
         Ext.each(columns, function (column) {
             var data_record = ">  <";
             // todo: check hidden props

@@ -17,32 +17,33 @@ To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
 wiki.openphacts.org and follow the instructions there.
 In case of problems contact Sune Askjaer on suap@lundbeck.com.
 
-== Adding a new tab to the Navigation three
+== Adding a new tab and form to the Navigation tree
 
-To add a new tab to the Navigation tree on the left follow these steps:
+To add a new tab to the Navigation tree you need to change LSP.store.NavigationTree store in the 
+main public/app folder. A node has leaf set to "true" if it has no children. Set 
+leaf to "false" and add an array of children if the node has any leaf nodes. Refer to the embedded
+JSON in the Navigation Tree store to see the the default tree that is rendered. 
+The xtype defines what form will be loaded when the node is clicked on.
 
-  1.  Add a row to the PostgreSQL database modelling the ancestry information for 
-      existing nodes. In the 'xtype' column add the name ExtJS widget alias defined
-      in the the javascript view file. NB. skip this part if you do not have the
-      js code scaffold for your widget done yet.
-  
-  2.  Create your javascript ExtJS view and controller (and optional model and store)
-      in folders under /public/javascrip/lsp(soon ops)/app/. Make sure to stick to the ExtJS MVC
-      concept as much as possible keeping the view layout apart from the logic and
-      controls that all should go into the javascript controller.
-  
-  3.  List your javascript controller in \public\javascripts\lsp\app.js file controller
-      array and your javascript view definition in the \public\javascripts\lsp\app\view\Viewer.js
-      file. If you have defined and cross referenced the javascript model, store,
-      view, and controller, you should be good to go with the exception of
-      the hidden athentication field that need to be included in the form. For these
-      it is best to look at one of the existing pages and simply copy paste these. 
+When the tree is clicked on the GuiComponents store is asked to return data about that form. Add some
+details about the new form to the json data in store/GuiComponent.js 
       
 In case you are only building a stand alone widget that goes on an existing page
 you can skip the above steps and just create the javascript view, controller,
 model and store as needed and make sure that the they reference each other and that
 the view defines the widget alias. Then all you need to put it in a page is to add
 it to an items: tag usings xtype: my_widget_name or Ext.Widget('my_widget_name').
+
+== Set the mailer constants
+
+Copy the file config/app_settings.yml_example to config/app_settings.yml and change
+the default values to whatever is appropriate for your application. Change 
+config.action_mailer.perform_deliveries = false to true in config/environments/development.rb
+if you want it to send feedback emails in development mode
+
+== Adding images
+The OPS Explorer uses the rails asset pipeline to load images. Any new ones should be added
+to app/assets/images and referred to as /assets/image.png etc in any css
       
 == Adding a controller method that accepts Ajax post or get
 
