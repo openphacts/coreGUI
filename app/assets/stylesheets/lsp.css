@@ -229,19 +229,23 @@ sub {
 }
 
 .conceptWikiValueColour {
-    background-color: rgb(124, 163, 99);
+    background-color: rgb(161, 209, 173);
+    text-align: center;
 }
 
 .chemblValueColour {
-    background-color: rgb(187, 71, 73);
+    background-color: rgb(41, 159, 150);
+    text-align: center;
 }
 
 .drugbankValueColour {
     background-color: rgb(222, 90, 251);
+    text-align: center;
 }
 
 .chemspiderValueColour {
-    background-color: rgb(59, 173, 241);
+    background-color: rgb(163, 231, 255);
+    text-align: center;
 }
 
 .conceptWikiValueIcon {
