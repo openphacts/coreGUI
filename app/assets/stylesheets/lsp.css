@@ -248,20 +248,24 @@ sub {
     text-align: center;
 }
 
-.conceptWikiValueIcon {
+.provenanceHelpIcon {
+    background-image: url(/assets/help.png) !important;
+}
 
+.conceptWikiValueIcon {
+    background-image: url(/assets/conceptWikiIcon.png) !important;
 }
 
 .chemblValueIcon {
-
+    background-image: url(/assets/chemblIcon.png) !important;
 }
 
 .drugbankValueIcon {
-
+    background-image: url(/assets/drugbankIcon.png) !important;
 }
 
 .chemspiderValueIcon {
-
+    background-image: url(/assets/chemspiderIcon.png) !important;
 }
 
 .conceptWikiValueText {
