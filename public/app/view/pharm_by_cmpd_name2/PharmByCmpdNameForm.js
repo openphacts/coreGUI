@@ -67,8 +67,26 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 				forId: 'addFilterButton_id',
 				text: 'Filter',
 				margin: '5 5 5 5'
-			}]
-		}, {
+			},{
+                xtype: 'radiogroup',
+                width: 200,
+                fieldLabel: 'Provenance',
+                margin: '5 5 5 65',
+
+                items: [
+                    { boxLabel: 'On', name: 'prov', inputValue: '1' },
+                    { boxLabel: 'Off', name: 'prov', inputValue: '2', checked: true}]
+            },{
+               xtype: 'button',
+               name: 'provHelp',
+               iconCls:'provenanceHelpIcon',
+               tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' +
+                   '<br><p class="chemspiderValueColour"> - ChemSpider </p>' +
+                   '<br><p class="drugbankValueColour"> - Drugbank </p>' +
+                   '<br><p class="chemblValueColour"> - Chembl</p>'
+            }
+            ]
+		},{
 			xtype: 'FilterPanel',
 			itemId: 'filterContainer_id',
 			margin: '0 5 5 5',
