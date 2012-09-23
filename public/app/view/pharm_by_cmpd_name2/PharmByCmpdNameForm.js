@@ -71,11 +71,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 xtype: 'radiogroup',
                 width: 200,
                 fieldLabel: 'Provenance',
+                itemId: 'provId',
                 margin: '5 5 5 65',
 
                 items: [
-                    { boxLabel: 'On', name: 'prov', inputValue: '1' },
-                    { boxLabel: 'Off', name: 'prov', inputValue: '2', checked: true}]
+                    { boxLabel: 'On', name: 'prov', inputValue: true },
+                    { boxLabel: 'Off', name: 'prov', inputValue: false, checked: true}]
             },{
                xtype: 'button',
                name: 'provHelp',
@@ -108,4 +109,5 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		}];
 		this.callParent(arguments);
 	}
+
 });
