@@ -129,13 +129,23 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
                 }
 
-            ]
+            ],
+        toggleProv:function (val) {
+            prov = val;
+            console.log(" Show provenance : " + prov );
+            this.doLayout();
+        }
 	}
 );
 
+var prov = false;
+
 function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
 
-    if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
+
+    //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
+    if (prov) {
+
         var recdata = this.columns[columnIndex].dataIndex;
         recdata += '_src';
         var source = record.data[recdata];
