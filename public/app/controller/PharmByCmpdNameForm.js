@@ -50,7 +50,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			},
 			'PharmByCmpdNameForm button[action=add_completed_filter]': {
 				click: this.addCompletedFilter
-			}
+			},
+            '#provId' : {
+                change: this.onProvChange
+            }
 		});
 	},
 
@@ -84,5 +87,13 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		button.disable();
 		var values = form.getValues();
 		Ext.History.add('!p=PharmByCmpdNameForm&u=' + values.compound_uri);
-	}
+	},
+
+    onProvChange :function(field, newVal, oldVal) {
+        var dg = this.getGridView();
+        dg.toggleProv(newVal['prov']);
+    }
+
 });
+
+
