@@ -64,8 +64,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'hha',
-                                        itemId:'hha',
+                                        name:'hba',
+                                        itemId:'hba',
                                         fieldCls:'x-cmpBottomfieldValue', // value
                                         baseCls:'x-cmpBottomBase', // label\
                                         anchor:'100%',
@@ -76,8 +76,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'hhd',
-                                        itemId:'hhd',
+                                        name:'hbd',
+                                        itemId:'hbd',
                                         fieldCls:'x-cmpBottomfieldValue', // value
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
@@ -88,8 +88,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'molweight',
-                                        itemId:'molweight',
+                                        name:'full_mwt',
+                                        itemId:'full_mwt',
                                         fieldCls:'x-cmpBottomfieldValue', // value
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
@@ -163,8 +163,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 items:[
                                     {
                                         xtype:'displayfield',
-                                        name:'compound_name',
-                                        itemId:'compound_name',
+                                        name:'prefLabel',
+                                        itemId:'prefLabel',
                                         //width:600,
                                         anchor:'100%',
                                         fieldCls:'x-cmpTitle'
@@ -261,8 +261,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'inchiKey',
-                                        itemId:'inchiKey',
+                                        name:'inchi_key',
+                                        itemId:'inchi_key',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
                                         padding:'10px 0 0 0',
@@ -492,9 +492,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 							field.show();
 							break;
                         default:
-                            field.setValue(td[prop]);
-                            field.show();
-
+                            if (td[prop]){
+                                field.setValue(td[prop]);
+                                field.show();
+                            }
                     }
 
 
