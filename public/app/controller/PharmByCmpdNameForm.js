@@ -51,7 +51,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			'PharmByCmpdNameForm button[action=add_completed_filter]': {
 				click: this.addCompletedFilter
 			},
-            '#provId' : {
+            'PharmByCmpdNameForm #provId' : {
                 change: this.onProvChange
             }
 		});
@@ -93,6 +93,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         var dg = this.getGridView();
         dg.toggleProv(newVal['prov']);
     }
+
+
 
 });
 
