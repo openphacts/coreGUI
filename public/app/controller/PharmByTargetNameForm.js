@@ -41,7 +41,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 	     'PharmByTargetNameForm button[action=add_completed_filter]': {
 		click: this.addCompletedFilter
 	     },
-            '#provId' : {
+            'PharmByTargetNameForm #provId' : {
                 change: this.onProvChange
             }
         });
@@ -79,6 +79,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
     onProvChange :function(field, newVal, oldVal) {
         var dg = this.getGridView();
-        dg.toggleProv(newVal['prov']);
+        dg.toggleProvenance(newVal['prov']);
     }
 });
