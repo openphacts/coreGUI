@@ -16,10 +16,11 @@
 Ext.create('Ext.app.Application', {
     name:'LSP',
     appFolder:'app',
+    requires:['LDA.helper.LDAConstants'],
 
     // Define all the controllers that should initialize at boot up of your application
     controllers:[
-        'LDAParserController',
+//        'LDAParserController',
 //        'Users',
         'grids.DynamicGrid',
    //     'grids.PharmaGridInf',
@@ -42,7 +43,7 @@ Ext.create('Ext.app.Application', {
     ],
 
     // autoCreateViewport:true,
-
+	
     launch:function () {
 		console.log('Application: launch()');
         //Ext.Loader.setConfig({enabled:true, paths:{ 'CS':'chemspider/lib','CW':'conceptwiki/lib' } });

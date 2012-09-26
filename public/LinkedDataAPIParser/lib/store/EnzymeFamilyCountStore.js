@@ -3,16 +3,7 @@ Ext.define('LDA.store.EnzymeFamilyCountStore', {
     model:'LDA.model.PharmacologyCountModel',
     storeId:'EnzymeFamilyCountStore',
     countNode: 'enzymePharmacologyTotalResults',
-    BASE_URL:'http://ops.few.vu.nl/target/enzyme/pharmacology/count?',
-		    proxy:{
-		        type:'jsonp',
-		        noCache:false,
-		        startParam:undefined,
-		limitParam:undefined,
-		pageParam:undefined,
-		        //this is the only query param handled natively by the proxy, all others are handled in store config below.
-		        callbackKey:'_callback'
-		    },
+    BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/target/enzyme/pharmacology/count?',
 
     constructor:function (config, arguments) {
         this.proxy.reader = Ext.create('LDA.helper.EnzymeFamilyCountReader');

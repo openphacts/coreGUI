@@ -4,7 +4,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
     views:['pharm_by_enzyme_family.PharmEnzymeForm','pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', 'tree_selector_forms.EnzymeTreeForm'],
     // views:['pharm_by_enzyme_family.PharmEnzymeForm','pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', 'tree_selector_forms.EnzymeTreeForm'],
 
-    // stores:['LDA.store.EnzymeFamilyPaginatedStore'],
+    stores:['LDA.store.EnzymeFamilyPaginatedStore'],
 
     refs:[
         {

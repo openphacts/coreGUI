@@ -1,5 +1,6 @@
 Ext.define('LDA.helper.LDAConstants', {
     singleton: true,
+	LDA_BASE_URL : 'http://ops2.few.vu.nl',
     LDA_IN_DATASET : 'inDataset',
 	LDA_ABOUT : '_about',
 	LDA_COMPOUND_PHARMACOLOGY_COUNT : 'compoundPharmacologyTotalResults',
