@@ -23,7 +23,8 @@ Ext.define('LDA.model.CompoundModel', {
         'description', 'description_src',
         'proteinBinding', 'proteinBinding_src',
         'toxicity', 'toxicity_src',
-        'prefLabel', 'prefLabel_src'
+        'prefLabel', 'prefLabel_src',
+        'meltingPoint', 'meltingPoint_src'
 //        '', '_src',
     ]
 });

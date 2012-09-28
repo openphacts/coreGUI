@@ -45,7 +45,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 	     },
 	     'PharmByTargetNameForm button[action=add_completed_filter]': {
 		click: this.addCompletedFilter
-	     }
+	     },
+            'PharmByTargetNameForm #provId' : {
+                change: this.onProvChange
+            }
         });
     },
 
@@ -77,5 +80,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         button.disable();
         var values = form.getValues();
         Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
+    },
+
+    onProvChange :function(field, newVal, oldVal) {
+        var dg = this.getGridView();
+        dg.toggleProvenance(newVal['prov']);
     }
 });

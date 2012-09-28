@@ -44,12 +44,15 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
                 afterrender:this.prepGrid,
                 historyToken:this.handleHistoryToken
             },
-	    'PharmEnzymeForm button[action=add_filter_form]': {
-		click: this.addFilterForm
-	     },
-	     'PharmEnzymeForm button[action=add_completed_filter]': {
-		click: this.addCompletedFilter
-	     }
+            'PharmEnzymeForm button[action=add_filter_form]': {
+            click: this.addFilterForm
+            },
+            'PharmEnzymeForm button[action=add_completed_filter]': {
+            click: this.addCompletedFilter
+            },
+            'PharmEnzymeForm #provId' : {
+                change: this.onProvChange
+            }
         });
     },
 
@@ -128,6 +131,11 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        button.disable();
 	        var values = form.getValues();
 	        Ext.History.add('!p=PharmEnzymeForm&ec=' + values.ec_number);
-	    }
+	    },
+
+        onProvChange :function(field, newVal, oldVal) {
+            var dg = this.getGridView();
+            dg.toggleProv(newVal['prov']);
+        }
 })
 ;
