@@ -371,7 +371,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			grid_view.setLoading(false);
 			grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
 		} else {
-			console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.uri);
+			console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
 			Ext.MessageBox.show({
 				title: 'Info',
 				msg: 'We are sorry but the OPS system returned an error.',
@@ -501,6 +501,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         gridview.down('#csvDownload_id').disable();
         gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
         gridview.down('#sdfDownload_id').disable();
+    },
+
+    onProvChange :function(field, newVal, oldVal) {
+        var dg = this.getGridView();
+        dg.toggleProv(newVal['prov']);
+		// TODO: doLayout the only api call I could find to refresh the grid. Seems that you still need to scroll
+		// for a second or 2 before it happens though. I think a better solution is still needed.
+		dg.doLayout();
     }
     
 });

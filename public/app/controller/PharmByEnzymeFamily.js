@@ -131,11 +131,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        button.disable();
 	        var values = form.getValues();
 	        Ext.History.add('!p=PharmEnzymeForm&ec=' + values.ec_number);
-	    },
-
-        onProvChange :function(field, newVal, oldVal) {
-            var dg = this.getGridView();
-            dg.toggleProv(newVal['prov']);
-        }
+	    }
+	
 })
 ;
