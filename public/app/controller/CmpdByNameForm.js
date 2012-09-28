@@ -56,7 +56,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 			var me = this;
 			var compound_panel = me.getFormView().down("CmpdByNameSingleDisplayForm");
             if (historyTokenObject.u) {
-                var store = this.getLDAStoreCompoundStoreStore();
+                var store = this.getStore("LDA.store.CompoundStore");
                 if (historyTokenObject.u != store.proxy.extraParams.uri) {
                     store.proxy.extraParams.uri = historyTokenObject.u;
 		    me.current_uri = historyTokenObject.u;
