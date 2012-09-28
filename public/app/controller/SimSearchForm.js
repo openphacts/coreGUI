@@ -2,7 +2,6 @@ Ext.define('LSP.controller.SimSearchForm', {
     extend:'Ext.app.Controller',
 
     views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer','larkc_sim_search.SimSearchScrollingGrid'],
-	requires:['LDA.helper.ChemspiderCompoundReader'],
     refs:[
         {
             ref:'ssform', // reference to the view
@@ -77,16 +76,16 @@ Ext.define('LSP.controller.SimSearchForm', {
         
 		var csid_store = Ext.create('LDA.store.CompoundStore', {});
 		for (var i = 0; i < csid_list.length; i++) {
-		    csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader' ,{});
-			store.proxy.extraParams.uri = "http://rdf.chemspider.org/" + csid_list[i];
+			csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
 			csid_store.load(function(records, operation, success) {
 				if (success) {
-
+					grid.getStore().add(records);
 				} else {
 
 				}
 			});
 		}
+		this.getSsform().setLoading(false);
     },
 
     handleHistoryToken:function (historyTokenObject) {
