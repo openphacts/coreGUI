@@ -187,6 +187,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
           //
           //TODO need to implement filter settings here... Get Ian to help
           //
+	  gridview.exportStore.proxy.timeout = '180000';
           gridview.exportStore.proxy.url = gridview.store.proxy.url;
 	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
           // and attaching it to the grid view
@@ -208,8 +209,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     gridview.exportCSVReady = true;                   
                   }
                   else {
-                     grid.up('form').setLoading(false);
-                     alert("We are sorry, something went wrong.<br/>Please try again later.");
+                     gridview.up('form').setLoading(false);
+                     alert("We are sorry, something went wrong. Please try again later.");
                   }
               }},this
         
