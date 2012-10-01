@@ -164,29 +164,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         var store_count = gridview.store.totalCount;
         if(store_count > CSV_EXPORT_LIMIT){alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");}     
         else{
-          // defining the name of the JSON reader
-          //var reader_name = 'LDA.helper.' + gridview.store.storeId.replace("Store","Reader");   
-          // creating instance of the export store
-          //var temp_store = Ext.create('Ext.data.Store', {
-            //model: gridview.store.model.modelName,
-            //proxy: {
-             // type: 'jsonp',
-             // noCache:false,
-             // startParam:undefined,
-             // limitParam:undefined,
-             // pageParam:undefined,
-             // callbackKey:'_callback',
-            //  timeout: '180000', 
-            //  url: gridview.store.proxy.url,
-            //  extraParams: gridview.store.proxy.extraParams,
-            //  reader: Ext.create(reader_name)
-            //},
-            //_format:'json'
-          //});
-          
-          //
-          //TODO need to implement filter settings here... Get Ian to help
-          //
 	  gridview.exportStore.proxy.timeout = '180000';
           gridview.exportStore.proxy.url = gridview.store.proxy.url;
 	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
