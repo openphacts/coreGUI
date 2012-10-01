@@ -6,7 +6,7 @@
 Ext.define("Ext.ux.exporter.csvFormatter.CsvFormatter", {
     extend:"Ext.ux.exporter.Formatter",
     contentType:'data:text/csv;base64,',
-    separator:";",
+    separator:"\t",
     extension:"csv",
 
     format:function (store, config) {
