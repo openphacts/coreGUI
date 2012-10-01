@@ -21,6 +21,13 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 		    }
 		},
         store:'TargetPharmacologyPaginatedStore',
+	exportStore: null,
+	getExportStore: function() {
+		if (this.exportStore == null) {
+			this.exportStore = Ext.create('LDA.store.TargetPharmacologyPaginatedStore', {});
+		}
+		return this.exportStore;		
+	},
         columns:
 			//TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)
             // defaults:{

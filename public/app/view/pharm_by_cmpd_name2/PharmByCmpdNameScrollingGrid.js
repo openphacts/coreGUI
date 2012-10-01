@@ -23,6 +23,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 			// }
 		],
         store:'CompoundPharmacologyPaginatedStore',
+	exportStore: null,
+	getExportStore: function() {
+		if (this.exportStore == null) {
+			this.exportStore = Ext.create('LDA.store.CompoundPharmacologyPaginatedStore', {});
+		}
+		return this.exportStore;		
+	},
 		// dockedItems: [{
 		//         xtype: 'dynamicpagingtoolbar',
 		// 		itemId: 'pager_id',

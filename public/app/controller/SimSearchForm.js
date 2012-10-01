@@ -2,7 +2,6 @@ Ext.define('LSP.controller.SimSearchForm', {
     extend:'Ext.app.Controller',
 
     views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer','larkc_sim_search.SimSearchScrollingGrid'],
-
     refs:[
         {
             ref:'ssform', // reference to the view
@@ -74,8 +73,19 @@ Ext.define('LSP.controller.SimSearchForm', {
 //        console.log(csid_list)
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
-        grid.store.proxy.extraParams = {csids:csid_list.join(',')};
-        grid.store.load({params:{offset:0, limit:100}});
+        
+		var csid_store = Ext.create('LDA.store.CompoundStore', {});
+		for (var i = 0; i < csid_list.length; i++) {
+			csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
+			csid_store.load(function(records, operation, success) {
+				if (success) {
+					grid.getStore().add(records);
+				} else {
+
+				}
+			});
+		}
+		this.getSsform().setLoading(false);
     },
 
     handleHistoryToken:function (historyTokenObject) {
@@ -159,7 +169,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     submitQuery:function (button) {
-//        console.log('submitQuery');
+        console.log(' SimSearchForm: submitQuery()');
         button.disable();
         var form = button.up('form');
         var this_gridview = this.getStrucGrid();
