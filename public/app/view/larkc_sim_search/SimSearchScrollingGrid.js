@@ -24,6 +24,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 			// }
 		],
         store:Ext.create('LDA.store.SimSearchStore', {}),
+	exportStore: null,
+	getExportStore: function() {
+		if (this.exportStore == null) {
+			this.exportStore = Ext.create('LDA.store.SimSearchStore', {});
+		}
+		return this.exportStore;		
+	},
 		// dockedItems: [{
 		//         xtype: 'dynamicpagingtoolbar',
 		// 		itemId: 'pager_id',
