@@ -24,6 +24,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 			// }
 		],
         store:Ext.create('LDA.store.SimSearchStore', {}),
+	exportStore: null,
+	getExportStore: function() {
+		if (this.exportStore == null) {
+			this.exportStore = Ext.create('LDA.store.SimSearchStore', {});
+		}
+		return this.exportStore;		
+	},
 		// dockedItems: [{
 		//         xtype: 'dynamicpagingtoolbar',
 		// 		itemId: 'pager_id',
@@ -39,59 +46,58 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
                 {
 					//TODO: renderer for chemical structure image (from chemspider?)
                     header:'Structure',
-                    dataIndex:'cs_compound_uri',
+                    dataIndex:'cs_uri',
 					xtype: 'templatecolumn',
-					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={{cs_uri.substr(cs_uri.lastIndexOf('/') + 1)}&w=128&h=128" alt="CSID:{cs_uri.substr(cs_uri.lastIndexOf('/') + 1)}"/>',
 					sortable:false
                 },
                 {
                     header:'Smiles',
-                    dataIndex:'compound_smiles'
+                    dataIndex:'smiles'
                 },
                 {
-                    header:'Std Value',
-                    dataIndex:'activity_standard_value'
+                    header:'hba',
+                    dataIndex:'hba'
                 },
                 {
-                    header:'Chemspider ID',
-                    dataIndex:'cs_compound_uri',
-					sortable:false
+                    header:'hbd',
+                    dataIndex:'hbd'
                 },
                 {
-                    header:'Inchi key',
-                    dataIndex:'compound_inchikey'
+                    header:'mw freebase',
+                    dataIndex:'mw_freebase'
                 },
                 {
-                    header:'Std Type',
-                    dataIndex:'activity_activity_type'
+                    header:'Melting Point',
+                    dataIndex:'melting_point'
                 },
                 {
-                    header:'Target Organism',
-                    dataIndex:'target_organism'
+                    header:'alogp',
+                    dataIndex:'alogp'
                 },
                 {
-                    header:'Std Unit',
-                    dataIndex:'activity_standard_units'
+                    header:'rtb',
+                    dataIndex:'rtb'
                 },
                 {
-                    header:'Target Name',
-                    dataIndex:'target_title'
-                },
-                {
-                    header:'Relation',
-                    dataIndex:'activity_relation'
+                    header:'molform',
+                    dataIndex:'molform'
                 },
                 {
                     header:'Molweight',
-                    dataIndex:'compound_full_mwt'
+                    dataIndex:'full_mwt'
                 },
                 {
                     header:'Inchi',
-                    dataIndex:'compound_inchi'
+                    dataIndex:'inchi'
+                },
+                {
+                    header:'Inchi Key',
+                    dataIndex:'inchi_key'
                 },
                 {
                     header:'Compound name',
-                    dataIndex:'compound_pref_label'
+                    dataIndex:'prefLabel'
                 }
             ]
 	}

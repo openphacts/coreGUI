@@ -75,6 +75,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
         
 		var csid_store = Ext.create('LDA.store.CompoundStore', {});
+		csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
 		for (var i = 0; i < csid_list.length; i++) {
 			csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
 			csid_store.load(function(records, operation, success) {
