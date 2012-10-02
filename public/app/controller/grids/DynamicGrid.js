@@ -474,7 +474,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
     // 
     resetDownload:function () {
-        var gridview = this.getGridView()
+        var gridview = this.getGridView();
         gridview.exportCSVReady = false;
         gridview.exportSDFReady = false;
 
@@ -488,9 +488,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     onProvChange :function(field, newVal, oldVal) {
         var dg = this.getGridView();
         dg.toggleProv(newVal['prov']);
-		// TODO: doLayout the only api call I could find to refresh the grid. Seems that you still need to scroll
-		// for a second or 2 before it happens though. I think a better solution is still needed.
-		dg.doLayout();
+		dg.getView().refresh();
     }
     
 });
