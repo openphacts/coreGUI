@@ -161,7 +161,7 @@ function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
             cls = 'defaultValue';
         }
         var iconCls = cls + 'Icon';
-        console.log(iconCls);
+        //console.log(iconCls);
         cls += LDAProvenanceMode;
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
