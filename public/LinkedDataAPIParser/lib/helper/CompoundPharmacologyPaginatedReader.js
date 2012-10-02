@@ -39,7 +39,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
-                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src;
+                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid;
 
             Ext.each(em, function (match, index, matches) {
                     var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];

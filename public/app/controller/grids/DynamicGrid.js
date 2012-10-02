@@ -356,6 +356,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
 		} else {
 			console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
+			this.getSubmitButton().enable();
+			grid_view.setLoading(false);
 			Ext.MessageBox.show({
 				title: 'Info',
 				msg: 'We are sorry but the OPS system returned an error.',
