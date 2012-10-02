@@ -37,149 +37,157 @@ Ext.define('LSP.store.NavigationTree', {
     //         type:'ajax',
     //         url:'application_modules.json'
     //     }
-	root: {
-	        expanded: true,
-	        children: [
-			{
-				xtype: "",
-				cls: "folder",
-				text: "OPS",
-				leaf: false,
-				expanded: false,
-				children: [{
-					xtype: "",
-					cls: "folder",
-					text: "Exemplars",
-					leaf: false,
-					children: [{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Chem-Bio Navigator",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Target Dossier",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Polypharmacology Browser",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				// Summmary form is hidden for the moment
-				// {
-				// 					xtype: "",
-				// 			        leaf: false,
-				// 			        text: "Concept",
-				// 			        cls: "folder",
-				// 					children: [{
-				// 						xtype: "SummeryForm",
-				// 						home: "Concept properties and relations",
-				// 				        leaf: true,
-				// 				        text: "Summary",
-				// 				        cls: "file",
-				// 						application_type : 'grid'
-				// 					}]
-				// 				},
-				{
-					xtype: "",
-			        leaf: false,
-			        text: "Pharmacology",
-			        cls: "folder",
-					children: [{
-						xtype: "PharmEnzymeForm",
-				        home: "Compounds active against enzyme family",
-				        leaf: true,
-				        text: "Pharmacology by Enzyme family",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "PharmByCmpdNameForm",
-				        home: "Pharmacology by Compound name",
-				        leaf: true,
-				        text: "Pharmacology by Compound",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "PharmByTargetNameForm",
-				        home: "Pharmacology by Target Name",
-				        leaf: true,
-				        text: "Pharmacology by Target",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				{
-					xtype: "",
-			        home: "",
-			        leaf: false,
-			        text: "Target",
-			        cls: "folder",
-					children: [{
-						xtype: "temp",
-				        home: "",
-				        leaf: true,
-				        text: "X-Target by sequence",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "TargetByNameForm",
-				        home: "Target by name",
-				        leaf: true,
-				        text: "Target by name",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				{
-					xtype: "",
-			        home: "",
-			        leaf: false,
-			        text: "Compound",
-			        cls: "folder",
-					children: [{
-						xtype: "SimSearchForm",
-				        home: "Compound Structure Search",
-				        leaf: true,
-				        text: "Compound by structure",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "CmpdByNameForm",
-				        home: "Compound by name",
-				        leaf: true,
-				        text: "Compound by name",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				}]
-			},
-			{
-				xtype: "",
-		        home: "",
-		        leaf: false,
-		        text: "Searching",
-		        cls: "folder",
-				children: [{
-					xtype: "queryform",
-			        home: "SPARQL form",
-			        leaf: true,
-			        text: "SPARQL",
-			        cls: "file",
-			        url: "rdf.json"
-				}]
-			}
-	        ]
-	    }
+    root:{
+        expanded:true,
+        children:[
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Compound",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"CmpdByNameForm",
+                        home:"Compound by name",
+                        leaf:true,
+                        text:"Compound by name",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"SimSearchForm",
+                        home:"Compound Structure Search",
+                        leaf:true,
+                        text:"Compound by structure",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+
+                ]
+            },
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Target",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"TargetByNameForm",
+                        home:"Target by name",
+                        leaf:true,
+                        text:"Target by name",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        home:"",
+                        leaf:true,
+                        text:"X-Target by sequence",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            },
+            {
+                xtype:"",
+                leaf:false,
+                text:"Pharmacology",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"PharmEnzymeForm",
+                        home:"Compounds active against enzyme family",
+                        leaf:true,
+                        text:"Pharmacology by Enzyme family",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByCmpdNameForm",
+                        home:"Pharmacology by Compound name",
+                        leaf:true,
+                        text:"Pharmacology by Compound",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByTargetNameForm",
+                        home:"Pharmacology by Target Name",
+                        leaf:true,
+                        text:"Pharmacology by Target",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            },
+            {
+                xtype:"",
+                cls:"folder",
+                text:"Exemplars",
+                leaf:false,
+                children:[
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Chem-Bio Navigator",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Target Dossier",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Polypharmacology Browser",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            }
+
+
+        ]
+
+
+    }
 });
+
+
+//			,{
+//				xtype: "",
+//		        home: "",
+//		        leaf: false,
+//		        text: "Searching",
+//		        cls: "folder",
+//				children: [{
+//					xtype: "queryform",
+//			        home: "SPARQL form",
+//			        leaf: true,
+//			        text: "SPARQL",
+//			        cls: "file",
+//			        url: "rdf.json"
+//				}]
+//			}
+// Summmary form is hidden for the moment
+// {
+// 					xtype: "",
+// 			        leaf: false,
+// 			        text: "Concept",
+// 			        cls: "folder",
+// 					children: [{
+// 						xtype: "SummeryForm",
+// 						home: "Concept properties and relations",
+// 				        leaf: true,
+// 				        text: "Summary",
+// 				        cls: "file",
+// 						application_type : 'grid'
+// 					}]
+// 				},
