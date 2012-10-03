@@ -161,225 +161,160 @@ Ext.define('LSP.store.NavigationTree', {
     //         type:'ajax',
     //         url:'application_modules.json'
     //     }
-	root: {
-	        expanded: true,
-	        children: [
-			{
-				xtype: "",
-				cls: "folder",
-				text: "OPS",
-				leaf: false,
-				expanded: false,
-				children: [{
-					xtype: "",
-					cls: "folder",
-					text: "Exemplars",
-					leaf: false,
-					children: [{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Chem-Bio Navigator",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Target Dossier",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "temp",
-				        leaf: true,
-				        text: "X-Polypharmacology Browser",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				// Summmary form is hidden for the moment
-				// {
-				// 					xtype: "",
-				// 			        leaf: false,
-				// 			        text: "Concept",
-				// 			        cls: "folder",
-				// 					children: [{
-				// 						xtype: "SummeryForm",
-				// 						home: "Concept properties and relations",
-				// 				        leaf: true,
-				// 				        text: "Summary",
-				// 				        cls: "file",
-				// 						application_type : 'grid'
-				// 					}]
-				// 				},
-				{
-					xtype: "",
-			        leaf: false,
-			        text: "Pharmacology",
-			        cls: "folder",
-					children: [{
-						xtype: "PharmEnzymeForm",
-				        home: "Compounds active against enzyme family",
-				        leaf: true,
-				        text: "Pharmacology by Enzyme family",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "PharmByCmpdNameForm",
-				        home: "Pharmacology by Compound name",
-				        leaf: true,
-				        text: "Pharmacology by Compound",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "PharmByTargetNameForm",
-				        home: "Pharmacology by Target Name",
-				        leaf: true,
-				        text: "Pharmacology by Target",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				{
-					xtype: "",
-			        home: "",
-			        leaf: false,
-			        text: "Target",
-			        cls: "folder",
-					children: [{
-						xtype: "temp",
-				        home: "",
-				        leaf: true,
-				        text: "X-Target by sequence",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "TargetByNameForm",
-				        home: "Target by name",
-				        leaf: true,
-				        text: "Target by name",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				},
-				{
-					xtype: "",
-			        home: "",
-			        leaf: false,
-			        text: "Compound",
-			        cls: "folder",
-					children: [{
-						xtype: "SimSearchForm",
-				        home: "Compound Structure Search",
-				        leaf: true,
-				        text: "Compound by structure",
-				        cls: "file",
-						application_type : 'grid'
-					},
-					{
-						xtype: "CmpdByNameForm",
-				        home: "Compound by name",
-				        leaf: true,
-				        text: "Compound by name",
-				        cls: "file",
-						application_type : 'grid'
-					}]
-				}]
-			},
-			{
-				xtype: "",
-		        home: "",
-		        leaf: false,
-		        text: "Searching",
-		        cls: "folder",
-				children: [{
-					xtype: "queryform",
-			        home: "SPARQL form",
-			        leaf: true,
-			        text: "SPARQL",
-			        cls: "file",
-			        url: "rdf.json"
-				}]
-			}
-	        ]
-	    }
-});
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 29/06/2012
- * Time: 07:39
- * To change this template use File | Settings | File Templates.
- */
-Ext.define('LDA.model.TargetModel', {
-    extend:'Ext.data.Model',
-    fields:[
-        //this msay need to change (target information endpiint is down)
+    root:{
+        expanded:true,
+        children:[
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Compound",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"CmpdByNameForm",
+                        home:"Compound by name",
+                        leaf:true,
+                        text:"Compound by name",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"SimSearchForm",
+                        home:"Compound Structure Search",
+                        leaf:true,
+                        text:"Compound by structure",
+                        cls:"file",
+                        application_type:'grid'
+                    }
 
-        'cw_target_uri',
-        'chembl_target_uri',
-        'drugbank_target_uri',
+                ]
+            },
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Target",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"TargetByNameForm",
+                        home:"Target by name",
+                        leaf:true,
+                        text:"Target by name",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        home:"",
+                        leaf:true,
+                        text:"X-Target by sequence",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            },
+            {
+                xtype:"",
+                leaf:false,
+                text:"Pharmacology",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"PharmEnzymeForm",
+                        home:"Compounds active against enzyme family",
+                        leaf:true,
+                        text:"Pharmacology by Enzyme family",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByCmpdNameForm",
+                        home:"Pharmacology by Compound name",
+                        leaf:true,
+                        text:"Pharmacology by Compound",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByTargetNameForm",
+                        home:"Pharmacology by Target Name",
+                        leaf:true,
+                        text:"Pharmacology by Target",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            },
+            {
+                xtype:"",
+                cls:"folder",
+                text:"Exemplars",
+                leaf:false,
+                children:[
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Chem-Bio Navigator",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Target Dossier",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"temp",
+                        leaf:true,
+                        text:"X-Polypharmacology Browser",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            }
 
-        //chembl
-        'label',
-        'label_src',
 
-        'keywords',
-        'keywords_src',
+        ]
 
-        'description',
-        'description_src',
 
-        'target_type',
-        'target_type_src',
-
-        'organism',
-        'organism_src',
-
-        'synonyms',
-        'synonyms_src',
-
-        'cellular_location',
-        'cellular_location_src',
-
-        'molecular_weight',
-        'molecular_weight_src',
-
-        'number_of_residues',
-        'number_of_residues_src',
-
-        'pdb_id_page',
-        'pdb_id_page_src',
-
-        'specific_function',
-        'specific_function_src',
-
-        'theoretical_pi',
-        'theoretical_pi_src'
-
-//        'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
-//        'inchi', 'inchi_src',
-//        'inchi_key', 'inchi_key_src',
-//        'smiles', 'smiles_src',
-//        'alogp', 'alogp_src',
-//        'full_mwt', 'full_mwt_src',
-//        'hba', 'hba_src',
-//        'hbd', 'hbd_src',
-//        'molform', 'molform_src',
-//        'mw_freebase', 'mw_freebase_src',
-//        'psa', 'psa_src',
-//        'rtb', 'rtb_src',
-//        'biotransformation', 'biotransformation_src',
-//        'description', 'description_src',
-//        'proteinBinding', 'proteinBinding_src',
-//        'toxicity', 'toxicity_src',
-//        'prefLabel', 'prefLabel_src'
-    ]
+    }
 });
 
+
+//			,{
+//				xtype: "",
+//		        home: "",
+//		        leaf: false,
+//		        text: "Searching",
+//		        cls: "folder",
+//				children: [{
+//					xtype: "queryform",
+//			        home: "SPARQL form",
+//			        leaf: true,
+//			        text: "SPARQL",
+//			        cls: "file",
+//			        url: "rdf.json"
+//				}]
+//			}
+// Summmary form is hidden for the moment
+// {
+// 					xtype: "",
+// 			        leaf: false,
+// 			        text: "Concept",
+// 			        cls: "folder",
+// 					children: [{
+// 						xtype: "SummeryForm",
+// 						home: "Concept properties and relations",
+// 				        leaf: true,
+// 				        text: "Summary",
+// 				        cls: "file",
+// 						application_type : 'grid'
+// 					}]
+// 				},
 /**
  * Created by JetBrains RubyMine.
  * User: jameseales
@@ -637,6 +572,79 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.doLayout();
     }
 
+});
+
+/**
+ * Created with JetBrains RubyMine.
+ * User: jameseales
+ * Date: 29/06/2012
+ * Time: 07:39
+ * To change this template use File | Settings | File Templates.
+ */
+Ext.define('LDA.model.TargetModel', {
+    extend:'Ext.data.Model',
+    fields:[
+        //this msay need to change (target information endpiint is down)
+
+        'cw_target_uri',
+        'chembl_target_uri',
+        'drugbank_target_uri',
+
+        //chembl
+        'label',
+        'label_src',
+
+        'keywords',
+        'keywords_src',
+
+        'description',
+        'description_src',
+
+        'target_type',
+        'target_type_src',
+
+        'organism',
+        'organism_src',
+
+        'synonyms',
+        'synonyms_src',
+
+        'cellular_location',
+        'cellular_location_src',
+
+        'molecular_weight',
+        'molecular_weight_src',
+
+        'number_of_residues',
+        'number_of_residues_src',
+
+        'pdb_id_page',
+        'pdb_id_page_src',
+
+        'specific_function',
+        'specific_function_src',
+
+        'theoretical_pi',
+        'theoretical_pi_src'
+
+//        'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
+//        'inchi', 'inchi_src',
+//        'inchi_key', 'inchi_key_src',
+//        'smiles', 'smiles_src',
+//        'alogp', 'alogp_src',
+//        'full_mwt', 'full_mwt_src',
+//        'hba', 'hba_src',
+//        'hbd', 'hbd_src',
+//        'molform', 'molform_src',
+//        'mw_freebase', 'mw_freebase_src',
+//        'psa', 'psa_src',
+//        'rtb', 'rtb_src',
+//        'biotransformation', 'biotransformation_src',
+//        'description', 'description_src',
+//        'proteinBinding', 'proteinBinding_src',
+//        'toxicity', 'toxicity_src',
+//        'prefLabel', 'prefLabel_src'
+    ]
 });
 
 Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
@@ -1218,91 +1226,6 @@ Ext.define('LDA.model.CompoundModel', {
 //        '', '_src',
     ]
 });
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
-    extend:'Ext.window.Window',
-    alias:'widget.KetcherForm',
-
-    requires:['Ext.form.Panel'],
-
-    title:'Draw structure',
-    layout:'fit',
-    modal:true,
-    autoShow:true,
-    height:570,
-    width:810,
-
-    initComponent:function () {
-        this.items = [
-            {
-                xtype:'form',
-                padding:'0 0 0 0',
-                border:false,
-                style:'background-color: #fff;',
-
-                items:[
-                    {
-                        xtype:'box',
-                        width:800,
-                        height:520,
-                        id:'ketcher_box_id',
-                        autoEl:{
-                            tag:'iframe',
-                            src:'ketcher/ketcher.html'
-                        }}
-                ]
-            }
-        ];
-
-        this.buttons = [
-            {
-                text:'Use structure',
-                action:'commit_structure'
-            },
-            {
-                text:'Cancel',
-                scope:this,
-                handler:this.close
-            }
-        ];
-
-        this.callParent(arguments);
-    }
-});
-
 Ext.define('LDA.helper.DynamicPagingToolbar', {
 	extend: 'Ext.toolbar.Paging',
     alias: 'widget.dynamicpagingtoolbar',
@@ -1604,6 +1527,104 @@ Ext.define('LDA.helper.SimReader', {
 })
 ;
 
+Ext.define('LDA.store.CompoundStore', {
+    extend:'LDA.store.basestores.BaseStore',
+    model:'LDA.model.CompoundModel',
+    storeId:'CompoundStore',
+    BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/compound?',
+
+    constructor:function (config, arguments) {
+		console.log('LDA.store.CompoundStore: constructor()');
+        this.proxy.reader = Ext.create('LDA.helper.CompoundReader');
+        this.callParent(arguments);
+    }
+});
+
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
+
+Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
+    extend:'Ext.window.Window',
+    alias:'widget.KetcherForm',
+
+    requires:['Ext.form.Panel'],
+
+    title:'Draw structure',
+    layout:'fit',
+    modal:true,
+    autoShow:true,
+    height:570,
+    width:810,
+
+    initComponent:function () {
+        this.items = [
+            {
+                xtype:'form',
+                padding:'0 0 0 0',
+                border:false,
+                style:'background-color: #fff;',
+
+                items:[
+                    {
+                        xtype:'box',
+                        width:800,
+                        height:520,
+                        id:'ketcher_box_id',
+                        autoEl:{
+                            tag:'iframe',
+                            src:'ketcher/ketcher.html'
+                        }}
+                ]
+            }
+        ];
+
+        this.buttons = [
+            {
+                text:'Use structure',
+                action:'commit_structure'
+            },
+            {
+                text:'Cancel',
+                scope:this,
+                handler:this.close
+            }
+        ];
+
+        this.callParent(arguments);
+    }
+});
+
 Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
     extend:'Ext.form.Panel',
     alias:'widget.SimSearchForm',
@@ -1730,71 +1751,23 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
     }
 });
 
-Ext.define('LDA.store.CompoundStore', {
-    extend:'LDA.store.basestores.BaseStore',
-    model:'LDA.model.CompoundModel',
-    storeId:'CompoundStore',
-    BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/compound?',
-
-    constructor:function (config, arguments) {
-		console.log('LDA.store.CompoundStore: constructor()');
-        this.proxy.reader = Ext.create('LDA.helper.CompoundReader');
-        this.callParent(arguments);
-    }
-});
-
 Ext.define('LSP.model.DynamicGrid', {
     extend:'Ext.data.Model',
     fields:[]
 });
 
-Ext.define('LSP.view.Settings', {
-    extend:'Ext.form.Panel',
-    alias:'widget.settingsform',
-    height:'100%',
-    initComponent:function () {
-
-        this.items = [
-            {
-                xtype:'form',
-                padding:'5 5 0 5',
-                border:false,
-                //height: '100%',
-                style:'background-color: #fff;',
-                items:[
-                    {
-                        xtype:'label',
-                        text:'To use a different endpoint than the default Amsterdam VU one insert URL of sparql endpoint below and click save'
-                    },
-                    {
-                        xtype:'textarea',
-                        name:'endpoint',
-                        heigth:50,
-                        fieldLabel:'URL',
-                        emptyText:'Insert full URL to the sparql endpoint used, eg: http://10.11.93.218:8183/sparql',
-                        labelWidth:30
-                    },
-                    {
-                        name:'utf8',
-                        xtype:'hidden',
-                        value:'&#x2713;'
-                    },
-                    {
-                        name:'authenticity_token',
-                        xtype:'hidden',
-                        value:$$('meta[name=csrf-token]')[0].readAttribute('content')
-                    },
-                    {
-                        xtype:'button',
-                        text:'Save',
-                        action:'save_endpoint'
-                    }
-                ]
-            }
-        ];
-        this.callParent(arguments);
-    }
+/**
+ * Created by JetBrains RubyMine.
+ * User: jameseales
+ * Date: 04/04/2012
+ * Time: 11:52
+ * To change this template use File | Settings | File Templates.
+ */
+Ext.define('LSP.model.GuiComponent', {
+    extend:'Ext.data.Model',
+    fields:['xtype', 'url', 'id', 'text', 'home']
 });
+
 Ext.define('CW.model.ConceptWikiLookup', {
     extend: 'Ext.data.Model',
     fields: [
@@ -1954,6 +1927,116 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 )
 ;
 
+Ext.define('LSP.store.GuiComponents', {
+	extend: 'Ext.data.Store',
+	id: 'GuiComponents',
+	model: 'LSP.model.GuiComponent',
+	autoLoad: true,
+	data: [{
+		"url": "users.json",
+		"text": "Users",
+		"id": 3,
+		"xtype": "dynamicgrid",
+		"home": "Users grid"
+	},
+		{
+			"url": "rdf.json",
+			"text": "SPARQL",
+			"id": 5,
+			"xtype": "queryform",
+			"home": "SPARQL form"
+		}, {
+			"url": "",
+			"text": "Compound by name",
+			"id": 18,
+			"xtype": "CmpdByNameForm",
+			"home": "Compound by name"
+		}, {
+			"url": "",
+			"text": "Compound by structure",
+			"id": 23,
+			"xtype": "SimSearchForm",
+			"home": "Compound Structure Search"
+		}, {
+			"url": "",
+			"text": "Target by name",
+			"id": 24,
+			"xtype": "TargetByNameForm",
+			"home": "Target by name"
+		}, {
+			"url": "",
+			"text": "X-Target by sequence",
+			"id": 25,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "Pharmacology by Target",
+			"id": 26,
+			"xtype": "PharmByTargetNameForm",
+			"home": "Pharmacology by Target Name"
+		}, {
+			"url": "",
+			"text": "Pharmacology by Compound",
+			"id": 27,
+			"xtype": "PharmByCmpdNameForm",
+			"home": "Pharmacology by Compound name"
+		}, {
+			"url": "",
+			"text": "Pharmacology by Enzyme family",
+			"id": 28,
+			"xtype": "PharmEnzymeForm",
+			"home": "Compounds active against enzyme family"
+		}, {
+			"url": "",
+			"text": "X-Polypharmacology Browser",
+			"id": 34,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "X-Target Dossier",
+			"id": 35,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "X-Chem-Bio Navigator",
+			"id": 36,
+			"xtype": "temp",
+			"home": ""
+		}],
+	// proxy: {
+	// 	type: 'ajax',
+	// 	extraParams: {
+	// 		type: 'grid'
+	// 	},
+	// 	url: 'application_modules.json',
+	// 	reader: {
+	// 		type: 'json'
+	// 	}
+	// },
+//  Listening for token done through viewport, load listener only works when loading remotely
+	// listeners: {
+	// 	load: {
+	// 		//triggered when GuiComponents store has loaded
+	// 		//load is triggered automatically by NavigationTree controller creation
+	// 		//check for an initial history token
+	// 		//then pass it to the central Viewport history token handler method, bypassing history change
+	// 		fn: function() {
+	// 			console.log("GuiComponents store: load()");
+	// 			var currentToken = Ext.History.getToken();
+	// 			//                    console.log('GuiComponents onLoad: Initial HistoryToken: ' + currentToken);
+	// 			if (currentToken) {
+	// 				if (currentToken.length > 0) {
+	// 					var viewPort = Ext.ComponentQuery.query('lspviewport')[0];
+	// 					viewPort.handleHistoryToken(currentToken);
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+});
 /*########################################################################################
  #
  #  Copyright H. Lundbeck A/S
@@ -1988,33 +2071,20 @@ Ext.define('LSP.controller.CmpdByNameForm', {
  #
  ########################################################################################*/
 
-Ext.define('LSP.controller.Settings', {
-        extend:'Ext.app.Controller',
+Ext.define('LSP.controller.NavigationTree', {
+    extend:'Ext.app.Controller',
 
-        views:['Settings'],
+    stores:['NavigationTree', 'GuiComponents'],
 
-        init:function () {
-            this.control({
-                'settingsform button[action=save_endpoint]':{
-                    click:this.saveEndpoint
-                }
-            });
-        },
-        saveEndpoint:function (button) {
-            // Call to store endpoint in session
-            var form = button.up('form');
-            var values = form.getValues();
-            form.submit({
-                url:'/sparql_endpoint/settings.json',
-                waitMsg:'Saving end point...',
-                success:function (fp, o) {
-                    Ext.Msg.alert('Success', 'Endpoint stored');
-                }});
+    views:[
+        'Appmoduletree'
+    ],
 
-        }
+    init:function () {
+
     }
-);
 
+});
 Ext.define('CW.helper.ConceptWikiJSONReader', {
     extend:'Ext.data.reader.Json',
     
@@ -2124,6 +2194,53 @@ Ext.define('CW.view.ConceptWikiLookup', {
     }
 });
          
+Ext.define('LSP.view.Settings', {
+    extend:'Ext.form.Panel',
+    alias:'widget.settingsform',
+    height:'100%',
+    initComponent:function () {
+
+        this.items = [
+            {
+                xtype:'form',
+                padding:'5 5 0 5',
+                border:false,
+                //height: '100%',
+                style:'background-color: #fff;',
+                items:[
+                    {
+                        xtype:'label',
+                        text:'To use a different endpoint than the default Amsterdam VU one insert URL of sparql endpoint below and click save'
+                    },
+                    {
+                        xtype:'textarea',
+                        name:'endpoint',
+                        heigth:50,
+                        fieldLabel:'URL',
+                        emptyText:'Insert full URL to the sparql endpoint used, eg: http://10.11.93.218:8183/sparql',
+                        labelWidth:30
+                    },
+                    {
+                        name:'utf8',
+                        xtype:'hidden',
+                        value:'&#x2713;'
+                    },
+                    {
+                        name:'authenticity_token',
+                        xtype:'hidden',
+                        value:$$('meta[name=csrf-token]')[0].readAttribute('content')
+                    },
+                    {
+                        xtype:'button',
+                        text:'Save',
+                        action:'save_endpoint'
+                    }
+                ]
+            }
+        ];
+        this.callParent(arguments);
+    }
+});
 Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
     extend:'Ext.form.ComboBox',
     alias:'widget.conceptWikiProteinLookup',
@@ -2175,6 +2292,70 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
 });
          
            
+/* 
+ * Purpose: to make text selectable in a Ext JS 4 grid
+ *
+ * Usage for MVC app:
+ * 
+ * 1. copy this file to feature/selectable.js
+ * 2. add this to your grid config:
+
+ features: [
+ {ftype: 'selectable', id: 'selectable'}
+ ],
+
+ * Tested with Ext.grid.Panel in Ext JS 4.0.2a MVC app
+ */
+
+// append our CSS class to <head>
+Ext.getHead().insertHtml("beforeEnd",
+    '<style type="text/css">' +
+        '.x-selectable, .x-selectable * {' +
+        '    -khtml-user-select: text !important;' +
+        '    -moz-user-select: text !important;' +
+        '}' +
+        '</style>'
+);
+
+Ext.require('Ext.view.Table', function () {
+    Ext.override(Ext.view.Table, {
+        afterrender:function () {
+            var me = this;
+
+            me.callParent();
+            me.mon(me.el, {
+                scroll:me.fireBodyScroll,
+                scope:me
+            });
+
+            // in case the selectable feature is present, don't do me.el.unselectable() 
+            if (me.getFeature('selectable') === undefined) {
+                me.el.unselectable();
+            }
+            me.attachEventsForFeatures();
+        }
+    });
+});
+
+Ext.require('Ext.grid.feature.Feature', function () {
+    Ext.define('LSP.view.dynamicgrid.feature.selectable', {
+        extend:'Ext.grid.feature.Feature',
+        alias:'feature.selectable',
+
+        mutateMetaRowTpl:function (metaRowTpl) {
+            var i,
+                ln = metaRowTpl.length;
+
+            for (i = 0; i < ln; i++) {
+                tpl = metaRowTpl[i];
+                tpl = tpl.replace(/x-grid-row/, 'x-grid-row x-selectable');
+                tpl = tpl.replace(/x-grid-cell-inner x-unselectable/g, 'x-grid-cell-inner');
+                tpl = tpl.replace(/unselectable="on"/g, '');
+                metaRowTpl[i] = tpl;
+            }
+        }
+    });
+});  
 /**
  * FiltersFeature is a grid {@link Ext.grid.feature.Feature feature} that allows for a slightly more
  * robust representation of filtering than what is provided by the default store.
@@ -2960,18 +3141,6 @@ filters[0][data][value]="someValue3"&
 });
 
 /**
- * Created by JetBrains RubyMine.
- * User: jameseales
- * Date: 04/04/2012
- * Time: 11:52
- * To change this template use File | Settings | File Templates.
- */
-Ext.define('LSP.model.GuiComponent', {
-    extend:'Ext.data.Model',
-    fields:['xtype', 'url', 'id', 'text', 'home']
-});
-
-/**
  * @author Ed Spencer (http://sencha.com)
  * Transition plugin for DataViews
  */
@@ -3308,70 +3477,67 @@ Ext.define('Ext.ux.DataView.Animated', {
     }
 });
 
-/* 
- * Purpose: to make text selectable in a Ext JS 4 grid
- *
- * Usage for MVC app:
- * 
- * 1. copy this file to feature/selectable.js
- * 2. add this to your grid config:
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
 
- features: [
- {ftype: 'selectable', id: 'selectable'}
- ],
+Ext.define('LSP.controller.Settings', {
+        extend:'Ext.app.Controller',
 
- * Tested with Ext.grid.Panel in Ext JS 4.0.2a MVC app
- */
+        views:['Settings'],
 
-// append our CSS class to <head>
-Ext.getHead().insertHtml("beforeEnd",
-    '<style type="text/css">' +
-        '.x-selectable, .x-selectable * {' +
-        '    -khtml-user-select: text !important;' +
-        '    -moz-user-select: text !important;' +
-        '}' +
-        '</style>'
+        init:function () {
+            this.control({
+                'settingsform button[action=save_endpoint]':{
+                    click:this.saveEndpoint
+                }
+            });
+        },
+        saveEndpoint:function (button) {
+            // Call to store endpoint in session
+            var form = button.up('form');
+            var values = form.getValues();
+            form.submit({
+                url:'/sparql_endpoint/settings.json',
+                waitMsg:'Saving end point...',
+                success:function (fp, o) {
+                    Ext.Msg.alert('Success', 'Endpoint stored');
+                }});
+
+        }
+    }
 );
 
-Ext.require('Ext.view.Table', function () {
-    Ext.override(Ext.view.Table, {
-        afterrender:function () {
-            var me = this;
-
-            me.callParent();
-            me.mon(me.el, {
-                scroll:me.fireBodyScroll,
-                scope:me
-            });
-
-            // in case the selectable feature is present, don't do me.el.unselectable() 
-            if (me.getFeature('selectable') === undefined) {
-                me.el.unselectable();
-            }
-            me.attachEventsForFeatures();
-        }
-    });
-});
-
-Ext.require('Ext.grid.feature.Feature', function () {
-    Ext.define('LSP.view.dynamicgrid.feature.selectable', {
-        extend:'Ext.grid.feature.Feature',
-        alias:'feature.selectable',
-
-        mutateMetaRowTpl:function (metaRowTpl) {
-            var i,
-                ln = metaRowTpl.length;
-
-            for (i = 0; i < ln; i++) {
-                tpl = metaRowTpl[i];
-                tpl = tpl.replace(/x-grid-row/, 'x-grid-row x-selectable');
-                tpl = tpl.replace(/x-grid-cell-inner x-unselectable/g, 'x-grid-cell-inner');
-                tpl = tpl.replace(/unselectable="on"/g, '');
-                metaRowTpl[i] = tpl;
-            }
-        }
-    });
-});  
 Ext.define('CW.controller.ConceptWikiLookup', {
     extend:'Ext.app.Controller',
     models: ['CW.model.ConceptWikiLookup'],
@@ -3564,164 +3730,6 @@ Ext.define('LSP.controller.TargetByNameForm', {
 	}
 });
 
-Ext.define('LSP.store.GuiComponents', {
-	extend: 'Ext.data.Store',
-	id: 'GuiComponents',
-	model: 'LSP.model.GuiComponent',
-	autoLoad: true,
-	data: [{
-		"url": "users.json",
-		"text": "Users",
-		"id": 3,
-		"xtype": "dynamicgrid",
-		"home": "Users grid"
-	},
-		{
-			"url": "rdf.json",
-			"text": "SPARQL",
-			"id": 5,
-			"xtype": "queryform",
-			"home": "SPARQL form"
-		}, {
-			"url": "",
-			"text": "Compound by name",
-			"id": 18,
-			"xtype": "CmpdByNameForm",
-			"home": "Compound by name"
-		}, {
-			"url": "",
-			"text": "Compound by structure",
-			"id": 23,
-			"xtype": "SimSearchForm",
-			"home": "Compound Structure Search"
-		}, {
-			"url": "",
-			"text": "Target by name",
-			"id": 24,
-			"xtype": "TargetByNameForm",
-			"home": "Target by name"
-		}, {
-			"url": "",
-			"text": "X-Target by sequence",
-			"id": 25,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "Pharmacology by Target",
-			"id": 26,
-			"xtype": "PharmByTargetNameForm",
-			"home": "Pharmacology by Target Name"
-		}, {
-			"url": "",
-			"text": "Pharmacology by Compound",
-			"id": 27,
-			"xtype": "PharmByCmpdNameForm",
-			"home": "Pharmacology by Compound name"
-		}, {
-			"url": "",
-			"text": "Pharmacology by Enzyme family",
-			"id": 28,
-			"xtype": "PharmEnzymeForm",
-			"home": "Compounds active against enzyme family"
-		}, {
-			"url": "",
-			"text": "X-Polypharmacology Browser",
-			"id": 34,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "X-Target Dossier",
-			"id": 35,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "X-Chem-Bio Navigator",
-			"id": 36,
-			"xtype": "temp",
-			"home": ""
-		}],
-	// proxy: {
-	// 	type: 'ajax',
-	// 	extraParams: {
-	// 		type: 'grid'
-	// 	},
-	// 	url: 'application_modules.json',
-	// 	reader: {
-	// 		type: 'json'
-	// 	}
-	// },
-//  Listening for token done through viewport, load listener only works when loading remotely
-	// listeners: {
-	// 	load: {
-	// 		//triggered when GuiComponents store has loaded
-	// 		//load is triggered automatically by NavigationTree controller creation
-	// 		//check for an initial history token
-	// 		//then pass it to the central Viewport history token handler method, bypassing history change
-	// 		fn: function() {
-	// 			console.log("GuiComponents store: load()");
-	// 			var currentToken = Ext.History.getToken();
-	// 			//                    console.log('GuiComponents onLoad: Initial HistoryToken: ' + currentToken);
-	// 			if (currentToken) {
-	// 				if (currentToken.length > 0) {
-	// 					var viewPort = Ext.ComponentQuery.query('lspviewport')[0];
-	// 					viewPort.handleHistoryToken(currentToken);
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// }
-});
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.controller.NavigationTree', {
-    extend:'Ext.app.Controller',
-
-    stores:['NavigationTree', 'GuiComponents'],
-
-    views:[
-        'Appmoduletree'
-    ],
-
-    init:function () {
-
-    }
-
-});
 Ext.Loader.setConfig({enabled:true});
 Ext.Loader.setPath('Ext.ux.DataView', '/ext/examples/ux/DataView/');
 
@@ -7688,127 +7696,112 @@ Ext.define("Ext.ux.exporter.excelFormatter.ExcelFormatter", {
     }
 });
 /**
- * @class Ext.ux.grid.filter.BooleanFilter
+ * @class Ext.ux.grid.filter.ListFilter
  * @extends Ext.ux.grid.filter.Filter
- * Boolean filters use unique radio group IDs (so you can have more than one!)
+ * <p>List filters are able to be preloaded/backed by an Ext.data.Store to load
+ * their options the first time they are shown. ListFilter utilizes the
+ * {@link Ext.ux.grid.menu.ListMenu} component.</p>
+ * <p>Although not shown here, this class accepts all configuration options
+ * for {@link Ext.ux.grid.menu.ListMenu}.</p>
+ *
  * <p><b><u>Example Usage:</u></b></p>
  * <pre><code>
 var filters = Ext.create('Ext.ux.grid.GridFilters', {
     ...
     filters: [{
-        // required configs
-        type: 'boolean',
-        dataIndex: 'visible'
-
-        // optional configs
-        defaultValue: null, // leave unselected (false selected by default)
-        yesText: 'Yes',     // default
-        noText: 'No'        // default
+        type: 'list',
+        dataIndex: 'size',
+        phpMode: true,
+        // options will be used as data to implicitly creates an ArrayStore
+        options: ['extra small', 'small', 'medium', 'large', 'extra large']
     }]
 });
  * </code></pre>
+ *
  */
-Ext.define('Ext.ux.grid.filter.BooleanFilter', {
+Ext.define('Ext.ux.grid.filter.ListFilter', {
     extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.boolean',
+    alias: 'gridfilter.list',
 
-	/**
-	 * @cfg {Boolean} defaultValue
-	 * Set this to null if you do not want either option to be checked by default. Defaults to false.
-	 */
-	defaultValue : false,
-	/**
-	 * @cfg {String} yesText
-	 * Defaults to 'Yes'.
-	 */
-	yesText : 'Yes',
-	/**
-	 * @cfg {String} noText
-	 * Defaults to 'No'.
-	 */
-	noText : 'No',
+    /**
+     * @cfg {Array} options
+     * <p><code>data</code> to be used to implicitly create a data store
+     * to back this list when the data source is <b>local</b>. If the
+     * data for the list is remote, use the <code>{@link #store}</code>
+     * config instead.</p>
+     * <br><p>Each item within the provided array may be in one of the
+     * following formats:</p>
+     * <div class="mdetail-params"><ul>
+     * <li><b>Array</b> :
+     * <pre><code>
+options: [
+    [11, 'extra small'],
+    [18, 'small'],
+    [22, 'medium'],
+    [35, 'large'],
+    [44, 'extra large']
+]
+     * </code></pre>
+     * </li>
+     * <li><b>Object</b> :
+     * <pre><code>
+labelField: 'name', // override default of 'text'
+options: [
+    {id: 11, name:'extra small'},
+    {id: 18, name:'small'},
+    {id: 22, name:'medium'},
+    {id: 35, name:'large'},
+    {id: 44, name:'extra large'}
+]
+     * </code></pre>
+     * </li>
+     * <li><b>String</b> :
+     * <pre><code>
+     * options: ['extra small', 'small', 'medium', 'large', 'extra large']
+     * </code></pre>
+     * </li>
+     */
+    /**
+     * @cfg {Boolean} phpMode
+     * <p>Adjust the format of this filter. Defaults to false.</p>
+     * <br><p>When GridFilters <code>@cfg encode = false</code> (default):</p>
+     * <pre><code>
+// phpMode == false (default):
+filter[0][data][type] list
+filter[0][data][value] value1
+filter[0][data][value] value2
+filter[0][field] prod
+
+// phpMode == true:
+filter[0][data][type] list
+filter[0][data][value] value1, value2
+filter[0][field] prod
+     * </code></pre>
+     * When GridFilters <code>@cfg encode = true</code>:
+     * <pre><code>
+// phpMode == false (default):
+filter : [{"type":"list","value":["small","medium"],"field":"size"}]
+
+// phpMode == true:
+filter : [{"type":"list","value":"small,medium","field":"size"}]
+     * </code></pre>
+     */
+    phpMode : false,
+    /**
+     * @cfg {Ext.data.Store} store
+     * The {@link Ext.data.Store} this list should use as its data source
+     * when the data source is <b>remote</b>. If the data for the list
+     * is local, use the <code>{@link #options}</code> config instead.
+     */
 
     /**
      * @private
-     * Template method that is to initialize the filter and install required menu items.
+     * Template method that is to initialize the filter.
+     * @param {Object} config
      */
     init : function (config) {
-        var gId = Ext.id();
-		this.options = [
-			Ext.create('Ext.menu.CheckItem', {text: this.yesText, group: gId, checked: this.defaultValue === true}),
-			Ext.create('Ext.menu.CheckItem', {text: this.noText, group: gId, checked: this.defaultValue === false})];
-
-		this.menu.add(this.options[0], this.options[1]);
-
-		for(var i=0; i<this.options.length; i++){
-			this.options[i].on('click', this.fireUpdate, this);
-			this.options[i].on('checkchange', this.fireUpdate, this);
-		}
-	},
-
-    /**
-     * @private
-     * Template method that is to get and return the value of the filter.
-     * @return {String} The value of this filter
-     */
-    getValue : function () {
-		return this.options[0].checked;
-	},
-
-    /**
-     * @private
-     * Template method that is to set the value of the filter.
-     * @param {Object} value The value to set the filter
-     */
-	setValue : function (value) {
-		this.options[value ? 0 : 1].setChecked(true);
-	},
-
-    /**
-     * @private
-     * Template method that is to get and return serialized filter data for
-     * transmission to the server.
-     * @return {Object/Array} An object or collection of objects containing
-     * key value pairs representing the current configuration of the filter.
-     */
-    getSerialArgs : function () {
-		var args = {type: 'boolean', value: this.getValue()};
-		return args;
-	},
-
-    /**
-     * Template method that is to validate the provided Ext.data.Record
-     * against the filters configuration.
-     * @param {Ext.data.Record} record The record to validate
-     * @return {Boolean} true if the record is valid within the bounds
-     * of the filter, false otherwise.
-     */
-    validateRecord : function (record) {
-		return record.get(this.dataIndex) == this.getValue();
-	}
-});
-
-/**
- * @class Ext.ux.grid.filter.NumericFilter
- * @extends Ext.ux.grid.filter.Filter
- * Filters using an Ext.ux.grid.menu.RangeMenu.
- * <p><b><u>Example Usage:</u></b></p>
- * <pre><code>
-var filters = Ext.create('Ext.ux.grid.GridFilters', {
-    ...
-    filters: [{
-        type: 'numeric',
-        dataIndex: 'price'
-    }]
-});
- * </code></pre>
- * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
- * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
- */
-Ext.define('Ext.ux.grid.filter.NumericFilter', {
-    extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.numeric',
-    uses: ['Ext.form.field.Number'],
+        this.dt = Ext.create('Ext.util.DelayedTask', this.fireUpdate, this);
+    },
 
     /**
      * @private @override
@@ -7817,10 +7810,8 @@ Ext.define('Ext.ux.grid.filter.NumericFilter', {
      * @return {Ext.menu.Menu}
      */
     createMenu: function(config) {
-        var me = this,
-            menu;
-        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
-        menu.on('update', me.fireUpdate, me);
+        var menu = Ext.create('Ext.ux.grid.menu.ListMenu', config);
+        menu.on('checkchange', this.onCheckChange, this);
         return menu;
     },
 
@@ -7830,16 +7821,16 @@ Ext.define('Ext.ux.grid.filter.NumericFilter', {
      * @return {String} The value of this filter
      */
     getValue : function () {
-        return this.menu.getValue();
+        return this.menu.getSelected();
     },
-
     /**
      * @private
      * Template method that is to set the value of the filter.
      * @param {Object} value The value to set the filter
      */
     setValue : function (value) {
-        this.menu.setValue(value);
+        this.menu.setSelected(value);
+        this.fireEvent('update', this);
     },
 
     /**
@@ -7849,14 +7840,7 @@ Ext.define('Ext.ux.grid.filter.NumericFilter', {
      * @return {Boolean}
      */
     isActivatable : function () {
-        var values = this.getValue(),
-            key;
-        for (key in values) {
-            if (values[key] !== undefined) {
-                return true;
-            }
-        }
-        return false;
+        return this.getValue().length > 0;
     },
 
     /**
@@ -7867,18 +7851,14 @@ Ext.define('Ext.ux.grid.filter.NumericFilter', {
      * key value pairs representing the current configuration of the filter.
      */
     getSerialArgs : function () {
-        var key,
-            args = [],
-            values = this.menu.getValue();
-        for (key in values) {
-            args.push({
-                type: 'numeric',
-                comparison: key,
-                value: values[key]
-            });
-        }
-        return args;
+        return {type: 'list', value: this.phpMode ? this.getValue().join(',') : this.getValue()};
     },
+
+    /** @private */
+    onCheckChange : function(){
+        this.dt.delay(this.updateBuffer);
+    },
+
 
     /**
      * Template method that is to validate the provided Ext.data.Record
@@ -7888,19 +7868,8 @@ Ext.define('Ext.ux.grid.filter.NumericFilter', {
      * of the filter, false otherwise.
      */
     validateRecord : function (record) {
-        var val = record.get(this.dataIndex),
-            values = this.getValue(),
-            isNumber = Ext.isNumber;
-        if (isNumber(values.eq) && val != values.eq) {
-            return false;
-        }
-        if (isNumber(values.lt) && val >= values.lt) {
-            return false;
-        }
-        if (isNumber(values.gt) && val <= values.gt) {
-            return false;
-        }
-        return true;
+        var valuesArray = this.getValue();
+        return Ext.Array.indexOf(valuesArray, record.get(this.dataIndex)) > -1;
     }
 });
 
@@ -8220,112 +8189,127 @@ Ext.define('Ext.ux.grid.filter.DateFilter', {
 });
 
 /**
- * @class Ext.ux.grid.filter.ListFilter
+ * @class Ext.ux.grid.filter.BooleanFilter
  * @extends Ext.ux.grid.filter.Filter
- * <p>List filters are able to be preloaded/backed by an Ext.data.Store to load
- * their options the first time they are shown. ListFilter utilizes the
- * {@link Ext.ux.grid.menu.ListMenu} component.</p>
- * <p>Although not shown here, this class accepts all configuration options
- * for {@link Ext.ux.grid.menu.ListMenu}.</p>
- *
+ * Boolean filters use unique radio group IDs (so you can have more than one!)
  * <p><b><u>Example Usage:</u></b></p>
  * <pre><code>
 var filters = Ext.create('Ext.ux.grid.GridFilters', {
     ...
     filters: [{
-        type: 'list',
-        dataIndex: 'size',
-        phpMode: true,
-        // options will be used as data to implicitly creates an ArrayStore
-        options: ['extra small', 'small', 'medium', 'large', 'extra large']
+        // required configs
+        type: 'boolean',
+        dataIndex: 'visible'
+
+        // optional configs
+        defaultValue: null, // leave unselected (false selected by default)
+        yesText: 'Yes',     // default
+        noText: 'No'        // default
     }]
 });
  * </code></pre>
- *
  */
-Ext.define('Ext.ux.grid.filter.ListFilter', {
+Ext.define('Ext.ux.grid.filter.BooleanFilter', {
     extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.list',
+    alias: 'gridfilter.boolean',
 
-    /**
-     * @cfg {Array} options
-     * <p><code>data</code> to be used to implicitly create a data store
-     * to back this list when the data source is <b>local</b>. If the
-     * data for the list is remote, use the <code>{@link #store}</code>
-     * config instead.</p>
-     * <br><p>Each item within the provided array may be in one of the
-     * following formats:</p>
-     * <div class="mdetail-params"><ul>
-     * <li><b>Array</b> :
-     * <pre><code>
-options: [
-    [11, 'extra small'],
-    [18, 'small'],
-    [22, 'medium'],
-    [35, 'large'],
-    [44, 'extra large']
-]
-     * </code></pre>
-     * </li>
-     * <li><b>Object</b> :
-     * <pre><code>
-labelField: 'name', // override default of 'text'
-options: [
-    {id: 11, name:'extra small'},
-    {id: 18, name:'small'},
-    {id: 22, name:'medium'},
-    {id: 35, name:'large'},
-    {id: 44, name:'extra large'}
-]
-     * </code></pre>
-     * </li>
-     * <li><b>String</b> :
-     * <pre><code>
-     * options: ['extra small', 'small', 'medium', 'large', 'extra large']
-     * </code></pre>
-     * </li>
-     */
-    /**
-     * @cfg {Boolean} phpMode
-     * <p>Adjust the format of this filter. Defaults to false.</p>
-     * <br><p>When GridFilters <code>@cfg encode = false</code> (default):</p>
-     * <pre><code>
-// phpMode == false (default):
-filter[0][data][type] list
-filter[0][data][value] value1
-filter[0][data][value] value2
-filter[0][field] prod
-
-// phpMode == true:
-filter[0][data][type] list
-filter[0][data][value] value1, value2
-filter[0][field] prod
-     * </code></pre>
-     * When GridFilters <code>@cfg encode = true</code>:
-     * <pre><code>
-// phpMode == false (default):
-filter : [{"type":"list","value":["small","medium"],"field":"size"}]
-
-// phpMode == true:
-filter : [{"type":"list","value":"small,medium","field":"size"}]
-     * </code></pre>
-     */
-    phpMode : false,
-    /**
-     * @cfg {Ext.data.Store} store
-     * The {@link Ext.data.Store} this list should use as its data source
-     * when the data source is <b>remote</b>. If the data for the list
-     * is local, use the <code>{@link #options}</code> config instead.
-     */
+	/**
+	 * @cfg {Boolean} defaultValue
+	 * Set this to null if you do not want either option to be checked by default. Defaults to false.
+	 */
+	defaultValue : false,
+	/**
+	 * @cfg {String} yesText
+	 * Defaults to 'Yes'.
+	 */
+	yesText : 'Yes',
+	/**
+	 * @cfg {String} noText
+	 * Defaults to 'No'.
+	 */
+	noText : 'No',
 
     /**
      * @private
-     * Template method that is to initialize the filter.
-     * @param {Object} config
+     * Template method that is to initialize the filter and install required menu items.
      */
     init : function (config) {
-        this.dt = Ext.create('Ext.util.DelayedTask', this.fireUpdate, this);
-    },
+        var gId = Ext.id();
+		this.options = [
+			Ext.create('Ext.menu.CheckItem', {text: this.yesText, group: gId, checked: this.defaultValue === true}),
+			Ext.create('Ext.menu.CheckItem', {text: this.noText, group: gId, checked: this.defaultValue === false})];
+
+		this.menu.add(this.options[0], this.options[1]);
+
+		for(var i=0; i<this.options.length; i++){
+			this.options[i].on('click', this.fireUpdate, this);
+			this.options[i].on('checkchange', this.fireUpdate, this);
+		}
+	},
+
+    /**
+     * @private
+     * Template method that is to get and return the value of the filter.
+     * @return {String} The value of this filter
+     */
+    getValue : function () {
+		return this.options[0].checked;
+	},
+
+    /**
+     * @private
+     * Template method that is to set the value of the filter.
+     * @param {Object} value The value to set the filter
+     */
+	setValue : function (value) {
+		this.options[value ? 0 : 1].setChecked(true);
+	},
+
+    /**
+     * @private
+     * Template method that is to get and return serialized filter data for
+     * transmission to the server.
+     * @return {Object/Array} An object or collection of objects containing
+     * key value pairs representing the current configuration of the filter.
+     */
+    getSerialArgs : function () {
+		var args = {type: 'boolean', value: this.getValue()};
+		return args;
+	},
+
+    /**
+     * Template method that is to validate the provided Ext.data.Record
+     * against the filters configuration.
+     * @param {Ext.data.Record} record The record to validate
+     * @return {Boolean} true if the record is valid within the bounds
+     * of the filter, false otherwise.
+     */
+    validateRecord : function (record) {
+		return record.get(this.dataIndex) == this.getValue();
+	}
+});
+
+/**
+ * @class Ext.ux.grid.filter.NumericFilter
+ * @extends Ext.ux.grid.filter.Filter
+ * Filters using an Ext.ux.grid.menu.RangeMenu.
+ * <p><b><u>Example Usage:</u></b></p>
+ * <pre><code>
+var filters = Ext.create('Ext.ux.grid.GridFilters', {
+    ...
+    filters: [{
+        type: 'numeric',
+        dataIndex: 'price'
+    }]
+});
+ * </code></pre>
+ * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
+ * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
+ */
+Ext.define('Ext.ux.grid.filter.NumericFilter', {
+    extend: 'Ext.ux.grid.filter.Filter',
+    alias: 'gridfilter.numeric',
+    uses: ['Ext.form.field.Number'],
 
     /**
      * @private @override
@@ -8334,8 +8318,10 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
      * @return {Ext.menu.Menu}
      */
     createMenu: function(config) {
-        var menu = Ext.create('Ext.ux.grid.menu.ListMenu', config);
-        menu.on('checkchange', this.onCheckChange, this);
+        var me = this,
+            menu;
+        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
+        menu.on('update', me.fireUpdate, me);
         return menu;
     },
 
@@ -8345,16 +8331,16 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
      * @return {String} The value of this filter
      */
     getValue : function () {
-        return this.menu.getSelected();
+        return this.menu.getValue();
     },
+
     /**
      * @private
      * Template method that is to set the value of the filter.
      * @param {Object} value The value to set the filter
      */
     setValue : function (value) {
-        this.menu.setSelected(value);
-        this.fireEvent('update', this);
+        this.menu.setValue(value);
     },
 
     /**
@@ -8364,7 +8350,14 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
      * @return {Boolean}
      */
     isActivatable : function () {
-        return this.getValue().length > 0;
+        var values = this.getValue(),
+            key;
+        for (key in values) {
+            if (values[key] !== undefined) {
+                return true;
+            }
+        }
+        return false;
     },
 
     /**
@@ -8375,14 +8368,18 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
      * key value pairs representing the current configuration of the filter.
      */
     getSerialArgs : function () {
-        return {type: 'list', value: this.phpMode ? this.getValue().join(',') : this.getValue()};
+        var key,
+            args = [],
+            values = this.menu.getValue();
+        for (key in values) {
+            args.push({
+                type: 'numeric',
+                comparison: key,
+                value: values[key]
+            });
+        }
+        return args;
     },
-
-    /** @private */
-    onCheckChange : function(){
-        this.dt.delay(this.updateBuffer);
-    },
-
 
     /**
      * Template method that is to validate the provided Ext.data.Record
@@ -8392,8 +8389,19 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
      * of the filter, false otherwise.
      */
     validateRecord : function (record) {
-        var valuesArray = this.getValue();
-        return Ext.Array.indexOf(valuesArray, record.get(this.dataIndex)) > -1;
+        var val = record.get(this.dataIndex),
+            values = this.getValue(),
+            isNumber = Ext.isNumber;
+        if (isNumber(values.eq) && val != values.eq) {
+            return false;
+        }
+        if (isNumber(values.lt) && val >= values.lt) {
+            return false;
+        }
+        if (isNumber(values.gt) && val <= values.gt) {
+            return false;
+        }
+        return true;
     }
 });
 
@@ -8532,134 +8540,6 @@ Ext.define('Ext.ux.grid.filter.StringFilter', {
     }
 });
 
-/**
- * @class Ext.ux.Exporter.ExcelFormatter.Style
- * @extends Object
- * Represents a style declaration for a Workbook (this is like defining CSS rules). Example:
- *
- * new Ext.ux.Exporter.ExcelFormatter.Style({
- *   attributes: [
- *     {
- *       name: "Alignment",
- *       properties: [
- *         {name: "Vertical", value: "Top"},
- *         {name: "WrapText", value: "1"}
- *       ]
- *     },
- *     {
- *       name: "Borders",
- *       children: [
- *         name: "Border",
- *         properties: [
- *           {name: "Color", value: "#e4e4e4"},
- *           {name: "Weight", value: "1"}
- *         ]
- *       ]
- *     }
- *   ]
- * })
- *
- * @cfg {String} id The ID of this style (required)
- * @cfg {Array} attributes The attributes for this style
- * @cfg {String} parentStyle The (optional parentStyle ID)
- */
-Ext.define("Ext.ux.exporter.excelFormatter.Style", {
-    constructor:function (config) {
-        config = config || {};
-
-        Ext.apply(this, config, {
-            parentStyle:'',
-            attributes:[]
-        });
-
-        Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
-
-        if (this.id == undefined) throw new Error("An ID must be provided to Style");
-
-        this.preparePropertyStrings();
-    },
-
-    /**
-     * Iterates over the attributes in this style, and any children they may have, creating property
-     * strings on each suitable for use in the XTemplate
-     */
-    preparePropertyStrings:function () {
-        Ext.each(this.attributes, function (attr, index) {
-            this.attributes[index].propertiesString = this.buildPropertyString(attr);
-            this.attributes[index].children = attr.children || [];
-
-            Ext.each(attr.children, function (child, childIndex) {
-                this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
-            }, this);
-        }, this);
-    },
-
-    /**
-     * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
-     */
-    buildPropertyString:function (attribute) {
-        var propertiesString = "";
-
-        Ext.each(attribute.properties || [], function (property) {
-            propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
-        }, this);
-
-        return propertiesString;
-    },
-
-    render:function () {
-        return this.tpl.apply(this);
-    },
-
-    tpl:new Ext.XTemplate(
-        '<tpl if="parentStyle.length == 0">',
-        '<ss:Style ss:ID="{id}">',
-        '</tpl>',
-        '<tpl if="parentStyle.length != 0">',
-        '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
-        '</tpl>',
-        '<tpl for="attributes">',
-        '<tpl if="children.length == 0">',
-        '<ss:{name} {propertiesString} />',
-        '</tpl>',
-        '<tpl if="children.length > 0">',
-        '<ss:{name} {propertiesString}>',
-        '<tpl for="children">',
-        '<ss:{name} {propertiesString} />',
-        '</tpl>',
-        '</ss:{name}>',
-        '</tpl>',
-        '</tpl>',
-        '</ss:Style>'
-    )
-});
-/**
- * @class Ext.ux.Exporter.ExcelFormatter.Cell
- * @extends Object
- * Represents a single cell in a worksheet
- */
-
-Ext.define("Ext.ux.exporter.excelFormatter.Cell", {
-    constructor:function (config) {
-        Ext.applyIf(config, {
-            type:"String"
-        });
-
-        Ext.apply(this, config);
-
-        Ext.ux.exporter.excelFormatter.Cell.superclass.constructor.apply(this, arguments);
-    },
-
-    render:function () {
-        return this.tpl.apply(this);
-    },
-
-    tpl:new Ext.XTemplate(
-        '<ss:Cell ss:StyleID="{style}">',
-        '<ss:Data ss:Type="{type}"><![CDATA[{value}]]></ss:Data>',
-        '</ss:Cell>'
-    )
-});
 /**
  * @class Ext.ux.Exporter.ExcelFormatter.Workbook
  * @extends Object
@@ -8996,6 +8876,134 @@ Ext.define("Ext.ux.exporter.excelFormatter.Workbook", {
             ]
         });
     }
+});
+/**
+ * @class Ext.ux.Exporter.ExcelFormatter.Style
+ * @extends Object
+ * Represents a style declaration for a Workbook (this is like defining CSS rules). Example:
+ *
+ * new Ext.ux.Exporter.ExcelFormatter.Style({
+ *   attributes: [
+ *     {
+ *       name: "Alignment",
+ *       properties: [
+ *         {name: "Vertical", value: "Top"},
+ *         {name: "WrapText", value: "1"}
+ *       ]
+ *     },
+ *     {
+ *       name: "Borders",
+ *       children: [
+ *         name: "Border",
+ *         properties: [
+ *           {name: "Color", value: "#e4e4e4"},
+ *           {name: "Weight", value: "1"}
+ *         ]
+ *       ]
+ *     }
+ *   ]
+ * })
+ *
+ * @cfg {String} id The ID of this style (required)
+ * @cfg {Array} attributes The attributes for this style
+ * @cfg {String} parentStyle The (optional parentStyle ID)
+ */
+Ext.define("Ext.ux.exporter.excelFormatter.Style", {
+    constructor:function (config) {
+        config = config || {};
+
+        Ext.apply(this, config, {
+            parentStyle:'',
+            attributes:[]
+        });
+
+        Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
+
+        if (this.id == undefined) throw new Error("An ID must be provided to Style");
+
+        this.preparePropertyStrings();
+    },
+
+    /**
+     * Iterates over the attributes in this style, and any children they may have, creating property
+     * strings on each suitable for use in the XTemplate
+     */
+    preparePropertyStrings:function () {
+        Ext.each(this.attributes, function (attr, index) {
+            this.attributes[index].propertiesString = this.buildPropertyString(attr);
+            this.attributes[index].children = attr.children || [];
+
+            Ext.each(attr.children, function (child, childIndex) {
+                this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
+            }, this);
+        }, this);
+    },
+
+    /**
+     * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
+     */
+    buildPropertyString:function (attribute) {
+        var propertiesString = "";
+
+        Ext.each(attribute.properties || [], function (property) {
+            propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
+        }, this);
+
+        return propertiesString;
+    },
+
+    render:function () {
+        return this.tpl.apply(this);
+    },
+
+    tpl:new Ext.XTemplate(
+        '<tpl if="parentStyle.length == 0">',
+        '<ss:Style ss:ID="{id}">',
+        '</tpl>',
+        '<tpl if="parentStyle.length != 0">',
+        '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
+        '</tpl>',
+        '<tpl for="attributes">',
+        '<tpl if="children.length == 0">',
+        '<ss:{name} {propertiesString} />',
+        '</tpl>',
+        '<tpl if="children.length > 0">',
+        '<ss:{name} {propertiesString}>',
+        '<tpl for="children">',
+        '<ss:{name} {propertiesString} />',
+        '</tpl>',
+        '</ss:{name}>',
+        '</tpl>',
+        '</tpl>',
+        '</ss:Style>'
+    )
+});
+/**
+ * @class Ext.ux.Exporter.ExcelFormatter.Cell
+ * @extends Object
+ * Represents a single cell in a worksheet
+ */
+
+Ext.define("Ext.ux.exporter.excelFormatter.Cell", {
+    constructor:function (config) {
+        Ext.applyIf(config, {
+            type:"String"
+        });
+
+        Ext.apply(this, config);
+
+        Ext.ux.exporter.excelFormatter.Cell.superclass.constructor.apply(this, arguments);
+    },
+
+    render:function () {
+        return this.tpl.apply(this);
+    },
+
+    tpl:new Ext.XTemplate(
+        '<ss:Cell ss:StyleID="{style}">',
+        '<ss:Data ss:Type="{type}"><![CDATA[{value}]]></ss:Data>',
+        '</ss:Cell>'
+    )
 });
 /**
  * @class Ext.ux.Exporter.ExcelFormatter.Worksheet
