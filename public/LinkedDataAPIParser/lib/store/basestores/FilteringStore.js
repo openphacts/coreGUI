@@ -10,7 +10,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	// '-' if required
 	sortColumn:function(arguments) {
 		console.log('LDA.store.basestores.FilteringStore: sortColumn()');
-		var sort_column = "?" + LDADataItems[arguments[0].property];
+		var sort_column = "?" + arguments[0].property;
 		var sort_direction = arguments[0].direction;
 		if (sort_direction == "DESC") {
 			sort_column = "DESC(" + sort_column + ")";
