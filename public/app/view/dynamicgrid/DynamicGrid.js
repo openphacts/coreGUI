@@ -106,9 +106,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	    initComponent:function () {
 			console.log('DynamicGrid: initComponent()');
 			// initializing features for the grid
-	        var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
-	            groupHeaderTpl:'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
-	        });
+	        //var groupingFeature = Ext.create('Ext.grid.feature.Grouping', {
+	        //    groupHeaderTpl:'Group: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+	        //});
 	        var filters = {
 	            ftype:'filters',
 	            encode:true, // json encode the filter query
@@ -168,7 +168,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    disabled:true
 	                }
 	            ],
-	            features:[groupingFeature, filters, cellTextSelector]
+	            features:[filters, cellTextSelector]
 	        };
 
 	        Ext.apply(this, config);
