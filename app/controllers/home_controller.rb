@@ -41,4 +41,8 @@ class HomeController < ApplicationController
     end
   end
 
+  def test
+   render :layout => "gui_test_runner"
+  end
+
 end

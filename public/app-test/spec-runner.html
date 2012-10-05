@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>ExtJS Unit Test: Sample App Jasmine Tests</title>
+
+    <!-- Jasmine -->
+    <script type="text/javascript" src="lib/jasmine-standalone-1.2.0/lib/jasmine-1.2.0/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-standalone-1.2.0/lib/jasmine-1.2.0/jasmine-html.js"></script>
+    <link href="lib/jasmine-standalone-1.2.0/lib/jasmine-1.2.0/jasmine.css" type="text/css" rel="stylesheet" />
+
+    <!-- ExtJS -->
+    <script type="text/javascript" src="../ext/ext-all.js"></script>
+  <script type="text/javascript">
+    //will be factored out some time with a jsonp call to chemspider. Just don't test it at the moment!
+    var simSearchUrl = 'http://localhost/blah/';
+  </script>
+<script type="text/javascript">
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'CS':'../chemspider/lib','CW':'../conceptwiki/lib','LDA':'../LinkedDataAPIParser/lib'
+    }
+});
+</script>
+    <!-- UNIT TEST CLASSES -->
+    <script type="text/javascript" src="spec/PharmacologyByCompoundTest.js"></script>
+    <!-- <script type="text/javascript" src="lda/PharmacologyByTargetTest.js"></script> -->
+    <!-- <script type="text/javascript" src="lda/PharmacologyByEnzymeTest.js"></script> -->
+
+    <!-- test launcher -->
+    <!--<script type="text/javascript" src="../app-test.js"></script>-->
+
+</head>
+<body>
+
+    <div id="test"></div>
+
+    <script type="text/javascript">
+        var jasmineEnv = jasmine.getEnv();
+        var trivialReporter = new jasmine.TrivialReporter();
+
+        jasmineEnv.updateInterval = 1000;
+
+        jasmineEnv.addReporter(trivialReporter);
+
+        jasmineEnv.specFilter = function(spec) {
+            return trivialReporter.specFilter(spec);
+        };
+
+        jasmineEnv.execute();
+    </script>
+
+</body>
+</html>

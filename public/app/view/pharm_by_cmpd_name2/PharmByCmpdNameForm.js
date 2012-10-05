@@ -2,7 +2,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.PharmByCmpdNameForm',
 	closable: true,
-	requires: ['LSP.view.dropdowns.conceptWikiCompoundLookup', 'LDA.helper.DynamicPagingToolbar', 'LSP.view.filter.FilterForm'],
+	requires: ['LSP.view.dropdowns.conceptWikiCompoundLookup', 'LDA.helper.DynamicPagingToolbar', 'LSP.view.filter.FilterForm', 'LDA.helper.LDAConstants'],
 	layout: {
 		type: 'vbox',
 		align: 'stretch'
