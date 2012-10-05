@@ -24,6 +24,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 		selector: 'PharmEnzymeForm #filterContainer_id'
 	}
     ],
+    filters: [],
 
     init:function () {
 	    console.log('PharmByEnzymeFamily: init()');

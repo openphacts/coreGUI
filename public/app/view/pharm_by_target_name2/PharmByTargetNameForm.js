@@ -33,6 +33,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 xtype: 'conceptWikiLookup',
                 fieldLabel: 'Protein name',
                 itemId: 'pharmByProteinCWLookup',
+		store: Ext.create('CW.store.ConceptWikiLookup', {}),
                 name: 'protein_uri',
                 cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
             }), {

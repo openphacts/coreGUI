@@ -2,6 +2,7 @@ Ext.define('CW.controller.ConceptWikiLookup', {
     extend:'Ext.app.Controller',
     models: ['CW.model.ConceptWikiLookup'],
     views:['CW.view.ConceptWikiLookup'],
+    stores:['CW.store.ConceptWikiLookup'],
     
     init:function () {
         this.control({

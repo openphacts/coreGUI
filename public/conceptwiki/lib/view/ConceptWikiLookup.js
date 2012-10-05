@@ -7,7 +7,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
         'CW.store.ConceptWikiLookup'
     ],
     cwTagUuid: 'pleaseConfigure[cwConceptTagUuid:]',
-    store: Ext.create('CW.store.ConceptWikiLookup'),
+    store: undefined,
     // search boks configs
     forceSelection:true,
     allowBlank:false,

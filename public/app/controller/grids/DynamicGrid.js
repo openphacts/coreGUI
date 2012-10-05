@@ -48,7 +48,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 selector:'dynamicgrid'
             }
         ],
-    filters: [],
 
     init:function () {
 		console.log('DynamicGrid: init()');

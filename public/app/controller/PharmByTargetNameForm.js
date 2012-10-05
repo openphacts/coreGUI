@@ -26,6 +26,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 		selector: 'PharmByTargetNameForm #filterContainer_id'
 	}
     ],
+    filters: [],
 
     init:function () {
 		console.log('PharmByTargetNameForm: init()');
