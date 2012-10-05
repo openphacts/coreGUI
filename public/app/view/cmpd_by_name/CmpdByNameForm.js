@@ -36,6 +36,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
 	                        xtype:'conceptWikiLookup',
 	                        fieldLabel:'Compound name',
 	                        itemId: 'compoundByNameLookup',
+				store: Ext.create('CW.store.ConceptWikiLookup', {}),
 	                        name: 'compound_uri',
 	                        cwTagUuid: '07a84994-e464-4bbf-812a-a4b96fa3d197'   // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
 	                    }),
