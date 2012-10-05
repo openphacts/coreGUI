@@ -3,7 +3,7 @@ describe('Compounds can be searched', function() {
 beforeEach(function() {
     this.application = Ext.create('Ext.app.Application', {
     name:'LSP',
-    appFolder:'/app',
+    appFolder:'./app',
     requires:['LDA.helper.LDAConstants'],
 
     // Define all the controllers that should initialize at boot up of your application

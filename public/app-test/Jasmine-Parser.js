@@ -3,7 +3,7 @@
  */
 
 FS = require('fs');
-var LOGFILE = '_jasmine-errors.txt';
+var LOGFILE = 'jasmine-errors.txt';
 
 UnitTester = {
 
