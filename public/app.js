@@ -16,7 +16,7 @@
 Ext.create('Ext.app.Application', {
     name:'LSP',
     appFolder:'app',
-    requires:['LDA.helper.LDAConstants'],
+    requires:['LDA.helper.LDAConstants', 'CW.config.Settings'],
 
     // Define all the controllers that should initialize at boot up of your application
     controllers:[

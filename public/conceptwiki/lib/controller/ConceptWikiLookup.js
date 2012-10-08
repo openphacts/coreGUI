@@ -14,8 +14,9 @@ Ext.define('CW.controller.ConceptWikiLookup', {
 
      // Fires when the box is rendered the first time
      prepProxy:function (cw_dropdown_view) {
-        cw_dropdown_view.store.proxy.extraParams = {uuid: cw_dropdown_view.cwTagUuid, limit: 10};
-       
+        // cw_dropdown_view.store.proxy.extraParams = cw_dropdown_view.store.proxy.extraParams + {uuid: cw_dropdown_view.cwTagUuid, limit: 10};
+		cw_dropdown_view.store.proxy.setExtraParam('uuid', cw_dropdown_view.cwTagUuid);
+		cw_dropdown_view.store.proxy.setExtraParam('limit', 10);
     },
     
    
