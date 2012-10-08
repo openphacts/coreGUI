@@ -1,3 +1,7 @@
+//@tag foundation,core
+//@require Object.js
+//@define Ext.Date
+
 /**
  * @class Ext.Date
  * A set of useful static methods to deal with date
@@ -129,8 +133,8 @@ function xf(format) {
 
 Ext.Date = {
     /**
-     * Returns the current timestamp
-     * @return {Number} The current timestamp
+     * Returns the current timestamp.
+     * @return {Number} Milliseconds since UNIX epoch.
      * @method
      */
     now: Date.now || function() {

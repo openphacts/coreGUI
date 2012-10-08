@@ -1,3 +1,4 @@
+//@tag foundation,core
 /**
  * @class Ext
  * @singleton
@@ -563,7 +564,7 @@ Ext._startTime = new Date().getTime();
         /**
          * Clone simple variables including array, {}-like objects, DOM nodes and Date without keeping the old reference.
          * A reference for the object itself is returned if it's not a direct decendant of Object. For model cloning,
-         * see {@link Model#copy Model.copy}.
+         * see {@link Ext.data.Model#copy Model.copy}.
          * 
          * @param {Object} item The variable to clone
          * @return {Object} clone

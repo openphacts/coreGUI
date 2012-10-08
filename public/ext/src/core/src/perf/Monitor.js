@@ -1,3 +1,6 @@
+//@tag extras,core
+//@require Accumulator.js
+
 /**
  * @class Ext.perf.Monitor
  * @singleton
@@ -86,6 +89,23 @@ Ext.define('Ext.perf.Monitor', {
         });
 
         return ret;
+    },
+
+    reset: function(){
+        Ext.each(this.accumulators, function(accum){
+            var me = accum;
+            me.count = me.childCount = me.depth = me.maxDepth = 0;
+            me.pure = {
+                min: Number.MAX_VALUE,
+                max: 0,
+                sum: 0
+            };
+            me.total = {
+                min: Number.MAX_VALUE,
+                max: 0,
+                sum: 0
+            };
+        });
     },
 
     updateGC: function () {

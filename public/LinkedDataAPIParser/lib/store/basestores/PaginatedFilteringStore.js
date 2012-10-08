@@ -8,18 +8,21 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
 		startParam: undefined,
 		limitParam: '_pageSize',
 		pageParam: '_page',
+		timeout: 100000,
 		// sortParam:'_sort',
 		//this is the only query param handled natively by the proxy, all others are handled in store config below.
 		callbackKey: '_callback',
 		listeners: { // configure listener
 			exception: function(request, operation, options) {
+				// TODO throw this exception up the stack, should be the controller
+				// handling it
 				// this block is reached on any exception
-				Ext.Msg.show({
-					title: '',
-					msg: "We are sorry but the OPS system returned an error.",
-					buttons: Ext.Msg.OK,
-					icon: Ext.MessageBox.INFO
-				});
+				// Ext.Msg.show({
+				// 					title: '',
+				// 					msg: "We are sorry but the OPS system returned an error.",
+				// 					buttons: Ext.Msg.OK,
+				// 					icon: Ext.MessageBox.INFO
+				// 				});
 			}
 		}
 	},
