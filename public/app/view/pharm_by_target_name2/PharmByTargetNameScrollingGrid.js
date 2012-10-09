@@ -139,6 +139,13 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     align:'center'
                 },
                 {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism',
+                    renderer:provenanceRenderer,
+                    align:'center'
+
+                },
+                {
                     header:'Compound Concept',
                     dataIndex:'cw_compound_uri',
                     renderer:provenanceRenderer,
