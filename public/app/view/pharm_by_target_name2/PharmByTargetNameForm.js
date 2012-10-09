@@ -97,7 +97,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 			}, {
 				xtype: 'button',
 				name: 'provHelp',
-				iconCls: 'provenanceHelpIcon',
+                margin: '5 0 0 0',
+                iconCls: 'provenanceHelpIcon',
 				tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
 			}]
 		}, {
