@@ -73,6 +73,11 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 				tooltip: 'Show or hide filter selector',
 				action: 'add_filter_form'
 			}, {
+                xtype: 'label',
+                forId: 'addFilterButton_id',
+                text: 'Filter',
+                margin: '5 5 5 5'
+            }, {
 				xtype: 'radiogroup',
 				width: 200,
 				fieldLabel: 'Provenance',
@@ -95,11 +100,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 				iconCls: 'provenanceHelpIcon',
 				tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
 			}]
-		}, {
-			xtype: 'label',
-			forId: 'addFilterButton_id',
-			text: 'Filter',
-			margin: '5 5 5 5'
 		}, {
 			xtype: 'FilterPanel',
 			itemId: 'filterContainer_id',
