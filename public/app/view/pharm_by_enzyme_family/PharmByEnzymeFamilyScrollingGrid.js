@@ -34,59 +34,77 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Structure',
                     dataIndex:'cs_compound_uri',
-					
 					xtype: 'templatecolumn',
 					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
-					sortable:false
+                    width:135,
+                    sortable:false
                 },
                 {
-                    header:'Smiles',
-                    dataIndex:'compound_smiles'
-                },
-                {
-                    header:'Std Value',
-                    dataIndex:'activity_standard_value'
-                },
-                {
-                    header:'Chemspider ID',
-                    dataIndex:'cs_compound_uri',
-					sortable:false
-                },
-                {
-                    header:'Inchi key',
-                    dataIndex:'compound_inchikey'
-                },
-                {
-                    header:'Std Type',
-                    dataIndex:'activity_activity_type'
-                },
-                {
-                    header:'Target Organism',
-                    dataIndex:'target_organism'
-                },
-                {
-                    header:'Assay Organism',
-                    dataIndex:'assay_organism'
+                    header:'Compound Name',
+                    dataIndex:'compound_pref_label',
+                    width: 180,
+                    align:'center'
                 },
                 {
                     header:'Target Name',
-                    dataIndex:'target_title'
+                    dataIndex:'target_title',
+                    width: 180,
+                    align:'center'
+                },
+                {
+                    header:'Target Organism',
+                    dataIndex:'target_organism',
+                    align:'center'
+                },
+                {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism',
+                    align:'center'
+                },
+                {
+                    header:'SMILES',
+                    dataIndex:'compound_smiles',
+                    align:'center'
+                },
+                {
+                    header:'InChi',
+                    dataIndex:'compound_inchi',
+                    align:'center'
+                },
+                {
+                    header:'InChi Key',
+                    dataIndex:'compound_inchikey',
+                    align:'center'
+                },
+                {
+                    header:'Assay Type',
+                    dataIndex:'activity_activity_type',
+                    width: 70,
+                    align:'center'
                 },
                 {
                     header:'Relation',
-                    dataIndex:'activity_relation'
+                    dataIndex:'activity_relation',
+                    width: 52,
+                    align:'center'
+                },
+                {
+                    header:'Value',
+                    dataIndex:'activity_standard_value',
+                    width: 60,
+                    align:'center'
+                },
+                {
+                    header:'Units',
+                    dataIndex:'activity_standard_units',
+                    width: 60,
+                    align:'center'
                 },
                 {
                     header:'Molweight',
-                    dataIndex:'compound_full_mwt'
-                },
-                {
-                    header:'Inchi',
-                    dataIndex:'compound_inchi'
-                },
-                {
-                    header:'Compound name',
-                    dataIndex:'compound_pref_label'
+                    dataIndex:'compound_full_mwt',
+                    align:'center',
+                    width: 80
                 }
             ],
             toggleProv:function (val) {
@@ -142,3 +160,8 @@ function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
 };
 
 
+//{
+//    header:'Chemspider ID',
+//    dataIndex:'cs_compound_uri',
+//	sortable:false
+//},
