@@ -32,7 +32,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 items:[
                   Ext.create('CW.view.ConceptWikiLookup', {
                     xtype:'conceptWikiLookup',
-                    fieldLabel:'Protein name',
+                    fieldLabel:'Target name',
                     itemId: 'targetByNameLookup',
 		    store: Ext.create('CW.store.ConceptWikiLookup', {}),
                     name: 'protein_uri',
