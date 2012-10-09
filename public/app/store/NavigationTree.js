@@ -122,35 +122,6 @@ Ext.define('LSP.store.NavigationTree', {
                         application_type:'grid'
                     }
                 ]
-            },
-            {
-                xtype:"",
-                cls:"folder",
-                text:"Exemplars",
-                leaf:false,
-                children:[
-                    {
-                        xtype:"temp",
-                        leaf:true,
-                        text:"X-Chem-Bio Navigator",
-                        cls:"file",
-                        application_type:'grid'
-                    },
-                    {
-                        xtype:"temp",
-                        leaf:true,
-                        text:"X-Target Dossier",
-                        cls:"file",
-                        application_type:'grid'
-                    },
-                    {
-                        xtype:"temp",
-                        leaf:true,
-                        text:"X-Polypharmacology Browser",
-                        cls:"file",
-                        application_type:'grid'
-                    }
-                ]
             }
 
 
@@ -191,3 +162,34 @@ Ext.define('LSP.store.NavigationTree', {
 // 						application_type : 'grid'
 // 					}]
 // 				},
+//,
+
+//{
+//    xtype:"",
+//        cls:"folder",
+//    text:"Exemplars",
+//    leaf:false,
+//    children:[
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Chem-Bio Navigator",
+//        cls:"file",
+//        application_type:'grid'
+//    },
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Target Dossier",
+//        cls:"file",
+//        application_type:'grid'
+//    },
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Polypharmacology Browser",
+//        cls:"file",
+//        application_type:'grid'
+//    }
+//]
+//}
