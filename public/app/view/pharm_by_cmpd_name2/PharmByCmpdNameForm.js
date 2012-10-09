@@ -82,6 +82,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             },{
                xtype: 'button',
                name: 'provHelp',
+               margin: '5 0 0 0',
                iconCls:'provenanceHelpIcon',
                tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' +
                    '<br><p class="chemspiderValueColour"> - ChemSpider </p>' +
