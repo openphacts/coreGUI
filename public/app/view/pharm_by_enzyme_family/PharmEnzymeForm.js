@@ -27,7 +27,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 	                        xtype:'displayfield',
 	                        name:'enzyme_family',
 	                        margin:'5 5 5 5',
-	                        width:688,
+	                        width:400,
 	                        value:'No enzyme class selected - press button ->',
 	                        fieldLabel:'Enzyme family class',
 	                        labelWidth:130
@@ -35,7 +35,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 	                    {
 	                        xtype:'button',
 	                        padding:'5 5 5 5',
-	                        text:'Browse EC codes',
+                            margin:'5 5 5 5',
+                            text:'Browse EC codes',
 	                        action:'enz_tree'
 	                    },
 	                    {
@@ -53,7 +54,9 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 				{
 				    xtype:'button',
 					action:'query',
-					itemId:'submitEnzymePharm_id',
+                    margin: '5 0 0 320',
+                    maxWidth: 300,
+                    itemId:'submitEnzymePharm_id',
 					text:'Start search...'
 				}, {
 			xtype: 'container',
@@ -88,6 +91,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
             },{
                 xtype: 'button',
                 name: 'provHelp',
+                margin: '5 0 0 0',
                 iconCls:'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' +
                     '<br><p class="chemspiderValueColour"> - ChemSpider </p>' +
