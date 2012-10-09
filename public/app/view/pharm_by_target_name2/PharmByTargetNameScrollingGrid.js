@@ -141,6 +141,9 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                 {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
+                    tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
+                        'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
+                        ' expressed in non-human cells, or pathogen-infected human cells)',
                     renderer:provenanceRenderer,
                     align:'center'
 
