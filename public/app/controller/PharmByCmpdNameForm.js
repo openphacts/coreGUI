@@ -32,6 +32,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		selector: 'PharmByCmpdNameForm #filterContainer_id'
 	}],
 	filters: [],
+	current_uri: undefined,
 
 	init: function() {
 		console.log('PharmByCmpdNameForm: init()');
@@ -64,6 +65,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			var dg = this.getGridView();
 			var store = dg.store;
 			if (historyTokenObject.u != store.proxy.extraParams.uri) {
+				this.current_uri = historyTokenObject.u;
 				store.proxy.extraParams.uri = historyTokenObject.u;
 				store.proxy.reader.uri = historyTokenObject.u;
 				dg.setLoading(true);
@@ -87,7 +89,17 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		var form = button.up('form');
 		button.disable();
 		var values = form.getValues();
-		Ext.History.add('!p=PharmByCmpdNameForm&u=' + values.compound_uri);
+		if (this.current_uri == values.compound_uri) {
+			var dg = this.getGridView();
+			var store = dg.store;
+			store.proxy.extraParams.uri = this.current_uri;
+			store.proxy.reader.uri = this.current_uri;
+			dg.setLoading(true);
+			//loading the store is done after the total results are fetched
+			this.fetchTotalResults();
+		} else {
+			Ext.History.add('!p=PharmByCmpdNameForm&u=' + values.compound_uri);
+		}
 	}
 
 });

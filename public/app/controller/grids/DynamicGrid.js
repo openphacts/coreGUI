@@ -48,7 +48,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 selector:'dynamicgrid'
             }
         ],
-
+	
     init:function () {
 		console.log('DynamicGrid: init()');
         this.control({
@@ -142,6 +142,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 	filterClosed: function(filter) {
 		console.log('DynamicGrid: filterClosed()');
 		controller = filter.filterModel.controller;
+		var dg = controller.getGridView();
+		var store = dg.store;
+		var exportStore = dg.exportStore;
+		exportStore.setActivityType("");
+		exportStore.setActivityValue("");
+		exportStore.setActivityCondition("");
+		store.setActivityType("");
+		store.setActivityValue("");
+		store.setActivityCondition("");
 		var index = controller.filters.indexOf(filter.filterModel);
 		controller.filters.splice(index, 1);
 		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);

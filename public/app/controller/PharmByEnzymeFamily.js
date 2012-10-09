@@ -25,6 +25,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	}
     ],
     filters: [],
+	current_uri: undefined,
 
     init:function () {
 	    console.log('PharmByEnzymeFamily: init()');
@@ -61,6 +62,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
     handleHistoryToken:function (historyTokenObject) {
  	    console.log('PharmByEnzymeFamily: handleHistoryToken()');
         if (historyTokenObject.ec) {
+			this.current_uri = historyTokenObject.ec;
             var dg = this.getGridView();
             var store = dg.getStore();
             dg.setLoading(true);
@@ -131,7 +133,17 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        var form = button.up('form');
 	        button.disable();
 	        var values = form.getValues();
-	        Ext.History.add('!p=PharmEnzymeForm&ec=' + values.ec_number);
+			if (this.current_uri == values.ec_number) {
+				var dg = this.getGridView();
+				var store = dg.store;
+				store.proxy.extraParams.uri = this.current_uri;
+				store.proxy.reader.uri = this.current_uri;
+				dg.setLoading(true);
+				//loading the store is done after the total results are fetched
+				this.fetchTotalResults();
+			} else {
+		        Ext.History.add('!p=PharmEnzymeForm&ec=' + values.ec_number);
+			}
 	    }
 	
 })
