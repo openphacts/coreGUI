@@ -2,6 +2,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
     extend:'Ext.form.Panel',
     alias:'widget.CmpdByNameForm',
     closable:true,
+    header: false,
     requires:[
         'LSP.view.dropdowns.conceptWikiCompoundLookup',
         'LSP.view.dynamicgrid.DynamicGrid',
