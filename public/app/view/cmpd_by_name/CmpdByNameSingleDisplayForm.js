@@ -514,7 +514,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 //                    console.log("No itemId for: " + prop);
                 }
             }
-        }
+}
+
+        var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+        var csLink = this.query('#chemspider_id')[0];
+        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'">' + csLinkFrag + '</a>');
+        csLink.show();
+
         var ip = this.query('#compound_form_imagepanel')[0];
 		var csid;
 		if (compound.data.cs_uri) {
