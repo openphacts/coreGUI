@@ -2,6 +2,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
     extend:'Ext.form.Panel',
     alias:'widget.TargetByNameForm',
     closable:true,
+    header: false,
     requires:[
         'LSP.view.dropdowns.conceptWikiProteinLookup',
         // 'LSP.view.dynamicgrid.DynamicGrid',
