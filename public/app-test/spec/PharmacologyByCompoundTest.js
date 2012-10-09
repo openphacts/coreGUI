@@ -62,5 +62,50 @@ beforeEach(function() {
       	expect(store_success).toEqual(true);
     });
     });
+    it('and results can be filtered', function() {
+        //var compound_pharmacology_paginated_store = Ext.create("LDA.store.CompoundPharmacologyPaginatedStore", {});
+	//var ctlr = Application.getController('PharmByCmpdNameform');
+	var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
+        store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
+		store.setActivityType('Potency');
+		store.setActivityValue('1.6');
+		store.setActivityCondition('<');
+        store.load(function(records, operation, success) {
+		store_records = records;
+		store_operation = operation;
+		store_success = operation.success;
+        });
+        waitsFor(
+            function(){ return !store.isLoading(); },
+            "load never completed",
+            4000
+        );
+    runs(function() {
+      	expect(store_success).toEqual(true);
+    });
+    });
+    it('and specific pages can be requested', function() {
+        //var compound_pharmacology_paginated_store = Ext.create("LDA.store.CompoundPharmacologyPaginatedStore", {});
+	//var ctlr = Application.getController('PharmByCmpdNameform');
+	var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
+        store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
+		store.page = 10;
+		store.setActivityType('Potency');
+		store.setActivityValue('1.6');
+		store.setActivityCondition('<');
+        store.load(function(records, operation, success) {
+		store_records = records;
+		store_operation = operation;
+		store_success = operation.success;
+        });
+        waitsFor(
+            function(){ return !store.isLoading(); },
+            "load never completed",
+            4000
+        );
+    runs(function() {
+      	expect(store_success).toEqual(true);
+    });
+    });
 
 });
