@@ -1,6 +1,7 @@
 Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
     extend:'Ext.form.Panel',
     alias:'widget.SimSearchForm',
+    header: false,
     requires:[
         'LSP.view.mol_editor_forms.KetcherForm'
     ],
