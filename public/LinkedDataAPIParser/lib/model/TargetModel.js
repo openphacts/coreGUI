@@ -18,6 +18,9 @@ Ext.define('LDA.model.TargetModel', {
         'label',
         'label_src',
 
+        'prefLabel',
+        'prefLabel_src',
+
         'keywords',
         'keywords_src',
 
