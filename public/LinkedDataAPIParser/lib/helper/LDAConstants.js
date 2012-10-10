@@ -30,7 +30,9 @@ Ext.define('LDA.helper.LDAConstants', {
         'http://www.chemspider.com': 'chemspiderValue',
         'http://www.chemspider.com/': 'chemspiderValue',
         'http://rdf.chemspider.com': 'chemspiderValue',
-        'http://rdf.chemspider.com/': 'chemspiderValue'
+        'http://rdf.chemspider.com/': 'chemspiderValue',
+        'http://purl.uniprot.org' : 'uniprotValue',
+        'http://purl.uniprot.org/' : 'uniprotValue'
     },
     LDA_PROVENANCE_OFF: 'Off',
     LDA_PROVENANCE_COLOUR: 'Colour',
