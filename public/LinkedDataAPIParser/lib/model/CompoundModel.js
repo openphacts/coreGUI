@@ -7,7 +7,7 @@
  */
 Ext.define('LDA.model.CompoundModel', {
     extend:'Ext.data.Model',
-    fields:['cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
+    fields:['csid', 'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
         'inchi', 'inchi_src',
         'inchi_key', 'inchi_key_src',
         'smiles', 'smiles_src',
