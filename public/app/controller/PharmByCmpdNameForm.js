@@ -31,7 +31,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		ref: 'filterContainer',
 		selector: 'PharmByCmpdNameForm #filterContainer_id'
 	}],
-	filters: [],
+	filters: undefined,
 	current_uri: undefined,
 
 	init: function() {

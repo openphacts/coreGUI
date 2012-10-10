@@ -96,7 +96,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 				value: value_value//,
 				//unit: unit_value
 			});
-			this.filters.push(filter);
+			this.getFilters().push(filter);
 			// this is the only way I could find to reference the controller from the model and the view
 			filter.controller = this;
 
@@ -151,8 +151,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		store.setActivityType("");
 		store.setActivityValue("");
 		store.setActivityCondition("");
-		var index = controller.filters.indexOf(filter.filterModel);
-		controller.filters.splice(index, 1);
+		var index = controller.getFilters().indexOf(filter.filterModel);
+		controller.getFilters().splice(index, 1);
 		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);
 	},
 
@@ -178,11 +178,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
           // and attaching it to the grid view
           gridview.up('form').setLoading( "Preparing download of " + store_count + " records. Please wait..."); 
           // now we load the grid
-	  if (this.filters.length != 0) {
-		gridview.exportStore.setActivityType(this.filters[0].data.activity);
-			gridview.exportStore.setActivityValue(this.filters[0].data.value);
-			gridview.exportStore.setActivityCondition(this.filters[0].data.condition);
+	  if (this.getFilters().length != 0) {
+		gridview.exportStore.setActivityType(this.getFilters()[0].data.activity);
+			gridview.exportStore.setActivityValue(this.getFilters()[0].data.value);
+			gridview.exportStore.setActivityCondition(this.getFilters()[0].data.condition);
 	  };
+	  // we only want 1 page with all results but ext seems to send multi requests for the same data
+	  // as if it was in an infinite grid. Setting buffered to false prevents this
+          gridview.exportStore.buffered = false;
           gridview.exportStore.load({
               params:{ _page:1, _pageSize:store_count},
               callback:function (records, operation, success) {
@@ -389,10 +392,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		// at some point
 		// Count with filters was slow, easier to grab all the results and count them here
 		// code kept in case needed in future
-		if (this.filters.length>0) {
-			countStore.setActivityType(this.filters[0].data.activity);
-			countStore.setActivityValue(this.filters[0].data.value);
-			countStore.setActivityCondition(this.filters[0].data.condition);
+		if (this.getFilters().length>0) {
+			countStore.setActivityType(this.getFilters()[0].data.activity);
+			countStore.setActivityValue(this.getFilters()[0].data.value);
+			countStore.setActivityCondition(this.getFilters()[0].data.condition);
 		}
 		//	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
 		//	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
@@ -497,6 +500,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         var dg = this.getGridView();
         dg.toggleProv(newVal['prov']);
 		dg.getView().refresh();
+    },
+
+    getFilters: function() {
+	if (this.filters == null) {
+		this.filters = new Array();
+	}
+	return this.filters;
     }
     
 });
