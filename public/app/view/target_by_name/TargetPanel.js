@@ -52,7 +52,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 layout:'anchor',
                                 items:[
                                     {xtype:'displayfield', anchor:'100%', itemId:'prefLabel', fieldCls:'target-title'},
-                                    {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
+                                    {xtype:'button', text:'Pharmacology Data', margin: '15 0 20 0', itemId:'pharmTargetButton', cls:'target-pharm-button'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
@@ -247,7 +247,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop) && td[prop] != '') {
-               console.log(prop);
+               //console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
         }
