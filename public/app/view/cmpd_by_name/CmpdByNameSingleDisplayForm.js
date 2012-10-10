@@ -238,8 +238,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'molformula',
-                                        itemId:'molformula',
+                                        name:'molform',
+                                        itemId:'molform',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
                                         padding:'10px 0 0 0',
@@ -348,18 +348,10 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         fieldLabel:'Melting Point'
                                     }
                                 ]
-
-
                             }
-
-
                         ]
-
-
                     },
-
                     {
-
                         // BOTTOM Panel
                         xtype:'panel',
                         itemId:'bottomPanelDetails',
@@ -490,7 +482,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             field.setValue(alogpValue);
                             field.show();
                             break;
-                        case 'molformula':
+                        case 'molform':
 
                             // correctly format molecular formula
                             var molValue = td[prop];
