@@ -51,7 +51,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'textDataPanel',
                                 layout:'anchor',
                                 items:[
-                                    {xtype:'displayfield', anchor:'100%', itemId:'label', fieldCls:'target-title'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel', fieldCls:'target-title'},
                                     {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
@@ -124,7 +124,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
             var td = store.first().data;
 
-            if (records.length > 0 && td.hasOwnProperty('target_name')) { // TEMP FIX -- new coreAPI's returning an empty object
+            if (records.length > 0 && td.hasOwnProperty('prefLabel')) { // TEMP FIX -- new coreAPI's returning an empty object
 
                 var dp = this.down('#dp');
                 var msg = this.down('#msg');
@@ -208,15 +208,14 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }
         else if (fieldId == 'keywords') {
 //            console.log('keywords');
-	    if (value != null) {
-	    	this.addKeywords(value);
-	    }
+            if (value != null) {
+                this.addKeywords(value);
+            }
         }
         else if (fieldId == 'organism') {
-//            console.log('organism');
-	    if (value != null) {
-            	this.addOrganism(value);
-	    }
+            if (value != null) {
+                this.addOrganism(value);
+            }
         }
         else if (fieldId == 'pdb_id_page') {
 			if (value != "" && value != null) {
@@ -247,7 +246,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         pharmButton.show();
 
         for (var prop in td) {
-            if (td.hasOwnProperty(prop)) {
+            if (td.hasOwnProperty(prop) && td[prop] != '') {
                console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
