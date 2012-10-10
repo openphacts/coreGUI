@@ -24,7 +24,6 @@ Ext.define('LDA.helper.TargetReader', {
                 } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                    drugBankData = match;
                 } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'uniprotValue') {
-                    console.log( " HIT ");
                     uniprotData = match;
                 }
 
@@ -42,7 +41,7 @@ Ext.define('LDA.helper.TargetReader', {
         if (uniprotData != null) {
             uniprot_src = uniprotData[LDA.helper.LDAConstants.LDA_IN_DATASET];
         }
-        console.log(' RECORD ' + pt['Function_Annotation']);
+
         var record = Ext.create('LDA.model.TargetModel', {
             cw_target_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
             chembl_target_uri: chemblData != null ? chemblData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
