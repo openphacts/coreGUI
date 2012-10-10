@@ -16,26 +16,39 @@ Ext.define('LDA.helper.TargetReader', {
         // var drugBankData = em[1];
         var chemblData;
         var drugBankData;
+        var uniprotData;
         Ext.each(em, function (match, index, matches) {
                 var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                 if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemblValue') {
                     chemblData = match;
                 } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                    drugBankData = match;
+                } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'uniprotValue') {
+                    console.log( " HIT ");
+                    uniprotData = match;
                 }
+
             }
         );
 		var chembl_src;
 		if (chemblData != null) {			
         	chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
 		}
+        var drugBank_src;
 		if (drugBankData != null) {
-        	var drugBank_src = drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET];			
+        	drugBank_src = drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET];
 		}
+        var uniprot_src;
+        if (uniprotData != null) {
+            uniprot_src = uniprotData[LDA.helper.LDAConstants.LDA_IN_DATASET];
+        }
+        console.log(' RECORD ' + pt['Function_Annotation']);
         var record = Ext.create('LDA.model.TargetModel', {
             cw_target_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
             chembl_target_uri: chemblData != null ? chemblData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
             drugbank_target_uri: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
+
+            prefLabel: pt['prefLabel'],
 
             label: chemblData != null ? chemblData['label'] : null,
             label_src:chembl_src,
@@ -52,7 +65,7 @@ Ext.define('LDA.helper.TargetReader', {
             organism: chemblData != null ? chemblData['organism'] : null,
             organism_src:chembl_src,
 
-            synonyms: chemblData != null ? chemblData['synonyms'] : null,
+            synonyms: chemblData != null ? chemblData['label'] : null,
             synonyms_src:chembl_src,
 
             cellular_location: drugBankData != null ? drugBankData['cellularLocation'] : null,
@@ -67,8 +80,8 @@ Ext.define('LDA.helper.TargetReader', {
             pdb_id_page: drugBankData != null ? drugBankData['pdbIdPage'] : null,
             pdb_id_page_src:drugBank_src,
 
-            specific_function: drugBankData != null ? drugBankData['specificFunction'] : null,
-            specific_function_src:drugBank_src,
+            specific_function: uniprotData != null ? uniprotData['Function_Annotation'] : null,
+            specific_function_src:uniprot_src,
 
             theoretical_pi: drugBankData != null ? drugBankData['theoreticalPi'] : null,
             theoretical_pi_src:drugBank_src
