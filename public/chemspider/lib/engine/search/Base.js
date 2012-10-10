@@ -50,7 +50,8 @@
         searchingMask.hide();
     },
     runSearch: function (params) {
-        this.startProgress();
+	// no need for 2 loading masks
+        //this.startProgress();
 
         params.limit = this.limit;
 
@@ -67,7 +68,7 @@
                     this.fireEvent('finished', this, this.rid);
                 }
                 else {
-                    this.stopProgress();
+                    //this.stopProgress();
 
                     Ext.MessageBox.show({
                         title: 'Error',
