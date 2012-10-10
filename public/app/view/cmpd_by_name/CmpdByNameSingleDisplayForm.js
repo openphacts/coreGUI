@@ -187,7 +187,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         margin:'0 0 0 10',
                                         text:'View in ChemBioNavigator',
                                         itemId:'cbnLinkout',
-                                        action:'cbn_linkout'
+                                        action:'cbn_linkout',
+                                        hidden: true
                                     },
 
 
