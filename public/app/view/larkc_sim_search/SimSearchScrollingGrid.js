@@ -48,7 +48,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
                     header:'Structure',
                     dataIndex:'cs_uri',
 					xtype: 'templatecolumn',
-					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={{cs_uri.substr(cs_uri.lastIndexOf('/') + 1)}&w=128&h=128" alt="CSID:{cs_uri.substr(cs_uri.lastIndexOf('/') + 1)}"/>',
+					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
 					sortable:false
                 },
                 {
