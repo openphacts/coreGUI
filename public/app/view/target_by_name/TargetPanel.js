@@ -246,7 +246,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         pharmButton.show();
 
         for (var prop in td) {
-            if (td.hasOwnProperty(prop) && td[prop] != '') {
+            if (td.hasOwnProperty(prop) && td[prop] != '' && td[prop] != null) {
                //console.log(prop);
                 this.setFieldValue(prop, td[prop]);
             }
