@@ -65,7 +65,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             		var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
             		var target_pref_label = target['prefLabel'];
             		var target_title = target['title'];
-            		var target_organism = target['assay_organism'];
+            		var target_organism = target['target_organism'];
             		var target_concatenated_uris = target['concatenatedURIs'];
 				}
 			}
