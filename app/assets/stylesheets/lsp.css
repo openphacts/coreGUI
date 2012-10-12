@@ -154,6 +154,12 @@
     font-size: 30px;
 }
 
+.target-descriptions {
+    text-align: justify;
+    color: rgb(128, 128, 128);
+
+}
+
 .target-pharm-button {
     margin-bottom: 20px;
 }
@@ -247,6 +253,23 @@ sub {
     background-color: rgb(163, 231, 255);
     text-align: center;
 }
+
+.conceptWikiValueColourSummary {
+    background-color: rgb(161, 209, 173);
+}
+
+.chemblValueColourSummary {
+    background-color: rgb(41, 159, 150);
+}
+
+.drugbankValueColourSummary {
+    background-color: rgb(222, 90, 251);
+}
+
+.chemspiderValueColourSummary {
+    background-color: rgb(163, 231, 255);
+}
+
 
 .provenanceHelpIcon {
     background-image: url(/assets/help.png) !important;
