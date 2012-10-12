@@ -59,7 +59,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'20px 0 12px 0',
                                         fieldLabel:'ALogP',
                                         labelAlign:'top',
-                                        columnWidth:.1
+                                        columnWidth:.1,
 
                                     },
                                     {
@@ -70,9 +70,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         baseCls:'x-cmpBottomBase', // label\
                                         anchor:'100%',
                                         padding:'0 0 12px 0',
-                                        fieldLabel:'# H-Bond Receptors',
+                                        fieldLabel:'# H-Bond Acceptors',
                                         columnWidth:.13,
                                         labelAlign:'top'
+                                        //valueToRaw: function(value) {
+                                        //    return Ext.util.Format.currency(value, '$ ', 2);
+                                        //}
                                     },
                                     {
                                         xtype:'displayfield',
@@ -130,7 +133,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
                                         padding:'0 0 12px 0',
-                                        fieldLabel:'Polar Surface Area',
+                                        fieldLabel:'Polar Surface Area (Å<sup>2</sup>)',
                                         columnWidth:.12,
                                         labelAlign:'top'
                                     },
@@ -468,36 +471,62 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-//                console.log("Field: " + prop + " Value: " + td[prop]);
-
+                //console.log("Field: " + prop + " Value: " + td[prop]);
+                var val;
                 var field = this.down('#' + prop);
                 if (field) {
 
                     switch (prop) {
 
                         case 'alogp':
-                            // change alogp value to 1 d.p
-                            var alogpValue = new Number(td[prop]);
-                            alogpValue = alogpValue.toFixed(1);
-                            field.setValue(alogpValue);
-                            field.show();
+
+                            if (td[prop]){
+                                // change alogp value to 1 d.p
+                                var alogpValue = new Number(td[prop]);
+                                alogpValue = alogpValue.toFixed(1);
+                                val = provenanceSummaryRenderer(alogpValue, prop, td);
+                                field.setValue(val);
+                                field.show();
+                            }
                             break;
+
                         case 'molform':
 
-                            // correctly format molecular formula
-                            var molValue = td[prop];
-                            molValue = molValue.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
-                            field.setValue(molValue);
-                            field.show();
+                            if (td[prop]){
+                                // correctly format molecular formula
+                                var molValue = td[prop];
+                                molValue = molValue.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
+                                val = provenanceSummaryRenderer(molValue, prop, td);
+                                field.setValue(val);
+                                field.show();
+                            }
                             break;
+
 						case 'psa':
-							var psaValue = td[prop];
-							field.setValue(psaValue);
-							field.show();
+
+                            if (td[prop]){
+                                var psaValue = td[prop];
+                                val = provenanceSummaryRenderer(psaValue, prop, td);
+                                field.setValue(val);
+                                field.show();
+                            }
 							break;
+
+                        case 'meltingPoint':
+
+                            if (td[prop]){
+                                var meltingPoint = td[prop];
+                                val = provenanceSummaryRenderer(meltingPoint, prop, td);
+                                val = val.replace(/oC/g,'°C');
+                                field.setValue(val);
+                                field.show();
+                            }
+                            break;
+
                         default:
                             if (td[prop]){
-                                field.setValue(td[prop]);
+                                val = provenanceSummaryRenderer(td[prop], prop, td);
+                                field.setValue(val);
                                 field.show();
                             }
                     }
@@ -545,4 +574,43 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         msg.setValue(message);
         msg.setVisible(true);
     }
+
+
 });
+
+var provenance = false;
+
+
+function provenanceSummaryRenderer(value, field, record) {
+
+    if (provenance) {
+
+        //console.log(" HIT " + value);
+        var recdata = field;
+        recdata += '_src';
+
+        var source = record[recdata];
+        //console.log(source);
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        cls += LDAProvenanceMode;
+        cls += 'Summary';
+
+        var output;
+        //console.log(iconCls);
+        // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+
+        return output;
+
+    } else {
+
+        return value;
+
+    }
+
+};
+
