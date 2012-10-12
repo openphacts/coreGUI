@@ -213,9 +213,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         var gridview = csv_prep_button.up('dynamicgrid');
 //var params = gridview.store.proxy.url.replace(gridview.store.BASE_URL,"");
 var params = gridview.store.getAllConditionsEncoded();
+var type = gridview.store.REQUEST_TYPE;
 var downloader = Ext.getCmp('FileDownload');
 downloader.load({
-    url: '/core_api_calls/tab_separated_file/?uri=' + uri + "&" + params
+    url: '/core_api_calls/tab_separated_file/?uri=' + uri + "&" + params + "&request_type=" + type
 });
     },
 

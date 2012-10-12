@@ -3,6 +3,7 @@ Ext.define('LDA.store.TargetPharmacologyPaginatedStore', {
     model:'LDA.model.PharmacologyPaginatedModel',
     storeId:'TargetPharmacologyPaginatedStore',
     BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/target/pharmacology/pages?',
+    REQUEST_TYPE: 'target',
 
     constructor:function (config, arguments) {
 		console.log('TargetPharmacologyPaginatedStore: constructor()');

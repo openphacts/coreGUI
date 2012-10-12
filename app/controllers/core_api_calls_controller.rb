@@ -5,7 +5,6 @@ class CoreApiCallsController < ApplicationController
 
   def tab_separated_file
     domain = AppSettings.config["tsv"]["tsv_url"]
-    path = AppSettings.config["mail"]["tsv_path"]
     begin
       response = Net::HTTP.get(domain, "#{path}?".concat(@params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')))
       send_file response.body, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
