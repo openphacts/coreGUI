@@ -71,7 +71,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 click:this.prepSDFile
             },
             'dynamicgrid toolbar #csvDownloadProxy_id':{
-                click:this.prepCSVFile
+                click:this.prepCSVFile,
+		scope:this
             }
         })
     },
@@ -131,6 +132,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		console.log('DynamicGrid: setActivityFilters()');
 			var dg = this.getGridView();
 			var store = dg.store;
+			store.filters = this.getFilters();
 			store.setActivityType(activity_value);
 			store.setActivityValue(value_value);
 			store.setActivityCondition(conditions_value);
@@ -153,6 +155,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		store.setActivityCondition("");
 		var index = controller.getFilters().indexOf(filter.filterModel);
 		controller.getFilters().splice(index, 1);
+		store.filters = controller.getFilters();
 		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);
 	},
 
@@ -168,43 +171,52 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 	},
 
     prepCSVFile:function (csv_prep_button) {
+	console.log('LSP.controllers.DynamicGrid: prepCSVFile()');
+//        var gridview = csv_prep_button.up('dynamicgrid');
+//        var store_count = gridview.store.totalCount;
+//        if(store_count > CSV_EXPORT_LIMIT){alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");}     
+//        else{
+//	  gridview.exportStore.proxy.timeout = '180000';
+//          gridview.exportStore.proxy.url = gridview.store.proxy.url;
+//	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
+//          // and attaching it to the grid view
+//          gridview.up('form').setLoading( "Preparing download of " + store_count + " records. Please wait..."); 
+//          // now we load the grid
+//	  if (this.getFilters().length != 0) {
+//		gridview.exportStore.setActivityType(this.getFilters()[0].data.activity);
+//			gridview.exportStore.setActivityValue(this.getFilters()[0].data.value);
+//			gridview.exportStore.setActivityCondition(this.getFilters()[0].data.condition);
+//	  };
+//	  // we only want 1 page with all results but ext seems to send multi requests for the same data
+//	  // as if it was in an infinite grid. Setting buffered to false prevents this
+//          gridview.exportStore.buffered = false;
+//          gridview.exportStore.load({
+//              params:{ _page:1, _pageSize:store_count},
+//              callback:function (records, operation, success) {
+//                  if (success) {
+//                    gridview.up('form').setLoading(false);
+//                    csv_prep_button.setText('CSV-File ready! Click ->');
+//                    csv_prep_button.up('grid').down('#csvDownload_id').enable();
+//                    gridview.down('#sdfDownloadProxy_id').enable();
+//                    gridview.exportCSVReady = true;                   
+//                  }
+//                  else {
+//                     gridview.up('form').setLoading(false);
+//                     alert("We are sorry, something went wrong. Please try again later.");
+//                  }
+//              }},this
+//        
+//        );
+//           
+//   }
+        var uri = csv_prep_button.up('form').getValues().compound_uri;
         var gridview = csv_prep_button.up('dynamicgrid');
-        var store_count = gridview.store.totalCount;
-        if(store_count > CSV_EXPORT_LIMIT){alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");}     
-        else{
-	  gridview.exportStore.proxy.timeout = '180000';
-          gridview.exportStore.proxy.url = gridview.store.proxy.url;
-	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
-          // and attaching it to the grid view
-          gridview.up('form').setLoading( "Preparing download of " + store_count + " records. Please wait..."); 
-          // now we load the grid
-	  if (this.getFilters().length != 0) {
-		gridview.exportStore.setActivityType(this.getFilters()[0].data.activity);
-			gridview.exportStore.setActivityValue(this.getFilters()[0].data.value);
-			gridview.exportStore.setActivityCondition(this.getFilters()[0].data.condition);
-	  };
-	  // we only want 1 page with all results but ext seems to send multi requests for the same data
-	  // as if it was in an infinite grid. Setting buffered to false prevents this
-          gridview.exportStore.buffered = false;
-          gridview.exportStore.load({
-              params:{ _page:1, _pageSize:store_count},
-              callback:function (records, operation, success) {
-                  if (success) {
-                    gridview.up('form').setLoading(false);
-                    csv_prep_button.setText('CSV-File ready! Click ->');
-                    csv_prep_button.up('grid').down('#csvDownload_id').enable();
-                    gridview.down('#sdfDownloadProxy_id').enable();
-                    gridview.exportCSVReady = true;                   
-                  }
-                  else {
-                     gridview.up('form').setLoading(false);
-                     alert("We are sorry, something went wrong. Please try again later.");
-                  }
-              }},this
-        
-        );
-           
-    }   
+//var params = gridview.store.proxy.url.replace(gridview.store.BASE_URL,"");
+var params = gridview.store.getAllConditionsEncoded();
+var downloader = Ext.getCmp('FileDownload');
+downloader.load({
+    url: '/core_api_calls/tab_separated_file/?uri=' + uri + "&" + params
+});
     },
 
     
@@ -507,6 +519,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		this.filters = new Array();
 	}
 	return this.filters;
+    },
+
+    getRequestType: function() {
+        return this.request_type;
     }
     
 });

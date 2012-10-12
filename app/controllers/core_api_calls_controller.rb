@@ -2,6 +2,18 @@ require 'results_formatter'
 class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
+
+  def tab_separated_file
+    domain = AppSettings.config["tsv"]["tsv_url"]
+    path = AppSettings.config["mail"]["tsv_path"]
+    begin
+      response = Net::HTTP.get(domain, "#{path}?".concat(@params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')))
+      send_file response.body, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    rescue Exception => e
+      puts e.to_s
+      # TODO send an error response?
+    end
+  end
   
   def cmpd_name_lookup(substring = params[:query])
       options = Hash.new

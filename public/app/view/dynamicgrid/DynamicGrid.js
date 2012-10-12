@@ -5,7 +5,7 @@ Ext.Loader.setPath('Ext.ux.grid', 'ext/examples/ux/grid');
 Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid',
-	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable'],
+	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable', 'LSP.view.ux.download.FileDownload'],
   exportStore: null,
 	exportCSVReady: false,
 	exportSDFReady: false,
@@ -126,8 +126,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	            tbar:[
 	                 {
 	                    xtype:'button',
-	                    text:'Prepare full result set download',
-	                    tooltip:'Starts a two steep process to download the CSV and SD-files.',
+	                    text:'Download results as a tab separated file',
+	                    tooltip:'Download results as a tab separated file',
 	                    itemId:'csvDownloadProxy_id',
 	                    iconCls:'icon-csv',
 	                    hidden:false
@@ -166,7 +166,12 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    height:22,
 	                    hidden:false,
 	                    disabled:true
-	                }
+	                }, {
+            xtype: 'FileDownload',
+            id: 'FileDownload',
+                      width:111,
+	                    height:22
+}
 	            ],
 	            features:[filters, cellTextSelector]
 	        };
