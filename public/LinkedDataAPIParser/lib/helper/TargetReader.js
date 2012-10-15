@@ -48,6 +48,7 @@ Ext.define('LDA.helper.TargetReader', {
             drugbank_target_uri: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
 
             prefLabel: pt['prefLabel'],
+            prefLabel_src:pt[LDA.helper.LDAConstants.LDA_IN_DATASET],
 
             label: chemblData != null ? chemblData['label'] : null,
             label_src:chembl_src,
