@@ -51,16 +51,16 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'textDataPanel',
                                 layout:'anchor',
                                 items:[
-                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel', fieldCls:'target-title'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel',renderer: provenanceTargetSummaryRenderer, fieldCls:'target-title'},
                                     {xtype:'button', text:'Pharmacology Data', margin: '15 0 20 0', itemId:'pharmTargetButton', cls:'target-pharm-button'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function', fieldLabel:'Specific Function', cls:'target-descriptions'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', fieldLabel:'Cellular Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'pdb_id_page', fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type',renderer: provenanceTargetSummaryRenderer, cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Organism', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Description', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Synonyms', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function',fieldLabel:'Specific Function', renderer: provenanceTargetSummaryRenderer, cls:'target-descriptions'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {
                                         xtype:'panel',
                                         border:0,
@@ -69,9 +69,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                         layout:'column',
                                         bodyPadding:30,
                                         items:[
-                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
                                         ]
                                     }
                                 ]
@@ -155,7 +155,18 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:'{kw}'});
+
+        var output;
+        if (provenance) {
+            var source = recordData.data['keywords_src'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            output = '{kw} <a href="' + source + '">' + '<img class="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{kw}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:output});
         Ext.each(bits, function (keyword) {
             tpl.append(bodyEl, {kw:keyword.trim()});
         }, this);
@@ -167,7 +178,18 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = organismDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'{org}'});
+
+        var output;
+        if (provenance) {
+            var source = recordData.data['organism_src'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            output = '{org} <a href="' + source + '">' + '<img class="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{org}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'output'});
         tpl.append(bodyEl, {org:organism});
         organismDisplayField.show();
     },
@@ -178,7 +200,18 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = synonymsField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:'{syn}'});
+
+        var output;
+        if (provenance) {
+            var source = recordData.data['synonyms_src'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            output = '{syn} <a href="' + source + '">' + '<img class="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{syn}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:output});
         Ext.each(bits, function (synonym) {
             tpl.append(bodyEl, {syn:synonym});
         }, this);
@@ -234,6 +267,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     setValues:function (target) {
         this.resetAllFields();
         var td = target.data;
+        recordData = target;
 
         var pharmButton = this.down('#pharmTargetButton');
         pharmButton.hide();
@@ -245,7 +279,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-
                if (td[prop]){
                    //console.log(prop);
                    this.setFieldValue(prop, td[prop]);
@@ -254,6 +287,58 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             }
         }
         this.doLayout();
+    },
+
+    toggleProv:function (val) {
+        provenance = val;
+        console.log(" Show provenance : " + provenance);
     }
 
 });
+
+var provenance = false;
+var recordData;
+
+function provenanceTargetSummaryRenderer(value, field) {
+
+    console.log(" HIT ");
+    console.log(" * field " +field.itemId);
+
+    var sources = new Array();
+    sources['http://www.chemspider.com'] = "ChemSpider";
+    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
+    sources['http://www.conceptwiki.org'] = "ConceptWiki";
+    sources['http://purl.uniprot.org'] = "UniProt";
+
+    if (provenance) {
+        console.log(field.itemId);
+
+        var recdata = field.itemId;
+        recdata += '_src';
+
+        console.log(" *** " + recordData.data[recdata]);
+        var source = recordData.data[recdata];
+        console.log(source);
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        cls += LDAProvenanceMode;
+        cls += 'Summary';
+
+        var output;
+        //console.log(iconCls);
+        // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+
+        return output;
+
+    } else {
+
+        return value;
+
+    }
+
+};
