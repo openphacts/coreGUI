@@ -41,6 +41,9 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 },
                 'CmpdByNameForm button[action = cbn_linkout]':{
                     click:this.firecbnLink
+                },
+                'CmpdByNameForm #provId' : {
+                    change: this.onProvChange
                 }
             });
         },
@@ -66,6 +69,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
 						if (success) {
 							me.getSubmitButton().enable();
 							compound_panel.setValues(records[0]);
+                            compound_panel.recordData = records[0];
 							compound_panel.down("#displayPanel").setVisible(true);
 							compound_panel.down('#msg').setVisible(false);
 							me.getFormView().setLoading(false);
@@ -101,6 +105,13 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             var form = this.getFormView();
             var compound_uri = form.getValues().compound_uri;
             Ext.History.add('!p=CmpdByNameForm&u=' + compound_uri);
+        },
+
+        onProvChange :function(field, newVal, oldVal) {
+            var dg = this.getCmpdByNameSingleDisplayForm();
+            dg.toggleProv(newVal['prov']);
+            dg.setValues(dg.recordData);
+
         }
     }
 )
