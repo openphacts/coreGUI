@@ -210,6 +210,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 //        );
 //           
 //   }
+// credit due to Form Fields Anchoring Example by Ing. Jozef Sakáloš
+// http://examples.extjs.eu/
 var body = Ext.getBody();
 		    var frame = body.createChild({
 		         tag:'iframe'
