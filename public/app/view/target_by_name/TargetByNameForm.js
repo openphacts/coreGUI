@@ -50,7 +50,25 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                 itemId: 'TargetByNameSubmit_id',
                 disabled: true,
                 action: 'query_target_by_name'
-            }]
+            },{
+                    xtype: 'radiogroup',
+                    width: 160,
+                    labelWidth: 65,
+                    fieldLabel: 'Provenance',
+                    itemId: 'provId',
+                    margin: '5 0 0 90',
+
+                    items: [{
+                        boxLabel: 'On',
+                        name: 'prov',
+                        inputValue: true
+                    }, {
+                        boxLabel: 'Off',
+                        name: 'prov',
+                        inputValue: false,
+                        checked: true
+                    }]
+                }]
         }, {
             xtype: 'TargetPanel',
             flex: 1
