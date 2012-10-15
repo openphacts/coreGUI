@@ -29,7 +29,10 @@ Ext.define('LSP.controller.TargetByNameForm', {
 			},
 			'TargetByNameForm': {
 				historyToken: this.handleHistoryToken
-			}
+			},
+            'TargetByNameForm #provId' : {
+                change: this.onProvChange
+            }
 		});
 	},
 
@@ -47,6 +50,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
 						console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
 						me.getSubmitButton().enable();
 						target_panel.setValues(records[0]);
+                        target_panel.recordData = records[0];
 						target_panel.down("#dp").setVisible(true);
 						target_panel.down('#msg').setVisible(false);
 						me.getFormView().setLoading(false);
@@ -81,5 +85,12 @@ Ext.define('LSP.controller.TargetByNameForm', {
 		var form = this.getFormView();
 		var target_uri = form.getValues().protein_uri;
 		Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
-	}
+	},
+
+    onProvChange :function(field, newVal, oldVal) {
+        var dg = this.getTargetPanel();
+        dg.toggleProv(newVal['prov']);
+        dg.setValues(dg.recordData);
+
+    }
 });
