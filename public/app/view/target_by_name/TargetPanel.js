@@ -56,10 +56,10 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                     {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'specific_function', fieldLabel:'Specific Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function', fieldLabel:'Specific Function', cls:'target-descriptions'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', fieldLabel:'Cellular Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'pdb_id_page', fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {
                                         xtype:'panel',
@@ -231,7 +231,6 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }
     },
 
-
     setValues:function (target) {
         this.resetAllFields();
         var td = target.data;
@@ -245,9 +244,13 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         pharmButton.show();
 
         for (var prop in td) {
-            if (td.hasOwnProperty(prop) && td[prop] != '' && td[prop] != null) {
-               //console.log(prop);
-                this.setFieldValue(prop, td[prop]);
+            if (td.hasOwnProperty(prop)) {
+
+               if (td[prop]){
+                   //console.log(prop);
+                   this.setFieldValue(prop, td[prop]);
+               }
+
             }
         }
         this.doLayout();
