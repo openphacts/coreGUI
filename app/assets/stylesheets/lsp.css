@@ -291,6 +291,10 @@ sub {
     background-image: url(/assets/chemspiderIcon.png) !important;
 }
 
+.uniprotValueIcon {
+    background-image: url(/assets/uniprotIcon.png) !important;
+}
+
 .conceptWikiValueText {
 
 }
