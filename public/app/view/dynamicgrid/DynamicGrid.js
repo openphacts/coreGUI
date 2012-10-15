@@ -121,6 +121,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	        };
 			//add the top bar here since the child may already have some docked items
 		var temp_store = this.getExportStore();
+
 	        var config = {
 
 	            tbar:[

@@ -25,6 +25,7 @@ gem 'jquery-rails'
 ###################
 # OPS explorer gems
 ###################
+gem "uuidtools"
 gem 'authlogic'
 gem 'ancestry'
 gem 'pg'

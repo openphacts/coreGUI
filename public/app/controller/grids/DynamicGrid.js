@@ -75,6 +75,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		scope:this
             }
         })
+
     },
     onLaunch:function () {
     },
@@ -209,15 +210,43 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 //        );
 //           
 //   }
+var body = Ext.getBody();
+		    var frame = body.createChild({
+		         tag:'iframe'
+		        ,cls:'x-hidden'
+		        ,id:'iframe'
+		        ,name:'iframe'
+		    });
+
         var uri = csv_prep_button.up('form').getValues().compound_uri;
         var gridview = csv_prep_button.up('dynamicgrid');
 //var params = gridview.store.proxy.url.replace(gridview.store.BASE_URL,"");
-var params = gridview.store.getAllConditionsEncoded();
+var params;
+if (gridview.store.filters.length > 0) {
+    //params = gridview.store.getAllConditionsEncoded() + "&total_count=" + gridview.store.getTotalCount();	
+	activity_condition = gridview.store.getActivityConditionParam();
+    params = {'uri' : uri, 'total_count' : gridview.store.getTotalCount(), 'activity_type' : gridview.store.activity_type, activity_condition : gridview.store.activity_value};
+} else {
+    params = {'uri': uri, 'total_count' : gridview.store.getTotalCount()};	
+}
 var type = gridview.store.REQUEST_TYPE;
-var downloader = Ext.getCmp('FileDownload');
-downloader.load({
-    url: '/core_api_calls/tab_separated_file/?uri=' + uri + "&" + params + "&request_type=" + type
+//var downloader = Ext.getCmp('FileDownload');
+//var url = '/core_api_calls/tab_separated_file/?uri=' + uri + "&request_type=" + type +"&" + params;
+//var params = {param1: 'Hello', param2: 'World'};
+// TODO use this to add porams to the form before submit
+// Ext.DomHelper.append("form", {tag: "input", type:"hidden", value: "blah", name : "blahblah"})
+var form = body.createChild({
+     tag:'form'
+    ,cls:'x-hidden'
+    ,id:'form'
+    ,action:'/core_api_calls/tab_separated_file'
+	,params: params
+    ,target:'iframe'
 });
+form.dom.submit();
+// downloader.load({
+//     url: url
+// });
     },
 
     

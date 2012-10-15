@@ -90,22 +90,42 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	switch(this.activity_condition)
 	{
 	case '>':
-  	  return  'activity_type=' + encodeURIComponent(this.activity_type) + '&' + encodeURIComponent('minEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+  	  return  'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('minEx-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
 	  break;
 	case '<':
-	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&' + encodeURIComponent('maxEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('maxEx-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
   	  break;
 	case '=':
-	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&' + encodeURIComponent('activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
 	  break;
 	case '<=':
-	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&' + encodeURIComponent('max-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('max-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
 	  break;
 	case '>=':
-	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&' + encodeURIComponent('min-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('min-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
 	  break;
 	}
-    }
+    },
 
+	getActivityConditionParam: function() {
+		switch(this.activity_condition)
+		{
+		case '>':
+	  	  return  'minEx-activity_value';
+		  break;
+		case '<':
+		  return 'maxEx-activity_value';
+	  	  break;
+		case '=':
+		  return 'activity_value';
+		  break;
+		case '<=':
+		  return 'max-activity_value';
+		  break;
+		case '>=':
+		  return 'min-activity_value';
+		  break;
+		}	
+	}
 
 });
