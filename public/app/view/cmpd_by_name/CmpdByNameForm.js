@@ -47,11 +47,32 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                 }), {
                     xtype: 'button',
                     padding: '5 5 5 5',
-                    text: 'Search...',
+                    text: 'Search',
                     itemId: 'CmpdByNameSubmit_id',
                     disabled: true,
                     action: 'query_cmpd_by_name'
-                }]
+                },
+                    {
+                        xtype: 'radiogroup',
+                        width: 160,
+                        labelWidth: 65,
+                        fieldLabel: 'Provenance',
+                        itemId: 'provId',
+                        margin: '5 0 0 90',
+
+                        items: [{
+                            boxLabel: 'On',
+                            name: 'prov',
+                            inputValue: true
+                        }, {
+                            boxLabel: 'Off',
+                            name: 'prov',
+                            inputValue: false,
+                            checked: true
+                        }]
+                    }
+
+                ]
             }, {
                 xtype: 'CmpdByNameSingleDisplayForm',
                 flex: 1
