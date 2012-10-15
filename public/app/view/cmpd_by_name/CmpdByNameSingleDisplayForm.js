@@ -60,7 +60,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         fieldLabel:'ALogP',
                                         labelAlign:'top',
                                         columnWidth:.1,
-
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -72,10 +72,9 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'# H-Bond Acceptors',
                                         columnWidth:.13,
-                                        labelAlign:'top'
-                                        //valueToRaw: function(value) {
-                                        //    return Ext.util.Format.currency(value, '$ ', 2);
-                                        //}
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
+
                                     },
                                     {
                                         xtype:'displayfield',
@@ -87,7 +86,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'# H-Bond Donors',
                                         columnWidth:.13,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -99,7 +99,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'Mol Weight',
                                         columnWidth:.1,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -111,7 +112,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'MW Freebase',
                                         columnWidth:.1,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -123,7 +125,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'# Rule of 5 Violations',
                                         columnWidth:.14,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -135,7 +138,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'Polar Surface Area (Å<sup>2</sup>)',
                                         columnWidth:.12,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -147,7 +151,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         padding:'0 0 12px 0',
                                         fieldLabel:'# Rotatable Bonds',
                                         columnWidth:.12,
-                                        labelAlign:'top'
+                                        labelAlign:'top',
+                                        renderer: provenanceSummaryRenderer
                                     }
                                 ]
 
@@ -170,19 +175,22 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'prefLabel',
                                         //width:600,
                                         anchor:'100%',
-                                        fieldCls:'x-cmpTitle'
+                                        fieldCls:'x-cmpTitle',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
                                         //value:'<br>',
-                                        itemId:'spacer4'
+                                        itemId:'spacer4',
+                                        renderer: provenanceSummaryRenderer
                                     },
 
                                     {
                                         xtype:'button',
                                         margin:'0 10 0 0',
                                         text:'Pharmacology Data',
-                                        itemId:'pharmCompoundButton'
+                                        itemId:'pharmCompoundButton',
+                                        renderer: provenanceSummaryRenderer
 
                                     },
                                     {
@@ -198,7 +206,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     {
                                         xtype:'displayfield',
                                         value:'<br>',
-                                        itemId:'spacer1'
+                                        itemId:'spacer1',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -206,7 +215,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'description',
                                         fieldCls:'x-cmpDescriptions',
                                         anchor:'90%',
-                                        maxWidth:600
+                                        maxWidth:600,
+                                        renderer: provenanceSummaryRenderer
                                         //width:680
 
                                     },
@@ -220,7 +230,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'biotransformation',
                                         fieldCls:'x-cmpDescriptions',
                                         anchor:'90%',
-                                        maxWidth:600
+                                        maxWidth:600,
+                                        renderer: provenanceSummaryRenderer
                                         //width:680
 
                                     },
@@ -237,7 +248,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         labelWidth:120,
                                         labelAlign:'left',
                                         fieldLabel:'ChemSpider ID',
-                                        anchor:'100%'
+                                        anchor:'100%',
                                     },
                                     {
                                         xtype:'displayfield',
@@ -249,7 +260,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Molecular Formula'
+                                        fieldLabel:'Molecular Formula',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -261,7 +273,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'SMILES'
+                                        fieldLabel:'SMILES',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -272,7 +285,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChl'
+                                        fieldLabel:'Standard InChl',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -284,7 +298,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChiKey'
+                                        fieldLabel:'Standard InChiKey',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -296,7 +311,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Affected Organism'
+                                        fieldLabel:'Affected Organism',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -309,7 +325,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Indication'
+                                        fieldLabel:'Indication',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -322,7 +339,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Protein Binding'
+                                        fieldLabel:'Protein Binding',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -335,7 +353,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Toxicity'
+                                        fieldLabel:'Toxicity',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'displayfield',
@@ -348,7 +367,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Melting Point'
+                                        fieldLabel:'Melting Point',
+                                        renderer: provenanceSummaryRenderer
                                     }
                                 ]
                             }
@@ -459,7 +479,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         this.resetAllFields();
         this.showSpacerFields();
         var td = compound.data;
-
+        recordData = compound;
         var pharmButton = this.down('#pharmCompoundButton');
         pharmButton.hide();
         pharmButton.setHandler(function () {
@@ -484,8 +504,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 // change alogp value to 1 d.p
                                 var alogpValue = new Number(td[prop]);
                                 alogpValue = alogpValue.toFixed(1);
-                                val = provenanceSummaryRenderer(alogpValue, prop, td);
-                                field.setValue(val);
+                                field.setValue(alogpValue);
                                 field.show();
                             }
                             break;
@@ -496,8 +515,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 // correctly format molecular formula
                                 var molValue = td[prop];
                                 molValue = molValue.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
-                                val = provenanceSummaryRenderer(molValue, prop, td);
-                                field.setValue(val);
+                                field.setValue(molValue);
                                 field.show();
                             }
                             break;
@@ -506,8 +524,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                             if (td[prop]){
                                 var psaValue = td[prop];
-                                val = provenanceSummaryRenderer(psaValue, prop, td);
-                                field.setValue(val);
+                                field.setValue(psaValue);
                                 field.show();
                             }
 							break;
@@ -516,17 +533,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
                             if (td[prop]){
                                 var meltingPoint = td[prop];
-                                val = provenanceSummaryRenderer(meltingPoint, prop, td);
-                                val = val.replace(/oC/g,'°C');
-                                field.setValue(val);
+                                meltingPoint = meltingPoint.replace(/oC/g,'°C');
+                                field.setValue(meltingPoint);
                                 field.show();
                             }
                             break;
 
                         default:
                             if (td[prop]){
-                                val = provenanceSummaryRenderer(td[prop], prop, td);
-                                field.setValue(val);
+                                field.setValue(td[prop]);
                                 field.show();
                             }
                     }
@@ -573,23 +588,33 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
         var msg = this.query('#msg')[0];
         msg.setValue(message);
         msg.setVisible(true);
+    },
+
+    toggleProv:function (val) {
+        provenance = val;
+        console.log(" Show provenance : " + provenance);
     }
 
 
 });
 
 var provenance = false;
+var recordData;
 
+function provenanceSummaryRenderer(value, field) {
 
-function provenanceSummaryRenderer(value, field, record) {
+    var sources = new Array();
+    sources['http://www.chemspider.com'] = "ChemSpider";
+    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
+    sources['http://www.conceptwiki.org'] = "ConceptWiki";
 
     if (provenance) {
 
-        //console.log(" HIT " + value);
-        var recdata = field;
+        var recdata = field.name;
         recdata += '_src';
 
-        var source = record[recdata];
+        var source = recordData.data[recdata];
         //console.log(source);
         var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
         if (!cls) {
@@ -602,7 +627,7 @@ function provenanceSummaryRenderer(value, field, record) {
         var output;
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
 
         return output;
 
