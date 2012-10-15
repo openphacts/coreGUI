@@ -301,9 +301,6 @@ var recordData;
 
 function provenanceTargetSummaryRenderer(value, field) {
 
-    console.log(" HIT ");
-    console.log(" * field " +field.itemId);
-
     var sources = new Array();
     sources['http://www.chemspider.com'] = "ChemSpider";
     sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
@@ -312,14 +309,11 @@ function provenanceTargetSummaryRenderer(value, field) {
     sources['http://purl.uniprot.org'] = "UniProt";
 
     if (provenance) {
-        console.log(field.itemId);
 
         var recdata = field.itemId;
         recdata += '_src';
 
-        console.log(" *** " + recordData.data[recdata]);
         var source = recordData.data[recdata];
-        console.log(source);
         var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
         if (!cls) {
             cls = 'defaultValue';
