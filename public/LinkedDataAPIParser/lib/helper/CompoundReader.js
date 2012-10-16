@@ -26,6 +26,11 @@ Ext.define('LDA.helper.CompoundReader', {
                 }
             }
         );
+        var conceptWikiUri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
+        var chemSpiderUri =  chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT];
+        var chemblUri = chemblValue[LDA.helper.LDAConstants.LDA_ABOUT];
+        var drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT];
+
         var record = Ext.create('LDA.model.CompoundModel', {
             cw_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
             cs_uri: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT] : null,
@@ -33,38 +38,55 @@ Ext.define('LDA.helper.CompoundReader', {
             drugbank_uri: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
             inchi: chemspiderValue != null ? chemspiderValue['inchi'] : null,
             inchi_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            inchi_item: chemSpiderUri,
             inchi_key: chemspiderValue != null ? chemspiderValue['inchikey'] : null,
+            inchi_key_item: chemSpiderUri,
             inchi_key_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
             smiles: chemspiderValue != null ? chemspiderValue['smiles'] : null,
             smiles_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            smiles_item: chemSpiderUri,
             alogp: chemspiderValue != null ? chemspiderValue['logp'] : null,
             alogp_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            alogp_item: chemSpiderUri,
             full_mwt: chemblValue != null ? chemblValue['full_mwt'] : null,
             full_mwt_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            full_mwt_item: chemblUri,
             hba: chemspiderValue != null ? chemspiderValue['hba'] : null,
             hba_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            hba_item: chemSpiderUri,
             hbd: chemspiderValue != null ? chemspiderValue['hbd'] : null,
             hbd_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            hbd_item: chemSpiderUri,
             molform: chemblValue != null ? chemblValue['molform'] : null,
             molform_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            molform_item: chemblUri,
             mw_freebase: chemblValue != null ? chemblValue['mw_freebase'] : null,
             mw_freebase_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            mw_freebase_item: chemblUri,
             psa: chemspiderValue != null ? chemspiderValue['psa'] : null,
             psa_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            psa_item: chemSpiderUri,
             rtb: chemblValue != null ? chemblValue['rtb'] : null,
             rtb_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            rtb_item: chemblUri,
             biotransformation: drugBankData != null ? drugBankData['biotransformation'] : null,
             biotransformation_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            biotransformation_item: drugbankUrl,
             description: drugBankData != null ? drugBankData['description'] : null,
             description_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            description_item: drugbankUrl,
             proteinBinding: drugBankData != null ? drugBankData['proteinBinding'] : null,
             proteinBinding_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            proteinBinding_item: drugbankUrl,
             toxicity: drugBankData != null ? drugBankData['toxicity'] : null,
             toxicity_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            toxicity_item: drugbankUrl,
             prefLabel:pt['prefLabel'],
             prefLabel_src:pt[LDA.helper.LDAConstants.LDA_IN_DATASET],
+            prefLabel_item: conceptWikiUri,
             meltingPoint: drugBankData != null ? drugBankData['meltingPoint'] : null,
             meltingPoint_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            meltingPoint_item: drugbankUrl
 
         });
 
