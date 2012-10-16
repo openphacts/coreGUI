@@ -173,6 +173,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
     if (prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
+        var itemdata = recdata + '_item';
         recdata += '_src';
         var source = record.data[recdata];
         var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
@@ -187,7 +188,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[recdata] + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
