@@ -1,6 +1,4 @@
 require 'results_formatter'
-require 'tempfile'
-require 'uuidtools'
 class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
