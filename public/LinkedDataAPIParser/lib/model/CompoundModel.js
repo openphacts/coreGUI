@@ -24,7 +24,27 @@ Ext.define('LDA.model.CompoundModel', {
         'proteinBinding', 'proteinBinding_src',
         'toxicity', 'toxicity_src',
         'prefLabel', 'prefLabel_src',
-        'meltingPoint', 'meltingPoint_src'
+        'meltingPoint', 'meltingPoint_src',
+
+         'prefLabel_item',
+         'description_item',
+         'biotransformation_item',
+         'molform_item',
+         'smiles_item',
+         'inchi_item',
+         'inchi_key_item',
+         'proteinBinding_item',
+         'toxicity_item',
+         'meltingPoint_item',
+         'alogp_item',
+         'hba_item',
+         'hbd_item',
+         'full_mwt_item',
+         'mw_freebase_item',
+         'num_ro5_violations_item',
+         'psa_item',
+         'rtb_item'
+
 //        '', '_src',
     ]
 });
