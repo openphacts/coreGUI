@@ -612,6 +612,7 @@ function provenanceSummaryRenderer(value, field) {
     if (provenance) {
 
         var recdata = field.name;
+        var itemdata = recdata + '_item';
         recdata += '_src';
 
         var source = recordData.data[recdata];
@@ -627,7 +628,7 @@ function provenanceSummaryRenderer(value, field) {
         var output;
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
 
         return output;
 
