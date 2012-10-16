@@ -68,6 +68,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				this.current_uri = historyTokenObject.u;
 				store.proxy.extraParams.uri = historyTokenObject.u;
 				store.proxy.reader.uri = historyTokenObject.u;
+				store.setURI(historyTokenObject.u);
 				dg.setLoading(true);
 				//loading the store is done after the total results are fetched
 				this.fetchTotalResults();
@@ -94,6 +95,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			var store = dg.store;
 			store.proxy.extraParams.uri = this.current_uri;
 			store.proxy.reader.uri = this.current_uri;
+			store.setURI(this.current_uri);
 			dg.setLoading(true);
 			//loading the store is done after the total results are fetched
 			this.fetchTotalResults();

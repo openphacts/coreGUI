@@ -127,52 +127,49 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	            tbar:[
 	                 {
 	                    xtype:'button',
-	                    text:'Download results as a tab separated file',
+	                    text:'Download tsv file',
 	                    tooltip:'Download results as a tab separated file',
 	                    itemId:'csvDownloadProxy_id',
 	                    iconCls:'icon-csv',
-	                    hidden:false
-	                },
-	                {
-	                    xtype:'exporterbutton',
-	                    formatter:'csv',
-	                    swfPath:'app/view/ux/exporter/downloadify.swf',
-	                    downloadImage:'app/view/ux/exporter/csv_button.png',
-	                    itemId:'csvDownload_id',
-	                    downloadName: 'ops_pharmacology_data.csv',
-			    store: temp_store,
-	                    width:117,
-	                    height:22,
 	                    hidden:false,
-	                    disabled:true
+						disabled: true
+	
 	                },
+			    // 	                {
+			    // 	                    xtype:'exporterbutton',
+			    // 	                    formatter:'csv',
+			    // 	                    swfPath:'app/view/ux/exporter/downloadify.swf',
+			    // 	                    downloadImage:'app/view/ux/exporter/csv_button.png',
+			    // 	                    itemId:'csvDownload_id',
+			    // 	                    downloadName: 'ops_pharmacology_data.csv',
+			    // store: temp_store,
+			    // 	                    width:117,
+			    // 	                    height:22,
+			    // 	                    hidden:false,
+			    // 	                    disabled:true
+			    // 	                },
 	                { xtype:'tbseparator' },
 	                {
 	                    xtype:'button',
-	                    text:'Prepare SD-file download',
-	                    tooltip:'Starts a two steep process to download the SD-file. This may take a while...',
+	                    text:'Download SD file ',
+	                    tooltip:'Download results in SD file format',
 	                    itemId:'sdfDownloadProxy_id',
 	                    iconCls:'icon-sdf',
 	                    hidden:false,
 	                    disabled:true
 	                },
-	                {
-	                    xtype:'exporterbutton',
-	                    formatter:'sdf',
-	                    swfPath:'app/view/ux/exporter/downloadify.swf',
-	                    downloadImage:'app/view/ux/exporter/sdf_button.png',
-	                    itemId:'sdfDownload_id',
-	                    downloadName: 'ops_pharmacology_data.sdf',	                    
-                      width:111,
-	                    height:22,
-	                    hidden:false,
-	                    disabled:true
-	                }, {
-            xtype: 'FileDownload',
-            id: 'FileDownload',
-                      width:111,
-	                    height:22
-}
+	                // {
+	                //     xtype:'exporterbutton',
+	                //     formatter:'sdf',
+	                //     swfPath:'app/view/ux/exporter/downloadify.swf',
+	                //     downloadImage:'app/view/ux/exporter/sdf_button.png',
+	                //     itemId:'sdfDownload_id',
+	                //     downloadName: 'ops_pharmacology_data.sdf',	                    
+	                //                       width:111,
+	                //     height:22,
+	                //     hidden:false,
+	                //     disabled:true
+	                // }
 	            ],
 	            features:[filters, cellTextSelector]
 	        };
