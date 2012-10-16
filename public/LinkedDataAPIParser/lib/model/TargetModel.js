@@ -17,42 +17,55 @@ Ext.define('LDA.model.TargetModel', {
         //chembl
         'label',
         'label_src',
+        'label_item',
 
         'prefLabel',
         'prefLabel_src',
+        'prefLabel_item',
 
         'keywords',
         'keywords_src',
+        'keywords_item',
 
         'description',
         'description_src',
+        'description_item',
 
         'target_type',
         'target_type_src',
+        'target_type_item',
 
         'organism',
         'organism_src',
+        'organism_item',
 
         'synonyms',
         'synonyms_src',
+        'synonyms_item',
 
         'cellular_location',
         'cellular_location_src',
+        'cellular_location_item',
 
         'molecular_weight',
         'molecular_weight_src',
+        'molecular_weight_item',
 
         'number_of_residues',
         'number_of_residues_src',
+        'number_of_residues_item',
 
         'pdb_id_page',
         'pdb_id_page_src',
+        'pdb_id_page_item',
 
         'specific_function',
         'specific_function_src',
+        'specific_function_item',
 
         'theoretical_pi',
-        'theoretical_pi_src'
+        'theoretical_pi_src',
+        'theoretical_pi_item'
 
 //        'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
 //        'inchi', 'inchi_src',
