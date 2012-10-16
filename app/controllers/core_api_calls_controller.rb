@@ -1,29 +1,51 @@
 require 'results_formatter'
+require 'uuidtools'
+require 'tempfile'
+
 class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
+  # Given query params, a URI and total count of results download them all
+  # as a tsv file and return it. The download request batches of 250 from
+  # the Linked Data API server
   def tab_separated_file
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
-    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv&_page=1&_pageSize=" + params[:total_count]
+    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv"
     params[:activity_type] ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
-    url_path = "#{path}?".concat(url_params)
-    puts url_path
+    
+    number_of_pages = (params[:total_count].to_i / 250) + 1
+    i=1
+    uuid = UUIDTools::UUID.random_create.to_s
+    tmpfile = Tempfile.new(uuid)
+    # download the tsv file 250 records at a time
     begin
+      url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
       response = Net::HTTP.get(domain, url_path)
+      puts url_path
+      # only need the header line from the first response
+      i > 1 ? lines = response.lines.to_a[1..-1].join : lines = response
+      tmpfile << lines
+      i+=1
+      rescue Exception => e
+        logger.error "An error occurred retrieving response for url_path: "  + e.to_s
+        # TODO send an error response?
+      end while i <= number_of_pages
+    #begin
+      #response = Net::HTTP.get(domain, url_path)
       #response = Net::HTTP.get(domain, "#{path}?".concat(@params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')))
       #uuid = UUIDTools::UUID.random_create.to_s
       #tmp = Tempfile.new(uuid)
       #tmp << response
-      send_data response, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+      send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
       #send_file tmp, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
-      #tmp.close(true)
+      tmpfile.close(true)
       #send_file response, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
-    rescue Exception => e
-      puts e.to_s
+    #rescue Exception => e
+      #puts e.to_s
       # TODO send an error response?
-    end
+    #end
   end
   
   def cmpd_name_lookup(substring = params[:query])
