@@ -5,7 +5,7 @@ Ext.Loader.setPath('Ext.ux.grid', 'ext/examples/ux/grid');
 Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid',
-	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable'],
+	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable', 'LSP.view.ux.download.FileDownload'],
   exportStore: null,
 	exportCSVReady: false,
 	exportSDFReady: false,
@@ -121,52 +121,55 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	        };
 			//add the top bar here since the child may already have some docked items
 		var temp_store = this.getExportStore();
+
 	        var config = {
 
 	            tbar:[
 	                 {
 	                    xtype:'button',
-	                    text:'Prepare full result set download',
-	                    tooltip:'Starts a two steep process to download the CSV and SD-files.',
+	                    text:'Download tsv file',
+	                    tooltip:'Download results as a tab separated file',
 	                    itemId:'csvDownloadProxy_id',
 	                    iconCls:'icon-csv',
-	                    hidden:false
-	                },
-	                {
-	                    xtype:'exporterbutton',
-	                    formatter:'csv',
-	                    swfPath:'app/view/ux/exporter/downloadify.swf',
-	                    downloadImage:'app/view/ux/exporter/csv_button.png',
-	                    itemId:'csvDownload_id',
-	                    downloadName: 'ops_pharmacology_data.csv',
-			    store: temp_store,
-	                    width:117,
-	                    height:22,
 	                    hidden:false,
-	                    disabled:true
+						disabled: true
+	
 	                },
+			    // 	                {
+			    // 	                    xtype:'exporterbutton',
+			    // 	                    formatter:'csv',
+			    // 	                    swfPath:'app/view/ux/exporter/downloadify.swf',
+			    // 	                    downloadImage:'app/view/ux/exporter/csv_button.png',
+			    // 	                    itemId:'csvDownload_id',
+			    // 	                    downloadName: 'ops_pharmacology_data.csv',
+			    // store: temp_store,
+			    // 	                    width:117,
+			    // 	                    height:22,
+			    // 	                    hidden:false,
+			    // 	                    disabled:true
+			    // 	                },
 	                { xtype:'tbseparator' },
 	                {
 	                    xtype:'button',
-	                    text:'Prepare SD-file download',
-	                    tooltip:'Starts a two steep process to download the SD-file. This may take a while...',
+	                    text:'Download SD file ',
+	                    tooltip:'Download results in SD file format',
 	                    itemId:'sdfDownloadProxy_id',
 	                    iconCls:'icon-sdf',
 	                    hidden:false,
 	                    disabled:true
 	                },
-	                {
-	                    xtype:'exporterbutton',
-	                    formatter:'sdf',
-	                    swfPath:'app/view/ux/exporter/downloadify.swf',
-	                    downloadImage:'app/view/ux/exporter/sdf_button.png',
-	                    itemId:'sdfDownload_id',
-	                    downloadName: 'ops_pharmacology_data.sdf',	                    
-                      width:111,
-	                    height:22,
-	                    hidden:false,
-	                    disabled:true
-	                }
+	                // {
+	                //     xtype:'exporterbutton',
+	                //     formatter:'sdf',
+	                //     swfPath:'app/view/ux/exporter/downloadify.swf',
+	                //     downloadImage:'app/view/ux/exporter/sdf_button.png',
+	                //     itemId:'sdfDownload_id',
+	                //     downloadName: 'ops_pharmacology_data.sdf',	                    
+	                //                       width:111,
+	                //     height:22,
+	                //     hidden:false,
+	                //     disabled:true
+	                // }
 	            ],
 	            features:[filters, cellTextSelector]
 	        };

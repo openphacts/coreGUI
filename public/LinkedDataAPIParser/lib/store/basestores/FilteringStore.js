@@ -5,6 +5,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     activity_value:'',
     activity_condition:'',
 	sort_column:'',
+    filters: undefined,
 	
 	// Set up the sort properties, check the direction of sort and prepend with
 	// '-' if required
@@ -82,7 +83,49 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('min-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
 	  break;
 	}
-    }
+    },
 
+    getAllConditionsEncoded: function() {
+ 	// add the conditions property to the url
+	switch(this.activity_condition)
+	{
+	case '>':
+  	  return  'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('minEx-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '<':
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('maxEx-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
+  	  break;
+	case '=':
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '<=':
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('max-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	case '>=':
+	  return 'activity_type=' + encodeURIComponent(this.activity_type) + '&activity_value_type=' + encodeURIComponent('min-activity_value') + '&activity_value=' + encodeURIComponent(String(this.activity_value));
+	  break;
+	}
+    },
+
+	getActivityConditionParam: function() {
+		switch(this.activity_condition)
+		{
+		case '>':
+	  	  return  'minEx-activity_value';
+		  break;
+		case '<':
+		  return 'maxEx-activity_value';
+	  	  break;
+		case '=':
+		  return 'activity_value';
+		  break;
+		case '<=':
+		  return 'max-activity_value';
+		  break;
+		case '>=':
+		  return 'min-activity_value';
+		  break;
+		}	
+	}
 
 });

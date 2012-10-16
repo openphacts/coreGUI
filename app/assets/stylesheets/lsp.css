@@ -310,3 +310,7 @@ sub {
 .chemspiderValueText {
 
 }
+
+.excel-button .x-btn-text {
+	background-image: url(/assets/icon-csv.png);
+}

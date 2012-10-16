@@ -55,6 +55,7 @@ LSP4All::Application.routes.draw do
       get :pmid2concepts
       get :wiki_pathways_by_compound
       get :wiki_pathways_by_protein
+      get :tab_separated_file
     end
   end
 

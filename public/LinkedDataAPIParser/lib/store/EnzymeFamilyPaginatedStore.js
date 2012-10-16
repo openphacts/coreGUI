@@ -3,6 +3,7 @@ Ext.define('LDA.store.EnzymeFamilyPaginatedStore', {
     model:'LDA.model.PharmacologyPaginatedModel',
     storeId:'EnzymeFamilyPaginatedStore',
     BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/target/enzyme/pharmacology/pages?',
+    REQUEST_TYPE: 'enzyme',
 
     constructor:function (config, arguments) {
 		console.log('EnzymeFamilyPaginatedStore: constructor()');
