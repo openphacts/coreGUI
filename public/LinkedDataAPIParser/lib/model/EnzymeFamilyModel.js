@@ -24,7 +24,21 @@ Ext.define('LDA.model.EnzymeFamilyModel', {
         'proteinBinding', 'proteinBinding_src',
         'toxicity', 'toxicity_src',
         'prefLabel', 'prefLabel_src',
-	'target_title', 'target_organism'
+	'target_title', 'target_organism',
+
+        'compound_pref_label_item',
+        'target_title_item',
+        'target_organism_item',
+        'assay_organism_item',
+        'compound_smiles_item',
+        'compound_inchi_item',
+        'compound_inchikey_item',
+        'activity_activity_type_item',
+        'activity_relation_item',
+        'activity_standard_value_item',
+        'activity_standard_units_item',
+        'compound_full_mwt_item'
+
 //        '', '_src',
     ]
 });
