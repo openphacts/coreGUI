@@ -43,75 +43,89 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     header:'Compound Name',
                     dataIndex:'compound_pref_label',
                     width: 180,
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'Target Name',
                     dataIndex:'target_title',
                     width: 180,
+                    renderer: provenanceRenderer,
+
                     align:'center'
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism',
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'SMILES',
                     dataIndex:'compound_smiles',
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'InChi',
                     dataIndex:'compound_inchi',
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'InChi Key',
                     dataIndex:'compound_inchikey',
+                    renderer: provenanceRenderer,
                     align:'center'
                 },
                 {
                     header:'Assay Type',
                     dataIndex:'activity_activity_type',
+                    renderer: provenanceRenderer,
                     width: 70,
                     align:'center'
                 },
                 {
                     header:'Relation',
                     dataIndex:'activity_relation',
+                    renderer: provenanceRenderer,
                     width: 52,
                     align:'center'
                 },
                 {
                     header:'Value',
                     dataIndex:'activity_standard_value',
+                    renderer: provenanceRenderer,
                     width: 60,
                     align:'center'
                 },
                 {
                     header:'Units',
                     dataIndex:'activity_standard_units',
+                    renderer: provenanceRenderer,
                     width: 60,
                     align:'center'
                 },
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt',
+                    renderer: provenanceRenderer,
                     align:'center',
                     width: 80
                 }
-            ],
-            toggleProv:function (val) {
-                prov = val;
-                console.log(" Show provenance : " + prov );
-                this.doLayout();
-            }
+            ]
+
+        },
+        toggleProv:function (val) {
+            prov = val;
+            console.log(" Show provenance : " + prov );
+            this.doLayout();
         }
     }
 );
