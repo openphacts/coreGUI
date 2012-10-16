@@ -26,26 +26,31 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
+
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
+            var compound_full_mwt_item;
 
             //big bits
             var forMolecule = item[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
 			if (forMolecule != null) {
             	var chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
             	var compound_full_mwt = forMolecule['full_mwt'];
+                compound_full_mwt_item = chembl_compound_uri;
             	var em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
 			}
 
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
-                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid;
+                drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid,
+                compound_smiles_item, compound_inchi_item, compound_inchikey_item, compound_pref_label_item;
 
             Ext.each(em, function (match, index, matches) {
                     var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                         cw_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
                         compound_pref_label = match['prefLabel'];
+                        compound_pref_label_item = cw_compound_uri;
                         cw_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         cs_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
@@ -53,6 +58,9 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
+                        compound_smiles_item = cs_compound_uri;
+                        compound_inchi_item = cs_compound_uri;
+                        compound_inchikey_item = cs_compound_uri;
                         cs_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                         drugbank_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
@@ -63,8 +71,13 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 }
             );
 
+            var target_title_item, target_organism_item, activity_activity_type_item, activity_standard_value_item,
+                activity_standard_units_item,activity_relation_item;
+
             var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
-			if (onAssay != null) {
+            //console.log(" ITEM : " + onAssay[LDA.helper.LDAConstants.LDA_ABOUT]);
+
+            if (onAssay != null) {
             	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
             	var target = onAssay['target'];
 			}
@@ -79,16 +92,21 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 					target_inner = target;
 				}
             	var target_title = target_inner['title'];
+                target_title_item = chembl_assay_uri;
             	var target_organism = target_inner['target_organisms'];
+                target_organism_item = chembl_assay_uri;
             	var target_concatenated_uris = target_inner['concatenatedURIs'];
 			}
 
 
             var activity_activity_type = item['activity_type'];
+            activity_activity_type_item = chembl_activity_uri;
             var activity_standard_value = item['standardValue'];
+            activity_standard_value_item = chembl_activity_uri;
             var activity_standard_units = item['standardUnits'];
+            activity_standard_units_item = chembl_activity_uri;
             var activity_relation = item['relation'];
-
+            activity_relation_item = chembl_activity_uri;
 
             var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
                 //for page
@@ -144,7 +162,19 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_relation_src:chembl_src,
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
-                activity_activity_type_src:chembl_src
+                activity_activity_type_src:chembl_src,
+
+                target_title_item:target_title_item,
+                target_organism_item:target_organism_item,
+                activity_activity_type_item:activity_activity_type_item,
+                activity_relation_item:activity_relation_item,
+                activity_standard_value_item:activity_standard_value_item,
+                activity_standard_units_item:activity_standard_units_item,
+                compound_full_mwt_item:compound_full_mwt_item,
+                compound_smiles_item:compound_smiles_item,
+                compound_inchi_item:compound_inchi_item,
+                compound_inchikey_item:compound_inchikey_item,
+                compound_pref_label_item:compound_pref_label_item
             });
 
 
