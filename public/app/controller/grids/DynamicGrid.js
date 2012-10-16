@@ -257,6 +257,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 				value: type,
 				name: "request_type"
 			});
+			Ext.DomHelper.append("csv_download_form", {
+				tag: "input",
+				type: "hidden",
+				value: gridview.store.activity_type,
+				name: "activity_type"
+			});
 		} else {
 			Ext.DomHelper.append("csv_download_form", {
 				tag: "input",
