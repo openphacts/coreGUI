@@ -110,14 +110,14 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        var selected = tree.getView().getSelectionModel().getSelection();
 	        var sel_data = selected[0].data;
 
-	        if (sel_data.leaf) {
-	            Ext.Msg.show({
-	                title:'Incorrect selection',
-	                msg:'Please select an enzyme class (folder).',
-	                buttons:Ext.MessageBox.OK,
-	                icon:Ext.MessageBox.INFO
-	            });
-	        } else {
+//	        if (sel_data.leaf) {
+//	            Ext.Msg.show({
+//	                title:'Incorrect selection',
+//	                msg:'Please select an enzyme class (folder).',
+//	                buttons:Ext.MessageBox.OK,
+//	                icon:Ext.MessageBox.INFO
+//	            });
+//	        } else {
 	            var disp_field = this.getFormView().getForm().findField('enzyme_family');
 	            disp_field.setValue('<b>' + sel_data.ec_number + ' : ' + sel_data.name + '</b>');
 	            var ec_num_field = this.getFormView().getForm().findField('ec_number');
@@ -125,7 +125,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	            var enz_name_field = this.getFormView().getForm().findField('enz_name');
 	            enz_name_field.setValue(sel_data.name);
 	            this.hideEnzyme('');
-	        }
+//	        }
 	    },
 
 	    submitQuery:function (button) {
