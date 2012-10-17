@@ -104,8 +104,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
             }]
         }, {
-            xtype: 'FilterPanel',
-            itemId: 'filterContainer_id',
+            xtype: 'ActivityFilterForm',
+            itemId: 'activityFilterContainer_id',
             margin: '0 5 5 5',
             name: 'filter_fields',
             hidden: true

@@ -71,9 +71,9 @@ var unit = Ext.create('Ext.data.Store', {
 		"name": "µM"
 	}]
 });
-Ext.define('LSP.view.filter.FilterForm', {
+Ext.define('LSP.view.filter.ActivityFilterForm', {
 	extend: 'Ext.container.Container',
-	alias: 'widget.FilterPanel',
+	alias: 'widget.ActivityFilterForm',
 	closable: true,
 	layout: {
 		type: 'hbox'
@@ -145,10 +145,10 @@ Ext.define('LSP.view.filter.FilterForm', {
 	//}
 	, {
 		xtype: 'button',
-		itemId: 'addCompletedFilter_id',
+		itemId: 'addCompletedActivityFilter_id',
 		iconCls: 'icon-new',
 		padding: '5 5 5 5',
-		tooltip: 'Add this filter',
-		action: 'add_completed_filter'
+		tooltip: 'Add this activity filter',
+		action: 'add_completed_activity_filter'
 	}]
 });

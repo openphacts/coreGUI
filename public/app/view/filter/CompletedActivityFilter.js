@@ -1,6 +1,6 @@
-Ext.define('LSP.view.filter.CompletedFilter', {
+Ext.define('LSP.view.filter.CompletedActivityFilter', {
 	extend: 'Ext.panel.Panel',
-	alias: 'widget.CompletedFilter',
+	alias: 'widget.CompletedActivityFilter',
 	closable: true,
 	headerPosition: 'right',
 	height: 30,

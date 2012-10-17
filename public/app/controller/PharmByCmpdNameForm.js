@@ -28,8 +28,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		ref: 'lookup',
 		selector: '#pharmByCmpdLookup'
 	}, {
-		ref: 'filterContainer',
-		selector: 'PharmByCmpdNameForm #filterContainer_id'
+		ref: 'activityFilterContainer',
+		selector: 'PharmByCmpdNameForm #activityFilterContainer_id'
 	}],
 	filters: undefined,
 	current_uri: undefined,
