@@ -155,7 +155,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    tooltip:'Download results in SD file format',
 	                    itemId:'sdfDownloadProxy_id',
 	                    iconCls:'icon-sdf',
-	                    hidden:false,
+			    // TODO sd file download is disabled for now
+	                    hidden:true,
 	                    disabled:true
 	                },
 	                // {

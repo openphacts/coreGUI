@@ -14,7 +14,7 @@ Ext.define('LDA.helper.CompoundReader', {
         var em = pt['exactMatch'];
         var chemspiderValue;
         var drugBankData;
-		var chemblValue;
+	var chemblValue;
         Ext.each(em, function (match, index, matches) {
                 var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
                 if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
@@ -26,10 +26,13 @@ Ext.define('LDA.helper.CompoundReader', {
                 }
             }
         );
+	var chemSpiderUri;
+	var chemblUri;
+	var drugbankUrl;
         var conceptWikiUri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
-        var chemSpiderUri =  chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT];
-        var chemblUri = chemblValue[LDA.helper.LDAConstants.LDA_ABOUT];
-        var drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT];
+        chemspiderValue != null ? chemSpiderUri =  chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT] : chemSpiderUri = null;
+        chemblValue != null ? chemblUri = chemblValue[LDA.helper.LDAConstants.LDA_ABOUT] : chemblUri = null;
+        drugBankData != null ? drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : drugbankUrl = null;
 
         var record = Ext.create('LDA.model.CompoundModel', {
             cw_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
