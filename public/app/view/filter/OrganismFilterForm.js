@@ -1,10 +1,10 @@
 var assay_organism = Ext.create('Ext.data.Store', {
 	fields: ['abbr', 'name'],
 	data: [{
-		"abbr": "HS",
+		"abbr": "Homo Sapiens",
 		"name": "Homo Sapiens"
 	}, {
-		"abbr": "MM",
+		"abbr": "Mus Musculus",
 		"name": "Mus Musculus"
 	}]
 });

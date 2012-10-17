@@ -1,11 +1,3 @@
-/*
-// Filter model holds the values that the user selected in the filter form view
-// as well as references to the controller and view used when removing the filter
-*/
-Ext.define('LSP.model.Filter', {
-	extend: 'Ext.data.Model',
-	fields: ['activity', 'condition', 'value', 'unit', 'filterView', 'controller'],
-});
 Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	extend: 'LSP.controller.grids.DynamicGrid',
 	views: ['pharm_by_cmpd_name2.PharmByCmpdNameForm', 'pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid'],
@@ -28,8 +20,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		ref: 'lookup',
 		selector: '#pharmByCmpdLookup'
 	}, {
-		ref: 'activityFilterContainer',
-		selector: 'PharmByCmpdNameForm #activityFilterContainer_id'
+		ref: 'filterContainer',
+		selector: 'PharmByCmpdNameForm #filterSelectorContainer_id'
 	}],
 	filters: undefined,
 	current_uri: undefined,
@@ -50,8 +42,11 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			'PharmByCmpdNameForm button[action=add_filter_form]': {
 				click: this.addFilterForm
 			},
-			'PharmByCmpdNameForm button[action=add_completed_filter]': {
-				click: this.addCompletedFilter
+			'PharmByCmpdNameForm button[action=add_completed_organism_filter]': {
+				click: this.addCompletedOrganismFilter
+			},
+			'PharmByCmpdNameForm button[action=add_completed_activity_filter]': {
+				click: this.addCompletedActivityFilter
 			},
             'PharmByCmpdNameForm #provId' : {
                 change: this.onProvChange

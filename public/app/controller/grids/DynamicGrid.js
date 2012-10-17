@@ -78,8 +78,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
 	testThis: function(args) {},
 
-	addCompletedFilter: function(button) {
-		console.log('DynamicGrid: addCompletedFilter()');
+	addCompletedActivityFilter: function(button) {
+		console.log('DynamicGrid: addCompletedActivityFilter()');
 		activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
 		conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
 		value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
@@ -89,14 +89,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			filter = Ext.create('LSP.model.Filter', {
 				activity: activity_value,
 				condition: conditions_value,
-				value: value_value //,
+				value: value_value
 				//unit: unit_value
 			});
+			filter.filterType = "activity";
 			this.getFilters().push(filter);
 			// this is the only way I could find to reference the controller from the model and the view
 			filter.controller = this;
 
-			filter_view = Ext.create('LSP.view.filter.CompletedFilter', {});
+			filter_view = Ext.create('LSP.view.filter.CompletedActivityFilter', {});
 			filter_view.down('#activityLabel_id').setText(activity_value);
 			filter_view.down('#conditionsLabel_id').setText(conditions_value);
 			filter_view.down('#valueLabel_id').setText(value_value);
@@ -108,11 +109,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
 			filter_view.filterModel = filter;
 			filter_view.on({
-				close: this.filterClosed
+				close: this.removeFilter
 			});
-			this.setActivityFilters(activity_value, conditions_value, value_value);
-			// currently only 1 filter can be added at a time
-			this.getFormView().down('#addCompletedFilter_id').setDisabled(true);
+			this.addFilter(filter);
+			// currently only 1 activity filter can be added at a time
+			this.getFormView().down('#addCompletedActivityFilter_id').setDisabled(true);
 		} else {
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -123,35 +124,78 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		}
 	},
 
-	setActivityFilters: function(activity_value, conditions_value, value_value) {
+	addCompletedOrganismFilter: function(button) {
+		console.log('DynamicGrid: addCompletedOrganismFilter()');
+		organism_value = this.getFilterContainer().down('#organism_combobox_id').getValue();
+		//unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		// TODO unit value check && unit_value != null
+		if (organism_value != null) {
+			filter = Ext.create('LSP.model.Filter', {
+				value: organism_value			
+			});
+			filter.filterType =  "organism";
+			this.getFilters().push(filter);
+			// this is the only way I could find to reference the controller from the model and the view
+			filter.controller = this;
+
+			filter_view = Ext.create('LSP.view.filter.CompletedOrganismFilter', {});
+			filter_view.down('#valueLabel_id').setText("Assay Organism");
+			filter_view.down('#conditionsLabel_id').setText("=");
+			filter_view.down('#organismType_id').setText(organism_value);
+			//filter_view.down('#unitLabel_id').setText(unit_value);
+			// tell the filter what model it is using so we can get back to the controller when the
+			// filter is removed from the view
+			filter.filterView = filter_view;
+			this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+			this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+			filter_view.filterModel = filter;
+			filter_view.on({
+				close: this.removeFilter
+			});
+			this.addFilter(filter);
+			// currently only 1 organism filter can be added at a time
+			this.getFormView().down('#addCompletedOrganismFilter_id').setDisabled(true);
+		} else {
+			Ext.MessageBox.show({
+				title: 'Error',
+				msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+				buttons: Ext.MessageBox.OK,
+				icon: Ext.MessageBox.ERROR
+			});
+		}
+	},
+
+	addFilter: function(filter) {
 		console.log('DynamicGrid: setActivityFilters()');
 		var dg = this.getGridView();
 		var store = dg.store;
 		store.filters = this.getFilters();
-		store.setActivityType(activity_value);
-		store.setActivityValue(value_value);
-		store.setActivityCondition(conditions_value);
+		//store.setActivityType(activity_value);
+		//store.setActivityValue(value_value);
+		//store.setActivityCondition(conditions_value);
 	},
 
 /* When a filter is removed from the view also
 		// remove the model from the controller
 		*/
-	filterClosed: function(filter) {
+	removeFilter: function(filter) {
 		console.log('DynamicGrid: filterClosed()');
 		controller = filter.filterModel.controller;
 		var dg = controller.getGridView();
 		var store = dg.store;
 		var exportStore = dg.exportStore;
-		exportStore.setActivityType("");
-		exportStore.setActivityValue("");
-		exportStore.setActivityCondition("");
-		store.setActivityType("");
-		store.setActivityValue("");
-		store.setActivityCondition("");
+		if (filter.filterModel.filterType == "activity") {
 		var index = controller.getFilters().indexOf(filter.filterModel);
 		controller.getFilters().splice(index, 1);
 		store.filters = controller.getFilters();
-		controller.getFormView().down('#addCompletedFilter_id').setDisabled(false);
+		controller.getFormView().down('#addCompletedActivityFilter_id').setDisabled(false);
+		} else if (filter.filterModel.filterType == "organism"){
+		var index = controller.getFilters().indexOf(filter.filterModel);
+		controller.getFilters().splice(index, 1);
+		store.filters = controller.getFilters();
+		controller.getFormView().down('#addCompletedOrganismFilter_id').setDisabled(false);
+		}
+
 	},
 
 	addFilterForm: function(button) {
