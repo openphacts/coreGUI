@@ -6,6 +6,15 @@ var assay_organism = Ext.create('Ext.data.Store', {
 	}, {
 		"abbr": "Mus Musculus",
 		"name": "Mus Musculus"
+	}, {
+		"abbr": "Rattus norvegicus",
+		"name": "Rattus norvegicus"
+	}, {
+		"abbr": "Cavia porcellus",
+		"name": "Cavia porcellus"
+	}, {
+		"abbr": "Equus caballus",
+		"name": "Equus caballus"
 	}]
 });
 Ext.define('LSP.view.filter.OrganismFilterForm', {

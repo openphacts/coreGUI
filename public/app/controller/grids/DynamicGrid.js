@@ -111,9 +111,16 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			filter_view.on({
 				close: this.removeFilter
 			});
-			this.addFilter(filter);
+					var dg = this.getGridView();
+		var store = dg.store;
+		store.filters = this.getFilters();
+		store.setActivityType(activity_value);
+		store.setActivityValue(value_value);
+		store.setActivityCondition(conditions_value);
 			// currently only 1 activity filter can be added at a time
 			this.getFormView().down('#addCompletedActivityFilter_id').setDisabled(true);
+			//this.getFormView().down('#activityFilterContainer_id').disable();
+			//this.getFormView().down('#activityFilterContainer_id').setVisible(false);
 		} else {
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -131,9 +138,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		// TODO unit value check && unit_value != null
 		if (organism_value != null) {
 			filter = Ext.create('LSP.model.Filter', {
-				value: organism_value			
+				value: organism_value
 			});
-			filter.filterType =  "organism";
+			filter.filterType = "organism";
 			this.getFilters().push(filter);
 			// this is the only way I could find to reference the controller from the model and the view
 			filter.controller = this;
@@ -152,9 +159,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			filter_view.on({
 				close: this.removeFilter
 			});
-			this.addFilter(filter);
+					var dg = this.getGridView();
+		var store = dg.store;
+		store.filters = this.getFilters();
+		store.setAssayOrganism(organism_value);
 			// currently only 1 organism filter can be added at a time
 			this.getFormView().down('#addCompletedOrganismFilter_id').setDisabled(true);
+			//this.getFormView().down('#organismFilterContainer_id').disable();
+			//this.getFormView().down('#organismFilterContainer_id').setVisible(false);
 		} else {
 			Ext.MessageBox.show({
 				title: 'Error',
@@ -165,16 +177,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		}
 	},
 
-	addFilter: function(filter) {
-		console.log('DynamicGrid: setActivityFilters()');
-		var dg = this.getGridView();
-		var store = dg.store;
-		store.filters = this.getFilters();
-		//store.setActivityType(activity_value);
-		//store.setActivityValue(value_value);
-		//store.setActivityCondition(conditions_value);
-	},
-
 /* When a filter is removed from the view also
 		// remove the model from the controller
 		*/
@@ -183,17 +185,25 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		controller = filter.filterModel.controller;
 		var dg = controller.getGridView();
 		var store = dg.store;
-		var exportStore = dg.exportStore;
+		//var exportStore = dg.exportStore;
 		if (filter.filterModel.filterType == "activity") {
 		var index = controller.getFilters().indexOf(filter.filterModel);
 		controller.getFilters().splice(index, 1);
 		store.filters = controller.getFilters();
+store.setActivityType("");
+		store.setActivityValue("");
+		store.setActivityCondition("");
 		controller.getFormView().down('#addCompletedActivityFilter_id').setDisabled(false);
+		//controller.getFormView().down('#activityFilterContainer_id').enable();
+		//controller.getFormView().down('#activityFilterContainer_id').setVisible(true);
 		} else if (filter.filterModel.filterType == "organism"){
 		var index = controller.getFilters().indexOf(filter.filterModel);
 		controller.getFilters().splice(index, 1);
 		store.filters = controller.getFilters();
+		store.setAssayOrganism(null);
 		controller.getFormView().down('#addCompletedOrganismFilter_id').setDisabled(false);
+		//controller.getFormView().down('#organismFilterContainer_id').enable();
+		//controller.getFormView().down('#organismFilterContainer_id').setVisible(true);
 		}
 
 	},
@@ -524,11 +534,21 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			// at some point
 			// Count with filters was slow, easier to grab all the results and count them here
 			// code kept in case needed in future
-			if (this.getFilters().length > 0) {
-				countStore.setActivityType(this.getFilters()[0].data.activity);
-				countStore.setActivityValue(this.getFilters()[0].data.value);
-				countStore.setActivityCondition(this.getFilters()[0].data.condition);
-			}
+			Ext.each(this.getFilters(), function(filter, index) {
+				if (filter.filterType == "activity") {
+				countStore.setActivityType(filter.data.activity);
+				countStore.setActivityValue(filter.data.value);
+				countStore.setActivityCondition(filter.data.condition);
+				} else if (filter.filterType == "organism") {
+				countStore.setAssayOrganism(filter.data.value);
+				}
+			});
+			//if (this.getFilters().length > 0) {
+			//	countStore.filters = this.getFilters();
+			//	countStore.setActivityType(this.getFilters()[0].data.activity);
+			//	countStore.setActivityValue(this.getFilters()[0].data.value);
+			//	countStore.setActivityCondition(this.getFilters()[0].data.condition);
+			//}
 			//	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
 			//	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
 			//	allResultsStore.setActivityType(this.filters[0].data.activity);
