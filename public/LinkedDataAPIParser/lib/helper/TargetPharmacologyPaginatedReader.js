@@ -48,7 +48,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid,
-                compound_pref_label_item, compound_inchi_item, compound_inchikey_item, compound_smiles_item;
+                compound_pref_label_item, compound_inchi_item, compound_inchikey_item, compound_smiles_item,
+                assay_description, assay_description_item;
 
             Ext.each(em, function (match, index, matches) {
                     var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
@@ -85,6 +86,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 		chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
 		assay_organism = onAssay['assay_organism'];
         assay_organism_item = chembl_assay_uri;
+        assay_description = onAssay['description'];
+        assay_description_item = chembl_assay_uri;
 		target = onAssay['target'];
 	    }
 	   var chembl_target_uri; 
@@ -155,6 +158,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 target_pref_label:target_pref_label,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
+                assay_description:assay_description,
                 activity_relation:activity_relation,
                 activity_standard_units:activity_standard_units,
                 activity_standard_value:activity_standard_value,
@@ -167,6 +171,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 target_organism_src:chembl_src,
                 target_pref_label_src:cw_src,
                 assay_organism_src:chembl_src,
+                assay_description_src:chembl_src,
                 activity_relation_src:chembl_src,
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
@@ -182,7 +187,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 compound_inchi_item: compound_inchi_item,
                 compound_inchikey_item: compound_inchikey_item,
                 target_pref_label_item: target_pref_label_item,
-                assay_organism_item: assay_organism_item
+                assay_organism_item: assay_organism_item,
+                assay_description_item: assay_description_item
 
             });
 
