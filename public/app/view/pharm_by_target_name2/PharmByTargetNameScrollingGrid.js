@@ -139,6 +139,13 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     align:'center'
                 },
                 {
+                    header:'Target Organism',
+                    dataIndex:'target_organism',
+                    width: 130,
+                    renderer:provenanceRenderer,
+                    align:'center'
+                },
+                {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
                     tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
@@ -147,6 +154,14 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:provenanceRenderer,
                     align:'center'
 
+                },
+                {
+                    header:'Assay Description',
+                    dataIndex:'assay_description',
+                    width: 150,
+                    tdCls: 'wrap',
+                    renderer:provenanceRenderer
+                    //align:'center'
                 },
                 {
                     header:'Compound Concept',
