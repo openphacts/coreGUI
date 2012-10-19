@@ -67,6 +67,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
+                header:'Assay Description',
+                dataIndex:'assay_description',
+                width: 200,
+                tdCls: 'wrap',
+                renderer:provenanceRenderer
+                //align:'center'
+            },
+            {
                 header:'Assay Type',
                 dataIndex:'activity_activity_type',
                 width: 70,
