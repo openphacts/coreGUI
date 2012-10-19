@@ -93,17 +93,24 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 	   var chembl_target_uri; 
 	   var target_pref_label;
        var target_pref_label_item;
+       var targetMatch;
 	   var target_title;
-	   var target_organism; 
+	   var target_organism;
+       var target_organism_item;
 	   var target_concatenated_uris;
 	    if (target != null) {
 		chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
-		target_pref_label = target['prefLabel'];
-        target_pref_label_item = chembl_target_uri;
-	    	// There seems to be no title so pref_label will have to do
-		target_title = target_pref_label;
-            	//var target_title = target['title'];
+		//target_pref_label = target['prefLabel'];
+
+        targetMatch = target['exactMatch'];
+        if (targetMatch != null) {
+            target_pref_label = targetMatch['prefLabel'];
+            target_pref_label_item = targetMatch[LDA.helper.LDAConstants.LDA_ABOUT];
+            target_title = target_pref_label;
+        }
+
 		target_organism = target['target_organism'];
+        target_organism_item = chembl_target_uri;
 		target_concatenated_uris = target['concatenatedURIs'];
 	    }
 
@@ -188,8 +195,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 compound_inchikey_item: compound_inchikey_item,
                 target_pref_label_item: target_pref_label_item,
                 assay_organism_item: assay_organism_item,
-                assay_description_item: assay_description_item
-
+                assay_description_item: assay_description_item,
+                target_organism_item:target_organism_item
             });
 
 
