@@ -100,7 +100,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 	    	// There seems to be no title so pref_label will have to do
 		target_title = target_pref_label;
             	//var target_title = target['title'];
-		target_organism = target['assay_organism'];
+		target_organism = target['target_organism'];
 		target_concatenated_uris = target['concatenatedURIs'];
 	    }
 
