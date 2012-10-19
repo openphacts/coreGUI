@@ -314,3 +314,8 @@ sub {
 .excel-button .x-btn-text {
 	background-image: url(/assets/icon-csv.png);
 }
+
+.wrap .x-grid-cell-inner {
+    white-space: normal;
+    text-align: justify;
+}
