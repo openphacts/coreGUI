@@ -72,13 +72,15 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             );
 
             var target_title_item, target_organism_item, activity_activity_type_item, activity_standard_value_item,
-                activity_standard_units_item,activity_relation_item;
+                activity_standard_units_item,activity_relation_item, assay_description, assay_description_item;
 
             var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
             //console.log(" ITEM : " + onAssay[LDA.helper.LDAConstants.LDA_ABOUT]);
 
             if (onAssay != null) {
             	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
+                assay_description = onAssay['description'];
+                assay_description_item = chembl_assay_uri;
             	var target = onAssay['target'];
 			}
 			if (target != null) {
@@ -147,6 +149,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 target_pref_label:undefined,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:undefined,
+                assay_description:assay_description,
                 activity_relation:activity_relation,
                 activity_standard_units:activity_standard_units,
                 activity_standard_value:activity_standard_value,
@@ -159,6 +162,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 target_organism_src:chembl_src,
                 target_pref_label_src:undefined,
                 assay_organism_src:chembl_src,
+                assay_description_src:chembl_src,
                 activity_relation_src:chembl_src,
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
@@ -170,6 +174,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_relation_item:activity_relation_item,
                 activity_standard_value_item:activity_standard_value_item,
                 activity_standard_units_item:activity_standard_units_item,
+                assay_description_item:assay_description_item,
                 compound_full_mwt_item:compound_full_mwt_item,
                 compound_smiles_item:compound_smiles_item,
                 compound_inchi_item:compound_inchi_item,
