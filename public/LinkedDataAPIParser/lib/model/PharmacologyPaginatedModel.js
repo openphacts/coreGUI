@@ -47,6 +47,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'target_pref_label',
         //this value is missing totally from compound pharmacology paginated
         'assay_organism',
+        'assay_description',
         'activity_relation',
         'activity_standard_units',
         'activity_standard_value',
@@ -59,6 +60,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'target_organism_src',
         'target_pref_label_src',
         'assay_organism_src',
+        'assay_description_src',
         'activity_relation_src',
         'activity_standard_units_src',
         'activity_standard_value_src',
@@ -77,7 +79,8 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'compound_inchikey_item',
         'compound_pref_label_item',
         'target_pref_label_item',
-        'assay_organism_item'
+        'assay_organism_item',
+        'assay_description_item'
 
     ]
 });
