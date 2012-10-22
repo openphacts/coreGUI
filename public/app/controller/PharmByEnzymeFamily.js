@@ -21,7 +21,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         
         }, {
 		ref: 'filterContainer',
-		selector: 'PharmEnzymeForm #filterContainer_id'
+		selector: 'PharmEnzymeForm #filterSelectorContainer_id'
 	}
     ],
     filters: undefined,
@@ -49,8 +49,11 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm button[action=add_filter_form]': {
             click: this.addFilterForm
             },
-            'PharmEnzymeForm button[action=add_completed_filter]': {
-            click: this.addCompletedFilter
+            'PharmEnzymeForm button[action=add_completed_organism_filter]': {
+                click: this.addCompletedOrganismFilter
+            },
+            'PharmEnzymeForm button[action=add_completed_activity_filter]': {
+                click: this.addCompletedActivityFilter
             },
             'PharmEnzymeForm #provId' : {
                 change: this.onProvChange
@@ -62,7 +65,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
     handleHistoryToken:function (historyTokenObject) {
  	    console.log('PharmByEnzymeFamily: handleHistoryToken()');
         if (historyTokenObject.ec) {
-			this.current_uri = historyTokenObject.ec;
+			this.current_uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             var dg = this.getGridView();
             var store = dg.getStore();
             dg.setLoading(true);
@@ -125,6 +128,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	            var enz_name_field = this.getFormView().getForm().findField('enz_name');
 	            enz_name_field.setValue(sel_data.name);
 	            this.hideEnzyme('');
+		    this.getSubmitButton().enable();
 //	        }
 	    },
 
@@ -133,7 +137,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        var form = button.up('form');
 	        button.disable();
 	        var values = form.getValues();
-			if (this.current_uri == values.ec_number) {
+			if (this.current_uri == "http://purl.uniprot.org/enzyme/" + values.ec_number) {
 				var dg = this.getGridView();
 				var store = dg.store;
 				store.proxy.extraParams.uri = this.current_uri;

@@ -14,6 +14,7 @@ class CoreApiCallsController < ApplicationController
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv"
     params[:activity_type] ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
+    params[:assay_organism] ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
     number_of_pages = (params[:total_count].to_i / 250) + 1
     i=1
     uuid = UUIDTools::UUID.random_create.to_s

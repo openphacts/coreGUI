@@ -5,7 +5,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     activity_value:'',
     activity_condition:'',
 	sort_column:'',
-    filters: undefined,
+    filters: new Array(),
 	
 	// Set up the sort properties, check the direction of sort and prepend with
 	// '-' if required
