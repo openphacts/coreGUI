@@ -71,7 +71,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 scope: this
             }
         })
-
     },
     onLaunch: function() {},
 
@@ -511,6 +510,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         try {
             var grid_view = this.getGridView();
             var grid_store = grid_view.getStore();
+	    //grid_store.gridController = this;
             var form = this.getFormView();
             var button = this.getSubmitButton();
             this.resetDownload();
