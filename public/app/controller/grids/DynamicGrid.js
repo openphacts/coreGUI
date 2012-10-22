@@ -306,7 +306,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         Ext.DomHelper.append("csv_download_form", {
             tag: "input",
             type: "hidden",
-            value: gridview.store.uri,
+            value: gridview.store.proxy.extraParams.uri,
             name: "uri"
         });
         Ext.DomHelper.append("csv_download_form", {

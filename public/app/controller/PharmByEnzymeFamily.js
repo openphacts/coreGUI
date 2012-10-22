@@ -69,7 +69,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             var dg = this.getGridView();
             var store = dg.getStore();
             dg.setLoading(true);
-            store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
+            //store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
 			//use the reader uri when retrieving the count after store load
 			store.proxy.reader.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             this.fetchTotalResults();
@@ -142,7 +142,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 				var store = dg.store;
 				store.proxy.extraParams.uri = this.current_uri;
 				store.proxy.reader.uri = this.current_uri;
-				store.setURI("http://purl.uniprot.org/enzyme/" + this.current_uri);
+				//store.setURI("http://purl.uniprot.org/enzyme/" + this.current_uri);
 				dg.setLoading(true);
 				//loading the store is done after the total results are fetched
 				this.fetchTotalResults();

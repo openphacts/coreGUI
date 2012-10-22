@@ -63,7 +63,11 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				this.current_uri = historyTokenObject.u;
 				store.proxy.extraParams.uri = historyTokenObject.u;
 				store.proxy.reader.uri = historyTokenObject.u;
-				store.setURI(historyTokenObject.u);
+				// This was originally set so that the TSV download could retrieve the uri
+				// However, it causes the store to send 2 uri params, no idea why. Possibly
+				// the store sends any configs that are not defaults as params?. The uri is stored in the
+				// proxy extraParams so use that.
+				//store.setURI(historyTokenObject.u);
 				dg.setLoading(true);
 				//loading the store is done after the total results are fetched
 				this.fetchTotalResults();
@@ -90,7 +94,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			var store = dg.store;
 			store.proxy.extraParams.uri = this.current_uri;
 			store.proxy.reader.uri = this.current_uri;
-			store.setURI(this.current_uri);
+			//store.setURI(this.current_uri);
 			dg.setLoading(true);
 			//loading the store is done after the total results are fetched
 			this.fetchTotalResults();
