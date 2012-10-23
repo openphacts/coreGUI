@@ -1,8 +1,8 @@
 Ext.define('LSP.controller.TargetByNameForm', {
     extend: 'Ext.app.Controller',
-    models: ['LDA.model.TargetModel'],
-    stores: ['LDA.store.TargetStore'],
-    views: ['target_by_name.TargetByNameForm', 'target_by_name.TargetPanel'],
+    // models: ['LDA.model.TargetModel'],
+    // stores: ['LDA.store.TargetStore'],
+    views: ['target_by_name.TargetByNameForm'],
     current_uri: null,
 
     refs: [{

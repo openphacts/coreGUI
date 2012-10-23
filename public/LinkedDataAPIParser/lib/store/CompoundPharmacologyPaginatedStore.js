@@ -2,7 +2,7 @@ Ext.define('LDA.store.CompoundPharmacologyPaginatedStore', {
     extend:'LDA.store.basestores.PaginatedFilteringStore',
     model:'LDA.model.PharmacologyPaginatedModel',
     storeId:'CompoundPharmacologyPaginatedStore',	
-    BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/compound/pharmacology/pages?',
+    BASE_URL: ldaBaseUrl + '/compound/pharmacology/pages?',
     REQUEST_TYPE : 'compound',
 
     constructor:function (config, arguments) {

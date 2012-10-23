@@ -3,7 +3,7 @@ Ext.define('LDA.store.CompoundPharmacologyCountStore', {
     model:'LDA.model.PharmacologyCountModel',
     storeId:'CompoundPharmacologyCountStore',
     countNode: 'compoundPharmacologyTotalResults',
-    BASE_URL: LDA.helper.LDAConstants.LDA_BASE_URL + '/compound/pharmacology/count?',
+    BASE_URL: ldaBaseUrl + '/compound/pharmacology/count?',
 
     constructor:function (config, arguments) {
         this.proxy.reader = Ext.create('LDA.helper.CompoundPharmacologyCountReader');

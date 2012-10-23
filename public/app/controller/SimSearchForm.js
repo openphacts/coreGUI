@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.SimSearchForm', {
     extend:'Ext.app.Controller',
 
-    views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer','larkc_sim_search.SimSearchScrollingGrid'],
+    views:['larkc_sim_search.SimSearchForm', 'mol_editor_forms.KetcherForm', 'dataview.StructureViewer'],
     refs:[
         {
             ref:'ssform', // reference to the view

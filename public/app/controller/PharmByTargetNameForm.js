@@ -3,7 +3,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
     views: ['pharm_by_target_name2.PharmByTargetNameForm', 'pharm_by_target_name2.PharmByTargetNameScrollingGrid'],
     // views:['pharm_by_target_name2.PharmByTargetNameForm', 'pharm_by_target_name2.PharmByTargetNameGrid'],
-    stores: ['LDA.store.TargetPharmacologyPaginatedStore'],
+    // stores: ['LDA.store.TargetPharmacologyPaginatedStore'],
     refs: [{
         ref: 'gridView', // reference to the view
         selector: '#pharmByTargetNameGrid'

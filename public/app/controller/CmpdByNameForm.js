@@ -1,7 +1,7 @@
 Ext.define('LSP.controller.CmpdByNameForm', {
     extend: 'Ext.app.Controller',
-    models: ['LDA.model.CompoundModel'],
-    stores: ['LDA.store.CompoundStore'],
+    // models: ['LDA.model.CompoundModel'],
+    // stores: ['LDA.store.CompoundStore'],
     views: ['cmpd_by_name.CmpdByNameSingleDisplayForm'],
 
     refs: [{

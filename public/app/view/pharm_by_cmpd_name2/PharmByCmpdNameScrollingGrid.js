@@ -6,7 +6,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
         // 					itemId: 'pager_id',
         // 					store: 'CompoundPharmacologyPaginatedStore'
         // }),
-        verticalScrollerType:Ext.create('LDA.helper.DynamicPagingToolbar', {itemId:'pager_id'}),
+        // verticalScrollerType:Ext.create('LDA.helper.DynamicPagingToolbar', {itemId:'pager_id'}),
         disableSelection:true,
         invalidateScrollerOnRefresh:false,
         requires:[],

@@ -10,6 +10,7 @@
 <!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
   <script type="text/javascript">
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
+	var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
   </script>
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>

@@ -2,7 +2,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.PharmByTargetNameForm',
 	closable: true,
-	requires: ['LSP.view.dynamicgrid.DynamicGrid'],
+	// requires: ['LSP.view.dynamicgrid.DynamicGrid'],
     header: false,
     layout: {
 		type: 'vbox',
