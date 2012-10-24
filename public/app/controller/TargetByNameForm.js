@@ -43,7 +43,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
         var target_panel = me.getFormView().down("TargetPanel");
         if (historyTokenObject.u) {
             this.current_uri = historyTokenObject.u;
-            var store = this.getLDAStoreTargetStoreStore();
+            var store = this.getStore("LDA.store.TargetStore");
             if (historyTokenObject.u != store.proxy.extraParams.uri) {
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
@@ -89,7 +89,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
         var target_panel = me.getFormView().down("TargetPanel");
         var target_uri = form.getValues().protein_uri;
         if (this.current_uri == target_uri) {
-            var store = this.getLDAStoreTargetStoreStore();
+            var store = this.getStore("LDA.store.TargetStore");
             store.proxy.extraParams.uri = this.current_uri;
             me.getFormView().setLoading(true);
             store.load(function(records, operation, success) {
