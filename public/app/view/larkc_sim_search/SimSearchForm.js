@@ -3,7 +3,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
     alias:'widget.SimSearchForm',
     header: false,
     requires:[
-        'LSP.view.mol_editor_forms.KetcherForm'
+        'LSP.view.mol_editor_forms.KetcherForm','LSP.view.larkc_sim_search.SimSearchScrollingGrid'
     ],
     closable:true,
     layout:{
