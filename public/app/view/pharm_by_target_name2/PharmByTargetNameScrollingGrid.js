@@ -196,6 +196,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
             cls = 'defaultValue';
         }
         var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
         cls += LDAProvenanceMode;
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
@@ -203,7 +204,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
