@@ -622,13 +622,15 @@ function provenanceSummaryRenderer(value, field) {
             cls = 'defaultValue';
         }
         var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
         cls += LDAProvenanceMode;
         cls += 'Summary';
 
         var output;
+
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' +  '</a>'+ '</div>';
 
         return output;
 
