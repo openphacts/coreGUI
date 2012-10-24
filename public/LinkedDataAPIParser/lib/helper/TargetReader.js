@@ -52,10 +52,10 @@ Ext.define('LDA.helper.TargetReader', {
         var conceptWikiUri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
 
         var pdb = uniprotData['seeAlso'];
-        var pdbId;
+        var pdbLink;
         if (pdb) {
             //console.log(" PDB " + pdb[0]);
-            pdbId = pdb[0].split('/').pop();    // add first pdb_id
+            pdbLink = pdb[0];    // add first pdb_id
         }
 
 
@@ -104,7 +104,7 @@ Ext.define('LDA.helper.TargetReader', {
             number_of_residues_src: drugBank_src,
             number_of_residues_item: drugbankUri,
 
-            pdb_id_page: uniprotData != null ? pdbId : null,
+            pdb_id_page: uniprotData != null ? pdbLink : null,
             pdb_id_page_src: uniprot_src,
             pdb_id_page_item: uniprotUri,
 
