@@ -247,12 +247,12 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             	this.addSynonyms(value);
 	    }
         }
-        else if (fieldId == 'keywords') {
+        //else if (fieldId == 'keywords') {
 //            console.log('keywords');
-            if (value != null) {
-                this.addKeywords(value);
-            }
-        }
+        //    if (value != null) {
+        //        this.addKeywords(value);
+        //    }
+        //}
         else if (fieldId == 'organism') {
             if (value != null) {
                 this.addOrganism(value);
