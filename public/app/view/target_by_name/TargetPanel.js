@@ -69,9 +69,11 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                         layout:'column',
                                         bodyPadding:30,
                                         items:[
-                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.25, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.25, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.25, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'cellular_location', columnWidth:0.25, fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+
                                         ]
                                     }
                                 ]
