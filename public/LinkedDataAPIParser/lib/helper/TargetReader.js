@@ -46,11 +46,17 @@ Ext.define('LDA.helper.TargetReader', {
 
         if (uniprotData != null) {
             uniprot_src = uniprotData[LDA.helper.LDAConstants.LDA_IN_DATASET];
-            var uniprotUri = uniprotData[LDA.helper.LDAConstants.LDA_ABOUT];
+            uniprotUri = uniprotData[LDA.helper.LDAConstants.LDA_ABOUT];
         }
 
         var conceptWikiUri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
 
+        var pdb = uniprotData['seeAlso'];
+        var pdbId;
+        if (pdb) {
+            //console.log(" PDB " + pdb[0]);
+            pdbId = pdb[0].split('/').pop();    // add first pdb_id
+        }
 
 
         var record = Ext.create('LDA.model.TargetModel', {
@@ -98,9 +104,9 @@ Ext.define('LDA.helper.TargetReader', {
             number_of_residues_src: drugBank_src,
             number_of_residues_item: drugbankUri,
 
-            pdb_id_page: drugBankData != null ? drugBankData['pdbIdPage'] : null,
-            pdb_id_page_src: drugBank_src,
-            pdb_id_page_item: drugbankUri,
+            pdb_id_page: uniprotData != null ? pdbId : null,
+            pdb_id_page_src: uniprot_src,
+            pdb_id_page_item: uniprotUri,
 
             specific_function: uniprotData != null ? uniprotData['Function_Annotation'] : null,
             specific_function_src: uniprot_src,
