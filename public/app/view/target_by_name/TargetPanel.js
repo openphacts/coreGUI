@@ -162,7 +162,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             var sourceItem = recordData.data['keywords_item']
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
             cls += 'Icon';
-            output = '{kw} <a href="' + sourceItem + '">' + '<img class="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{kw} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
         } else {
             output = '{kw}'
         }
@@ -186,7 +188,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             var source = recordData.data['organism_src'];
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
             cls += 'Icon';
-            output = '{org} <a href="' + sourceItem + '">' + '<img class="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{org} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
         } else {
             output = '{org}'
         }
@@ -209,7 +213,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             var sourceItem = recordData.data['synonyms_item'];
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
             cls += 'Icon';
-            output = '{syn} <a href="' + sourceItem + '">' + '<img class="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{syn} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
         } else {
             output = '{syn}'
         }
@@ -323,13 +329,15 @@ function provenanceTargetSummaryRenderer(value, field) {
             cls = 'defaultValue';
         }
         var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
+
         cls += LDAProvenanceMode;
         cls += 'Summary';
 
         var output;
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img class="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img src="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
 
         return output;
 
