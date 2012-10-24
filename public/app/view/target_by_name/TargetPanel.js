@@ -232,11 +232,11 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 //        http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
         var stringURL = new String(pdbIdPage);
         var img = this.down('#target_image');
-        //var pdbID = stringURL.substr(stringURL.lastIndexOf('=') + 1);
+        var pdbID = stringURL.split('/').pop();
         var pdbField = this.down('#pdb_id_page');
-        pdbField.setRawValue('<a target=\'_blank\' href=\'' + pdbIdPage + '\'>' + pdbIdPage + '</a>');
+        pdbField.setRawValue('<a target=\'_blank\' href=\'' + pdbIdPage + '\'>' + pdbID + '</a>');
         pdbField.show();
-        img.setSrc('http://www.rcsb.org/pdb/images/' + pdbIdPage + '_asr_r_250.jpg');
+        img.setSrc('http://www.rcsb.org/pdb/images/' + pdbID + '_asr_r_250.jpg');
         img.show();
     },
 
