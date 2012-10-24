@@ -276,15 +276,15 @@ sub {
 }
 
 .conceptWikiValueIcon {
-    background-image: url(/assets/conceptWikiIcon.png) !important;
+    background-image: url(/assets/conceptWikiValueIcon.png) !important;
 }
 
 .chemblValueIcon {
-    background-image: url(/assets/chemblIcon.png) !important;
+    background-image: url(/assets/chemblValueIcon.png) !important;
 }
 
 .drugbankValueIcon {
-    background-image: url(/assets/drugbankIcon.png) !important;
+    background-image: url(/assets/drugbankValueIcon.png) !important;
 }
 
 .chemspiderValueIcon {
@@ -292,7 +292,7 @@ sub {
 }
 
 .uniprotValueIcon {
-    background-image: url(/assets/uniprotIcon.png) !important;
+    background-image: url(/assets/uniprotValueIcon.png) !important;
 }
 
 .conceptWikiValueText {
