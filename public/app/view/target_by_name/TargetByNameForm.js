@@ -27,7 +27,7 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
             style: 'background-color: #fff;',
             items: [
             Ext.create('CW.view.ConceptWikiLookup', {
-                xtype: 'conceptWikiLookup',
+                //xtype: 'conceptWikiLookup',
                 fieldLabel: 'Target name',
                 itemId: 'targetByNameLookup',
                 store: Ext.create('CW.store.ConceptWikiLookup', {

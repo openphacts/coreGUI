@@ -2,7 +2,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
-    requires: ['LSP.view.filter.ActivityFilterForm', 'LDA.helper.LDAConstants', 'LSP.view.filter.OrganismFilterForm'],
+    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm'],
     header: false,
     layout: {
         type: 'vbox',
@@ -37,7 +37,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             Ext.create('CW.view.ConceptWikiLookup', {
                            xtype: 'conceptWikiLookup',
                            fieldLabel: 'Compound name',
-                           itemId: 'compoundByNameLookup',
+                           itemId: 'pharmByCompoundCWLookup',
                            store: Ext.create('CW.store.ConceptWikiLookup', {
                                proxy: {
                                    type: 'jsonp',

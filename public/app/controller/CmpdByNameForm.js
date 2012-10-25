@@ -18,7 +18,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         selector: '#CmpdByNameSubmit_id'
     }, {
         ref: 'lookup',
-        selector: '#compoundByNameLookup'
+        selector: 'CmpdByNameForm #compoundByNameLookup'
     }],
     current_uri: null,
 

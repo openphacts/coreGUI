@@ -18,7 +18,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		selector: 'PharmByCmpdNameForm dynamicgrid3 #nextRecords'
 	}, {
 		ref: 'lookup',
-		selector: '#pharmByCmpdLookup'
+		selector: 'PharmByCmpdNameForm #pharmByCompoundCWLookup'
 	}, {
 		ref: 'filterContainer',
 		selector: 'PharmByCmpdNameForm #filterSelectorContainer_id'
