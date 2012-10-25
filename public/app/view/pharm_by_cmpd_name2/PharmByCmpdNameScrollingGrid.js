@@ -57,21 +57,23 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 width: 180,
                 dataIndex:'target_title',
                 renderer:provenanceRenderer,
-                align:'center'
+                tdCls: 'wrap gridDescriptiveRowPadding'
+                //align:'center'
             },
             {
                 header:'Target Organism',
                 dataIndex:'target_organism',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
                 header:'Assay Description',
                 dataIndex:'assay_description',
                 width: 200,
-                tdCls: 'wrap',
-                renderer:provenanceRenderer
+                renderer:provenanceRenderer,
+                tdCls: 'wrap gridDescriptiveRowPadding'
                 //align:'center'
             },
             {
@@ -79,14 +81,17 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'activity_activity_type',
                 width: 70,
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
+
             },
             {
                 header:'Relation',
                 width: 52,
                 dataIndex:'activity_relation',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
@@ -94,7 +99,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'activity_standard_value',
                 width: 60,
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
@@ -102,7 +108,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'activity_standard_units',
                 width: 60,
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
@@ -110,21 +117,24 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'compound_full_mwt',
                 width: 80,
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
                 header:'SMILES',
                 dataIndex:'compound_smiles',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
             {
                 header:'InChi',
                 dataIndex:'compound_inchi',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
 
@@ -132,7 +142,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 header:'InChi Key',
                 dataIndex:'compound_inchikey',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             },
 
@@ -140,7 +151,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 header:'Compound Name',
                 dataIndex:'compound_pref_label',
                 renderer:provenanceRenderer,
-                align:'center'
+                align:'center',
+                tdCls: 'gridRowPadding'
 
             }
 
