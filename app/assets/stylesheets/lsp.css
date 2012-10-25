@@ -319,3 +319,11 @@ sub {
     white-space: normal;
     text-align: justify;
 }
+
+.gridRowPadding {
+    padding: 55px 0 0 0;
+}
+
+.gridDescriptiveRowPadding {
+    vertical-align: middle;
+}
