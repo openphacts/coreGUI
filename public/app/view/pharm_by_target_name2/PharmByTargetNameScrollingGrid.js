@@ -74,28 +74,35 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     dataIndex:'compound_pref_label',
                     width: 180,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    //align:'center',
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+
                 },
                 {
                     header:'Assay Type',
                     dataIndex:'activity_activity_type',
                     width: 70,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'Relation',
                     dataIndex:'activity_relation',
                     width: 52,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'Value',
                     dataIndex:'activity_standard_value',
                     width: 60,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
 
                 },
                 {
@@ -103,47 +110,60 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     dataIndex:'activity_standard_units',
                     width: 60,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt',
                     width: 80,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'SMILES',
                     dataIndex:'compound_smiles',
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
 
                 },
                 {
                     header:'InChi',
                     dataIndex:'compound_inchi',
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'InChi Key',
                     dataIndex:'compound_inchikey',
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'Target Name',
                     dataIndex:'target_pref_label',
                     width: 180,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    //align:'center',
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism',
                     width: 130,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 },
                 {
                     header:'Assay Organism',
@@ -152,22 +172,26 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                         'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
                         ' expressed in non-human cells, or pathogen-infected human cells)',
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
 
                 },
                 {
                     header:'Assay Description',
                     dataIndex:'assay_description',
                     width: 150,
-                    tdCls: 'wrap',
+                    tdCls: 'wrap gridDescriptiveRowPadding',
                     renderer:provenanceRenderer
                     //align:'center'
                 },
                 {
                     header:'Compound Concept',
                     dataIndex:'cw_compound_uri',
+                    width: 200,
                     renderer:provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
                 }
             ],
 
