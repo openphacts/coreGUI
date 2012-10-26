@@ -32,7 +32,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
     labelWidth:120,
     listConfig:{
         loadingText:'Searching...',
-        emptyText:'No matching entities found.',
+        emptyText:'Nothing found which matches your text, you may need to enter more text or try something different.',
         getInnerTpl:function () {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
