@@ -6,6 +6,29 @@ class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
+  # Get the list of organisms for use in the filter
+  # autocompleter
+  def organisms
+    organisms = []
+    query = params[:query]
+    f = File.open(File.join(Rails.root,'config','organisms.txt'),'r')
+    f.each_line do |line|
+      if line.downcase.starts_with? query
+       org = { "name" => line, "abbr" => line }
+       organisms.push(org)
+      end
+    end
+    f.close
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => organisms.to_xml }
+      format.json {
+        render :json => organisms.to_json
+      }
+    end
+  end
+
   # Given query params, a URI and total count of results download them all
   # as a tsv file and return it. The download request batches of 250 from
   # the Linked Data API server
