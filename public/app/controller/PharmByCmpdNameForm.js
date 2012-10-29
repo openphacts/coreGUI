@@ -50,8 +50,17 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			},
             'PharmByCmpdNameForm #provId' : {
                 change: this.onProvChange
+            },
+            '#pharmByCmpdNameGrid #csvDownloadProxy_id': {
+                click: this.prepCSVFile//,
+                //scope: this
             }
 		});
+	},
+	
+	prepCSVFile: function(csv_prep_button) {
+		console.log('PharmByCmpdNameForm: prepCSVFile()');
+		this.callParent(csv_prep_button);
 	},
 
 	handleHistoryToken: function(historyTokenObject) {

@@ -40,9 +40,9 @@
             callback: function (records, options, success) {
                 this.searchStatus = records[0].data;
 
-                if (this.searchProgress() == 1) {
-                    this.stopProgress();
-                }
+//                if (this.searchProgress() == 1) {
+//                    this.stopProgress();
+//                }
             }
         });
     },

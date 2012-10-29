@@ -32,6 +32,10 @@ Ext.define('LSP.controller.SimSearchForm', {
             'SimSearchForm':{
                 historyToken:this.handleHistoryToken,
                 afterrender:this.prepGrid
+            },
+            '#simSearchGrid #csvDownloadProxy_id': {
+                click: this.prepCSVFile//,
+                //scope: this
             }
         });
 
@@ -61,14 +65,27 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     storeLoadComplete:function (store, records, success) {
-        console.log('PharmByTargetNameForm: storeLoadComplete()');
+        console.log('SimSearchForm: storeLoadComplete()');
         this.getSubmitButton().enable();
         this.getSsform().doLayout();
 		this.getSsform().setLoading(false);
-		this.callParent();
+		// TODO should check there are some records first
+		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
+		//this.callParent();
+    },
+
+    prepCSVFile: function(csv_prep_button) {
+        console.log('SimSearchForm: prepCSVFile()');
+        Ext.MessageBox.show({
+            title: 'Info',
+            msg: 'CSV file export for structures is not available in this release. The functionality will be available in the next release.',
+            buttons: Ext.MessageBox.OK,
+            icon: Ext.MessageBox.INFO
+        })
     },
 
     hitCoreAPI:function (csid_list) {
+		console.log("SimSearchForm: hitCoreAPI()");
 //        console.log('hitCoreAPI');
 //        console.log(csid_list)
         var grid = this.getStrucGrid();
@@ -86,7 +103,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 				}
 			});
 		}
-		this.getSsform().setLoading(false);
+		// wait for the last store to load
+		csid_store.on('load', this.storeLoadComplete, this);
     },
 
     handleHistoryToken:function (historyTokenObject) {

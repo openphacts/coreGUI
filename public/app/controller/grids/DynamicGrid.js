@@ -65,11 +65,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             },
             'dynamicgrid toolbar #sdfDownloadProxy_id': {
                 click: this.prepSDFile
-            },
-            'dynamicgrid toolbar #csvDownloadProxy_id': {
-                click: this.prepCSVFile,
-                scope: this
-            }
+            }//,
+            // 'dynamicgrid toolbar #csvDownloadProxy_id': {
+            //                 click: this.prepCSVFile//,
+            //                 //scope: this
+            //             }
         })
     },
     onLaunch: function() {},
@@ -271,7 +271,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             target: 'csv_download_iframe'
         });
 
-        var gridview = csv_prep_button.up('dynamicgrid');
+        var gridview = this.getGridView();
 
         Ext.each(gridview.store.filters, function(filter, index) {
             if (filter.filterType == "activity") {
