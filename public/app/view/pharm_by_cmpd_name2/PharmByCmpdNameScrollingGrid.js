@@ -193,7 +193,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 
                     var output = new String();
                     var targetNames = data.split(',');
-                    console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
+                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
                     Ext.each(targetNames, function (target, index) {
@@ -204,13 +204,13 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
 
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });
@@ -220,7 +220,7 @@ function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
