@@ -74,6 +74,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             var store = dg.getStore();
             dg.setLoading(true);
             //store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
+	    store.proxy.extraParams.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
 			//use the reader uri when retrieving the count after store load
 			store.proxy.reader.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             this.fetchTotalResults();
