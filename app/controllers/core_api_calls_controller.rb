@@ -9,7 +9,26 @@ class CoreApiCallsController < ApplicationController
   # Given a list of chemspider ids, grab the data about each
   # id from the Linked Data API, create the tsv file and return it
   def chemspider_tab_separated_file
-
+    domain = AppSettings.config["tsv"]["tsv_url"]
+    path = "/compound"
+    uuid = UUIDTools::UUID.random_create.to_s
+    tmpfile = Tempfile.new(uuid)
+    first = true
+    params[:csids].each do |csid|
+      url_params = "uri=" + CGI::escape("http://rdf.chemspider.com/#{csid}") + "&_format=tsv"
+      puts url_params
+      begin
+        url_path = "#{path}?".concat(url_params)
+        response = Net::HTTP.get(domain, url_path)
+        first ? lines = response : lines = response.lines.to_a[1..-1].join
+        tmpfile << lines
+        first = false
+      rescue Exception => e
+        logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
+      end
+    end
+    send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    tmpfile.close(true)
   end
 
   # Get the list of organisms for use in the filter
@@ -57,7 +76,7 @@ class CoreApiCallsController < ApplicationController
       tmpfile << lines
       i+=1
     rescue Exception => e
-      logger.error "An error occurred retrieving response for url_path: "  + e.to_s
+      logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
       # TODO send an error response?
     end while i <= number_of_pages
     send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false

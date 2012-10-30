@@ -78,11 +78,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log('SimSearchForm: prepCSVFile()');
 	var grid_store = this.getStrucGrid().getStore();
 	var items = grid_store.data.items;
-	var csid_list = new Array();
- 	Ext.each(items, function (item, index) {
-		csid_list.push(item.data.csid);
-	});
-        var body = Ext.getBody();
+	var body = Ext.getBody();
         var frame = body.createChild({
             tag: 'iframe',
             cls: 'x-hidden',
@@ -96,17 +92,14 @@ Ext.define('LSP.controller.SimSearchForm', {
             action: '/core_api_calls/chemspider_tab_separated_file',
             target: 'tsv_download_iframe'
         });
-
-        var gridview = this.getGridView();
-
-
+ 	Ext.each(items, function (item, index) {
         Ext.DomHelper.append("tsv_download_form", {
             tag: "input",
             type: "hidden",
-            value: csid_list,
-            name: "csids"
+            value: item.data.csid,
+            name: "csids[]"
         });
-
+	});
 
         form.dom.submit();
         frame.remove();
@@ -119,13 +112,14 @@ Ext.define('LSP.controller.SimSearchForm', {
 //        console.log(csid_list)
         var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
-        
+        var total_count = 0;
 		var csid_store = Ext.create('LDA.store.CompoundStore', {});
 		csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
 		for (var i = 0; i < csid_list.length; i++) {
 			csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
 			csid_store.load(function(records, operation, success) {
 				if (success) {
+					total_count ++;
 					grid.getStore().add(records);
 				} else {
 
@@ -133,7 +127,9 @@ Ext.define('LSP.controller.SimSearchForm', {
 			});
 		}
 		// wait for the last store to load
-		csid_store.on('load', this.storeLoadComplete, this);
+		if (i == csid_list.length) {
+			csid_store.on('load', this.storeLoadComplete, this);
+		}
     },
 
     handleHistoryToken:function (historyTokenObject) {
