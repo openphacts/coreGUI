@@ -83,15 +83,14 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                     target_title_item = chembl_target_uri;
             		var target_organism = target['target_organism'];
                     target_organism_item = chembl_target_uri;
-            		var target_concatenated_uris = target['concatenatedURIs'];
+            		var target_concatenated_uris = target['concatenetedURIs'];  // API sp mistake... to change
 				}
 			}
 
             var activity_activity_type_item, activity_standard_value_item, activity_standard_units_item,
                 activity_relation_item;
 
-            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
-
+            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' + chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
 
             var activity_activity_type = item['activity_type'];
             var activity_standard_value = item['standardValue'];
