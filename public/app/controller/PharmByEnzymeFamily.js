@@ -57,6 +57,10 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #provId' : {
                 change: this.onProvChange
+            },
+            '#pharmByEnzymeFamilyGrid #csvDownloadProxy_id': {
+                click: this.prepCSVFile//,
+                //scope: this
             }
         });
     },

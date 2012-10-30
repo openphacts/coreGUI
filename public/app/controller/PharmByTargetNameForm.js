@@ -48,6 +48,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             },
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
+            },
+            '#pharmByTargetNameGrid #csvDownloadProxy_id': {
+                click: this.prepCSVFile//,
+                //scope: this
             }
         });
     },
