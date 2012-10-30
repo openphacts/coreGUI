@@ -44,80 +44,89 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     dataIndex:'compound_pref_label',
                     width: 180,
                     renderer: provenanceRenderer,
-                    align:'center'
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Name',
                     dataIndex:'target_title',
                     width: 180,
                     renderer: provenanceRenderer,
-
-                    align:'center'
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'SMILES',
                     dataIndex:'compound_smiles',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi',
                     dataIndex:'compound_inchi',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi Key',
                     dataIndex:'compound_inchikey',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Type',
                     dataIndex:'activity_activity_type',
                     renderer: provenanceRenderer,
                     width: 70,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Relation',
                     dataIndex:'activity_relation',
                     renderer: provenanceRenderer,
                     width: 52,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Value',
                     dataIndex:'activity_standard_value',
                     renderer: provenanceRenderer,
                     width: 60,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Units',
                     dataIndex:'activity_standard_units',
                     renderer: provenanceRenderer,
                     width: 60,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt',
                     renderer: provenanceRenderer,
                     align:'center',
-                    width: 80
+                    width: 80,
+                    tdCls: 'gridRowPadding'
                 }
             ]
 
@@ -154,7 +163,7 @@ function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
             if (record.data[recdata] && data){
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>'                    ;
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
