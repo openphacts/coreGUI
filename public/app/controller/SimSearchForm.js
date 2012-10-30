@@ -108,28 +108,29 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     hitCoreAPI:function (csid_list) {
 		console.log("SimSearchForm: hitCoreAPI()");
+	this.addRecords(csid_list);
 //        console.log('hitCoreAPI');
 //        console.log(csid_list)
-        var grid = this.getStrucGrid();
+        //var grid = this.getStrucGrid();
 //        grid.on('scrollershow', function() { grid.view.refresh(); alert("Refreshing..?"); }, this, {single: true, delay: 3000});
-        var total_count = 0;
-		var csid_store = Ext.create('LDA.store.CompoundStore', {});
-		csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
-		for (var i = 0; i < csid_list.length; i++) {
-			csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
-			csid_store.load(function(records, operation, success) {
-				if (success) {
-					total_count ++;
-					grid.getStore().add(records);
-				} else {
-
-				}
-			});
-		}
-		// wait for the last store to load
-		if (i == csid_list.length) {
-			csid_store.on('load', this.storeLoadComplete, this);
-		}
+        //var total_count = 0;
+	//	var csid_store = Ext.create('LDA.store.CompoundStore', {});
+	//	csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
+	//	for (var i = 0; i < csid_list.length; i++) {
+	//		csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
+	//		csid_store.load(function(records, operation, success) {
+	//			if (success) {
+	//				total_count ++;
+	//				grid.getStore().add(records);
+	//			} else {
+	//
+	//			}
+	//		});
+	//	}
+	//	// wait for the last store to load
+	//	if (i == csid_list.length) {
+	//		csid_store.on('load', this.storeLoadComplete, this);
+	//	}
     },
 
     handleHistoryToken:function (historyTokenObject) {
@@ -235,32 +236,49 @@ Ext.define('LSP.controller.SimSearchForm', {
         }
 
         Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
-    }
+    },
 
-//     addRecords: function (csids) {
-//       var this_gridview = this.getStrucGrid();
-//       var this_store = this_gridview.store;
-//       var this_controller = this;
-//       var temp_store =§ Ext.create('LSP.store.DynamicGrid');
-//       temp_store.proxy.actionMethods = {read: 'POST'};
-//       temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
-//       var offset = 0;
-//     //  this_gridview.setLoading(true);
-//       this.recursiveAddCompoundInfo(csids,this_store,temp_store,this_controller, 0);
-//     },
-//     
-//     recursiveAddCompoundInfo: function(csids,grid_store, temp_store,this_controller, dept) {
-//       var csid = csids[0];
-//       var remaining_csids = csids.slice(1);
-//       if (dept > 6) {return true;}
-//       dept++;
-//       var last_csid = remaining_csids.length == 0;
-//       temp_store.load({params: { offset: 0, limit: 1, compound_uri: 'http://rdf.chemspider.com/' + csid}});
-//       temp_store.on('load',function(){
-//           grid_store.loadRecords(temp_store.getRange(),{addRecords: true});
-//       });    
-//       if (last_csid){ return;}
-//       this_controller.recursiveAddCompoundInfo(remaining_csids,grid_store,temp_store,this_controller, dept);
-//   //    })
-//   }
+     addRecords: function (csids) {
+       var this_gridview = this.getStrucGrid();
+       var this_store = this_gridview.store;
+       var this_controller = this;
+       //var temp_store = Ext.create('LSP.store.DynamicGrid');
+       var temp_store = Ext.create('LDA.store.CompoundStore', {});
+	temp_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
+       //temp_store.proxy.actionMethods = {read: 'POST'};
+       //temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
+       var offset = 0;
+     //  this_gridview.setLoading(true);
+       this.recursiveAddCompoundInfo(csids,this_store,temp_store,this_controller, 0);
+     },
+     
+     recursiveAddCompoundInfo: function(csids,grid_store, temp_store,this_controller, dept) {
+       var csid = csids[0];
+       var remaining_csids = csids.slice(1);
+       if (dept > 6) {     
+this.getSubmitButton().enable();
+        //this.getSsform().doLayout();
+		this.getSsform().setLoading(false);
+		// TODO should check there are some records first
+		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
+return;
+}
+       dept++;
+       var last_csid = remaining_csids.length == 0;
+       temp_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid;
+       temp_store.load();
+       temp_store.on('load',function(){
+           grid_store.loadRecords(temp_store.getRange(),{addRecords: true});
+       });    
+       if (last_csid){    
+     this.getSubmitButton().enable();
+        //this.getSsform().doLayout();
+		this.getSsform().setLoading(false);
+		// TODO should check there are some records first
+		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
+return;
+}
+       this_controller.recursiveAddCompoundInfo(remaining_csids,grid_store,temp_store,this_controller, dept);
+   //    })
+   }
 });

@@ -22,9 +22,11 @@ Ext.define('LDA.helper.ChemspiderCompoundReader', {
             }
         });
 	var csid;
+	var cw_uri;
+	conceptWikiData != null ? cw_uri= conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT] : '';
         var record = Ext.create('LDA.model.CompoundModel', {
 	    csid: pt[LDA.helper.LDAConstants.LDA_ABOUT].substring(pt[LDA.helper.LDAConstants.LDA_ABOUT].lastIndexOf('/') + 1),
-            cw_uri: conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT] != null ? conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
+            cw_uri: cw_uri,
             cs_uri: pt[LDA.helper.LDAConstants.LDA_ABOUT] != null ? pt[LDA.helper.LDAConstants.LDA_ABOUT] : null,
             chembl_uri: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_ABOUT] : null,
             drugbank_uri: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
