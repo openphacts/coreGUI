@@ -35,7 +35,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src,
-                compound_pref_label_item, compound_smiles_item, compound_inchi_item, compound_inchikey_item;
+                compound_pref_label_item, compound_smiles_item, compound_inchi_item, compound_inchikey_item, csids;
 
 			if (forMolecule != null) {
             	Ext.each(em, function (match, index, matches) {
@@ -70,7 +70,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
             	var assay_organism = onAssay['assay_organism'];
                 assay_organism_item = chembl_assay_uri;
-            	var target = onAssay['target'];
+            	var target = item['target'];
 				if (target != null) {
             		var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
             		var target_pref_label = target['prefLabel'];
