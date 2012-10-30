@@ -136,7 +136,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
                                         padding:'0 0 12px 0',
-                                        fieldLabel:'Polar Surface Area (Å<sup>2</sup>)',
+                                        fieldLabel:'Polar Surface Area (m<sup>2</sup>)',
                                         columnWidth:.12,
                                         labelAlign:'top',
                                         renderer: provenanceSummaryRenderer
