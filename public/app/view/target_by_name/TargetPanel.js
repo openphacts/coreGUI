@@ -152,6 +152,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }
     },
 
+    // addKeywords not used, just rendered normally
     addKeywords:function (keywords) {
         var bits = keywords.split(',');
         var keywordDisplayField = this.down('#keywords');
@@ -193,7 +194,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             cls += 'Icon';
             cls = '/assets/' + cls + '.png';
 
-            output = '{org} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+            output = '{org} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
         } else {
             output = '{org}'
         }
@@ -218,7 +219,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             cls += 'Icon';
             cls = '/assets/' + cls + '.png';
 
-            output = '{syn} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+            output = '{syn} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
         } else {
             output = '{syn}'
         }
