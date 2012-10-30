@@ -57,6 +57,7 @@ LSP4All::Application.routes.draw do
       get :wiki_pathways_by_protein
       get :tab_separated_file
       get :organisms
+      get :chemspider_tab_separated_file
     end
   end
 

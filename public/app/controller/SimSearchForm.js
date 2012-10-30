@@ -76,12 +76,41 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     prepCSVFile: function(csv_prep_button) {
         console.log('SimSearchForm: prepCSVFile()');
-        Ext.MessageBox.show({
-            title: 'Info',
-            msg: 'CSV file export for structures is not available in this release. The functionality will be available in the next release.',
-            buttons: Ext.MessageBox.OK,
-            icon: Ext.MessageBox.INFO
-        })
+	var grid_store = this.getStrucGrid().getStore();
+	var items = grid_store.data.items;
+	var csid_list = new Array();
+ 	Ext.each(items, function (item, index) {
+		csid_list.push(item.data.csid);
+	});
+        var body = Ext.getBody();
+        var frame = body.createChild({
+            tag: 'iframe',
+            cls: 'x-hidden',
+            id: 'tsv_download_iframe',
+            name: 'iframe'
+        });
+        var form = body.createChild({
+            tag: 'form',
+            cls: 'x-hidden',
+            id: 'tsv_download_form',
+            action: '/core_api_calls/chemspider_tab_separated_file',
+            target: 'tsv_download_iframe'
+        });
+
+        var gridview = this.getGridView();
+
+
+        Ext.DomHelper.append("tsv_download_form", {
+            tag: "input",
+            type: "hidden",
+            value: csid_list,
+            name: "csids"
+        });
+
+
+        form.dom.submit();
+        frame.remove();
+        form.remove();
     },
 
     hitCoreAPI:function (csid_list) {
