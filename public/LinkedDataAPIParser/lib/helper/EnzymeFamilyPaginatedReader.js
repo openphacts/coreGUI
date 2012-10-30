@@ -35,7 +35,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src,
-                compound_pref_label_item, compound_smiles_item, compound_inchi_item, compound_inchikey_item, csids;
+                compound_pref_label_item, compound_smiles_item, compound_inchi_item, compound_inchikey_item, csid;
 
 			if (forMolecule != null) {
             	Ext.each(em, function (match, index, matches) {
