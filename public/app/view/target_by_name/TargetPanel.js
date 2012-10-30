@@ -61,6 +61,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'cellular_location', fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'},
+
                                     {
                                         xtype:'panel',
                                         border:0,
@@ -69,10 +71,9 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                         layout:'column',
                                         bodyPadding:30,
                                         items:[
-                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.25, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.25, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.25, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'cellular_location', columnWidth:0.25, fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
 
                                         ]
                                     }
