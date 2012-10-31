@@ -36,6 +36,9 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             'CmpdByNameForm button[action = cbn_linkout]': {
                 click: this.firecbnLink
             },
+            'CmpdByNameForm button[action=openCSWindow]': {
+				        click: this.openChemSpiderWidget
+			      },
             'CmpdByNameForm #provId': {
                 change: this.onProvChange
             }
@@ -46,6 +49,12 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         //            http://cbn.zbh.uni-hamburg.de/?ops_uris=http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413
         //var store = this.getLDAStoreCompoundStoreStore();
         window.open('http://cbn.zbh.uni-hamburg.de/?ops_uris=' + this.current_uri, '_blank')
+    },
+    
+    openChemSpiderWidget: function(button) {
+        if (parseInt(button.chemspiderId) >= 1) {
+            Ext.create('CS.view.CompoundWindow').showCompound(button.chemspiderId);
+        }
     },
 
     handleHistoryToken: function(historyTokenObject) {
