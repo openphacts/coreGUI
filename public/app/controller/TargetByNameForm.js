@@ -45,6 +45,11 @@ Ext.define('LSP.controller.TargetByNameForm', {
             this.current_uri = historyTokenObject.u;
             var store = this.getStore("LDA.store.TargetStore");
             if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
+                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
                 store.load(function(records, operation, success) {
