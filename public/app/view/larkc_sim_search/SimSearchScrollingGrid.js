@@ -6,11 +6,10 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		// 					itemId: 'pager_id',
 		// 					store: 'CompoundPharmacologyPaginatedStore'
 		// }),
-		verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+		//verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
         disableSelection: true,
         invalidateScrollerOnRefresh: false,
-        requires:[
-        ],
+        requires:['LDA.model.SimModel'],
 		listeners: {
 		    'sortchange': function(ct, column, direction, eOpts ) {
 				console.log('SimSearchScrollingGrid: sortchange()');
@@ -23,7 +22,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 			//         		selector:'#pager_id'
 			// }
 		],
-        store:Ext.create('LDA.store.SimSearchStore', {}),
+        store: null,
 	exportStore: null,
 	getExportStore: function() {
 		if (this.exportStore == null) {
@@ -31,13 +30,12 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		}
 		return this.exportStore;		
 	},
-		// dockedItems: [{
-		//         xtype: 'dynamicpagingtoolbar',
-		// 		itemId: 'pager_id',
-		//         dock: 'bottom',
-		// 		store: 'CompoundPharmacologyPaginatedStore',
-		//         displayInfo: true
-		//     }],
+	initComponent: function() {
+		this.store = Ext.create('Ext.data.Store', {
+		model: 'LDA.model.SimModel'
+	});
+	this.callParent(arguments);
+	},
         columns:[
 				{
 					xtype: 'rownumberer',
