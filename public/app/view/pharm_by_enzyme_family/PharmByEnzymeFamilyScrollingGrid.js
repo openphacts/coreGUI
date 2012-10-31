@@ -44,80 +44,89 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     dataIndex:'compound_pref_label',
                     width: 180,
                     renderer: provenanceRenderer,
-                    align:'center'
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Name',
                     dataIndex:'target_title',
                     width: 180,
                     renderer: provenanceRenderer,
-
-                    align:'center'
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'SMILES',
                     dataIndex:'compound_smiles',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi',
                     dataIndex:'compound_inchi',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi Key',
                     dataIndex:'compound_inchikey',
                     renderer: provenanceRenderer,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Type',
                     dataIndex:'activity_activity_type',
                     renderer: provenanceRenderer,
                     width: 70,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Relation',
                     dataIndex:'activity_relation',
                     renderer: provenanceRenderer,
                     width: 52,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Value',
                     dataIndex:'activity_standard_value',
                     renderer: provenanceRenderer,
                     width: 60,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Units',
                     dataIndex:'activity_standard_units',
                     renderer: provenanceRenderer,
                     width: 60,
-                    align:'center'
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt',
                     renderer: provenanceRenderer,
                     align:'center',
-                    width: 80
+                    width: 80,
+                    tdCls: 'gridRowPadding'
                 }
             ]
 
@@ -153,8 +162,37 @@ function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
 
             if (record.data[recdata] && data){
 
+                if (this.columns[columnIndex].dataIndex == 'target_title') {
+
+                    var output = new String();
+                    var targetNames = data.split(',');
+                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
+                    var targetURIs = record.data['target_concatenated_uris'].split(',');
+                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
+                    Ext.each(targetNames, function (target, index) {
+
+                        var url = targetURIs[index];
+                        if (url) {
+                            //console.log( ' url ' + url);
+                            //var targetId = url.split('/').pop();
+                            var linkOut = targetBaseURL + url.split('/').pop();
+                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+                        } else {
+
+                            var onlyTarget = targetURIs[0].split('/').pop();
+                            var linkOutfirst = targetBaseURL + onlyTarget;
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                        }
+
+                    });
+                    return output;
+
+                }
+
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>'                    ;
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 

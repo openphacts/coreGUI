@@ -53,52 +53,84 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
                     sortable:false
                 },
                 {
-                    header:'Smiles',
-                    dataIndex:'smiles'
+                    header:'Compound name',
+                    dataIndex:'prefLabel',
+                    width: 180,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
-                    header:'hba',
-                    dataIndex:'hba'
+                    header:'Molecular Formula',
+                    dataIndex:'molform',
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'hbd',
-                    dataIndex:'hbd'
+                    header:'SMILES',
+                    dataIndex:'smiles',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'mw freebase',
-                    dataIndex:'mw_freebase'
+                    header:'InChi',
+                    dataIndex:'inchi',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChi Key',
+                    dataIndex:'inchi_key',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'ALogP',
+                    dataIndex:'alogp',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# HBA',
+                    dataIndex:'hba',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# HBD',
+                    dataIndex:'hbd',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Mol Weight',
+                    dataIndex:'full_mwt',
+                    width: 70,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# RTB',
+                    dataIndex:'rtb',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'MW Freebase',
+                    dataIndex:'mw_freebase',
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Melting Point',
-                    dataIndex:'melting_point'
-                },
-                {
-                    header:'alogp',
-                    dataIndex:'alogp'
-                },
-                {
-                    header:'rtb',
-                    dataIndex:'rtb'
-                },
-                {
-                    header:'molform',
-                    dataIndex:'molform'
-                },
-                {
-                    header:'Molweight',
-                    dataIndex:'full_mwt'
-                },
-                {
-                    header:'Inchi',
-                    dataIndex:'inchi'
-                },
-                {
-                    header:'Inchi Key',
-                    dataIndex:'inchi_key'
-                },
-                {
-                    header:'Compound name',
-                    dataIndex:'prefLabel'
+                    dataIndex:'meltingPoint',
+                    width:140,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 }
             ]
 	}

@@ -80,15 +80,15 @@ Ext.define('LSP.store.NavigationTree', {
                         text:"Target by name",
                         cls:"file",
                         application_type:'grid'
-                    },
-                    {
-                        xtype:"temp",
-                        home:"",
-                        leaf:true,
-                        text:"X-Target by sequence",
-                        cls:"file",
-                        application_type:'grid'
                     }
+                    //{
+                    //    xtype:"temp",
+                    //    home:"",
+                    //    leaf:true,
+                    //    text:"X-Target by sequence",
+                    //    cls:"file",
+                    //    application_type:'grid'
+                    //}
                 ]
             },
             {

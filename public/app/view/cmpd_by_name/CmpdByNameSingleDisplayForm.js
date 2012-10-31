@@ -136,7 +136,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         baseCls:'x-cmpBottomBase', // label
                                         anchor:'100%',
                                         padding:'0 0 12px 0',
-                                        fieldLabel:'Polar Surface Area (Å<sup>2</sup>)',
+                                        fieldLabel:'Polar Surface Area (m<sup>2</sup>)',
                                         columnWidth:.12,
                                         labelAlign:'top',
                                         renderer: provenanceSummaryRenderer
@@ -630,7 +630,7 @@ function provenanceSummaryRenderer(value, field) {
 
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' +  '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" title= "' + sources[source]+  '" height="15" width="15"/>' +  '</a>'+ '</div>';
 
         return output;
 
