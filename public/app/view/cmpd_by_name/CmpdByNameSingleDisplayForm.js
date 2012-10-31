@@ -201,6 +201,15 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         action:'cbn_linkout',
                                         hidden: true
                                     },
+                                    {
+                                        xtype:'button',
+                                        margin:'0 0 0 10',
+                                        text:'ChemSpider Info',
+                                        itemId:'csWindowLaunchButton',
+                                        chemspiderId: '',
+                                        action:'openCSWindow',
+                                        hidden: true
+                                    },
 
 
                                     {
@@ -437,6 +446,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 var ip = this.query('#compound_form_imagepanel')[0];
 				var csid;
 				if (record.data.cs_uri) {
+
 					csid = record.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
 	                ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
 	                ip.show();
@@ -523,8 +533,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 						case 'psa':
 
                             if (td[prop]){
-                                var psaValue = td[prop];
-                                field.setValue(psaValue);
+                                var psaValue = parseFloat(td[prop])*1e19 ;                              
+                                field.setValue(psaValue.toFixed(1));
                                 field.show();
                             }
 							break;
@@ -555,9 +565,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
         var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
         var csLink = this.query('#chemspider_id')[0];
-        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'">' + csLinkFrag + '</a>');
+        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
         csLink.show();
-
         var ip = this.query('#compound_form_imagepanel')[0];
 		var csid;
 		if (compound.data.cs_uri) {
@@ -565,6 +574,11 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 	        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
 		}
         ip.show();
+        // Preparing for Chemspider window open
+        var csButton = this.query('#csWindowLaunchButton')[0];
+        csButton.show();
+        csButton.chemspiderId = csid;
+        // End of Chemspider window open prep.
         this.doLayout();
     },
 
@@ -630,7 +644,7 @@ function provenanceSummaryRenderer(value, field) {
 
         //console.log(iconCls);
         // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '">' + '<img src="' + iconCls + '" height="15" width="15"/>' +  '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" title= "' + sources[source]+  '" height="15" width="15"/>' +  '</a>'+ '</div>';
 
         return output;
 

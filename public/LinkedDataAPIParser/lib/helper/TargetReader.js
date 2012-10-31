@@ -34,14 +34,20 @@ Ext.define('LDA.helper.TargetReader', {
         var uniprotUri;
         var drugBank_src;
         var uniprot_src;
+        var chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
+        var drugbankLinkOut = 'http://www.drugbank.ca/molecules/';
+
+
         if (chemblData != null) {
             chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
             chemblUri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
+            chemblLinkOut += chemblUri.split('/').pop();
         }
 
         if (drugBankData != null) {
             drugBank_src = drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET];
             drugbankUri = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT];
+            drugbankLinkOut += drugbankUri.split('/').pop() + '?as=target';
         }
 
         if (uniprotData != null) {
@@ -70,39 +76,39 @@ Ext.define('LDA.helper.TargetReader', {
 
             label: chemblData != null ? chemblData['label'] : null,
             label_src: chembl_src,
-            label_item: chemblUri,
+            label_item: chemblLinkOut,
 
             keywords: chemblData != null ? chemblData['keyword'] : null,
             keywords_src: chembl_src,
-            keywords_item: chemblUri,
+            keywords_item: chemblLinkOut,
 
             description: chemblData != null ? chemblData['description'] : null,
             description_src: chembl_src,
-            description_item: chemblUri,
+            description_item: chemblLinkOut,
 
             target_type: chemblData != null ? chemblData['target_type'] : null,
             target_type_src: chembl_src,
-            target_type_item: chemblUri,
+            target_type_item: chemblLinkOut,
 
             organism: chemblData != null ? chemblData['organism'] : null,
             organism_src: chembl_src,
-            organism_item: chemblUri,
+            organism_item: chemblLinkOut,
 
             synonyms: chemblData != null ? chemblData['label'] : null,
             synonyms_src: chembl_src,
-            synonyms_item: chemblUri,
+            synonyms_item: chemblLinkOut,
 
             cellular_location: drugBankData != null ? drugBankData['cellularLocation'] : null,
             cellular_location_src: drugBank_src,
-            cellular_location_item: drugbankUri,
+            cellular_location_item: drugbankLinkOut,
 
             molecular_weight: drugBankData != null ? drugBankData['molecularWeight'] : null,
             molecular_weight_src: drugBank_src,
-            molecular_weight_item: drugbankUri,
+            molecular_weight_item: drugbankLinkOut,
 
             number_of_residues: drugBankData != null ? drugBankData['numberOfResidues'] : null,
             number_of_residues_src: drugBank_src,
-            number_of_residues_item: drugbankUri,
+            number_of_residues_item: drugbankLinkOut,
 
             pdb_id_page: uniprotData != null ? pdbLink : null,
             pdb_id_page_src: uniprot_src,
@@ -114,7 +120,7 @@ Ext.define('LDA.helper.TargetReader', {
 
             theoretical_pi: drugBankData != null ? drugBankData['theoreticalPi'] : null,
             theoretical_pi_src: drugBank_src,
-            theoretical_pi_item: drugbankUri
+            theoretical_pi_item: drugbankLinkOut
         });
 
         //        console.log('LDA.model.TargetModel: Target');

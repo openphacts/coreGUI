@@ -47,55 +47,88 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
                     dataIndex:'cs_uri',
 					xtype: 'templatecolumn',
 					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
-					sortable:false
-                },
-                {
-                    header:'Smiles',
-                    dataIndex:'smiles'
-                },
-                {
-                    header:'hba',
-                    dataIndex:'hba'
-                },
-                {
-                    header:'hbd',
-                    dataIndex:'hbd'
-                },
-                {
-                    header:'mw freebase',
-                    dataIndex:'mw_freebase'
-                },
-                {
-                    header:'Melting Point',
-                    dataIndex:'melting_point'
-                },
-                {
-                    header:'alogp',
-                    dataIndex:'alogp'
-                },
-                {
-                    header:'rtb',
-                    dataIndex:'rtb'
-                },
-                {
-                    header:'molform',
-                    dataIndex:'molform'
-                },
-                {
-                    header:'Molweight',
-                    dataIndex:'full_mwt'
-                },
-                {
-                    header:'Inchi',
-                    dataIndex:'inchi'
-                },
-                {
-                    header:'Inchi Key',
-                    dataIndex:'inchi_key'
+                    width:135,
+                    sortable:false
                 },
                 {
                     header:'Compound name',
-                    dataIndex:'prefLabel'
+                    dataIndex:'prefLabel',
+                    width: 180,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Molecular Formula',
+                    dataIndex:'molform',
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'SMILES',
+                    dataIndex:'smiles',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChi',
+                    dataIndex:'inchi',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChi Key',
+                    dataIndex:'inchi_key',
+                    width:135,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'ALogP',
+                    dataIndex:'alogp',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# HBA',
+                    dataIndex:'hba',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# HBD',
+                    dataIndex:'hbd',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Mol Weight',
+                    dataIndex:'full_mwt',
+                    width: 70,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'# RTB',
+                    dataIndex:'rtb',
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'MW Freebase',
+                    dataIndex:'mw_freebase',
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Melting Point',
+                    dataIndex:'meltingPoint',
+                    width:140,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
                 }
             ]
 	}

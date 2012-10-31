@@ -36,6 +36,9 @@ Ext.define('LSP.controller.CmpdByNameForm', {
             'CmpdByNameForm button[action = cbn_linkout]': {
                 click: this.firecbnLink
             },
+            'CmpdByNameForm button[action=openCSWindow]': {
+				        click: this.openChemSpiderWidget
+			      },
             'CmpdByNameForm #provId': {
                 change: this.onProvChange
             }
@@ -47,6 +50,12 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         //var store = this.getLDAStoreCompoundStoreStore();
         window.open('http://cbn.zbh.uni-hamburg.de/?ops_uris=' + this.current_uri, '_blank')
     },
+    
+    openChemSpiderWidget: function(button) {
+        if (parseInt(button.chemspiderId) >= 1) {
+            Ext.create('CS.view.CompoundWindow').showCompound(button.chemspiderId);
+        }
+    },
 
     handleHistoryToken: function(historyTokenObject) {
         console.log('CmpdByNameForm: handleHistoryToken()');
@@ -55,6 +64,11 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         if (historyTokenObject.u) {
             var store = this.getStore("LDA.store.CompoundStore");
             if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
+                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.current_uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
