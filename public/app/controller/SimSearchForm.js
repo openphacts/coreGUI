@@ -38,6 +38,9 @@ Ext.define('LSP.controller.SimSearchForm', {
             '#simSearchGrid #csvDownloadProxy_id': {
                 click: this.prepCSVFile //,
                 //scope: this
+            },
+            'SimSearchForm #provId': {
+                change: this.onProvChange
             }
         });
 
@@ -264,6 +267,12 @@ Ext.define('LSP.controller.SimSearchForm', {
         }
 
         Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
+    },
+
+    onProvChange: function(field, newVal, oldVal) {
+        var dg = this.getStrucGrid();
+        dg.toggleProv(newVal['prov']);
+        dg.getView().refresh();
     }
 
     //     addRecords: function (csids) {
