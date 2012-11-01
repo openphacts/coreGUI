@@ -12,7 +12,7 @@ Ext.define('CS.view.Compound', {
     bodyStyle: 'background-color: #fff;',
     constructor: function () {
         this.callParent(arguments);
-
+/*
         this.molTabs = Ext.create('Ext.tab.Panel', {
             activeTab: 0,
             width: 210,
@@ -49,6 +49,16 @@ Ext.define('CS.view.Compound', {
         }, this);
 
         this.add(this.molTabs);
+*/
+        this.add(
+            {
+                items: {
+                    xtype: 'cs.molecule2D',
+                    id: this.getMol2DId(),
+                    height: 233
+                }
+            }
+        );
 
         this.add(
             {
@@ -75,7 +85,7 @@ Ext.define('CS.view.Compound', {
     },
     loadData: function (compound) {
         Ext.getCmp(this.getMol2DId()).load(compound.data.CSID);
-        if (this.is3DTabActive()) Ext.getCmp(this.getMol3DId()).setMol(compound.data.Mol);
+//        if (this.is3DTabActive()) Ext.getCmp(this.getMol3DId()).setMol(compound.data.Mol);
         Ext.getCmp(this.getBasePropsId()).loadData(compound.data);
 
         this.mol = compound.data.Mol;
