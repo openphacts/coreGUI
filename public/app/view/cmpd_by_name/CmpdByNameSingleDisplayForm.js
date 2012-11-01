@@ -171,7 +171,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 items:[
                                     {
                                         xtype:'displayfield',
-                                        name:'prefLabel',
+                                        name:'compound_pref_label',
                                         itemId:'compound_pref_label',
                                         //width:600,
                                         anchor:'100%',
@@ -274,7 +274,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'smiles',
+                                        name:'compound_smiles',
                                         itemId:'compound_smiles',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
