@@ -10,7 +10,7 @@ Ext.define('LDA.model.CompoundModel', {
     fields:['csid', 'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
         'inchi', 'inchi_src',
         'inchi_key', 'inchi_key_src',
-        'smiles', 'smiles_src',
+        'compound_smiles', 'smiles_src',
         'alogp', 'alogp_src',
         'full_mwt', 'full_mwt_src',
         'hba', 'hba_src',
@@ -23,7 +23,7 @@ Ext.define('LDA.model.CompoundModel', {
         'description', 'description_src',
         'proteinBinding', 'proteinBinding_src',
         'toxicity', 'toxicity_src',
-        'prefLabel', 'prefLabel_src',
+        'compound_pref_label', 'prefLabel_src',
         'meltingPoint', 'meltingPoint_src',
 
          'prefLabel_item',

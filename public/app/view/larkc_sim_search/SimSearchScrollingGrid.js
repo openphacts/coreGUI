@@ -49,7 +49,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         sortable: false
     }, {
         header: 'Compound name',
-        dataIndex: 'prefLabel',
+        dataIndex: 'compound_pref_label',
         width: 180,
         tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
@@ -59,7 +59,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         tdCls: 'gridRowPadding'
     }, {
         header: 'SMILES',
-        dataIndex: 'smiles',
+        dataIndex: 'compound_smiles',
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'

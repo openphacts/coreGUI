@@ -152,9 +152,12 @@ Ext.define('LSP.controller.SimSearchForm', {
     },
 
     handleHistoryToken: function(historyTokenObject) {
-        console.log('SimSearchForm: handleHistoryToken()');
-        console.log(historyTokenObject);
+        console.log('SimSearchForm: handleHistoryToken() ' + historyTokenObject);
         var me = this;
+        var this_gridview = me.getStrucGrid();
+        var current_records = this_gridview.store.getRange();
+        this_gridview.store.remove(current_records);
+        me.getStrucGrid().recordsLoaded = 0;
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, rid) {
@@ -247,11 +250,6 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log(' SimSearchForm: submitQuery()');
         button.disable();
         var form = button.up('form');
-        var this_gridview = this.getStrucGrid();
-        var current_records = this_gridview.store.getRange();
-        this_gridview.store.remove(current_records);
-        //        this.getStrucGrid().removeAll(true);
-        this.getStrucGrid().recordsLoaded = 0;
         var values = form.getValues();
         if (values.smiles.length < 4) {
             button.enable();
