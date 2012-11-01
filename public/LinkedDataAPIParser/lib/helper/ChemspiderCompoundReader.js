@@ -36,9 +36,9 @@ Ext.define('LDA.helper.ChemspiderCompoundReader', {
     drugBankData != null ? drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : drugbankUrl = null;
 
     chemSpiderUri = pt[LDA.helper.LDAConstants.LDA_ABOUT];
-    console.log(" chemspider uri " + chemSpiderUri);
-    console.log(" chembl uri " + chemblUri);
-    console.log(" drugbank " + drugbankUrl);
+    //console.log(" chemspider uri " + chemSpiderUri);
+    //console.log(" chembl uri " + chemblUri);
+    //console.log(" drugbank " + drugbankUrl);
 
     chemspiderLinkOut = 'http://www.chemspider.com/' + chemSpiderUri.split('/').pop();
     chemblValue != null ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = null;
