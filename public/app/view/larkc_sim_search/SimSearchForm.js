@@ -45,6 +45,30 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                                 xtype:'button',
                                 action:'ketcher_editor',
                                 text:'Draw structure'
+                            }, {
+                                xtype: 'radiogroup',
+                                width: 160,
+                                labelWidth: 65,
+                                fieldLabel: 'Provenance',
+                                itemId: 'provId',
+                                margin: '5 5 5 80',
+
+                                items: [{
+                                    boxLabel: 'On',
+                                    name: 'prov',
+                                    inputValue: true
+                                }, {
+                                    boxLabel: 'Off',
+                                    name: 'prov',
+                                    inputValue: false,
+                                    checked: true
+                                }]
+                            }, {
+                                xtype: 'button',
+                                name: 'provHelp',
+                                margin: '5 0 0 0',
+                                iconCls: 'provenanceHelpIcon',
+                                tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
                             }
                         ]
                     },
