@@ -55,7 +55,7 @@ Ext.define('CS.view.Compound', {
                 items: {
                     xtype: 'cs.molecule2D',
                     id: this.getMol2DId(),
-                    height: 233
+                    height: 223
                 }
             }
         );
@@ -66,7 +66,7 @@ Ext.define('CS.view.Compound', {
                 items: {
                     xtype: 'cs.baseproperties',
                     id: this.getBasePropsId(),
-                    height: 233
+                    height: 223
                 }
             }
         );
