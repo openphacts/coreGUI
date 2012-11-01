@@ -67,7 +67,7 @@
         var oThis = this;
 
         this.compoundStore.load({
-            params: { 'csids[0]': csid },
+            params: { 'csids[0]': csid, serfilter: 'Compound[CSID|Name|MF|Mol|MM|Synonyms|References|Blobs|Identifiers]' },
             callback: function (records, operation, success) {
                 if(success) {
                     var compound = oThis.compoundStore.first();
