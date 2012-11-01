@@ -161,7 +161,18 @@ Ext.define('LSP.controller.SimSearchForm', {
                     searchEngine.loadCSIDs(function(csids) {
                         me.hitCoreAPI(csids);
                     });
-                }
+                },
+		failed: function(sender, error){
+                    Ext.MessageBox.show({
+                        title: 'Error',
+                        msg: 'There was an error retrieving the list of compounds from Chemspider',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.ERROR
+                    });
+                        me.getSubmitButton().enable();
+                        me.getSsform().setLoading(false);
+                        me.getStrucGrid().down('#csvDownloadProxy_id').disable();
+		}
             }
         });
 
@@ -191,7 +202,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
 	params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
-        this.getSsform().setLoading(true);
+        this.getSsform().setLoading('Fetching compounds....');
         searchEngine.doSearch(search_type, params);
     },
 
