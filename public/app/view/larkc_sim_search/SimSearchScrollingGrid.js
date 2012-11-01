@@ -22,7 +22,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
     //         		selector:'#pager_id'
     // }
     ],
-    store: null,
+    store: Ext.create('LDA.store.SimSearchLocalStore', {}),
     exportStore: null,
     getExportStore: function() {
         if (this.exportStore == null) {
@@ -30,12 +30,12 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         }
         return this.exportStore;
     },
-    initComponent: function() {
-        this.store = Ext.create('Ext.data.Store', {
-            model: 'LDA.model.SimModel'
-        });
-        this.callParent(arguments);
-    },
+    //initComponent: function() {
+    //    this.store = Ext.create('Ext.data.Store', {
+    //        model: 'LDA.model.SimModel'
+    //    });
+    //    this.callParent(arguments);
+    //},
     columns: [{
         xtype: 'rownumberer',
         width: 40
