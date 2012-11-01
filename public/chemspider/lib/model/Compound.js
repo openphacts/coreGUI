@@ -15,6 +15,7 @@
         { name: 'MF', mapping: 'MF' },
         { name: 'AM', mapping: 'AM' },
         { name: 'MW', mapping: 'MW' },
+        { name: 'MM', mapping: 'MM' },
         { name: 'Mol', mapping: 'Mol' },
         { name: 'Identifiers', mapping: 'Identifiers' },
         { name: 'Synonyms', mapping: 'Synonyms' },
