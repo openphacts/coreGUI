@@ -207,6 +207,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 var prov = false;
 
 function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
+	console.log("Target Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (prov) {

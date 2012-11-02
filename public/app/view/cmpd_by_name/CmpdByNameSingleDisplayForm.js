@@ -616,6 +616,7 @@ var provenance = false;
 var recordData;
 
 function provenanceSummaryRenderer(value, field) {
+	console.log("Compound by name provenance renderer");
 
     var sources = new Array();
     sources['http://www.chemspider.com'] = "ChemSpider";

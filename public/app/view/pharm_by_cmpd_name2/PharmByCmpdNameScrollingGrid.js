@@ -168,7 +168,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 var prov = false;
 
 function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
-
+	console.log("Compound Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (prov) {

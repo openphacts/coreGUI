@@ -142,6 +142,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 var prov = false;
 
 function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
+	console.log("Enzyme Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (prov) {

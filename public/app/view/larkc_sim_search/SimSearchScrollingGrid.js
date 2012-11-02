@@ -140,6 +140,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 var simSearchProv = false;
 
 function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
+	console.log("Structure provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (simSearchProv) {
