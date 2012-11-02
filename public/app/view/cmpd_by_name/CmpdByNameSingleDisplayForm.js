@@ -605,17 +605,18 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     },
 
     toggleProv:function (val) {
-        provenance = val;
-        console.log(" Show provenance : " + provenance);
+        compound_name_provenance = val;
+        console.log(" Show provenance : " + compound_name_provenance);
     }
 
 
 });
 
-var provenance = false;
+var compound_name_provenance = false;
 var recordData;
 
 function provenanceSummaryRenderer(value, field) {
+	//console.log("Compound by name provenance renderer");
 
     var sources = new Array();
     sources['http://www.chemspider.com'] = "ChemSpider";
@@ -623,7 +624,7 @@ function provenanceSummaryRenderer(value, field) {
     sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
     sources['http://www.conceptwiki.org'] = "ConceptWiki";
 
-    if (provenance) {
+    if (compound_name_provenance) {
 
         var recdata = field.name;
         var itemdata = recdata + '_item';

@@ -161,7 +161,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.clearDomBelow(domElem);
 
         var output;
-        if (provenance) {
+        if (target_name_provenance) {
             var source = recordData.data['keywords_src'];
             var sourceItem = recordData.data['keywords_item']
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
@@ -187,7 +187,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.clearDomBelow(domElem);
 
         var output;
-        if (provenance) {
+        if (target_name_provenance) {
             var sourceItem = recordData.data['organism_item'];
             var source = recordData.data['organism_src'];
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
@@ -212,7 +212,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         this.clearDomBelow(domElem);
 
         var output;
-        if (provenance) {
+        if (target_name_provenance) {
             var source = recordData.data['synonyms_src'];
             var sourceItem = recordData.data['synonyms_item'];
             var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
@@ -303,16 +303,17 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     toggleProv:function (val) {
-        provenance = val;
-        console.log(" Show provenance : " + provenance);
+        target_name_provenance = val;
+        console.log(" Show provenance : " + target_name_provenance);
     }
 
 });
 
-var provenance = false;
+var target_name_provenance = false;
 var recordData;
 
 function provenanceTargetSummaryRenderer(value, field) {
+	//console.log("Target by name provenance renderer");
 
     var sources = new Array();
     sources['http://www.chemspider.com'] = "ChemSpider";
@@ -321,7 +322,7 @@ function provenanceTargetSummaryRenderer(value, field) {
     sources['http://www.conceptwiki.org'] = "ConceptWiki";
     sources['http://purl.uniprot.org'] = "UniProt";
 
-    if (provenance) {
+    if (target_name_provenance) {
 
         var recdata = field.itemId;
         var itemdata = recdata + '_item';

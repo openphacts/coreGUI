@@ -50,81 +50,81 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
     }, {
         header: 'Compound name',
         dataIndex: 'compound_pref_label',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 180,
         tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
         header: 'Molecular Formula',
         dataIndex: 'molform',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'SMILES',
         dataIndex: 'compound_smiles',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'InChi',
         dataIndex: 'inchi',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'InChi Key',
         dataIndex: 'inchi_key',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'ALogP',
         dataIndex: 'alogp',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 60,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: '# HBA',
         dataIndex: 'hba',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 60,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: '# HBD',
         dataIndex: 'hbd',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 60,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'Mol Weight',
         dataIndex: 'full_mwt',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 70,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: '# RTB',
         dataIndex: 'rtb',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 60,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'MW Freebase',
         dataIndex: 'mw_freebase',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
         header: 'Melting Point',
         dataIndex: 'meltingPoint',
-        renderer:provenanceRenderer,
+        renderer:structureProvenanceRenderer,
         width: 140,
         tdCls: 'wrap gridDescriptiveRowPadding'
     }]
@@ -139,7 +139,8 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 
 var simSearchProv = false;
 
-function provenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
+function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
+	//console.log("Structure provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (simSearchProv) {

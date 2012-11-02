@@ -137,7 +137,7 @@ Ext.define('LSP.controller.SimSearchForm', {
                     // There is only 1 compound record returned
                     me.getStrucGrid().getStore().add(records[0]);
                     //me.all_records.push(records[0]);
-                    console.log('Count is now ' + me.current_count);
+                    //console.log('Count is now ' + me.current_count);
                     if (me.current_count == me.total_count) {
                         me.getSubmitButton().enable();
                         //me.getSsform().doLayout();
