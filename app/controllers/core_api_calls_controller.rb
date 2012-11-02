@@ -38,7 +38,7 @@ class CoreApiCallsController < ApplicationController
     query = params[:query]
     f = File.open(File.join(Rails.root,'config','organisms.txt'),'r')
     f.each_line do |line|
-      if line.downcase.starts_with? query
+      if line.downcase.starts_with? query.downcase
        org = { "name" => line, "abbr" => line }
        organisms.push(org)
       end
