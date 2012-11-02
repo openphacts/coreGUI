@@ -12,6 +12,7 @@
 <!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
   <script type="text/javascript">
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
+	var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
   </script>
 <script type="text/javascript">
 Ext.Loader.setConfig({
@@ -23,8 +24,8 @@ Ext.Loader.setConfig({
 </script>
     <!-- UNIT TEST CLASSES -->
     <script type="text/javascript" src="/app-test/spec/PharmacologyByCompoundTest.js"></script>
-    <!-- <script type="text/javascript" src="lda/PharmacologyByTargetTest.js"></script> -->
-    <!-- <script type="text/javascript" src="lda/PharmacologyByEnzymeTest.js"></script> -->
+    <script type="text/javascript" src="/app-test/spec/PharmacologyByTargetTest.js"></script>
+    <script type="text/javascript" src="/app-test/spec/PharmacologyByEnzymeTest.js"></script>
 
     <!-- test launcher -->
     <!--<script type="text/javascript" src="/app-test.js"></script>-->
