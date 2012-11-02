@@ -132,20 +132,20 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 
         },
         toggleProv:function (val) {
-            prov = val;
-            console.log(" Show provenance : " + prov );
+            enzyme_prov = val;
+            console.log(" Show provenance : " + enzyme_prov );
             this.doLayout();
         }
     }
 );
 
-var prov = false;
+var enzyme_prov = false;
 
 function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
-	console.log("Enzyme Pharmacology provenance renderer");
+	//console.log("Enzyme Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (prov) {
+    if (enzyme_prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';
