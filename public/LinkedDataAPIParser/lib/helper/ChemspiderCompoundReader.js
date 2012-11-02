@@ -93,7 +93,7 @@ Ext.define('LDA.helper.ChemspiderCompoundReader', {
             toxicity_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
             compound_pref_label: conceptWikiData != null ? conceptWikiData['prefLabel'] : null,
             compound_pref_label_src: conceptWikiData != null ? conceptWikiData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
-            compound_pref_label_item : conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT],
+            compound_pref_label_item : conceptWikiData != null ? conceptWikiData[LDA.helper.LDAConstants.LDA_ABOUT] : null,
             meltingPoint: drugBankData != null ? drugBankData['meltingPoint'] : null,
             meltingPoint_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
             meltingPoint_item: drugbankLinkOut
