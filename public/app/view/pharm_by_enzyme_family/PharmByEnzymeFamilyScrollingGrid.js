@@ -43,55 +43,55 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     header:'Compound Name',
                     dataIndex:'compound_pref_label',
                     width: 180,
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Name',
                     dataIndex:'target_title',
                     width: 180,
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
                     header:'Target Organism',
                     dataIndex:'target_organism',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Organism',
                     dataIndex:'assay_organism',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
                     header:'SMILES',
                     dataIndex:'compound_smiles',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi',
                     dataIndex:'compound_inchi',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
                     header:'InChi Key',
                     dataIndex:'compound_inchikey',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
                     header:'Assay Type',
                     dataIndex:'activity_activity_type',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     width: 70,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -99,7 +99,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Relation',
                     dataIndex:'activity_relation',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     width: 52,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -107,7 +107,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Value',
                     dataIndex:'activity_standard_value',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     width: 60,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -115,7 +115,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Units',
                     dataIndex:'activity_standard_units',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     width: 60,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -123,7 +123,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Molweight',
                     dataIndex:'compound_full_mwt',
-                    renderer: provenanceRenderer,
+                    renderer: enzymeProvenanceRenderer,
                     align:'center',
                     width: 80,
                     tdCls: 'gridRowPadding'
@@ -141,7 +141,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 
 var prov = false;
 
-function provenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
+function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (prov) {
