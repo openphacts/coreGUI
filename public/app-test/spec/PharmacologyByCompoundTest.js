@@ -1,4 +1,4 @@
-describe('Compounds can be searched', function() {
+describe('Use the OPS Linked Data api to find compounds with a specific concept wiki uri', function() {
     var store_records, store_operation, store_success;
 beforeEach(function() {
     this.application = Ext.create('Ext.app.Application', {
@@ -43,11 +43,13 @@ beforeEach(function() {
     //spyOn(this.controller,'onLogout').andReturn(true);
     //this.controller.init();
 });
-    it('and results can be paginated', function() {
+    it('results can be paginated', function() {
         //var compound_pharmacology_paginated_store = Ext.create("LDA.store.CompoundPharmacologyPaginatedStore", {});
 	//var ctlr = Application.getController('PharmByCmpdNameform');
-	var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
+	var store = Ext.create('LDA.store.CompoundPharmacologyPaginatedStore',{});
+	//var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
         store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
+		store.buffered = false;
         store.load(function(records, operation, success) {
 		store_records = records;
 		store_operation = operation;
@@ -62,10 +64,10 @@ beforeEach(function() {
       	expect(store_success).toEqual(true);
     });
     });
-    it('and results can be filtered', function() {
+    it('results can be filtered for activities', function() {
         //var compound_pharmacology_paginated_store = Ext.create("LDA.store.CompoundPharmacologyPaginatedStore", {});
 	//var ctlr = Application.getController('PharmByCmpdNameform');
-	var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
+	var store = Ext.create('LDA.store.CompoundPharmacologyPaginatedStore',{});
         store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
 		store.setActivityType('Potency');
 		store.setActivityValue('1.6');
@@ -84,10 +86,10 @@ beforeEach(function() {
       	expect(store_success).toEqual(true);
     });
     });
-    it('and specific pages can be requested', function() {
+    it('specific pages can be requested', function() {
         //var compound_pharmacology_paginated_store = Ext.create("LDA.store.CompoundPharmacologyPaginatedStore", {});
 	//var ctlr = Application.getController('PharmByCmpdNameform');
-	var store = this.application.getController('PharmByCmpdNameForm').getLDAStoreCompoundPharmacologyPaginatedStoreStore();
+	var store = Ext.create('LDA.store.CompoundPharmacologyPaginatedStore',{});
         store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
 		store.page = 10;
 		store.setActivityType('Potency');
