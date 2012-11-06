@@ -473,6 +473,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     prepGrid: function() {
         console.log(this.$className + ': prepGrid()');
+		// reset the filters to empty
+		this.filters = new Array();
         var grid_view = this.getGridView();
         var store = grid_view.getStore();
         store.on('prefetch', this.storeLoadComplete, this);
