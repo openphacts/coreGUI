@@ -51,6 +51,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log('LSP.controller.SimSearchForm: prepGrid()');
         var grid = this.getStrucGrid();
         var store = grid.getStore();
+		store.removeAll();
         store.on('prefetch', this.storeLoadComplete, this);
 
         // var grid = this.getStrucGrid();
