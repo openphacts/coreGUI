@@ -19,6 +19,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     current_count: 0,
 
+	failed_to_load: 0,
+
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
         this.control({
@@ -131,6 +133,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
             csid_store.load(function(records, operation, success) {
                 if (success) {
+					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
                     records[0].index = me.current_count;
@@ -145,11 +148,27 @@ Ext.define('LSP.controller.SimSearchForm', {
                         me.getSsform().setLoading(false);
                         // TODO should check there are some records first
                         me.getStrucGrid().down('#csvDownloadProxy_id').enable();
+						if (me.failed_to_load > 0) {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records)');
+						} else {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
+						}
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
+					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     me.current_count++;
-
+					me.failed_to_load++;
+					if (me.current_count == me.total_count) {
+						me.getSubmitButton().enable();
+						me.getSsform().setLoading(false);
+						me.getStrucGrid().down('#csvDownloadProxy_id').enable();
+						if (me.failed_to_load > 0) {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records)');
+						} else {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
+						}					
+					}
                 }
             });
         }
@@ -160,13 +179,25 @@ Ext.define('LSP.controller.SimSearchForm', {
         var me = this;
         var this_gridview = me.getStrucGrid();
         var current_records = this_gridview.store.getRange();
-        this_gridview.store.remove(current_records);
-        me.getStrucGrid().recordsLoaded = 0;
+        //this_gridview.store.remove(current_records);
+		this_gridview.store.removeAll();
+        // me.getStrucGrid().recordsLoaded = 0;
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, rid) {
                     searchEngine.loadCSIDs(function(csids) {
-                        me.hitCoreAPI(csids);
+						if (csids.length == 0) {
+							Ext.MessageBox.show({
+		                        title: 'Error',
+		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        buttons: Ext.MessageBox.OK,
+		                        icon: Ext.MessageBox.ERROR
+		                    });
+		                    me.getSubmitButton().enable();
+	                        me.getSsform().setLoading(false);
+						} else {
+							me.hitCoreAPI(csids);
+						}
                     });
                 },
 		failed: function(sender, error){
