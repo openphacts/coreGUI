@@ -18,7 +18,18 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm',
     ],
-
+	listeners: {
+	        remove: {
+			// if all the tabs have been removed then add an empty history token in
+			// case the user wants to reopen the last closed tab again, seems a bit ugly 
+			// doing it like this but can't think of any other way at the moment
+	            fn: function() {
+					if (this.items.length == 0) {
+						Ext.History.add('');
+					}
+				}
+	        }
+	},
     activeItem:0,
     margins:'0 4 4 4',
     //cls: 'preview',
