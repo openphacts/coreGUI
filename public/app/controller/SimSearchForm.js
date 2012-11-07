@@ -149,7 +149,7 @@ Ext.define('LSP.controller.SimSearchForm', {
                         // TODO should check there are some records first
                         me.getStrucGrid().down('#csvDownloadProxy_id').enable();
 						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records)');
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
 						} else {
 							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
 						}
@@ -164,7 +164,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 						me.getSsform().setLoading(false);
 						me.getStrucGrid().down('#csvDownloadProxy_id').enable();
 						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records)');
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
 						} else {
 							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
 						}					
