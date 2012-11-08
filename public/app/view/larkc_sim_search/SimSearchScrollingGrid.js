@@ -48,7 +48,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         sortable: false
     }, {
-        header: 'Compound name',
+        header: 'Compound Name',
         dataIndex: 'compound_pref_label',
         renderer:structureProvenanceRenderer,
         width: 180,
@@ -59,6 +59,58 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
+    }, {
+        header: 'ALogP',
+        dataIndex: 'alogp',
+        renderer:structureProvenanceRenderer,
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# HBA',
+        dataIndex: 'hba',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Hydrogen Bond Acceptors',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# HBD',
+        dataIndex: 'hbd',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Hydrogen Bond Donors',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'Mol Weight',
+        dataIndex: 'full_mwt',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Molecular Weight',
+        width: 70,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'MW Freebase',
+        dataIndex: 'mw_freebase',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Molecular Weight (Free Base)',
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# RTB',
+        dataIndex: 'rtb',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Rotatable Bonds',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'Melting Point',
+        dataIndex: 'meltingPoint',
+        renderer:structureProvenanceRenderer,
+        width: 140,
+        tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
         header: 'SMILES',
         dataIndex: 'compound_smiles',
@@ -80,53 +132,6 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
-    }, {
-        header: 'ALogP',
-        dataIndex: 'alogp',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# HBA',
-        dataIndex: 'hba',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# HBD',
-        dataIndex: 'hbd',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'Mol Weight',
-        dataIndex: 'full_mwt',
-        renderer:structureProvenanceRenderer,
-        width: 70,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# RTB',
-        dataIndex: 'rtb',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'MW Freebase',
-        dataIndex: 'mw_freebase',
-        renderer:structureProvenanceRenderer,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'Melting Point',
-        dataIndex: 'meltingPoint',
-        renderer:structureProvenanceRenderer,
-        width: 140,
-        tdCls: 'wrap gridDescriptiveRowPadding'
     }]
     ,
     toggleProv:function (val) {
