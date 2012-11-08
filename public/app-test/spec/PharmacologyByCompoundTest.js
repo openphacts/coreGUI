@@ -91,15 +91,12 @@ beforeEach(function() {
 	//var ctlr = Application.getController('PharmByCmpdNameform');
 	var store = Ext.create('LDA.store.CompoundPharmacologyPaginatedStore',{});
         store.uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
-		store.page = 10;
-		store.setActivityType('Potency');
-		store.setActivityValue('1.6');
-		store.setActivityCondition('<');
-        store.load(function(records, operation, success) {
+        store.buffered = false;
+        store.loadPage(10, {callback: function(records, operation, success) {
 		store_records = records;
 		store_operation = operation;
 		store_success = operation.success;
-        });
+        }});
         waitsFor(
             function(){ return !store.isLoading(); },
             "load never completed",
@@ -107,7 +104,7 @@ beforeEach(function() {
         );
     runs(function() {
       	expect(store_success).toEqual(true);
+        expect(store_records[0].data.page_uri).toMatch('_page=10');
     });
     });
-
 });
