@@ -1,17 +1,19 @@
-Ext.define('LDA.helper.FilterActivityReader', {
+Ext.define('LDA.helper.FilterUnitsReader', {
     extend: 'Ext.data.reader.Json',
     requires: ['LDA.helper.LDAConstants'],
 
     readRecords: function(data) {
         var pt = data['result']['primaryTopic'];
-        var activities = pt['normalised_activity_type'];
+        var activity_type = pt[LDA.helper.LDAConstants.LDA_LABEL]
+        var units = pt.unit;
         var records = new Array();
 
-        Ext.each(activities, function(match, index) {
-            var about = match[LDA.helper.LDAConstants.LDA_ABOUT];
-            var label = match[LDA.helper.LDAConstants.LDA_LABEL];
-            var record = Ext.create('LDA.model.FilterActivityModel', {
-                activity_type: label,
+        Ext.each(units, function(unit, index) {
+            var about = unit[LDA.helper.LDAConstants.LDA_ABOUT];
+            var label = unit[LDA.helper.LDAConstants.LDA_LABEL];
+            var record = Ext.create('LDA.model.FilterUnitsModel', {
+                activity_type: activity_type,
+                unit: label,
                 about: about
             });
             records.push(record);

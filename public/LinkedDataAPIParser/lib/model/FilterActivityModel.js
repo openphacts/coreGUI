@@ -1,4 +1,4 @@
 Ext.define('LDA.model.FilterActivityModel', {
     extend:'Ext.data.Model',
-    fields:['label', 'about']
+    fields:['activity_type', 'about']
 });
