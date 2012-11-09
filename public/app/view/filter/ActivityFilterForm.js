@@ -1,36 +1,5 @@
 // The data store containing the list of states
-var activity_type = Ext.create('Ext.data.Store', {
-	fields: ['abbr', 'name'],
-	data: [{
-		"abbr": "Potency",
-		"name": "Potency"
-	}, {
-		"abbr": "IC50",
-		"name": "IC50"
-	}//, {
-	//	"abbr": "activity",
-	//	"name": "activity"
-	//}, {
-	//	"abbr": "Ki",
-	//	"name": "Ki"
-	//}, {
-	//	"abbr": "Ec50",
-	//	"name": "Ec50"
-	//}, {
-	//	"abbr": "Logki",
-	//	"name": "Logki"
-	//}, {
-	//	"abbr": "id50",
-	//	"name": "id50"
-	//}, {
-	//	"abbr": "logIC50",
-	//	"name": "logIC50"
-	//}, {
-	//	"abbr": "Ac50",
-	//	"name": "Ac50"
-	//}
-	]
-});
+var activity_type = Ext.create('LDA.store.FilterActivityStore', {});
 var condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -59,17 +28,7 @@ var condition = Ext.create('Ext.data.Store', {
 // no need for the units at the moment, it is handled automatically by the api depending on whether
 // it is Potency or IC50 (the only allowed values at the moment)
 var unit = Ext.create('Ext.data.Store', {
-	fields: ['unit', 'name'],
-	data: [{
-		"unit": "nM",
-		"name": "nM"
-	}, {
-		"unit": "mM",
-		"name": "mM"
-	}, {
-		"unit": "µM",
-		"name": "µM"
-	}]
+	fields: ['unit', 'name']
 });
 Ext.define('LSP.view.filter.ActivityFilterForm', {
 	extend: 'Ext.container.Container',
@@ -104,9 +63,9 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
 		itemId: 'activity_combobox_id',
 		fieldLabel: 'Activity Type',
 		store: activity_type,
-		queryMode: 'local',
-		displayField: 'abbr',
-		valueField: 'name',
+		queryMode: 'remote',
+		displayField: 'activity_type',
+		valueField: 'activity_type',
 		labelWidth: 100,
 		labelPad: 2,
 		padding: '0 2 0 0'
@@ -131,19 +90,18 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
 		labelPad: 2,
 		padding: '0 2 0 0'
 		// requires a non-empty value
-	}//, {
-	//	xtype: 'combobox',
-	//	itemId: 'unit_combobox_id',
-	//	fieldLabel: 'Unit',
-	//	store: unit,
-	//	queryMode: 'local',
-	//	displayField: 'unit',
-	//	valueField: 'name',
-	//	labelWidth: 50,
-	//	labelPad: 2,
-	//	padding: '0 10 0 0'
-	//}
-	, {
+	}, {
+		xtype: 'combobox',
+		itemId: 'unit_combobox_id',
+		fieldLabel: 'Unit',
+		store: unit,
+		queryMode: 'local',
+		displayField: 'unit',
+		valueField: 'name',
+		labelWidth: 50,
+		labelPad: 2,
+		padding: '0 10 0 0'
+	}, {
 		xtype: 'button',
 		itemId: 'addCompletedActivityFilter_id',
 		iconCls: 'icon-new',

@@ -22,6 +22,9 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	}, {
 		ref: 'filterContainer',
 		selector: 'PharmByCmpdNameForm #filterSelectorContainer_id'
+	}, {
+		ref: 'organismsCombo',
+		selector: 'PharmByCmpdNameForm #activityFilterContainer_id #organismFilterContainer_id'
 	}],
 	filters: undefined,
 	current_uri: undefined,
@@ -54,10 +57,23 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             '#pharmByCmpdNameGrid #csvDownloadProxy_id': {
                 click: this.prepCSVFile//,
                 //scope: this
+            },
+            'PharmByCmpdNameForm #activityFilterContainer_id #activity_combobox_id': {
+                select: this.comboSelect,
+                scope: this
             }
 		});
 	},
 	
+   comboSelect: function(combo, records, eOpts) {
+	var activity = records[0].get('activity_type');
+	var filter_units_store = Ext.create('LDA.store.FilterUnitsStore',{activity_type: activity});
+        filter_units_store.load(function(records, operation, success) {
+		store_records = records;
+		store_operation = operation;
+		store_success = operation.success;
+        });
+   },
 	prepCSVFile: function(csv_prep_button) {
 		console.log('PharmByCmpdNameForm: prepCSVFile()');
 		this.callParent(csv_prep_button);
