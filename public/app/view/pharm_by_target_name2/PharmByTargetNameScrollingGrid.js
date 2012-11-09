@@ -183,22 +183,22 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                 }
             ],
 
+        target_prov: false,
+
         toggleProv:function (val) {
-            target_prov = val;
-            console.log(" Show target provenance : " + target_prov);
+            this.target_prov = val;
+            console.log(" Show target provenance : " + this.target_prov);
             this.doLayout();
         }
 
     }
 );
 
-var target_prov = false;
-
 function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Target Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (target_prov) {
+    if (this.target_prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';
