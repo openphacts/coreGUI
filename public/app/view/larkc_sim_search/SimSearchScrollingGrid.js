@@ -134,21 +134,21 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         tdCls: 'gridRowPadding'
     }]
     ,
+
+    simSearchProv: false,
+
     toggleProv:function (val) {
-        simSearchProv = val;
-        console.log(" Show provenance : " + simSearchProv);
+        this.simSearchProv = val;
+        console.log(" Show provenance : " + this.simSearchProv);
         this.doLayout();
     }
 });
-
-
-var simSearchProv = false;
 
 function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Structure provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (simSearchProv) {
+    if (this.simSearchProv) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';
