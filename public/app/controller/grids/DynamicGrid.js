@@ -78,10 +78,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
         conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
         value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
-		units_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         // TODO unit value check && unit_value != null
-        if (activity_value != null && conditions_value != null && value_value != "" & units_value != "") {
+        if (activity_value != null && conditions_value != null && value_value != "" & unit_value != "") {
             filter = Ext.create('LSP.model.Filter', {
                 activity: activity_value,
                 condition: conditions_value,
@@ -98,7 +98,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             filter_view.down('#conditionsLabel_id').setText(conditions_value);
             filter_view.down('#valueLabel_id').setText(value_value);
 			filter_view.down('#unitLabel_id').setText(unit_value);	
-            //filter_view.down('#unitLabel_id').setText(unit_value);
             // tell the filter what model it is using so we can get back to the controller when the
             // filter is removed from the view
             filter.filterView = filter_view;
