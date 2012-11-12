@@ -4,6 +4,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     activity_type:'',
     activity_value:'',
     activity_condition:'',
+	activity_unit:'',
 	sort_column:'',
     filters: new Array(),
 	
@@ -46,6 +47,10 @@ Ext.define('LDA.store.basestores.FilteringStore', {
             this.activity_condition = activityCondition;
     },
 
+    setActivityUnit:function (activityUnit) {
+	//TODO check whether condition is valid
+            this.activity_unit = activityUnit;
+    },
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +
@@ -68,19 +73,24 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	switch(this.activity_condition)
 	{
 	case '>':
-  	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('minEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+  	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('minEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value))
+						+ '&' + encodeURIComponent('activity_unit') + '=' + encodeURIComponent(String(this.activity_unit));
 	  break;
 	case '<':
-	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('maxEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('maxEx-activity_value') + '=' + encodeURIComponent(String(this.activity_value))
+				+ '&' + encodeURIComponent('activity_unit') + '=' + encodeURIComponent(String(this.activity_unit));
   	  break;
 	case '=':
-	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('activity_value') + '=' + encodeURIComponent(String(this.activity_value))
+			+ '&' + encodeURIComponent('activity_unit') + '=' + encodeURIComponent(String(this.activity_unit));
 	  break;
 	case '<=':
-	  this.proxy.url = this.proxy.url  + '&' + encodeURIComponent('max-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  this.proxy.url = this.proxy.url  + '&' + encodeURIComponent('max-activity_value') + '=' + encodeURIComponent(String(this.activity_value))
+			+ '&' + encodeURIComponent('activity_unit') + '=' + encodeURIComponent(String(this.activity_unit));
 	  break;
 	case '>=':
-	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('min-activity_value') + '=' + encodeURIComponent(String(this.activity_value));
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('min-activity_value') + '=' + encodeURIComponent(String(this.activity_value))
+			+ '&' + encodeURIComponent('activity_unit') + '=' + encodeURIComponent(String(this.activity_unit));
 	  break;
 	}
     },

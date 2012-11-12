@@ -78,14 +78,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
         conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
         value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		units_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         // TODO unit value check && unit_value != null
-        if (activity_value != null && conditions_value != null && value_value != "") {
+        if (activity_value != null && conditions_value != null && value_value != "" & units_value != "") {
             filter = Ext.create('LSP.model.Filter', {
                 activity: activity_value,
                 condition: conditions_value,
-                value: value_value
-                //unit: unit_value
+                value: value_value,
+                unit: unit_value
             });
             filter.filterType = "activity";
             this.getFilters().push(filter);
@@ -96,6 +97,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             filter_view.down('#activityLabel_id').setText(activity_value);
             filter_view.down('#conditionsLabel_id').setText(conditions_value);
             filter_view.down('#valueLabel_id').setText(value_value);
+			filter_view.down('#unitLabel_id').setText(unit_value);	
             //filter_view.down('#unitLabel_id').setText(unit_value);
             // tell the filter what model it is using so we can get back to the controller when the
             // filter is removed from the view
@@ -112,6 +114,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.setActivityType(activity_value);
             store.setActivityValue(value_value);
             store.setActivityCondition(conditions_value);
+			store.setActivityUnit(unit_value);
             // currently only 1 activity filter can be added at a time
             this.getFormView().down('#addCompletedActivityFilter_id').disable();
             //this.getFormView().down('#activityFilterContainer_id').disable();
@@ -185,6 +188,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.setActivityType("");
             store.setActivityValue("");
             store.setActivityCondition("");
+			store.setActivityUnit("");
             controller.getFormView().down('#addCompletedActivityFilter_id').enable();
             //controller.getFormView().down('#activityFilterContainer_id').enable();
             //controller.getFormView().down('#activityFilterContainer_id').setVisible(true);
@@ -288,6 +292,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     type: "hidden",
                     value: gridview.store.activity_value,
                     name: "activity_value"
+                });
+                Ext.DomHelper.append("csv_download_form", {
+                    tag: "input",
+                    type: "hidden",
+                    value: gridview.store.activity_unit,
+                    name: "activity_unit"
                 });
             } else if (filter.filterType == "organism") {
                 Ext.DomHelper.append("csv_download_form", {

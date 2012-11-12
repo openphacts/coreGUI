@@ -49,7 +49,7 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
             {
                 ref:'value_textfield',
                 selector:'#value_textfield_id'
-            }//,
+            },
             //{
             //    ref:'unit_combobox',
             //    selector:'#unit_combobox_id'
@@ -94,7 +94,9 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
 		xtype: 'combobox',
 		itemId: 'unit_combobox_id',
 		fieldLabel: 'Unit',
-		store: unit,
+		store: Ext.create('Ext.data.Store', {
+			fields: ['unit', 'name']
+		}),
 		queryMode: 'local',
 		displayField: 'unit',
 		valueField: 'name',
