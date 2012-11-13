@@ -95,6 +95,7 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
 		itemId: 'unit_combobox_id',
 		fieldLabel: 'Unit',
 		store: Ext.create('Ext.data.Store', {
+			model: 'LSP.model.unit',
 			fields: ['unit', 'name']
 		}),
 		queryMode: 'local',

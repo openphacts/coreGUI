@@ -80,7 +80,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				store_operation = operation;
 				store_success = operation.success;
 				if (store_success) {
-					units_store.add(records);
+				    Ext.each(records, function (record, index) {
+                                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit, name: record.data.unit});
+                                        units_store.add(unit);		
+				    });
 				}
         	});
 	}
