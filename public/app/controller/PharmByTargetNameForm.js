@@ -22,7 +22,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         selector: 'PharmByTargetNameForm #filterSelectorContainer_id'
     }, {
 		ref: 'unitsCombo',
-		selector: 'PharmByTargetNameForm #activityFilterContainer_id #unit_combobox_id'
+		selector: 'PharmByTargetNameForm #unit_combobox_id'
     }],
     filters: undefined,
     current_uri: undefined,
@@ -56,7 +56,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 click: this.prepCSVFile//,
                 //scope: this
             },
-            'PharmByTargetNameForm #activityFilterContainer_id #activity_combobox_id': {
+            'PharmByTargetNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
             }

@@ -24,7 +24,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		selector: 'PharmByCmpdNameForm #filterSelectorContainer_id'
 	}, {
 		ref: 'unitsCombo',
-		selector: 'PharmByCmpdNameForm #activityFilterContainer_id #unit_combobox_id'
+		selector: 'PharmByCmpdNameForm #unit_combobox_id'
 	}],
 	filters: undefined,
 	current_uri: undefined,
@@ -59,7 +59,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 click: this.prepCSVFile//,
                 //scope: this
             },
-            'PharmByCmpdNameForm #activityFilterContainer_id #activity_combobox_id': {
+            'PharmByCmpdNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
             }
@@ -88,6 +88,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         	});
 	}
    },
+
 	prepCSVFile: function(csv_prep_button) {
 		console.log('PharmByCmpdNameForm: prepCSVFile()');
 		this.callParent(csv_prep_button);
