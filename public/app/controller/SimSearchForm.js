@@ -127,6 +127,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     hitCoreAPI: function(csid_list) {
         console.log("SimSearchForm: hitCoreAPI()");
         var me = this;
+	this.failed_to_load = 0;
 		me.getStrucGrid().getStore().sorters.clear();
         var grid = this.getStrucGrid();
         this.all_records = new Array();
