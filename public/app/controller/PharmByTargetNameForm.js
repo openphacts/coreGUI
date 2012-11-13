@@ -20,6 +20,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     }, {
         ref: 'filterContainer',
         selector: 'PharmByTargetNameForm #filterSelectorContainer_id'
+    }, {
+		ref: 'unitsCombo',
+		selector: 'PharmByTargetNameForm #activityFilterContainer_id #unit_combobox_id'
     }],
     filters: undefined,
     current_uri: undefined,
