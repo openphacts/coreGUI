@@ -4,7 +4,7 @@ Ext.define('LSP.view.filter.CompletedActivityFilter', {
 	closable: true,
 	headerPosition: 'right',
 	height: 30,
-	width: 200,
+	width: 250,
 	filterModel:null,
 	layout: {
 		type: 'hbox'
@@ -23,9 +23,9 @@ Ext.define('LSP.view.filter.CompletedActivityFilter', {
 		xtype: 'label',
 		itemId: 'valueLabel_id',
 		padding: '0 5 0 0'
-	}//, {
-	//	xtype: 'label',
-	//	itemId: 'unitLabel_id'
-	//}
+	}, {
+		xtype: 'label',
+		itemId: 'unitLabel_id'
+	}
 	]
 });
