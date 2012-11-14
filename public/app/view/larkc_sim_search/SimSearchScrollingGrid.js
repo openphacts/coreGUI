@@ -141,7 +141,108 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         this.simSearchProv = val;
         console.log(" Show provenance : " + this.simSearchProv);
         this.doLayout();
-    }
+    },
+	showMenu: function(x, y, record) {
+		var cmp = record.data.compound_pref_label;
+		var tar = record.data.target_title;
+		var smi = record.data.compound_smiles;
+
+		if (tar) {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: tar
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for a compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for a compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Search for a target by name',
+					itemId: 'searchForTarget',
+					iconCls: 'menu-search-target',
+					handler: function() {
+						//                        console.log('Search for target by name');
+						//                        console.log(tar);
+						Ext.History.add('!p=TargetByNameForm&s=' + tar);
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		} else {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for a compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for a compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Search for Pharmacology by Compound',
+					itemId: 'searchForPharmacologyByCompound',
+					iconCls: 'menu-search-pharma-by-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=PharmByCmpdNameForm&s=' + cmp);
+					}
+				},{
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		}
+
+	},
 });
 
 function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {

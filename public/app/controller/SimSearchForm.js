@@ -47,6 +47,13 @@ Ext.define('LSP.controller.SimSearchForm', {
             },
             'SimSearchForm #provId': {
                 change: this.onProvChange
+            },
+            '#simSearchGrid': {
+                itemcontextmenu: function(view, record, itemHTMLElement, index, eventObject, eOpts) {
+                    eventObject.preventDefault();
+                    //                    console.log('itemcontextmenu');
+                    this.getStrucGrid().showMenu(eventObject.getX(), eventObject.getY(), record);
+                }
             }
         });
 
