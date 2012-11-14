@@ -503,12 +503,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
             this.getSubmitButton().enable();
             grid_view.setLoading(false);
-            Ext.MessageBox.show({
-                title: 'Info',
-                msg: 'We are sorry but the OPS system returned an error.',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.INFO
-            });
+            grid_view.setTitle(grid_view.gridBaseTitle + ' ---- There was an error retrieving some of the records ----');
+            //Ext.MessageBox.show({
+            //    title: 'Info',
+            //    msg: 'We are sorry but the OPS system returned an error.',
+            //    buttons: Ext.MessageBox.OK,
+            //    icon: Ext.MessageBox.INFO
+            //});
         }
     },
 
