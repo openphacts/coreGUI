@@ -12,6 +12,10 @@
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
 	var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
   </script>
+<!--[if lte IE 8]>
+<p div class="browser-warning">The OPS Explorer is currently only supported on IE9+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
+<![endif]-->
+
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>
 	<script type="text/javascript">

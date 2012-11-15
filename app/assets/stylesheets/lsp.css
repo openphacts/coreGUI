@@ -327,3 +327,7 @@ sub {
 .gridDescriptiveRowPadding {
     vertical-align: middle;
 }
+.browser-warning {
+    background: red;
+    font-size: large;
+}
