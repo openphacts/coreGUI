@@ -45,7 +45,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDADataItems: {
         "compound_smiles": "smiles",
         "activity_standard_value": "std_value",
-        "compound_inchikey": "inchikey",
+        "compound_inchikey": "inchiKey",
         "activity_activity_type": "std_type",
         "activity_standard_units": "std_unit",
         "target_pref_label": "target_name",
@@ -54,6 +54,7 @@ Ext.define('LDA.helper.LDAConstants', {
         "compound_full_mwt": "molweight",
         "cw_compound_uri": "compound_cw",
         "compound_pref_label": "compound_name",
-        "target_organism": "assay_organism"
+        "target_organism": "assay_organism",
+	"target_title": "target_names"
     }
 });
