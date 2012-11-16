@@ -6,9 +6,9 @@ Ext.define('LDA.store.CompoundPharmacologyPaginatedStore', {
     REQUEST_TYPE : 'compound',
 
     constructor:function (config, arguments) {
-		console.log('CompoundPharmacologyPaginatedStore: constructor()');
+	console.log('CompoundPharmacologyPaginatedStore: constructor()');
         this.proxy.reader = Ext.create('LDA.helper.CompoundPharmacologyPaginatedReader');
         this.callParent(arguments);
-    },
+    }
 
 });
