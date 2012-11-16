@@ -8,7 +8,7 @@ Ext.define('CW.model.ConceptWikiLookup', {
         { name: 'alt_labels', mapping: 'alt_labels', type: 'string' },
         { name: 'uuid', mapping: 'uuid', type: 'string' },
         { name: 'concept_type_tags', mapping: 'uuid_tags', type:'string'},
-        { name: 'pref_url', mapping: 'pref_url', type: 'string' },
+        { name: 'pref_url', mapping: 'pref_url', type: 'string' }
     ],
     getSomething: function () {
         if (this.something == null) this.parseSomething();

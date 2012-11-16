@@ -242,7 +242,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 			contextMenu.showAt(x, y);
 		}
 
-	},
+	}
 });
 
 function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {

@@ -257,7 +257,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         labelWidth:120,
                                         labelAlign:'left',
                                         fieldLabel:'ChemSpider ID',
-                                        anchor:'100%',
+                                        anchor:'100%'
                                     },
                                     {
                                         xtype:'displayfield',
