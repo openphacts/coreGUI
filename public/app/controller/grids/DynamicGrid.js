@@ -43,6 +43,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     refs: [{
         ref: 'gridView',
         selector: 'dynamicgrid'
+    }, {
+        ref: 'tsvDownloadButton',
+        selector: 'tsvDownloadProxy_id'
     }],
 
     init: function() {
@@ -116,6 +119,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			store.setActivityUnit(unit_value);
             // currently only 1 activity filter can be added at a time
             this.getFormView().down('#addCompletedActivityFilter_id').disable();
+            Ext.each(this.getFilters(), function(filter, index) {
+                this.getTsvDownloadButton().href = "http://google.co.uk";
+            });
             //this.getFormView().down('#activityFilterContainer_id').disable();
             //this.getFormView().down('#activityFilterContainer_id').setVisible(false);
         } else {
