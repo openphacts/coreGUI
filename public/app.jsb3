@@ -20,6 +20,11 @@
                     "path": "conceptwiki/lib/config/"
                 },
                 {
+                    "clsName": "LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm",
+                    "name": "CmpdByNameSingleDisplayForm.js",
+                    "path": "app/view/cmpd_by_name/"
+                },
+                {
                     "clsName": "LSP.view.Appmoduletree",
                     "name": "Appmoduletree.js",
                     "path": "app/view/"
@@ -30,14 +35,14 @@
                     "path": "app/store/"
                 },
                 {
-                    "clsName": "LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm",
-                    "name": "CmpdByNameSingleDisplayForm.js",
-                    "path": "app/view/cmpd_by_name/"
-                },
-                {
                     "clsName": "LSP.view.mol_editor_forms.KetcherForm",
                     "name": "KetcherForm.js",
                     "path": "app/view/mol_editor_forms/"
+                },
+                {
+                    "clsName": "LSP.view.Settings",
+                    "name": "Settings.js",
+                    "path": "app/view/"
                 },
                 {
                     "clsName": "LSP.model.DynamicGrid",
@@ -50,34 +55,14 @@
                     "path": "conceptwiki/lib/model/"
                 },
                 {
-                    "clsName": "CW.helper.ConceptWikiJSONReader",
-                    "name": "ConceptWikiJSONReader.js",
-                    "path": "conceptwiki/lib/helper/"
+                    "clsName": "Ext.ux.grid.FiltersFeature",
+                    "name": "FiltersFeature.js",
+                    "path": "ext/examples/ux/grid/"
                 },
                 {
-                    "clsName": "LSP.controller.CmpdByNameForm",
-                    "name": "CmpdByNameForm.js",
-                    "path": "app/controller/"
-                },
-                {
-                    "clsName": "CW.store.ConceptWikiLookup",
-                    "name": "ConceptWikiLookup.js",
-                    "path": "conceptwiki/lib/store/"
-                },
-                {
-                    "clsName": "CW.view.ConceptWikiLookup",
-                    "name": "ConceptWikiLookup.js",
-                    "path": "conceptwiki/lib/view/"
-                },
-                {
-                    "clsName": "Ext.ux.DataView.Animated",
-                    "name": "Animated.js",
-                    "path": "/ext/examples/ux/DataView//"
-                },
-                {
-                    "clsName": "LSP.view.Settings",
-                    "name": "Settings.js",
-                    "path": "app/view/"
+                    "clsName": "LSP.model.GuiComponent",
+                    "name": "GuiComponent.js",
+                    "path": "app/model/"
                 },
                 {
                     "clsName": "LDA.model.SimModel",
@@ -90,49 +75,14 @@
                     "path": "LinkedDataAPIParser/lib/store/"
                 },
                 {
-                    "clsName": "CW.controller.ConceptWikiLookup",
-                    "name": "ConceptWikiLookup.js",
-                    "path": "conceptwiki/lib/controller/"
+                    "clsName": "LSP.controller.CmpdByNameForm",
+                    "name": "CmpdByNameForm.js",
+                    "path": "app/controller/"
                 },
                 {
                     "clsName": "LSP.controller.Settings",
                     "name": "Settings.js",
                     "path": "app/controller/"
-                },
-                {
-                    "clsName": "LSP.view.dataview.StructureViewer",
-                    "name": "StructureViewer.js",
-                    "path": "app/view/dataview/"
-                },
-                {
-                    "clsName": "Ext.ux.grid.FiltersFeature",
-                    "name": "FiltersFeature.js",
-                    "path": "ext/examples/ux/grid/"
-                },
-                {
-                    "clsName": "LSP.model.GuiComponent",
-                    "name": "GuiComponent.js",
-                    "path": "app/model/"
-                },
-                {
-                    "clsName": "LSP.view.dropdowns.conceptWikiProteinLookup",
-                    "name": "conceptWikiProteinLookup.js",
-                    "path": "app/view/dropdowns/"
-                },
-                {
-                    "clsName": "LSP.view.dynamicgrid.feature.selectable",
-                    "name": "selectable.js",
-                    "path": "app/view/dynamicgrid/feature/"
-                },
-                {
-                    "clsName": "LSP.view.target_by_name.TargetPanel",
-                    "name": "TargetPanel.js",
-                    "path": "app/view/target_by_name/"
-                },
-                {
-                    "clsName": "LSP.view.ux.download.FileDownload",
-                    "name": "FileDownload.js",
-                    "path": "app/view/ux/download/"
                 },
                 {
                     "clsName": "LSP.store.GuiComponents",
@@ -145,6 +95,46 @@
                     "path": "app/controller/"
                 },
                 {
+                    "clsName": "CW.helper.ConceptWikiJSONReader",
+                    "name": "ConceptWikiJSONReader.js",
+                    "path": "conceptwiki/lib/helper/"
+                },
+                {
+                    "clsName": "CW.store.ConceptWikiLookup",
+                    "name": "ConceptWikiLookup.js",
+                    "path": "conceptwiki/lib/store/"
+                },
+                {
+                    "clsName": "LSP.view.dynamicgrid.feature.selectable",
+                    "name": "selectable.js",
+                    "path": "app/view/dynamicgrid/feature/"
+                },
+                {
+                    "clsName": "Ext.ux.DataView.Animated",
+                    "name": "Animated.js",
+                    "path": "/ext/examples/ux/DataView//"
+                },
+                {
+                    "clsName": "LSP.view.ux.download.FileDownload",
+                    "name": "FileDownload.js",
+                    "path": "app/view/ux/download/"
+                },
+                {
+                    "clsName": "LSP.view.target_by_name.TargetPanel",
+                    "name": "TargetPanel.js",
+                    "path": "app/view/target_by_name/"
+                },
+                {
+                    "clsName": "LSP.view.dropdowns.conceptWikiProteinLookup",
+                    "name": "conceptWikiProteinLookup.js",
+                    "path": "app/view/dropdowns/"
+                },
+                {
+                    "clsName": "LSP.view.dataview.StructureViewer",
+                    "name": "StructureViewer.js",
+                    "path": "app/view/dataview/"
+                },
+                {
                     "clsName": "LSP.view.dynamicgrid.DynamicGrid",
                     "name": "DynamicGrid.js",
                     "path": "app/view/dynamicgrid/"
@@ -153,6 +143,16 @@
                     "clsName": "LSP.controller.grids.DynamicGrid",
                     "name": "DynamicGrid.js",
                     "path": "app/controller/grids/"
+                },
+                {
+                    "clsName": "CW.view.ConceptWikiLookup",
+                    "name": "ConceptWikiLookup.js",
+                    "path": "conceptwiki/lib/view/"
+                },
+                {
+                    "clsName": "CW.controller.ConceptWikiLookup",
+                    "name": "ConceptWikiLookup.js",
+                    "path": "conceptwiki/lib/controller/"
                 },
                 {
                     "clsName": "LSP.view.target_by_name.TargetByNameForm",
@@ -180,6 +180,16 @@
                     "path": "app/controller/"
                 },
                 {
+                    "clsName": "LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid",
+                    "name": "PharmByEnzymeFamilyScrollingGrid.js",
+                    "path": "app/view/pharm_by_enzyme_family/"
+                },
+                {
+                    "clsName": "LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid",
+                    "name": "PharmByCmpdNameScrollingGrid.js",
+                    "path": "app/view/pharm_by_cmpd_name2/"
+                },
+                {
                     "clsName": "LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid",
                     "name": "PharmByTargetNameScrollingGrid.js",
                     "path": "app/view/pharm_by_target_name2/"
@@ -188,16 +198,6 @@
                     "clsName": "LSP.view.pharm_by_target_name2.PharmByTargetNameForm",
                     "name": "PharmByTargetNameForm.js",
                     "path": "app/view/pharm_by_target_name2/"
-                },
-                {
-                    "clsName": "LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid",
-                    "name": "PharmByCmpdNameScrollingGrid.js",
-                    "path": "app/view/pharm_by_cmpd_name2/"
-                },
-                {
-                    "clsName": "LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid",
-                    "name": "PharmByEnzymeFamilyScrollingGrid.js",
-                    "path": "app/view/pharm_by_enzyme_family/"
                 },
                 {
                     "clsName": "LDA.helper.JamesQueryStringEncoder",
@@ -270,11 +270,6 @@
                     "path": "app/controller/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.Base64",
-                    "name": "Base64.js",
-                    "path": "/app/view/ux/exporter/"
-                },
-                {
                     "clsName": "Ext.ux.exporter.Button",
                     "name": "Button.js",
                     "path": "/app/view/ux/exporter/"
@@ -283,6 +278,11 @@
                     "clsName": "Ext.ux.grid.menu.ListMenu",
                     "name": "ListMenu.js",
                     "path": "ext/examples/ux/grid/menu/"
+                },
+                {
+                    "clsName": "Ext.ux.exporter.Base64",
+                    "name": "Base64.js",
+                    "path": "/app/view/ux/exporter/"
                 },
                 {
                     "clsName": "Ext.ux.grid.menu.RangeMenu",
@@ -300,9 +300,9 @@
                     "path": "/app/view/ux/exporter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.sdfFormatter.SdfFormatter",
-                    "name": "SdfFormatter.js",
-                    "path": "/app/view/ux/exporter/sdfFormatter/"
+                    "clsName": "Ext.ux.exporter.excelFormatter.ExcelFormatter",
+                    "name": "ExcelFormatter.js",
+                    "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
                     "clsName": "Ext.ux.exporter.csvFormatter.CsvFormatter",
@@ -310,9 +310,9 @@
                     "path": "/app/view/ux/exporter/csvFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.excelFormatter.ExcelFormatter",
-                    "name": "ExcelFormatter.js",
-                    "path": "/app/view/ux/exporter/excelFormatter/"
+                    "clsName": "Ext.ux.exporter.sdfFormatter.SdfFormatter",
+                    "name": "SdfFormatter.js",
+                    "path": "/app/view/ux/exporter/sdfFormatter/"
                 },
                 {
                     "clsName": "Ext.ux.grid.filter.DateFilter",
@@ -340,23 +340,23 @@
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.excelFormatter.Worksheet",
-                    "name": "Worksheet.js",
-                    "path": "/app/view/ux/exporter/excelFormatter/"
-                },
-                {
                     "clsName": "Ext.ux.exporter.excelFormatter.Workbook",
                     "name": "Workbook.js",
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.excelFormatter.Style",
-                    "name": "Style.js",
+                    "clsName": "Ext.ux.exporter.excelFormatter.Worksheet",
+                    "name": "Worksheet.js",
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
                     "clsName": "Ext.ux.exporter.excelFormatter.Cell",
                     "name": "Cell.js",
+                    "path": "/app/view/ux/exporter/excelFormatter/"
+                },
+                {
+                    "clsName": "Ext.ux.exporter.excelFormatter.Style",
+                    "name": "Style.js",
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
