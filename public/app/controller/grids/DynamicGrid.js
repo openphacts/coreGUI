@@ -98,7 +98,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 		unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         // TODO unit value check && unit_value != null
-        if (activity_value != null && conditions_value != null && value_value != "" & unit_value != "") {
+        if (activity_value != null && conditions_value != null && value_value != "" & unit_value != null) {
             filter = Ext.create('LSP.model.Filter', {
                 activity: activity_value,
                 condition: conditions_value,
@@ -433,6 +433,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setActivityType(filter.data.activity);
                     countStore.setActivityValue(filter.data.value);
                     countStore.setActivityCondition(filter.data.condition);
+                    countStore.setActivityUnit(filter.data.unit);
                 } else if (filter.filterType == "organism") {
                     countStore.setAssayOrganism(filter.data.value);
                 }
