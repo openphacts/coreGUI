@@ -73,6 +73,23 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     testThis: function(args) {},
 
+    setTSVDownloadParams: function() {
+        var tsv_download_button = this.getTsvDownloadButton();
+        var gridview = this.getGridView();
+        var tsv_download_params = new Array();
+        Ext.each(this.getFilters(), function(filter, index) {
+            if (filter.filterType == "activity") {
+                tsv_download_params.push("activity_value_type=" + gridview.store.getActivityConditionParam() + "&activity_type=" + gridview.store.activity_type + "&activity_value=" + gridview.store.activity_value + "&activity_unit=" + gridview.store.activity_unit)
+            } else if (filter.filterType == "organism") {
+                tsv_download_params.push("assay_organism=" + gridview.store.assay_organism);
+            }
+        });
+        tsv_download_params.push("uri=" + gridview.store.proxy.extraParams.uri + "&total_count=" + gridview.store.getTotalCount() + "&request_type=" + gridview.store.REQUEST_TYPE);
+        total_params = tsv_download_params.join("&");
+        tsv_download_button.href = tsv_download_url + "?" + total_params
+        tsv_download_button.setParams();
+    },
+
     addCompletedActivityFilter: function(button) {
         console.log('DynamicGrid: addCompletedActivityFilter()');
         activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
@@ -116,19 +133,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			store.setActivityUnit(unit_value);
             // currently only 1 activity filter can be added at a time
             this.getFormView().down('#addCompletedActivityFilter_id').disable();
-            var tsv_download_button = this.getTsvDownloadButton();
-            var gridview = this.getGridView();
-            var tsv_download_params = new Array();
-            Ext.each(this.getFilters(), function(filter, index) {
-            if (filter.filterType == "activity") {
-                tsv_download_params.push("activity_value_type=" + gridview.store.getActivityConditionParam() + "&activity_type=" + gridview.store.activity_type + "&activity_value=" + gridview.store.activity_value + "&activity_unit=" + gridview.store.activity_unit)
-            } else if (filter.filterType == "organism") {
-                tsv_download_params.push("assay_organism=" + gridview.store.assay_organism);
-            }
-            });
-            total_params = tsv_download_params.join("&");
-            tsv_download_button.href = tsv_download_url + "?" + total_params
-            tsv_download_button.setParams();
             //this.getFormView().down('#activityFilterContainer_id').disable();
             //this.getFormView().down('#activityFilterContainer_id').setVisible(false);
         } else {
@@ -502,9 +506,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         console.log(this.$className + ': storeLoadComplete()');
         grid_view = this.getGridView();
         grid_store = grid_view.getStore();
-		// remove the sort column if there was any
-		grid_store.sort_column = undefined;
+        // remove the sort column if there was any
+        grid_store.sort_column = undefined;
         if (success) {
+            // If some records are coming back then set the tsv download params
+            this.setTSVDownloadParams();
             //grid_view.down('#sdfDownload_id').disable();
             //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
             grid_view.down('#sdfDownloadProxy_id').enable();
