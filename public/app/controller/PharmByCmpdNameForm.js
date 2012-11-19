@@ -25,7 +25,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	}, {
 		ref: 'unitsCombo',
 		selector: 'PharmByCmpdNameForm #unit_combobox_id'
-	}],
+	}, {
+          ref: 'tsvDownloadButton',
+          selector: 'PharmByCmpdNameForm #tsvDownloadProxy_id'
+        }],
 	filters: undefined,
 	current_uri: undefined,
 	current_activity_combo_select: undefined,

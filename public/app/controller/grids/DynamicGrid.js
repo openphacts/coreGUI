@@ -43,9 +43,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     refs: [{
         ref: 'gridView',
         selector: 'dynamicgrid'
-    }, {
-        ref: 'tsvDownloadButton',
-        selector: 'tsvDownloadProxy_id'
     }],
 
     init: function() {
@@ -119,9 +116,19 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 			store.setActivityUnit(unit_value);
             // currently only 1 activity filter can be added at a time
             this.getFormView().down('#addCompletedActivityFilter_id').disable();
+            var tsv_download_button = this.getTsvDownloadButton();
+            var gridview = this.getGridView();
+            var tsv_download_params = new Array();
             Ext.each(this.getFilters(), function(filter, index) {
-                this.getTsvDownloadButton().href = "http://google.co.uk";
+            if (filter.filterType == "activity") {
+                tsv_download_params.push("activity_value_type=" + gridview.store.getActivityConditionParam() + "&activity_type=" + gridview.store.activity_type + "&activity_value=" + gridview.store.activity_value + "&activity_unit=" + gridview.store.activity_unit)
+            } else if (filter.filterType == "organism") {
+                tsv_download_params.push("assay_organism=" + gridview.store.assay_organism);
+            }
             });
+            total_params = tsv_download_params.join("&");
+            tsv_download_button.href = tsv_download_url + "?" + total_params
+            tsv_download_button.setParams();
             //this.getFormView().down('#activityFilterContainer_id').disable();
             //this.getFormView().down('#activityFilterContainer_id').setVisible(false);
         } else {

@@ -143,8 +143,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    iconCls:'icon-csv',
 	                    hidden:false,
 						disabled: false,
-    href: undefined,
-    target: '_blank',
+    href: tsv_download_url,
     renderTo: Ext.getBody()	
 	                },
 			    // 	                {
