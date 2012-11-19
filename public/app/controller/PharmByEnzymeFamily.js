@@ -25,6 +25,9 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	}, {
 		ref: 'unitsCombo',
 		selector: 'PharmEnzymeForm #unit_combobox_id'
+        }, {
+          ref: 'tsvDownloadButton',
+          selector: 'PharmEnzymeForm #tsvDownloadProxy_id'
         }],
     filters: undefined,
 	current_uri: undefined,
@@ -59,10 +62,6 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #provId' : {
                 change: this.onProvChange
-            },
-            '#pharmByEnzymeFamilyGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile//,
-                //scope: this
             },
             'PharmEnzymeForm #activity_combobox_id': {
                 select: this.comboSelect,

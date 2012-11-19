@@ -9,6 +9,7 @@
   <%= stylesheet_link_tag '/ext/resources/css/ext-all.css' %>
 <!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
   <script type="text/javascript">
+    var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
     var tsv_download_url = '<%= tab_separated_file_core_api_calls_url -%>';
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
 	var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';

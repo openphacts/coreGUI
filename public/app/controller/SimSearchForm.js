@@ -11,7 +11,10 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, {
         ref: 'submitButton',
         selector: 'SimSearchForm #sim_sss_start_search_button_id'
-    }],
+    }, {
+          ref: 'tsvDownloadButton',
+          selector: 'SimSearchForm #tsvDownloadProxy_id'
+        }],
 
     all_records: undefined,
 
@@ -41,10 +44,6 @@ Ext.define('LSP.controller.SimSearchForm', {
                 historyToken: this.handleHistoryToken,
                 afterrender: this.prepGrid
             },
-            '#simSearchGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile //,
-                //scope: this
-            },
             'SimSearchForm #provId': {
                 change: this.onProvChange
             },
@@ -58,6 +57,19 @@ Ext.define('LSP.controller.SimSearchForm', {
         });
 
 
+    },    
+
+    setTSVDownloadParams: function() {
+        var tsv_download_button = this.getTsvDownloadButton();
+        var tsv_download_params = new Array();
+        var grid_store = this.getStrucGrid().getStore();
+        var items = grid_store.data.items;
+        Ext.each(items, function(item, index) {
+            tsv_download_params.push("csids[]=" + item.data.csid);
+        });
+        total_params = tsv_download_params.join("&");
+        tsv_download_button.href = cs_download_url + "?" + total_params
+        tsv_download_button.setParams();
     },
 
     prepGrid: function() {
@@ -66,53 +78,6 @@ Ext.define('LSP.controller.SimSearchForm', {
         var store = grid.getStore();
 		store.removeAll();
         store.on('prefetch', this.storeLoadComplete, this);
-
-        // var grid = this.getStrucGrid();
-        // grid.store.proxy.actionMethods = {read:'POST'};
-        // grid.store.proxy.api.read = grid.readUrl;
-        // grid.store.proxy.params = {offset:0, limit:100};
-        // 
-        // grid.store.on('load', function (this_store, records, success) {
-        //     console.log('grid.store \'load\'');
-        //     this.getSubmitButton().enable();
-        //     var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        //     grid_controller.storeLoad(grid, success);
-        //     this.getSsform().doLayout();
-        //     //       this.getStrucGrid().view.refresh();
-        //     this.getSsform().setLoading(false);
-        // }, this);
-    },
-
-    prepCSVFile: function(csv_prep_button) {
-        console.log('SimSearchForm: prepCSVFile()');
-        var grid_store = this.getStrucGrid().getStore();
-        var items = grid_store.data.items;
-        var body = Ext.getBody();
-        var frame = body.createChild({
-            tag: 'iframe',
-            cls: 'x-hidden',
-            id: 'tsv_download_iframe',
-            name: 'iframe'
-        });
-        var form = body.createChild({
-            tag: 'form',
-            cls: 'x-hidden',
-            id: 'tsv_download_form',
-            action: '/core_api_calls/chemspider_tab_separated_file',
-            target: 'tsv_download_iframe'
-        });
-        Ext.each(items, function(item, index) {
-            Ext.DomHelper.append("tsv_download_form", {
-                tag: "input",
-                type: "hidden",
-                value: item.data.csid,
-                name: "csids[]"
-            });
-        });
-
-        form.dom.submit();
-        frame.remove();
-        form.remove();
     },
 
     storeLoadComplete: function(store, records, success) {
@@ -127,7 +92,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             this.getSsform().doLayout();
             this.getSsform().setLoading(false);
             // TODO should check there are some records first
-            this.getStrucGrid().down('#csvDownloadProxy_id').enable();
+            this.getStrucGrid().down('#tsvDownloadProxy_id').enable();
             //this.callParent();
         }
     },
@@ -160,12 +125,13 @@ Ext.define('LSP.controller.SimSearchForm', {
                         //me.getSsform().doLayout();
                         me.getSsform().setLoading(false);
                         // TODO should check there are some records first
-                        me.getStrucGrid().down('#csvDownloadProxy_id').enable();
+                        me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
 						if (me.failed_to_load > 0) {
 							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
 						} else {
 							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
 						}
+                        me.setTSVDownloadParams();
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
@@ -175,7 +141,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 					if (me.current_count == me.total_count) {
 						me.getSubmitButton().enable();
 						me.getSsform().setLoading(false);
-						me.getStrucGrid().down('#csvDownloadProxy_id').enable();
+						me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
 						if (me.failed_to_load > 0) {
 							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
 						} else {
@@ -224,7 +190,7 @@ Ext.define('LSP.controller.SimSearchForm', {
                     });
                         me.getSubmitButton().enable();
                         me.getSsform().setLoading(false);
-                        me.getStrucGrid().down('#csvDownloadProxy_id').disable();
+                        me.getStrucGrid().down('#tsvDownloadProxy_id').disable();
 		}
             }
         });
@@ -345,7 +311,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 		              	});
 		                me.getSubmitButton().enable();
 		                me.getSsform().setLoading(false);
-		                me.getStrucGrid().down('#csvDownloadProxy_id').disable();
+		                me.getStrucGrid().down('#tsvDownloadProxy_id').disable();
 					}
 		        }
 			});
@@ -386,48 +352,4 @@ Ext.define('LSP.controller.SimSearchForm', {
         dg.toggleProv(newVal['prov']);
         dg.getView().refresh();
     }
-
-    //     addRecords: function (csids) {
-    //       var this_gridview = this.getStrucGrid();
-    //       var this_store = this_gridview.store;
-    //       var this_controller = this;
-    //       //var temp_store = Ext.create('LSP.store.DynamicGrid');
-    //       var temp_store = Ext.create('LDA.store.CompoundStore', {});
-    //	temp_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
-    //      //temp_store.proxy.actionMethods = {read: 'POST'};
-    //       //temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
-    //       var offset = 0;
-    //     //  this_gridview.setLoading(true);
-    //       this.recursiveAddCompoundInfo(csids,this_store,temp_store,this_controller, 0);
-    //     },
-
-    //     recursiveAddCompoundInfo: function(csids,grid_store, temp_store,this_controller, dept) {
-    //       var csid = csids[0];
-    //       var remaining_csids = csids.slice(1);
-    //       if (dept > 6) {     
-    //this.getSubmitButton().enable();
-    //        //this.getSsform().doLayout();
-    //		this.getSsform().setLoading(false);
-    //		// TODO should check there are some records first
-    //		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
-    //return;
-    //}
-    //       dept++;
-    //       var last_csid = remaining_csids.length == 0;
-    //       temp_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid;
-    //       temp_store.load();
-    //      temp_store.on('load',function(){
-    //           grid_store.loadRecords(temp_store.getRange(),{addRecords: true});
-    //       });    
-    //       if (last_csid){    
-    //     this.getSubmitButton().enable();
-    //        //this.getSsform().doLayout();
-    //		this.getSsform().setLoading(false);
-    //		// TODO should check there are some records first
-    //		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
-    //return;
-    //}
-    //       this_controller.recursiveAddCompoundInfo(remaining_csids,grid_store,temp_store,this_controller, dept);
-    //    })
-    //   }
 });

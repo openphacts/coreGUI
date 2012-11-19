@@ -231,125 +231,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }
     },
 
-    prepCSVFile: function(csv_prep_button) {
-        console.log('LSP.controllers.DynamicGrid: prepCSVFile()');
-        //        var gridview = csv_prep_button.up('dynamicgrid');
-        //        var store_count = gridview.store.totalCount;
-        //        if(store_count > CSV_EXPORT_LIMIT){alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");}     
-        //        else{
-        //	  gridview.exportStore.proxy.timeout = '180000';
-        //          gridview.exportStore.proxy.url = gridview.store.proxy.url;
-        //	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
-        //          // and attaching it to the grid view
-        //          gridview.up('form').setLoading( "Preparing download of " + store_count + " records. Please wait..."); 
-        //          // now we load the grid
-        //	  if (this.getFilters().length != 0) {
-        //		gridview.exportStore.setActivityType(this.getFilters()[0].data.activity);
-        //			gridview.exportStore.setActivityValue(this.getFilters()[0].data.value);
-        //			gridview.exportStore.setActivityCondition(this.getFilters()[0].data.condition);
-        //	  };
-        //	  // we only want 1 page with all results but ext seems to send multi requests for the same data
-        //	  // as if it was in an infinite grid. Setting buffered to false prevents this
-        //          gridview.exportStore.buffered = false;
-        //          gridview.exportStore.load({
-        //              params:{ _page:1, _pageSize:store_count},
-        //              callback:function (records, operation, success) {
-        //                  if (success) {
-        //                    gridview.up('form').setLoading(false);
-        //                    csv_prep_button.setText('CSV-File ready! Click ->');
-        //                    csv_prep_button.up('grid').down('#csvDownload_id').enable();
-        //                    gridview.down('#sdfDownloadProxy_id').enable();
-        //                    gridview.exportCSVReady = true;                   
-        //                  }
-        //                  else {
-        //                     gridview.up('form').setLoading(false);
-        //                     alert("We are sorry, something went wrong. Please try again later.");
-        //                  }
-        //              }},this
-        //        
-        //        );
-        //           
-        //   }
-        // credit due to Form Fields Anchoring Example by Ing. Jozef Sakáloš
-        // http://examples.extjs.eu/
-        var body = Ext.getBody();
-        var frame = body.createChild({
-            tag: 'iframe',
-            cls: 'x-hidden',
-            id: 'csv_download_iframe',
-            name: 'iframe'
-        });
-        var form = body.createChild({
-            tag: 'form',
-            cls: 'x-hidden',
-            id: 'csv_download_form',
-            action: '/core_api_calls/tab_separated_file',
-            target: 'csv_download_iframe'
-        });
-
-        var gridview = this.getGridView();
-
-        Ext.each(gridview.store.filters, function(filter, index) {
-            if (filter.filterType == "activity") {
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.getActivityConditionParam(),
-                    name: "activity_value_type"
-                });
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.activity_type,
-                    name: "activity_type"
-                });
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.activity_value,
-                    name: "activity_value"
-                });
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.activity_unit,
-                    name: "activity_unit"
-                });
-            } else if (filter.filterType == "organism") {
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.assay_organism,
-                    name: "assay_organism"
-                });
-            }
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.proxy.extraParams.uri,
-            name: "uri"
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.getTotalCount(),
-            name: "total_count"
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.REQUEST_TYPE,
-            name: "request_type"
-        });
-
-
-        form.dom.submit();
-        frame.remove();
-        form.remove();
-    },
-
-
     prepSDFile: function(sdf_prep_button) {
         Ext.MessageBox.show({
             title: 'Info',
@@ -514,7 +395,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             //grid_view.down('#sdfDownload_id').disable();
             //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
             grid_view.down('#sdfDownloadProxy_id').enable();
-            grid_view.down('#csvDownloadProxy_id').enable();
+            grid_view.down('#tsvDownloadProxy_id').enable();
             this.getSubmitButton().enable();
             grid_view.setLoading(false);
             grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
@@ -603,7 +484,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                         //grid_view.down('#sdfDownload_id').disable();
                         //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
                         grid_view.down('#sdfDownloadProxy_id').disable();
-                        grid_view.down('#csvDownloadProxy_id').disable();
+                        grid_view.down('#tsvDownloadProxy_id').disable();
                         button.enable();
                         grid_view.setLoading(false);
                         Ext.MessageBox.show({
@@ -622,7 +503,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     //grid_view.down('#sdfDownload_id').disable();
                     //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
                     grid_view.down('#sdfDownloadProxy_id').disable();
-                    grid_view.down('#csvDownloadProxy_id').disable();
+                    grid_view.down('#tsvDownloadProxy_id').disable();
                     button.enable();
                     grid_view.setLoading(false);
                     Ext.MessageBox.show({

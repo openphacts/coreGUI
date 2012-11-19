@@ -58,10 +58,6 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             'PharmByCmpdNameForm #provId' : {
                 change: this.onProvChange
             },
-            '#pharmByCmpdNameGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile//,
-                //scope: this
-            },
             'PharmByCmpdNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this

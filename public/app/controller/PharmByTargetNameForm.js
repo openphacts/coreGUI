@@ -23,7 +23,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     }, {
 		ref: 'unitsCombo',
 		selector: 'PharmByTargetNameForm #unit_combobox_id'
-    }],
+    }, {
+          ref: 'tsvDownloadButton',
+          selector: 'PharmByTargetNameForm #tsvDownloadProxy_id'
+        }],
     filters: undefined,
     current_uri: undefined,
 
@@ -51,10 +54,6 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             },
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
-            },
-            '#pharmByTargetNameGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile//,
-                //scope: this
             },
             'PharmByTargetNameForm #activity_combobox_id': {
                 select: this.comboSelect,

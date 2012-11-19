@@ -124,27 +124,16 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 	        var config = {
 
-	            tbar:[
-	                 {
-	                    xtype:'button',
-	                    text:'Download tsv file',
-	                    tooltip:'Download results as a tab separated file',
-	                    itemId:'csvDownloadProxy_id',
-	                    iconCls:'icon-csv',
-	                    hidden:false,
-						disabled: true
-	
-	                },
-	                 {
+	            tbar:[{
 	                    xtype:'button',
 	                    text:'Download tsv file',
 	                    tooltip:'Download results as a tab separated file',
 	                    itemId:'tsvDownloadProxy_id',
 	                    iconCls:'icon-csv',
 	                    hidden:false,
-						disabled: false,
-    href: tsv_download_url,
-    renderTo: Ext.getBody()	
+                            disabled: true,
+                            href: tsv_download_url,
+                            renderTo: Ext.getBody()	
 	                },
 			    // 	                {
 			    // 	                    xtype:'exporterbutton',
