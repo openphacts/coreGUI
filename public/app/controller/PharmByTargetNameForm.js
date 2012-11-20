@@ -18,6 +18,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         selector: '#pharmByTargetSubmit_id'
 
     }, {
+		ref: 'cancelButton',
+		selector: '#pharmByTargetCancel_id'
+	}, {
         ref: 'filterContainer',
         selector: 'PharmByTargetNameForm #filterSelectorContainer_id'
     }, {
@@ -26,9 +29,17 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     }, {
           ref: 'tsvDownloadButton',
           selector: 'PharmByTargetNameForm #tsvDownloadProxy_id'
-        }],
+    }],
     filters: undefined,
     current_uri: undefined,
+
+    cancelRequest: function(button) {
+	    console.log('PharmByTargetNameForm: cancelRequest()');
+		this.getGridView().getStore().cancelled = true;
+		this.getGridView().setLoading(false);
+		this.getGridView().getStore().getProxy().abort();
+		this.getFormView().setLoading(false);	
+    },
 
     init: function() {
         console.log('PharmByTargetNameForm: init()');
@@ -58,7 +69,10 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
-            }
+            },
+			'PharmByTargetNameForm button[action=cancel_pharm_by_target_name]': {
+				click: this.cancelRequest
+			}
         });
     },
 
@@ -87,6 +101,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
     handleHistoryToken: function(historyTokenObject) {
         if (historyTokenObject.u) {
+			this.getCancelButton().enable();
             var dg = this.getGridView();
             var store = dg.store;
             if (historyTokenObject.u != store.proxy.extraParams.uri) {
@@ -119,6 +134,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         button.disable();
         var values = form.getValues();
         if (this.current_uri == values.protein_uri) {
+			this.getCancelButton().enable();
             var dg = this.getGridView();
             var store = dg.store;
             store.proxy.extraParams.uri = this.current_uri;

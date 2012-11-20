@@ -14,6 +14,9 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 		ref: 'submitButton',
 		selector: '#pharmByCmpdSubmit_id'
 	}, {
+		ref: 'cancelButton',
+		selector: '#pharmByCmpdCancel_id'
+	}, {
 		ref: 'nextRecordsButton',
 		selector: 'PharmByCmpdNameForm dynamicgrid3 #nextRecords'
 	}, {
@@ -61,10 +64,21 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             'PharmByCmpdNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
-            }
+            },
+            'PharmByCmpdNameForm button[action=cancel_pharm_by_cmpd_name]': {
+				click: this.cancelRequest
+			}
 		});
 	},
 	
+    cancelRequest: function(button) {
+	    console.log('PharmByCmpdNameForm: cancelRequest()');
+		this.getGridView().getStore().cancelled = true;
+		this.getGridView().setLoading(false);
+		this.getGridView().getStore().getProxy().abort();
+		this.getFormView().setLoading(false);	
+    },
+
    comboSelect: function(combo, records, eOpts) {
 	var activity = records[0].get('activity_type');
 	// only fetch new units if the selected activity is different than before
@@ -96,6 +110,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	handleHistoryToken: function(historyTokenObject) {
 		console.log('PharmByCmpdNameForm: handleHistoryToken()');
 		if (historyTokenObject.u) {
+			this.getCancelButton().enable();
 			var dg = this.getGridView();
 			var store = dg.store;
 			if (historyTokenObject.u != store.proxy.extraParams.uri) {
@@ -140,6 +155,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			store.proxy.reader.uri = this.current_uri;
 			//store.setURI(this.current_uri);
 			dg.setLoading(true);
+			this.getCancelButton().enable();
 			//loading the store is done after the total results are fetched
 			this.fetchTotalResults();
 		} else {
