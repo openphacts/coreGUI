@@ -20,8 +20,11 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             selector:'#submitEnzymePharm_id'
         
         }, {
-		ref: 'filterContainer',
-		selector: 'PharmEnzymeForm #filterSelectorContainer_id'
+			ref: 'cancelButton',
+			selector: '#cancelEnzymePharm_id'
+		}, {
+		    ref: 'filterContainer',
+		    selector: 'PharmEnzymeForm #filterSelectorContainer_id'
 	}, {
 		ref: 'unitsCombo',
 		selector: 'PharmEnzymeForm #unit_combobox_id'
@@ -66,8 +69,19 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
-            }
+            },
+	        'PharmEnzymeForm button[action=cancel_pharm_by_enzyme_name]': {
+				click: this.cancelRequest
+			}
         });
+    },
+	
+    cancelRequest: function(button) {
+	    console.log('PharmEnzymeForm: cancelRequest()');
+		this.getGridView().getStore().cancelled = true;
+		this.getGridView().setLoading(false);
+		this.getGridView().getStore().getProxy().abort();
+		this.getFormView().setLoading(false);	
     },
 
    comboSelect: function(combo, records, eOpts) {
@@ -96,12 +110,13 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
     handleHistoryToken:function (historyTokenObject) {
  	    console.log('PharmByEnzymeFamily: handleHistoryToken()');
         if (historyTokenObject.ec) {
+			this.getCancelButton().enable();
 			this.current_uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             var dg = this.getGridView();
             var store = dg.getStore();
             dg.setLoading(true);
             //store.setURI("http://purl.uniprot.org/enzyme/" + historyTokenObject.ec);
-	    store.proxy.extraParams.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
+	        store.proxy.extraParams.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
 			//use the reader uri when retrieving the count after store load
 			store.proxy.reader.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             this.fetchTotalResults();
@@ -170,6 +185,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	        button.disable();
 	        var values = form.getValues();
 			if (this.current_uri == "http://purl.uniprot.org/enzyme/" + values.ec_number) {
+				this.getCancelButton().enable();
 				var dg = this.getGridView();
 				var store = dg.store;
 				store.proxy.extraParams.uri = this.current_uri;
