@@ -149,7 +149,9 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		valueField: 'activity_type',
 		labelWidth: 100,
 		labelPad: 2,
-		padding: '0 2 0 0'
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
 	}, {
 		xtype: 'combobox',
 		itemId: 'conditions_combobox_id',
@@ -160,7 +162,9 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		valueField: 'name',
 		labelWidth: 70,
 		labelPad: 2,
-		padding: '0 2 0 0'
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
 	}, {
 		xtype: 'textfield',
 		itemId: 'value_textfield_id',
@@ -169,7 +173,8 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		allowBlank: false,
 		labelWidth: 50,
 		labelPad: 2,
-		padding: '0 2 0 0'
+		padding: '0 2 0 0',
+		emptyText: 'Enter a value...'
 		// requires a non-empty value
 	}, {
 		xtype: 'combobox',
@@ -184,7 +189,9 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		valueField: 'name',
 		labelWidth: 50,
 		labelPad: 2,
-		padding: '0 10 0 0'
+		padding: '0 10 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
 	}, {
 		xtype: 'button',
 		itemId: 'addCompletedActivityFilter_id',
