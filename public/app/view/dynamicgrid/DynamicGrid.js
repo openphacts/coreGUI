@@ -5,7 +5,7 @@ Ext.Loader.setPath('Ext.ux.grid', 'ext/examples/ux/grid');
 Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid',
-	requires: ['Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable', 'LSP.view.ux.download.FileDownload'],
+	requires: ['LDA.helper.FilterUnitsReader', 'LDA.store.FilterUnitsStore', 'LDA.model.FilterUnitsModel', 'Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable', 'LSP.view.ux.download.FileDownload'],
   exportStore: null,
 	exportCSVReady: false,
 	exportSDFReady: false,

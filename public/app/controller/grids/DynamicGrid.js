@@ -38,7 +38,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     views: ['dynamicgrid.DynamicGrid'],
 
-    models: ['DynamicGrid'],
+    models: ['DynamicGrid', 'Unit'],
 
     refs: [{
         ref: 'gridView',
