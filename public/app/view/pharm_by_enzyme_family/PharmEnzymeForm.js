@@ -63,8 +63,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
         }, {
             xtype: 'button',
             action: 'query',
-            margin: '5 0 0 320',
-            maxWidth: 300,
+            margin: '5 0 0 400',
+            maxWidth: 150,
             itemId: 'submitEnzymePharm_id',
             text: 'Start search...',
             disabled: true
@@ -72,7 +72,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
         }, {
             xtype: 'button',
             itemId: 'cancelEnzymePharm_id',
-            padding: '5 5 5 5',
+            margin: '5 0 0 400',
+            maxWidth: 150,
             text: 'Cancel...',
             disabled: true,
             action: 'cancel_pharm_by_enzyme_name'

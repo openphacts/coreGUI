@@ -3,7 +3,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
 	    console.log("LDA.helper.EnzymeFamilyPaginatedReader: readRecords()");
-	    console.log(data);
+	    //console.log(data);
         var me = this;
         var records = new Array();
 
@@ -18,7 +18,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
-	        console.log(index);
+	        //console.log(index);
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 

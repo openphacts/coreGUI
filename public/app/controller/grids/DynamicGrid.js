@@ -404,9 +404,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         } else {
             console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
             this.getSubmitButton().enable();
+			this.getCancelButton().disable();
 			grid_view.getView().setLoading(false);
 			if (!grid_view.getStore().cancelled) {
 	            grid_view.setTitle(grid_view.gridBaseTitle + ' ---- There was an error retrieving some of the records ----');				
+			} else {
+				grid_view.setTitle(grid_view.gridBaseTitle + ' ---- SEARCH CANCELLED ----');				
+				grid_store.cancelled = false;
 			}
             //Ext.MessageBox.show({
             //    title: 'Info',
@@ -415,10 +419,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             //    icon: Ext.MessageBox.INFO
             //});
         }
-		if (grid_store.cancelled) {
-			grid_view.setTitle(grid_view.gridBaseTitle + ' ---- SEARCH CANCELLED ----');				
-			grid_store.cancelled = false;
-		}
     },
 
     fetchTotalResults: function() {
@@ -487,13 +487,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 if (success) {
 					if (!grid_store.cancelled) {
 						console.log('count not cancelled');
-						me.getCancelButton().disable();
+						//me.getCancelButton().disable();
 						total = operation.response.result.primaryTopic[this.countNode];
 	                    grid_store.proxy.reader.total_count = total;
 	                    // we have the total number of results now and the proxy reader knows what it is so
 	                    // fetch the first page of results
 	                    if (total == 0) {
+							me.getCancelButton().disable();
 	                        grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+
 	                        //grid_view.down('#sdfDownload_id').disable();
 	                        //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
 	                        grid_view.down('#sdfDownloadProxy_id').disable();
