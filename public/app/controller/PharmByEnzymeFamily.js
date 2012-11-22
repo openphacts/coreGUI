@@ -66,6 +66,22 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
+            },
+            'PharmEnzymeForm #activity_combobox_id': {
+                select: this.comboSelect,
+                scope: this
+            },
+            'PharmEnzymeForm toolbar #tsvDownloadProxy_id': {
+                click: function(button, e, eopts) {
+                    var grid = Ext.ComponentQuery.query('#pharmByEnzymeFamilyGrid')[0];
+                    var store_count = grid.getStore().getTotalCount();
+                    if(store_count > CSV_EXPORT_LIMIT){
+                        return false;
+                        alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");
+                    } else {
+                        return true;
+                    }
+                }
             }
         });
     },

@@ -58,6 +58,18 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
+            },
+            'PharmByTargetNameForm toolbar #tsvDownloadProxy_id': {
+                click: function(button, e, eopts) {
+                    Ext.Component.query('#pharmByTargetNameGrid');
+                    var store_count = this.getGridView().getStore().getTotalCount();
+                    if(store_count > CSV_EXPORT_LIMIT){
+                        alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");
+                        return false;
+                    } else {
+                      return true;
+                    }
+                }
             }
         });
     },
