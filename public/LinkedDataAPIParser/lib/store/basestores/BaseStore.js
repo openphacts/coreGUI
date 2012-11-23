@@ -20,12 +20,12 @@ Ext.define('LDA.store.basestores.BaseStore', {
 			exception: function(request, operation, options) {
 				//this.gridStore.gridController.getGridView.setLoading(false);
 				// this block is reached on any exception
-				Ext.Msg.show({
-					title: '',
-					msg: "We are sorry but the OPS system returned an error.",
-					buttons: Ext.Msg.OK,
-					icon: Ext.MessageBox.INFO
-				});
+				//Ext.Msg.show({
+				//	title: '',
+				//	msg: "We are sorry but the OPS system returned an error.",
+				//	buttons: Ext.Msg.OK,
+				//	icon: Ext.MessageBox.INFO
+				//});
 			}
 		}
 	},

@@ -53,6 +53,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 sortable:false
             },
             {
+                header:'Compound Name',
+                dataIndex:'compound_pref_label',
+                renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
+
+            },
+            {
                 header:'Target Name',
                 width: 180,
                 dataIndex:'target_title',
@@ -77,9 +85,9 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 //align:'center'
             },
             {
-                header:'Assay Type',
+                header:'Activity Type',
                 dataIndex:'activity_activity_type',
-                width: 70,
+                width: 72,
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -113,15 +121,6 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
-                header:'Molweight',
-                dataIndex:'compound_full_mwt',
-                width: 80,
-                renderer:compoundProvenanceRenderer,
-                align:'center',
-                tdCls: 'gridRowPadding'
-
-            },
-            {
                 header:'SMILES',
                 dataIndex:'compound_smiles',
                 renderer:compoundProvenanceRenderer,
@@ -145,33 +144,24 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
-            },
-
-            {
-                header:'Compound Name',
-                dataIndex:'compound_pref_label',
-                renderer:compoundProvenanceRenderer,
-                align:'center',
-                tdCls: 'gridRowPadding'
-
             }
-
         ],
+
+        compound_prov: false,
+
         toggleProv:function (val) {
-            compound_prov = val;
-            console.log(" Show provenance : " + compound_prov);
+            this.compound_prov = val;
+            console.log(" Show provenance : " + this.compound_prov);
             this.doLayout();
         }
     }
 );
 
-var compound_prov = false;
-
 function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Compound Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (compound_prov) {
+    if (this.compound_prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';

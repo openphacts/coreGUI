@@ -70,7 +70,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     sortable:false
                 },
                 {
-                    header:'Compound name',
+                    header:'Compound Name',
                     dataIndex:'compound_pref_label',
                     width: 180,
                     renderer:targetProvenanceRenderer,
@@ -79,9 +79,44 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'Assay Type',
+                    header:'Target Name',
+                    dataIndex:'target_pref_label',
+                    width: 180,
+                    renderer:targetProvenanceRenderer,
+                    //align:'center',
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Target Organism',
+                    dataIndex:'target_organism',
+                    width: 130,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism',
+                    tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
+                        'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
+                        ' expressed in non-human cells, or pathogen-infected human cells)',
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'Assay Description',
+                    dataIndex:'assay_description',
+                    width: 150,
+                    tdCls: 'wrap gridDescriptiveRowPadding',
+                    renderer:targetProvenanceRenderer
+                    //align:'center'
+                },
+                {
+                    header:'Activity Type',
                     dataIndex:'activity_activity_type',
-                    width: 70,
+                    width: 72,
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -103,7 +138,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'Units',
@@ -115,7 +149,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'Molweight',
+                    header:'Mol Weight',
                     dataIndex:'compound_full_mwt',
                     width: 80,
                     renderer:targetProvenanceRenderer,
@@ -146,71 +180,25 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     align:'center',
                     tdCls: 'gridRowPadding'
 
-                },
-                {
-                    header:'Target Name',
-                    dataIndex:'target_pref_label',
-                    width: 180,
-                    renderer:targetProvenanceRenderer,
-                    //align:'center',
-                    tdCls: 'wrap gridDescriptiveRowPadding'
-
-                },
-                {
-                    header:'Target Organism',
-                    dataIndex:'target_organism',
-                    width: 130,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Assay Organism',
-                    dataIndex:'assay_organism',
-                    tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
-                        'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
-                        ' expressed in non-human cells, or pathogen-infected human cells)',
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Assay Description',
-                    dataIndex:'assay_description',
-                    width: 150,
-                    tdCls: 'wrap gridDescriptiveRowPadding',
-                    renderer:targetProvenanceRenderer
-                    //align:'center'
-                },
-                {
-                    header:'Compound Concept',
-                    dataIndex:'cw_compound_uri',
-                    width: 200,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
                 }
             ],
 
+        target_prov: false,
+
         toggleProv:function (val) {
-            target_prov = val;
-            console.log(" Show target provenance : " + target_prov);
+            this.target_prov = val;
+            console.log(" Show target provenance : " + this.target_prov);
             this.doLayout();
         }
 
     }
 );
 
-var target_prov = false;
-
 function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Target Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (target_prov) {
+    if (this.target_prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';

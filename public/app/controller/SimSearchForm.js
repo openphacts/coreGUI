@@ -11,13 +11,22 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, {
         ref: 'submitButton',
         selector: 'SimSearchForm #sim_sss_start_search_button_id'
-    }],
+    }, {
+          ref: 'tsvDownloadButton',
+          selector: 'SimSearchForm #tsvDownloadProxy_id'
+        }],
 
     all_records: undefined,
 
     total_count: 0,
 
     current_count: 0,
+
+	failed_to_load: 0,
+	
+	current_smiles: undefined,
+	
+	current_mode: undefined,
 
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
@@ -35,70 +44,40 @@ Ext.define('LSP.controller.SimSearchForm', {
                 historyToken: this.handleHistoryToken,
                 afterrender: this.prepGrid
             },
-            '#simSearchGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile //,
-                //scope: this
-            },
             'SimSearchForm #provId': {
                 change: this.onProvChange
+            },
+            '#simSearchGrid': {
+                itemcontextmenu: function(view, record, itemHTMLElement, index, eventObject, eOpts) {
+                    eventObject.preventDefault();
+                    //                    console.log('itemcontextmenu');
+                    this.getStrucGrid().showMenu(eventObject.getX(), eventObject.getY(), record);
+                }
             }
         });
 
 
+    },    
+
+    setTSVDownloadParams: function() {
+        var tsv_download_button = this.getTsvDownloadButton();
+        var tsv_download_params = new Array();
+        var grid_store = this.getStrucGrid().getStore();
+        var items = grid_store.data.items;
+        Ext.each(items, function(item, index) {
+            tsv_download_params.push("csids[]=" + item.data.csid);
+        });
+        total_params = tsv_download_params.join("&");
+        tsv_download_button.href = cs_download_url + "?" + total_params
+        tsv_download_button.setParams();
     },
 
     prepGrid: function() {
         console.log('LSP.controller.SimSearchForm: prepGrid()');
         var grid = this.getStrucGrid();
         var store = grid.getStore();
+		store.removeAll();
         store.on('prefetch', this.storeLoadComplete, this);
-
-        // var grid = this.getStrucGrid();
-        // grid.store.proxy.actionMethods = {read:'POST'};
-        // grid.store.proxy.api.read = grid.readUrl;
-        // grid.store.proxy.params = {offset:0, limit:100};
-        // 
-        // grid.store.on('load', function (this_store, records, success) {
-        //     console.log('grid.store \'load\'');
-        //     this.getSubmitButton().enable();
-        //     var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        //     grid_controller.storeLoad(grid, success);
-        //     this.getSsform().doLayout();
-        //     //       this.getStrucGrid().view.refresh();
-        //     this.getSsform().setLoading(false);
-        // }, this);
-    },
-
-    prepCSVFile: function(csv_prep_button) {
-        console.log('SimSearchForm: prepCSVFile()');
-        var grid_store = this.getStrucGrid().getStore();
-        var items = grid_store.data.items;
-        var body = Ext.getBody();
-        var frame = body.createChild({
-            tag: 'iframe',
-            cls: 'x-hidden',
-            id: 'tsv_download_iframe',
-            name: 'iframe'
-        });
-        var form = body.createChild({
-            tag: 'form',
-            cls: 'x-hidden',
-            id: 'tsv_download_form',
-            action: '/core_api_calls/chemspider_tab_separated_file',
-            target: 'tsv_download_iframe'
-        });
-        Ext.each(items, function(item, index) {
-            Ext.DomHelper.append("tsv_download_form", {
-                tag: "input",
-                type: "hidden",
-                value: item.data.csid,
-                name: "csids[]"
-            });
-        });
-
-        form.dom.submit();
-        frame.remove();
-        form.remove();
     },
 
     storeLoadComplete: function(store, records, success) {
@@ -113,13 +92,15 @@ Ext.define('LSP.controller.SimSearchForm', {
             this.getSsform().doLayout();
             this.getSsform().setLoading(false);
             // TODO should check there are some records first
-            this.getStrucGrid().down('#csvDownloadProxy_id').enable();
+            this.getStrucGrid().down('#tsvDownloadProxy_id').enable();
             //this.callParent();
         }
     },
     hitCoreAPI: function(csid_list) {
         console.log("SimSearchForm: hitCoreAPI()");
         var me = this;
+	this.failed_to_load = 0;
+		me.getStrucGrid().getStore().sorters.clear();
         var grid = this.getStrucGrid();
         this.all_records = new Array();
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
@@ -130,6 +111,7 @@ Ext.define('LSP.controller.SimSearchForm', {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
             csid_store.load(function(records, operation, success) {
                 if (success) {
+					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
                     records[0].index = me.current_count;
@@ -143,12 +125,29 @@ Ext.define('LSP.controller.SimSearchForm', {
                         //me.getSsform().doLayout();
                         me.getSsform().setLoading(false);
                         // TODO should check there are some records first
-                        me.getStrucGrid().down('#csvDownloadProxy_id').enable();
+                        me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
+						if (me.failed_to_load > 0) {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
+						} else {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
+						}
+                        me.setTSVDownloadParams();
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
+					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     me.current_count++;
-
+					me.failed_to_load++;
+					if (me.current_count == me.total_count) {
+						me.getSubmitButton().enable();
+						me.getSsform().setLoading(false);
+						me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
+						if (me.failed_to_load > 0) {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
+						} else {
+							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
+						}					
+					}
                 }
             });
         }
@@ -157,15 +156,29 @@ Ext.define('LSP.controller.SimSearchForm', {
     handleHistoryToken: function(historyTokenObject) {
         console.log('SimSearchForm: handleHistoryToken() ' + historyTokenObject);
         var me = this;
+		me.current_smiles = historyTokenObject.sm;
+		me.current_mode = historyTokenObject.st;
         var this_gridview = me.getStrucGrid();
         var current_records = this_gridview.store.getRange();
-        this_gridview.store.remove(current_records);
-        me.getStrucGrid().recordsLoaded = 0;
+        //this_gridview.store.remove(current_records);
+		this_gridview.store.removeAll();
+        // me.getStrucGrid().recordsLoaded = 0;
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, rid) {
                     searchEngine.loadCSIDs(function(csids) {
-                        me.hitCoreAPI(csids);
+						if (csids.length == 0) {
+							Ext.MessageBox.show({
+		                        title: 'Error',
+		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        buttons: Ext.MessageBox.OK,
+		                        icon: Ext.MessageBox.ERROR
+		                    });
+		                    me.getSubmitButton().enable();
+	                        me.getSsform().setLoading(false);
+						} else {
+							me.hitCoreAPI(csids);
+						}
                     });
                 },
 		failed: function(sender, error){
@@ -177,7 +190,7 @@ Ext.define('LSP.controller.SimSearchForm', {
                     });
                         me.getSubmitButton().enable();
                         me.getSsform().setLoading(false);
-                        me.getStrucGrid().down('#csvDownloadProxy_id').disable();
+                        me.getStrucGrid().down('#tsvDownloadProxy_id').disable();
 		}
             }
         });
@@ -251,6 +264,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     submitQuery: function(button) {
         console.log(' SimSearchForm: submitQuery()');
+		var me = this;
         button.disable();
         var form = button.up('form');
         var values = form.getValues();
@@ -265,8 +279,72 @@ Ext.define('LSP.controller.SimSearchForm', {
         } else if (values.search_type == 3) {
             searchType = 'sim';
         }
-
-        Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
+		// history cannot cope with token being the same as it was before
+		if (me.current_smiles == values.smiles && me.current_mode == searchType) {
+			var this_gridview = me.getStrucGrid();
+		    var current_records = this_gridview.store.getRange();
+			this_gridview.store.removeAll();
+		    var searchEngine = Ext.create('CS.engine.search.Structure', {
+		    	listeners: {
+		        	finished: function(sender, rid) {
+		            	searchEngine.loadCSIDs(function(csids) {
+							if (csids.length == 0) {
+								Ext.MessageBox.show({
+				                	title: 'Error',
+				                    msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+				                    buttons: Ext.MessageBox.OK,
+				                    icon: Ext.MessageBox.ERROR
+				                });
+				                me.getSubmitButton().enable();
+			                    me.getSsform().setLoading(false);
+							} else {
+								me.hitCoreAPI(csids);
+							}
+		                });
+		        	},
+					failed: function(sender, error){
+		            	Ext.MessageBox.show({
+		                	title: 'Error',
+		                    msg: 'There was an error retrieving the list of compounds from Chemspider',
+		                    buttons: Ext.MessageBox.OK,
+		                    icon: Ext.MessageBox.ERROR
+		              	});
+		                me.getSubmitButton().enable();
+		                me.getSsform().setLoading(false);
+		                me.getStrucGrid().down('#tsvDownloadProxy_id').disable();
+					}
+		        }
+			});
+		    var grid_title = '';
+		    var params = {};
+		    var values = this.getSsform().getValues();
+		    params['searchOptions.Molecule'] = values.smiles;
+	        if (values.search_type == '1') { //  Exact structure search
+	            grid_title = 'Exact structure match';
+	            search_type = 'exact';
+	        } else if (values.search_type == '2') { //  SubStructure search
+	            grid_title = 'Substructure structure';
+	            search_type = 'substructure';
+	        } else if (values.search_type == '3') { //  Similarity search
+	            grid_title = 'Similarity search';
+	            search_type = 'similarity';
+	            //  In the future this parameters should be taken from the UI.
+	            //  But right now in order to make Similarity search more realistic they are entered manually.
+	            params['searchOptions.Threshold'] = 0.99;
+	            params['searchOptions.SimilarityType'] = 'Tanimoto';
+	        } else {
+	            //  Unsupported search type...
+	        }
+			// there can also be 'ChEBI' and 'MeSH'
+			params['scopeOptions.DataSources[0]'] = 'DrugBank';
+			params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+			params['scopeOptions.DataSources[2]'] = 'PDB';
+		    me.getStrucGrid().setTitle(grid_title);
+		    me.getSsform().setLoading('Fetching compounds....');
+		    searchEngine.doSearch(search_type, params);
+		} else {
+			Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
+		}
     },
 
     onProvChange: function(field, newVal, oldVal) {
@@ -274,48 +352,4 @@ Ext.define('LSP.controller.SimSearchForm', {
         dg.toggleProv(newVal['prov']);
         dg.getView().refresh();
     }
-
-    //     addRecords: function (csids) {
-    //       var this_gridview = this.getStrucGrid();
-    //       var this_store = this_gridview.store;
-    //       var this_controller = this;
-    //       //var temp_store = Ext.create('LSP.store.DynamicGrid');
-    //       var temp_store = Ext.create('LDA.store.CompoundStore', {});
-    //	temp_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
-    //      //temp_store.proxy.actionMethods = {read: 'POST'};
-    //       //temp_store.proxy.api.read = '/core_api_calls/compound_info.json';
-    //       var offset = 0;
-    //     //  this_gridview.setLoading(true);
-    //       this.recursiveAddCompoundInfo(csids,this_store,temp_store,this_controller, 0);
-    //     },
-
-    //     recursiveAddCompoundInfo: function(csids,grid_store, temp_store,this_controller, dept) {
-    //       var csid = csids[0];
-    //       var remaining_csids = csids.slice(1);
-    //       if (dept > 6) {     
-    //this.getSubmitButton().enable();
-    //        //this.getSsform().doLayout();
-    //		this.getSsform().setLoading(false);
-    //		// TODO should check there are some records first
-    //		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
-    //return;
-    //}
-    //       dept++;
-    //       var last_csid = remaining_csids.length == 0;
-    //       temp_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid;
-    //       temp_store.load();
-    //      temp_store.on('load',function(){
-    //           grid_store.loadRecords(temp_store.getRange(),{addRecords: true});
-    //       });    
-    //       if (last_csid){    
-    //     this.getSubmitButton().enable();
-    //        //this.getSsform().doLayout();
-    //		this.getSsform().setLoading(false);
-    //		// TODO should check there are some records first
-    //		this.getStrucGrid().down('#csvDownloadProxy_id').enable();
-    //return;
-    //}
-    //       this_controller.recursiveAddCompoundInfo(remaining_csids,grid_store,temp_store,this_controller, dept);
-    //    })
-    //   }
 });

@@ -1,0 +1,27 @@
+{
+    "format": "linked-data-api",
+    "version": "0.2",
+    "result": {
+        "_about": "http://ops2.few.vu.nl/pharmacology/filters/activities?_format=json",
+        "definition": "http://ops2.few.vu.nl/api-config",
+        "extendedMetadataVersion": "http://ops2.few.vu.nl/pharmacology/filters/activities?_format=json&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+        "primaryTopic": {
+            "_about": "http://data.kasabi.com/dataset/chembl-rdf",
+            "normalised_activity_type": [{
+                "_about": "http://www.openphacts.org/chembl/onto/#Activity",
+                "label": "Activity"
+            }, {
+                "_about": "http://www.openphacts.org/chembl/onto/#IC50",
+                "label": "IC50"
+            }, {
+                "_about": "http://www.openphacts.org/chembl/onto/#PercentageInhibition",
+                "label": "Percentage Inhibition"
+            }, {
+                "_about": "http://www.openphacts.org/chembl/onto/#Potency",
+                "label": "Potency"
+            }],
+            "isPrimaryTopicOf": "http://ops2.few.vu.nl/pharmacology/filters/activities?_format=json"
+        }
+    }
+}
+

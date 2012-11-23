@@ -79,5 +79,98 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyGrid', {
                 }
             ]
         }
-    }
+    }, 
+
+    showMenu: function(x, y, record) {
+		var cmp = record.data.compound_pref_label;
+		var tar = record.data.target_title;
+		var smi = record.data.compound_smiles;
+
+		if (tar) {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: tar
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Search for target by name',
+					itemId: 'searchForTarget',
+					iconCls: 'menu-search-target',
+					handler: function() {
+						//                        console.log('Search for target by name');
+						//                        console.log(tar);
+						Ext.History.add('!p=TargetByNameForm&s=' + tar);
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		} else {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		}
+
+	}
 );

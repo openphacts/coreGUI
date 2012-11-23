@@ -20,7 +20,13 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     }, {
         ref: 'filterContainer',
         selector: 'PharmByTargetNameForm #filterSelectorContainer_id'
-    }],
+    }, {
+		ref: 'unitsCombo',
+		selector: 'PharmByTargetNameForm #unit_combobox_id'
+    }, {
+          ref: 'tsvDownloadButton',
+          selector: 'PharmByTargetNameForm #tsvDownloadProxy_id'
+        }],
     filters: undefined,
     current_uri: undefined,
 
@@ -49,13 +55,35 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
             },
-            '#pharmByTargetNameGrid #csvDownloadProxy_id': {
-                click: this.prepCSVFile//,
-                //scope: this
+            'PharmByTargetNameForm #activity_combobox_id': {
+                select: this.comboSelect,
+                scope: this
             }
         });
     },
 
+   comboSelect: function(combo, records, eOpts) {
+	var activity = records[0].get('activity_type');
+	// only fetch new units if the selected activity is different than before
+	if (this.current_activity_combo_select != activity) {
+		var units_store = this.getUnitsCombo().getStore();
+		this.getUnitsCombo().clearValue();
+		units_store.removeAll();
+		this.current_activity_combo_select = activity;
+		var filter_units_store = Ext.create('LDA.store.FilterUnitsStore',{activity_type: activity});
+        	filter_units_store.load(function(records, operation, success) {
+				store_records = records;
+				store_operation = operation;
+				store_success = operation.success;
+				if (store_success) {
+				    Ext.each(records, function (record, index) {
+                                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit, name: record.data.unit});
+                                        units_store.add(unit);		
+				    });
+				}
+        	});
+	}
+   },
 
     handleHistoryToken: function(historyTokenObject) {
         if (historyTokenObject.u) {

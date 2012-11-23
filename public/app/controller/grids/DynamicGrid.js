@@ -38,7 +38,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     views: ['dynamicgrid.DynamicGrid'],
 
-    models: ['DynamicGrid'],
+    models: ['DynamicGrid', 'Unit'],
 
     refs: [{
         ref: 'gridView',
@@ -65,11 +65,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             },
             'dynamicgrid toolbar #sdfDownloadProxy_id': {
                 click: this.prepSDFile
-            }//,
-            // 'dynamicgrid toolbar #csvDownloadProxy_id': {
-            //                 click: this.prepCSVFile//,
-            //                 //scope: this
-            //             }
+            }
         })
     },
     onLaunch: function() {},
@@ -77,19 +73,37 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     testThis: function(args) {},
 
+    setTSVDownloadParams: function() {
+        var tsv_download_button = this.getTsvDownloadButton();
+        var gridview = this.getGridView();
+        var tsv_download_params = new Array();
+        Ext.each(this.getFilters(), function(filter, index) {
+            if (filter.filterType == "activity") {
+                tsv_download_params.push("activity_value_type=" + gridview.store.getActivityConditionParam() + "&activity_type=" + gridview.store.activity_type + "&activity_value=" + gridview.store.activity_value + "&activity_unit=" + gridview.store.activity_unit)
+            } else if (filter.filterType == "organism") {
+                tsv_download_params.push("assay_organism=" + gridview.store.assay_organism);
+            }
+        });
+        tsv_download_params.push("uri=" + gridview.store.proxy.extraParams.uri + "&total_count=" + gridview.store.getTotalCount() + "&request_type=" + gridview.store.REQUEST_TYPE);
+        total_params = tsv_download_params.join("&");
+        tsv_download_button.href = tsv_download_url + "?" + total_params
+        tsv_download_button.setParams();
+    },
+
     addCompletedActivityFilter: function(button) {
         console.log('DynamicGrid: addCompletedActivityFilter()');
         activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
         conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
         value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
         // TODO unit value check && unit_value != null
-        if (activity_value != null && conditions_value != null && value_value != "") {
+        if (activity_value != null && conditions_value != null && value_value != "" & unit_value != null) {
             filter = Ext.create('LSP.model.Filter', {
                 activity: activity_value,
                 condition: conditions_value,
-                value: value_value
-                //unit: unit_value
+                value: value_value,
+                unit: unit_value
             });
             filter.filterType = "activity";
             this.getFilters().push(filter);
@@ -100,7 +114,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             filter_view.down('#activityLabel_id').setText(activity_value);
             filter_view.down('#conditionsLabel_id').setText(conditions_value);
             filter_view.down('#valueLabel_id').setText(value_value);
-            //filter_view.down('#unitLabel_id').setText(unit_value);
+			filter_view.down('#unitLabel_id').setText(unit_value);	
             // tell the filter what model it is using so we can get back to the controller when the
             // filter is removed from the view
             filter.filterView = filter_view;
@@ -116,6 +130,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.setActivityType(activity_value);
             store.setActivityValue(value_value);
             store.setActivityCondition(conditions_value);
+			store.setActivityUnit(unit_value);
             // currently only 1 activity filter can be added at a time
             this.getFormView().down('#addCompletedActivityFilter_id').disable();
             //this.getFormView().down('#activityFilterContainer_id').disable();
@@ -189,6 +204,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.setActivityType("");
             store.setActivityValue("");
             store.setActivityCondition("");
+			store.setActivityUnit("");
             controller.getFormView().down('#addCompletedActivityFilter_id').enable();
             //controller.getFormView().down('#activityFilterContainer_id').enable();
             //controller.getFormView().down('#activityFilterContainer_id').setVisible(true);
@@ -214,119 +230,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             this.getFilterContainer().setVisible(false);
         }
     },
-
-    prepCSVFile: function(csv_prep_button) {
-        console.log('LSP.controllers.DynamicGrid: prepCSVFile()');
-        //        var gridview = csv_prep_button.up('dynamicgrid');
-        //        var store_count = gridview.store.totalCount;
-        //        if(store_count > CSV_EXPORT_LIMIT){alert("The OPS Explorer currently only allows for the export of " + CSV_EXPORT_LIMIT + " records. The current search returns " + store_count + " records. Please restrict your search and try again.");}     
-        //        else{
-        //	  gridview.exportStore.proxy.timeout = '180000';
-        //          gridview.exportStore.proxy.url = gridview.store.proxy.url;
-        //	  gridview.exportStore.proxy.extraParams = gridview.store.proxy.extraParams;
-        //          // and attaching it to the grid view
-        //          gridview.up('form').setLoading( "Preparing download of " + store_count + " records. Please wait..."); 
-        //          // now we load the grid
-        //	  if (this.getFilters().length != 0) {
-        //		gridview.exportStore.setActivityType(this.getFilters()[0].data.activity);
-        //			gridview.exportStore.setActivityValue(this.getFilters()[0].data.value);
-        //			gridview.exportStore.setActivityCondition(this.getFilters()[0].data.condition);
-        //	  };
-        //	  // we only want 1 page with all results but ext seems to send multi requests for the same data
-        //	  // as if it was in an infinite grid. Setting buffered to false prevents this
-        //          gridview.exportStore.buffered = false;
-        //          gridview.exportStore.load({
-        //              params:{ _page:1, _pageSize:store_count},
-        //              callback:function (records, operation, success) {
-        //                  if (success) {
-        //                    gridview.up('form').setLoading(false);
-        //                    csv_prep_button.setText('CSV-File ready! Click ->');
-        //                    csv_prep_button.up('grid').down('#csvDownload_id').enable();
-        //                    gridview.down('#sdfDownloadProxy_id').enable();
-        //                    gridview.exportCSVReady = true;                   
-        //                  }
-        //                  else {
-        //                     gridview.up('form').setLoading(false);
-        //                     alert("We are sorry, something went wrong. Please try again later.");
-        //                  }
-        //              }},this
-        //        
-        //        );
-        //           
-        //   }
-        // credit due to Form Fields Anchoring Example by Ing. Jozef Sakáloš
-        // http://examples.extjs.eu/
-        var body = Ext.getBody();
-        var frame = body.createChild({
-            tag: 'iframe',
-            cls: 'x-hidden',
-            id: 'csv_download_iframe',
-            name: 'iframe'
-        });
-        var form = body.createChild({
-            tag: 'form',
-            cls: 'x-hidden',
-            id: 'csv_download_form',
-            action: '/core_api_calls/tab_separated_file',
-            target: 'csv_download_iframe'
-        });
-
-        var gridview = this.getGridView();
-
-        Ext.each(gridview.store.filters, function(filter, index) {
-            if (filter.filterType == "activity") {
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.getActivityConditionParam(),
-                    name: "activity_value_type"
-                });
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.activity_type,
-                    name: "activity_type"
-                });
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.activity_value,
-                    name: "activity_value"
-                });
-            } else if (filter.filterType == "organism") {
-                Ext.DomHelper.append("csv_download_form", {
-                    tag: "input",
-                    type: "hidden",
-                    value: gridview.store.assay_organism,
-                    name: "assay_organism"
-                });
-            }
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.proxy.extraParams.uri,
-            name: "uri"
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.getTotalCount(),
-            name: "total_count"
-        });
-        Ext.DomHelper.append("csv_download_form", {
-            tag: "input",
-            type: "hidden",
-            value: gridview.store.REQUEST_TYPE,
-            name: "request_type"
-        });
-
-
-        form.dom.submit();
-        frame.remove();
-        form.remove();
-    },
-
 
     prepSDFile: function(sdf_prep_button) {
         Ext.MessageBox.show({
@@ -473,6 +376,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     prepGrid: function() {
         console.log(this.$className + ': prepGrid()');
+		// reset the filters to empty
+		this.filters = new Array();
         var grid_view = this.getGridView();
         var store = grid_view.getStore();
         store.on('prefetch', this.storeLoadComplete, this);
@@ -482,13 +387,15 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         console.log(this.$className + ': storeLoadComplete()');
         grid_view = this.getGridView();
         grid_store = grid_view.getStore();
-		// remove the sort column if there was any
-		grid_store.sort_column = undefined;
+        // remove the sort column if there was any
+        grid_store.sort_column = undefined;
         if (success) {
+            // If some records are coming back then set the tsv download params
+            this.setTSVDownloadParams();
             //grid_view.down('#sdfDownload_id').disable();
             //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
             grid_view.down('#sdfDownloadProxy_id').enable();
-            grid_view.down('#csvDownloadProxy_id').enable();
+            grid_view.down('#tsvDownloadProxy_id').enable();
             this.getSubmitButton().enable();
             grid_view.setLoading(false);
             grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
@@ -496,12 +403,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
             this.getSubmitButton().enable();
             grid_view.setLoading(false);
-            Ext.MessageBox.show({
-                title: 'Info',
-                msg: 'We are sorry but the OPS system returned an error.',
-                buttons: Ext.MessageBox.OK,
-                icon: Ext.MessageBox.INFO
-            });
+            grid_view.setTitle(grid_view.gridBaseTitle + ' ---- There was an error retrieving some of the records ----');
+            //Ext.MessageBox.show({
+            //    title: 'Info',
+            //    msg: 'We are sorry but the OPS system returned an error.',
+            //    buttons: Ext.MessageBox.OK,
+            //    icon: Ext.MessageBox.INFO
+            //});
         }
     },
 
@@ -525,6 +433,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setActivityType(filter.data.activity);
                     countStore.setActivityValue(filter.data.value);
                     countStore.setActivityCondition(filter.data.condition);
+                    countStore.setActivityUnit(filter.data.unit);
                 } else if (filter.filterType == "organism") {
                     countStore.setAssayOrganism(filter.data.value);
                 }
@@ -576,7 +485,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                         //grid_view.down('#sdfDownload_id').disable();
                         //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
                         grid_view.down('#sdfDownloadProxy_id').disable();
-                        grid_view.down('#csvDownloadProxy_id').disable();
+                        grid_view.down('#tsvDownloadProxy_id').disable();
                         button.enable();
                         grid_view.setLoading(false);
                         Ext.MessageBox.show({
@@ -595,7 +504,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     //grid_view.down('#sdfDownload_id').disable();
                     //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
                     grid_view.down('#sdfDownloadProxy_id').disable();
-                    grid_view.down('#csvDownloadProxy_id').disable();
+                    grid_view.down('#tsvDownloadProxy_id').disable();
                     button.enable();
                     grid_view.setLoading(false);
                     Ext.MessageBox.show({

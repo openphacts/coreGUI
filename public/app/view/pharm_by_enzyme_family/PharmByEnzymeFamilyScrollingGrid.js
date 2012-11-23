@@ -68,31 +68,17 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'SMILES',
-                    dataIndex:'compound_smiles',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
+                    header:'Assay Description',
+                    dataIndex:'assay_description',
+                    width:200,
+                    renderer:enzymeProvenanceRenderer,
+                    tdCls:'wrap gridDescriptiveRowPadding'
                 },
                 {
-                    header:'InChi',
-                    dataIndex:'compound_inchi',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'InChi Key',
-                    dataIndex:'compound_inchikey',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Assay Type',
+                    header:'Activity Type',
                     dataIndex:'activity_activity_type',
                     renderer: enzymeProvenanceRenderer,
-                    width: 70,
+                    width: 72,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
@@ -121,31 +107,52 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'Molweight',
+                    header:'Mol Weight',
                     dataIndex:'compound_full_mwt',
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
                     width: 80,
                     tdCls: 'gridRowPadding'
+                },{
+                    header:'SMILES',
+                    dataIndex:'compound_smiles',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChi',
+                    dataIndex:'compound_inchi',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChi Key',
+                    dataIndex:'compound_inchikey',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
                 }
             ]
 
         },
+
+        enzyme_prov: false,
+
         toggleProv:function (val) {
-            enzyme_prov = val;
-            console.log(" Show provenance : " + enzyme_prov );
+            this.enzyme_prov = val;
+            console.log(" Show provenance : " + this.enzyme_prov );
             this.doLayout();
         }
     }
 );
 
-var enzyme_prov = false;
-
 function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Enzyme Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (enzyme_prov) {
+    if (this.enzyme_prov) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';

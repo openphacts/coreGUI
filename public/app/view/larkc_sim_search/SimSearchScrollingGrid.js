@@ -48,7 +48,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         sortable: false
     }, {
-        header: 'Compound name',
+        header: 'Compound Name',
         dataIndex: 'compound_pref_label',
         renderer:structureProvenanceRenderer,
         width: 180,
@@ -59,6 +59,58 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
+    }, {
+        header: 'ALogP',
+        dataIndex: 'alogp',
+        renderer:structureProvenanceRenderer,
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# HBA',
+        dataIndex: 'hba',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Hydrogen Bond Acceptors',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# HBD',
+        dataIndex: 'hbd',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Hydrogen Bond Donors',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'Mol Weight',
+        dataIndex: 'full_mwt',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Molecular Weight',
+        width: 70,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'MW Freebase',
+        dataIndex: 'mw_freebase',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Molecular Weight (Free Base)',
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: '# RTB',
+        dataIndex: 'rtb',
+        renderer:structureProvenanceRenderer,
+        tooltip: 'Number of Rotatable Bonds',
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
+    }, {
+        header: 'Melting Point',
+        dataIndex: 'meltingPoint',
+        renderer:structureProvenanceRenderer,
+        width: 140,
+        tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
         header: 'SMILES',
         dataIndex: 'compound_smiles',
@@ -80,70 +132,124 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
-    }, {
-        header: 'ALogP',
-        dataIndex: 'alogp',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# HBA',
-        dataIndex: 'hba',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# HBD',
-        dataIndex: 'hbd',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'Mol Weight',
-        dataIndex: 'full_mwt',
-        renderer:structureProvenanceRenderer,
-        width: 70,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: '# RTB',
-        dataIndex: 'rtb',
-        renderer:structureProvenanceRenderer,
-        width: 60,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'MW Freebase',
-        dataIndex: 'mw_freebase',
-        renderer:structureProvenanceRenderer,
-        align: 'center',
-        tdCls: 'gridRowPadding'
-    }, {
-        header: 'Melting Point',
-        dataIndex: 'meltingPoint',
-        renderer:structureProvenanceRenderer,
-        width: 140,
-        tdCls: 'wrap gridDescriptiveRowPadding'
     }]
     ,
+
+    simSearchProv: false,
+
     toggleProv:function (val) {
-        simSearchProv = val;
-        console.log(" Show provenance : " + simSearchProv);
+        this.simSearchProv = val;
+        console.log(" Show provenance : " + this.simSearchProv);
         this.doLayout();
-    }
+    },
+	showMenu: function(x, y, record) {
+		var cmp = record.data.compound_pref_label;
+		var tar = record.data.target_title;
+		var smi = record.data.compound_smiles;
+
+		if (tar) {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: tar
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for a compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for a compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Search for a target by name',
+					itemId: 'searchForTarget',
+					iconCls: 'menu-search-target',
+					handler: function() {
+						//                        console.log('Search for target by name');
+						//                        console.log(tar);
+						Ext.History.add('!p=TargetByNameForm&s=' + tar);
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		} else {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
+				}, {
+					xtype: 'textfield',
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'Search for a compound by name',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+					}
+				}, {
+					text: 'Search for a compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Search for Pharmacology by Compound',
+					itemId: 'searchForPharmacologyByCompound',
+					iconCls: 'menu-search-pharma-by-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=PharmByCmpdNameForm&s=' + cmp);
+					}
+				},{
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+			contextMenu.showAt(x, y);
+		}
+
+	}
 });
-
-
-var simSearchProv = false;
 
 function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
 	//console.log("Structure provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (simSearchProv) {
+    if (this.simSearchProv) {
 
         var recdata = this.columns[columnIndex].dataIndex;
         var itemdata = recdata + '_item';

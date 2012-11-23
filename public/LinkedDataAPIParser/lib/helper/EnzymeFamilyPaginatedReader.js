@@ -3,7 +3,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
     requires:['LDA.helper.LDAConstants'],
     readRecords:function (data) {
 	    console.log("LDA.helper.EnzymeFamilyPaginatedReader: readRecords()");
-	    console.log(data);
+	    //console.log(data);
         var me = this;
         var records = new Array();
 
@@ -18,7 +18,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
 
         Ext.each(items, function (item, index, items) {
-	        console.log(index);
+	        //console.log(index);
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
@@ -67,14 +67,16 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 	}
             	);
 			}
-            var target_title_item, target_organism_item, assay_organism_item;
+            var target_title_item, target_organism_item, assay_organism_item, assay_description_item;
             var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
 			if (onAssay != null) {
             	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
                 var chembldAssayLink = 'https://www.ebi.ac.uk/chembldb/assay/inspect/';
                 chembldAssayLink += chembl_assay_uri.split('/').pop();
                 var assay_organism = onAssay['assay_organism'];
+                var assay_description = onAssay['description'];
                 assay_organism_item = chembldAssayLink;
+                assay_description_item = chembldAssayLink;
             	var target = item['target'];
 				if (target != null) {
             		var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
@@ -141,6 +143,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 target_pref_label:target_pref_label,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
+                assay_description:assay_description,
                 activity_relation:activity_relation,
                 activity_standard_units:activity_standard_units,
                 activity_standard_value:activity_standard_value,
@@ -153,6 +156,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 target_organism_src:chembl_src,
                 target_pref_label_src:cw_src,
                 assay_organism_src:chembl_src,
+                assay_description_src:chembl_src,
                 activity_relation_src:chembl_src,
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
@@ -162,6 +166,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 target_title_item:target_title_item,
                 target_organism_item:target_organism_item,
                 assay_organism_item:assay_organism_item,
+                assay_description_item:assay_description_item,
                 compound_smiles_item:compound_smiles_item,
                 compound_inchi_item:compound_inchi_item,
                 compound_inchikey_item:compound_inchikey_item,

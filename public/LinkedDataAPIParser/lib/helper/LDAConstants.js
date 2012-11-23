@@ -3,6 +3,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDA_BASE_URL: 'http://ops2.few.vu.nl',
     LDA_IN_DATASET: 'inDataset',
     LDA_ABOUT: '_about',
+    LDA_LABEL: 'label',
     LDA_COMPOUND_PHARMACOLOGY_COUNT: 'compoundPharmacologyTotalResults',
     LDA_TARGET_PHARMACOLOGY_COUNT: 'targetPharmacologyTotalResults',
     LDA_ENZYME_FAMILY_COUNT: 'enzymePharmacologyTotalResults',
@@ -44,7 +45,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDADataItems: {
         "compound_smiles": "smiles",
         "activity_standard_value": "std_value",
-        "compound_inchikey": "inchikey",
+        "compound_inchikey": "inchiKey",
         "activity_activity_type": "std_type",
         "activity_standard_units": "std_unit",
         "target_pref_label": "target_name",
@@ -53,6 +54,7 @@ Ext.define('LDA.helper.LDAConstants', {
         "compound_full_mwt": "molweight",
         "cw_compound_uri": "compound_cw",
         "compound_pref_label": "compound_name",
-        "target_organism": "assay_organism"
+        "target_organism": "assay_organism",
+	"target_title": "target_names"
     }
 });

@@ -257,7 +257,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         labelWidth:120,
                                         labelAlign:'left',
                                         fieldLabel:'ChemSpider ID',
-                                        anchor:'100%',
+                                        anchor:'100%'
                                     },
                                     {
                                         xtype:'displayfield',
@@ -562,11 +562,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 }
             }
 }
-
-        var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-        var csLink = this.query('#chemspider_id')[0];
-        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
-        csLink.show();
+	if (compound.data.cs_uri) {
+            var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+            var csLink = this.query('#chemspider_id')[0];
+            csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
+            csLink.show();
+	}
         var ip = this.query('#compound_form_imagepanel')[0];
 		var csid;
 		if (compound.data.cs_uri) {
