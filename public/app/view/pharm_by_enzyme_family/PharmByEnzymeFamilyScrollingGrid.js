@@ -12,7 +12,23 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 		    'sortchange': function(ct, column, direction, eOpts ) {
 				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
 				this.setLoading(true);
-		    }
+		    },
+                    'afterrender': function(form, eopts) {
+                        console.log('PharmByEnzymeFamilyScrollingGrid: afterrender()');
+                        var button = Ext.ComponentQuery.query('PharmByEnzymeFamilyScrollingGrid toolbar #tsvDownloadProxy_id')[0];
+                        button.on("click", function(button, e, eopts) {
+var grid = Ext.ComponentQuery.query('PharmByEnzymeFamilyScrollingGrid')[0];
+            if (grid.getStore().getTotalCount() > CSV_EXPORT_LIMIT) {
+Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+e.stopEvent();
+}
+                        });
+                    }
 		},
         store:'EnzymeFamilyPaginatedStore',
 	exportStore: null,
