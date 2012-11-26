@@ -55,6 +55,7 @@ Ext.define('LDA.helper.LDAConstants', {
         "cw_compound_uri": "compound_cw",
         "compound_pref_label": "compound_name",
         "target_organism": "assay_organism",
-	"target_title": "target_names"
+	"target_title": "target_names",
+	"assay_description": "assay_description"
     }
 });
