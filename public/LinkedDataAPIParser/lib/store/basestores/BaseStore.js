@@ -40,11 +40,15 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	// but the behaviour still persists. TODO check EXTJS updates to see if
 	// it gets fixed
 	prefetchPage: function(page, options) {
-		if (this.cancelled) {
-			console.log('prefetch cancelling');
-			this.controller.getGridView().getView().setLoading(false);
-			return false;
-		} else {
+		// if (this.cancelled) {
+			console.log('prefetchPage cancelling');
+			// var view = this.controller.getGridView().getView();
+			// var mask = view.loadmask;
+			// Ext.destroy(view.loadMask);
+			// view.loadMask = null;
+			// this.controller.getGridView().getView().unmask();
+			// return false;
+		// } else {
 		        var me = this,
 		            pageSize = me.pageSize || me.defaultPageSize,
 		            start = (page - 1) * me.pageSize,
@@ -62,7 +66,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 		            start    : start,
 		            limit    : pageSize
 		        }, options));	
-		}
+		// }
     },
 
 	listeners: {
@@ -70,14 +74,18 @@ Ext.define('LDA.store.basestores.BaseStore', {
 		beforeprefetch: {
 
 			fn: function() {
-				if (this.cancelled) {
-					console.log('not fetching request');
-					this.controller.getGridView().getView().setLoading(false);
-					return false;
-				} else {
+				// if (this.cancelled) {
+					console.log('beforeprefetch not fetching request');
+					// var view = this.controller.getGridView().getView();
+					// 					var mask = view.loadmask;
+					// 					Ext.destroy(view.loadMask);
+					// view.loadMask = null;
+					// this.controller.getGridView().getView().unmask();
+					// return false;
+				// } else {
 					var me = this;
 					me.updateProxyURL();
-				}
+				// }
 			}
 		},
 		beforeload: {

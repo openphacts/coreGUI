@@ -80,8 +80,9 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	    console.log('PharmEnzymeForm: cancelRequest()');
 		this.getGridView().getStore().cancelled = true;
 		this.getGridView().setLoading(false);
+		this.getGridView().getStore().removeAll();
 		this.getGridView().getStore().getProxy().abort();
-		this.getFormView().setLoading(false);	
+		//this.getFormView().setLoading(false);	
     },
 
    comboSelect: function(combo, records, eOpts) {

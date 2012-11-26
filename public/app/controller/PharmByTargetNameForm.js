@@ -130,6 +130,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
     submitQuery: function(button) {
+		this.getGridView().getStore().cancelled = false;
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
