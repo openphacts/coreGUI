@@ -90,29 +90,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                             {boxLabel:'Substructure search', name:'search_type', inputValue:2},
                             {boxLabel:'Structural similarity search', name:'search_type', inputValue:3}
                         ]
-                    },
-                    // {
-                    // 						xtype: 'combobox',
-                    // 						itemId: 'tanimoto_combobox_id',
-                    // 						fieldLabel: 'Tanimoto threshold',
-                    // 						store: tanimoto_values,
-                    // 						queryMode: 'remote',
-                    // 						displayField: 't_percent',
-                    // 						valueField: 't_value',
-                    // 						labelWidth: 100,
-                    // 						labelPad: 2,
-                    // 						padding: '0 2 0 0'
-                    // 					},
-					{
+                    }, {
 					        xtype: 'numberfield',
 					        itemId: 'tanimoto_threshold_id',
 					        anchor: '100%',
 					        name: 'tanimoto_threshold',
 					        fieldLabel: 'Tanimoto threshold',
-					        step: 5,
-					        value: 90
-					        // maxValue: 100,
-					        // minValue: 0
+					        // step: 5,
+					        value: 90,
+							allowDecimals: false,
+					        maxValue: 100,
+					        minValue: 1
 					}]},
                     {
                         xtype:'button',
