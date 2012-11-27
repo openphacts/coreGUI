@@ -18,6 +18,9 @@
 
         this.callParent(arguments)
     },
+    setLimit: function(limit) {
+	    this.limit = limit;
+    },
     searchProgress: function () {
         return this.searchStatus.Progress;
     },

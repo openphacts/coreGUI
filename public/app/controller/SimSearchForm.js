@@ -17,6 +17,9 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, {
 	    ref: 'tanimotoThresholdSpinner',
 		selector: 'SimSearchForm #tanimoto_threshold_id'
+	}, {
+	    ref: 'maxRecordsSpinner',
+		selector: 'SimSearchForm #max_records_id'
 	}],
 
     all_records: undefined,
@@ -227,6 +230,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
+		searchEngine.setLimit(this.getMaxRecordsSpinner().value);
         searchEngine.doSearch(search_type, params);
     },
 
@@ -348,6 +352,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 			params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
+			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
 		    searchEngine.doSearch(search_type, params);
 		} else {
 			Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);

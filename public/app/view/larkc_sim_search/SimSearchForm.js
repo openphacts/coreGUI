@@ -101,7 +101,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 							allowDecimals: false,
 					        maxValue: 100,
 					        minValue: 1
-					}]},
+					}, {
+							        xtype: 'numberfield',
+							        itemId: 'max_records_id',
+							        anchor: '100%',
+							        name: 'max_records',
+							        fieldLabel: 'Maximum records to retrieve',
+							        step: 20,
+							        value: 100,
+									allowDecimals: false,
+							        minValue: 20
+							}]},
                     {
                         xtype:'button',
                         action:'query',
