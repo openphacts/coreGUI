@@ -105,6 +105,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                     // 					},
 					{
 					        xtype: 'numberfield',
+					        itemId: 'tanimoto_threshold_id',
 					        anchor: '100%',
 					        name: 'tanimoto_threshold',
 					        fieldLabel: 'Tanimoto threshold',

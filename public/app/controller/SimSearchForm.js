@@ -14,7 +14,10 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, {
           ref: 'tsvDownloadButton',
           selector: 'SimSearchForm #tsvDownloadProxy_id'
-        }],
+    }, {
+	    ref: 'tanimotoThresholdSpinner',
+		selector: 'tanimoto_threshold_id'
+	}],
 
     all_records: undefined,
 
@@ -211,7 +214,9 @@ Ext.define('LSP.controller.SimSearchForm', {
             search_type = 'similarity';
             //  In the future this parameters should be taken from the UI.
             //  But right now in order to make Similarity search more realistic they are entered manually.
-            params['searchOptions.Threshold'] = 0.99;
+			var threshold = this.getTanimotoThresholdSpinner().value;
+			params['searchOptions.Threshold'] = threshold/100;
+            // params['searchOptions.Threshold'] = 0.99;
             params['searchOptions.SimilarityType'] = 'Tanimoto';
         } else {
             //  Unsupported search type...
