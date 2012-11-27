@@ -31,7 +31,6 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                 xtype:'form',
                 padding:'5 5 5 5',
                 border:false,
-//                height:'100%',
                 style:'background-color: #fff;',
                 items:[
                     {
