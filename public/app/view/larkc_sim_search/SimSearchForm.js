@@ -1,3 +1,16 @@
+var sim_search_type = Ext.create('Ext.data.Store', {
+	fields: ['sim_type', 'name'],
+	data: [{
+		"sim_type": "Tanimoto",
+		"name": "Tanimoto"
+	}, {
+		"sim_type": "Tversky",
+		"name": "Tversky"
+	}, {
+		"sim_type": "Euclidian",
+		"name": "Euclidian"
+	}]
+});
 Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
     extend:'Ext.form.Panel',
     alias:'widget.SimSearchForm',
@@ -90,28 +103,53 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
                             {boxLabel:'Substructure search', name:'search_type', inputValue:2},
                             {boxLabel:'Structural similarity search', name:'search_type', inputValue:3}
                         ]
-                    }, {
+                    }]},
+					{
+				            xtype: 'container',
+				            margin: '0 5 5 5',
+				            name: 'filter_fields',
+				            layout: {
+				                type: 'column'
+				            },
+				            style: 'background-color: #fff;',
+				            items: [
+							{
+									xtype: 'combobox',
+									itemId: 'sim_search_type_id',
+									fieldLabel: 'Similarity Threshold Type',
+									store: sim_search_type,
+									queryMode: 'local',
+									displayField: 'sim_type',
+									valueField: 'sim_type',
+									// labelWidth: 100,
+									labelPad: 2,
+									padding: '0 2 0 0',
+									value: 'Tanimoto'
+							},
+					{
 					        xtype: 'numberfield',
 					        itemId: 'tanimoto_threshold_id',
 					        anchor: '100%',
 					        name: 'tanimoto_threshold',
-					        fieldLabel: 'Tanimoto threshold',
+					        fieldLabel: 'Similarity threshold',
 					        // step: 5,
 					        value: 90,
 							allowDecimals: false,
 					        maxValue: 100,
-					        minValue: 1
+					        minValue: 1,
+							padding: '0 2 0 0'
 					}, {
-							        xtype: 'numberfield',
-							        itemId: 'max_records_id',
-							        anchor: '100%',
-							        name: 'max_records',
-							        fieldLabel: 'Maximum records to retrieve',
-							        step: 20,
-							        value: 100,
-									allowDecimals: false,
-							        minValue: 20
-							}]},
+							xtype: 'numberfield',
+							itemId: 'max_records_id',
+							anchor: '100%',
+							name: 'max_records',
+							fieldLabel: 'Maximum records to retrieve',
+							step: 20,
+							value: 100,
+							allowDecimals: false,
+							minValue: 20,
+							padding: '0 2 0 0'
+					}]},
                     {
                         xtype:'button',
                         action:'query',

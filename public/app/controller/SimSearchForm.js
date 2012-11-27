@@ -20,6 +20,9 @@ Ext.define('LSP.controller.SimSearchForm', {
 	}, {
 	    ref: 'maxRecordsSpinner',
 		selector: 'SimSearchForm #max_records_id'
+	}, {
+		ref: 'SimSearchType',
+		selector: 'SimSearchForm #sim_search_type_id'
 	}],
 
     all_records: undefined,
@@ -220,7 +223,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 			var threshold = this.getTanimotoThresholdSpinner().value;
 			params['searchOptions.Threshold'] = threshold/100;
             // params['searchOptions.Threshold'] = 0.99;
-            params['searchOptions.SimilarityType'] = 'Tanimoto';
+            // params['searchOptions.SimilarityType'] = 'Tanimoto';
+            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
         } else {
             //  Unsupported search type...
         }
@@ -342,7 +346,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 				var threshold = this.getTanimotoThresholdSpinner().value;
 				params['searchOptions.Threshold'] = threshold/100;
 	            // params['searchOptions.Threshold'] = 0.99;
-	            params['searchOptions.SimilarityType'] = 'Tanimoto';
+	            // params['searchOptions.SimilarityType'] = 'Tanimoto';
+	            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
 	        } else {
 	            //  Unsupported search type...
 	        }
