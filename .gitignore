@@ -1,5 +1,6 @@
 *.log
 Gemfile.lock
+/config/database.yml
 /tmp/*
 /log/*
 /tmp/pids/server.pid
