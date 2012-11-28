@@ -378,7 +378,20 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         labelAlign:'left',
                                         fieldLabel:'Melting Point',
                                         renderer: provenanceSummaryRenderer
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'wikiPathwayId',
+                                        itemId:'wikiPathwayId',
+                                        cls:'x-cmpfield',
+                                        fieldCls:'x-cmpDescriptions',
+                                        labelWidth:120,
+                                        padding:'10px 0 0 0',
+                                        labelAlign:'left',
+                                        fieldLabel:'Pathways'
+
                                     }
+
                                 ]
                             }
                         ]
@@ -548,8 +561,18 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 field.show();
                             }
                             break;
+                       case 'wikiPathwayId':
 
-                        default:
+                           if (td[prop]){
+                                var wpID = td[prop];
+                                //var wpLink = '<href> </href>http://www.wikipathways.org/wpi/wpi.php?action=downloadFile&type=png&pwTitle=Pathway:';
+                                var wpLink =  '<div><a href="' +'http://www.wikipathways.org/wpi/wpi.php?action=downloadFile&type=png&pwTitle=Pathway:' + wpID + '" target="_blank">' + wpID +  '</a>'+ '</div>';
+                                field.setValue(wpLink);
+                                field.show();
+                           }
+                           break;
+
+                           default:
                             if (td[prop]){
                                 field.setValue(td[prop]);
                                 field.show();
@@ -558,7 +581,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
 
 
                 } else {
-//                    console.log("No itemId for: " + prop);
+
                 }
             }
 }
@@ -611,6 +634,12 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     }
 
 
+});
+
+var win = new Ext.Window({
+    html: '<img src="http://www.google.co.za/intl/en%5Fcom/images/logo%5Fplain.png" />',
+    height: 150,
+    width: 250
 });
 
 var compound_name_provenance = false;

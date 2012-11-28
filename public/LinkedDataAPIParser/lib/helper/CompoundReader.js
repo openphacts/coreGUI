@@ -42,6 +42,7 @@ Ext.define('LDA.helper.CompoundReader', {
         chemblValue != null ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = null;
         drugBankData != null ? drugbankLinkOut = 'http://www.drugbank.ca/drugs/' + drugbankUrl.split('/').pop()  : drugbankLinkOut = null;
 
+
         var record = Ext.create('LDA.model.CompoundModel', {
             cw_uri:pt[LDA.helper.LDAConstants.LDA_ABOUT],
             cs_uri: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_ABOUT] : null,
@@ -97,9 +98,12 @@ Ext.define('LDA.helper.CompoundReader', {
             compound_pref_label_item: conceptWikiUri,
             meltingPoint: drugBankData != null ? drugBankData['meltingPoint'] : null,
             meltingPoint_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
-            meltingPoint_item: drugbankLinkOut
+            meltingPoint_item: drugbankLinkOut,
 
-        });
+            wikiPathwayId: 'WP722'
+
+
+    });
 
 //        console.log('LDA.model.CompoundModel: Compound');
 //        console.log(JSON.stringify(record));

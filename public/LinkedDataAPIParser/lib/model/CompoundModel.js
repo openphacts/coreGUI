@@ -25,6 +25,7 @@ Ext.define('LDA.model.CompoundModel', {
         'toxicity', 'toxicity_src',
         'compound_pref_label', 'compound_pref_label_src',
         'meltingPoint', 'meltingPoint_src',
+        'wikiPathwayId', 'wikiPathwayId_src',
 
          'compound_pref_label_item',
          'description_item',
@@ -43,7 +44,9 @@ Ext.define('LDA.model.CompoundModel', {
          'mw_freebase_item',
          'num_ro5_violations_item',
          'psa_item',
-         'rtb_item'
+         'rtb_item',
+         'wikiPathwayId_item'
+
 
 //        '', '_src',
     ]
