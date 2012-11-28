@@ -566,8 +566,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                            if (td[prop]){
                                 var wpID = td[prop];
                                 //var wpLink = '<href> </href>http://www.wikipathways.org/wpi/wpi.php?action=downloadFile&type=png&pwTitle=Pathway:';
-                                var wpLink =  '<div><a href="' +'http://www.wikipathways.org/wpi/wpi.php?action=downloadFile&type=png&pwTitle=Pathway:' + wpID + '" target="_blank">' + wpID +  '</a>'+ '</div>';
-                                field.setValue(wpLink);
+                                 var wpLink =  '<div><a href="' +wikipathwaysImageUrl + wpID + '" target="_blank">' + wpID +  '</a>'+ '</div>';
+                               field.setValue(wpLink);
                                 field.show();
                            }
                            break;
