@@ -7,8 +7,8 @@
 
 development:
   adapter: postgresql
-  username: postgres
-  password: something
+  username: username
+  password: password
   database: lsp4all_devl
   encoding: utf8
   template: template0
@@ -29,3 +29,4 @@ production:
   database: lsp4all_devl
   encoding: utf8
   template: template0
+

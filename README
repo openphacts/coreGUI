@@ -14,7 +14,7 @@ take a look at the Git Flow tutorial.
 == Setting it up
 
 To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
-wiki.openphacts.org and follow the instructions there.
+wiki.openphacts.org and follow the instructions there. Copy database.example.yml to database.yml with your configuration.
 In case of problems contact Sune Askjaer on suap@lundbeck.com.
 
 == Adding a new tab and form to the Navigation tree
