@@ -21,7 +21,7 @@ var grid = Ext.ComponentQuery.query('PharmByEnzymeFamilyScrollingGrid')[0];
             if (grid.getStore().getTotalCount() > CSV_EXPORT_LIMIT) {
 Ext.MessageBox.show({
                 title: 'Error',
-                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                msg: 'Only a maximum of ' + CSV_EXPORT_LIMIT + ' records can be exported. Please use filters and search again to reduce the number.',
                 buttons: Ext.MessageBox.OK,
                 icon: Ext.MessageBox.ERROR
             });
