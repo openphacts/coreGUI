@@ -16,6 +16,9 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 this.setLoading(true);
             }
         },
+        viewConfig: {
+            loadMask:false
+        },
         refs:[
             // {
             // 	ref:'pager',

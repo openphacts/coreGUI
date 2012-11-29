@@ -20,6 +20,9 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                 this.setLoading(true);
             }
         },
+        viewConfig: {
+            loadMask:false
+        },
         store:'TargetPharmacologyPaginatedStore',
         exportStore:null,
         getExportStore:function () {
