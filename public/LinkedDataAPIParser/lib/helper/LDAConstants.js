@@ -54,8 +54,9 @@ Ext.define('LDA.helper.LDAConstants', {
         "compound_full_mwt": "molweight",
         "cw_compound_uri": "compound_cw",
         "compound_pref_label": "compound_name",
-        "target_organism": "assay_organism",
+        "target_organism": "target_organisms",
 	"target_title": "target_names",
-	"assay_description": "assay_description"
+	"assay_description": "assay_description",
+        "assay_organism": "assay_organism"
     }
 });
