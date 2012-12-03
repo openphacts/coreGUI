@@ -433,7 +433,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             this.resetDownload();
             countStore = this.getCountStore();
             countStore.uri = grid_store.proxy.reader.uri;
-            // TODO only one filter can be used at the moment, need to change code for multiple
+            // TODO only one of each filter type can be used at the moment, need to change code for multiple
             // at some point
             // Count with filters was slow, easier to grab all the results and count them here
             // code kept in case needed in future
@@ -447,47 +447,11 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setAssayOrganism(filter.data.value);
                 }
             });
-            //if (this.getFilters().length > 0) {
-            //	countStore.filters = this.getFilters();
-            //	countStore.setActivityType(this.getFilters()[0].data.activity);
-            //	countStore.setActivityValue(this.getFilters()[0].data.value);
-            //	countStore.setActivityCondition(this.getFilters()[0].data.condition);
-            //}
-            //	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
-            //	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
-            //	allResultsStore.setActivityType(this.filters[0].data.activity);
-            //	allResultsStore.setActivityValue(this.filters[0].data.value);
-            //	allResultsStore.setActivityCondition(this.filters[0].data.condition);	
-            //	allResultsStore.load(function(records, operation, success) {
-            //		total = records.length;
-            //		grid_store.proxy.reader.total_count = total;
-            //	// we have the total number of results now and the proxy reader knows what it is so
-            //	// fetch the first page of results
-            //	if (total == 0) {
-            //		grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
-            //		grid_view.down('#sdfDownload_id').disable();
-            //		grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-            //		grid_view.down('#sdfDownloadProxy_id').disable();
-            //		button.enable();
-            //		grid_view.setLoading(false);
-            //		Ext.MessageBox.show({
-            //			title: 'Info',
-            //			msg: 'The OPS system does not contain any data that match this search.',
-            //			buttons: Ext.MessageBox.OK,
-            //			icon: Ext.MessageBox.INFO
-            //		});
-            //	} else {
-            //		// for pagianted grid use this
-            //		// grid_store.load();
-            //		grid_store.guaranteeRange(0, 49);
-            //	}
-            //	});	
-            //} else {
             countStore.load(function(records, operation, success) {
                 if (success) {
 					if (!grid_store.cancelled) {
 						console.log('count not cancelled');
-						//me.getCancelButton().disable();
+						me.getCancelButton().disable();
 						total = operation.response.result.primaryTopic[this.countNode];
 	                    grid_store.proxy.reader.total_count = total;
 	                    // we have the total number of results now and the proxy reader knows what it is so

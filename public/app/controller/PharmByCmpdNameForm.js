@@ -73,7 +73,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	
     cancelRequest: function(button) {
 	    console.log('PharmByCmpdNameForm: cancelRequest()');
-		this.getGridView().getStore().cancelled = true;
+		this.getGridView().getStore().setCancelled(true);
 		this.getGridView().setLoading(false);
 		if (this.getGridView().getStore().isLoading()) {
 			this.getGridView().getStore().getProxy().abort();
