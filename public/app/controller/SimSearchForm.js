@@ -14,7 +14,16 @@ Ext.define('LSP.controller.SimSearchForm', {
     }, {
           ref: 'tsvDownloadButton',
           selector: 'SimSearchForm #tsvDownloadProxy_id'
-        }],
+    }, {
+	    ref: 'tanimotoThresholdSpinner',
+		selector: 'SimSearchForm #tanimoto_threshold_id'
+	}, {
+	    ref: 'maxRecordsSpinner',
+		selector: 'SimSearchForm #max_records_id'
+	}, {
+		ref: 'SimSearchType',
+		selector: 'SimSearchForm #sim_search_type_id'
+	}],
 
     all_records: undefined,
 
@@ -211,8 +220,11 @@ Ext.define('LSP.controller.SimSearchForm', {
             search_type = 'similarity';
             //  In the future this parameters should be taken from the UI.
             //  But right now in order to make Similarity search more realistic they are entered manually.
-            params['searchOptions.Threshold'] = 0.99;
-            params['searchOptions.SimilarityType'] = 'Tanimoto';
+			var threshold = this.getTanimotoThresholdSpinner().value;
+			params['searchOptions.Threshold'] = threshold/100;
+            // params['searchOptions.Threshold'] = 0.99;
+            // params['searchOptions.SimilarityType'] = 'Tanimoto';
+            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
         } else {
             //  Unsupported search type...
         }
@@ -222,6 +234,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
+		searchEngine.setLimit(this.getMaxRecordsSpinner().value);
         searchEngine.doSearch(search_type, params);
     },
 
@@ -330,8 +343,11 @@ Ext.define('LSP.controller.SimSearchForm', {
 	            search_type = 'similarity';
 	            //  In the future this parameters should be taken from the UI.
 	            //  But right now in order to make Similarity search more realistic they are entered manually.
-	            params['searchOptions.Threshold'] = 0.99;
-	            params['searchOptions.SimilarityType'] = 'Tanimoto';
+				var threshold = this.getTanimotoThresholdSpinner().value;
+				params['searchOptions.Threshold'] = threshold/100;
+	            // params['searchOptions.Threshold'] = 0.99;
+	            // params['searchOptions.SimilarityType'] = 'Tanimoto';
+	            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
 	        } else {
 	            //  Unsupported search type...
 	        }
@@ -341,6 +357,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 			params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
+			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
 		    searchEngine.doSearch(search_type, params);
 		} else {
 			Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);

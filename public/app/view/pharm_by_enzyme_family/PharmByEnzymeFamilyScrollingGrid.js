@@ -22,6 +22,9 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 		}
 		return this.exportStore;		
 	},
+        viewConfig: {
+            loadMask:false
+        },
         columns:{
             defaults:{
             },

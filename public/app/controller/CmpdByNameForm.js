@@ -43,6 +43,8 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 change: this.onProvChange
             }
         });
+
+	this.compoundWnd = Ext.create('CS.view.CompoundWindow');
     },
 
     firecbnLink: function() {
@@ -53,7 +55,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
     
     openChemSpiderWidget: function(button) {
         if (parseInt(button.chemspiderId) >= 1) {
-            Ext.create('CS.view.CompoundWindow').showCompound(button.chemspiderId);
+            this.compoundWnd.showCompound(button.chemspiderId);
         }
     },
 

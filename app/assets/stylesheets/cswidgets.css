@@ -142,3 +142,7 @@ i.loading
 .zebra li:hover {
     background-color: #DEECFD;
 }
+
+.x-tabpanel-child .x-panel-body {
+    overflow: auto;
+}
