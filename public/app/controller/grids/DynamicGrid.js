@@ -387,8 +387,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         console.log(this.$className + ': storeLoadComplete()');
         grid_view = this.getGridView();
         grid_store = grid_view.getStore();
-        // remove the sort column if there was any
-        grid_store.sort_column = undefined;
         if (success) {
             // If some records are coming back then set the tsv download params
             this.setTSVDownloadParams();

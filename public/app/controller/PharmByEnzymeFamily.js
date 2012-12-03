@@ -166,12 +166,14 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 
 	    submitQuery:function (button) {
 		console.log('PharmByEnzymeFamily: submitQuery()');
+		var dg = this.getGridView();
+		var store = dg.store;
+		// remove the sort column if there was any
+        store.sort_column = undefined;
 	        var form = button.up('form');
 	        button.disable();
 	        var values = form.getValues();
 			if (this.current_uri == "http://purl.uniprot.org/enzyme/" + values.ec_number) {
-				var dg = this.getGridView();
-				var store = dg.store;
 				store.proxy.extraParams.uri = this.current_uri;
 				store.proxy.reader.uri = this.current_uri;
 				//store.setURI("http://purl.uniprot.org/enzyme/" + this.current_uri);

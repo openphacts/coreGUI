@@ -130,12 +130,14 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 
 	submitQuery: function(button) {
 		console.log('PharmByCmpdNameForm: submitQuery()');
+		var dg = this.getGridView();
+		var store = dg.store;
+		// remove the sort column if there was any
+        store.sort_column = undefined;
 		var form = button.up('form');
 		button.disable();
 		var values = form.getValues();
 		if (this.current_uri == values.compound_uri) {
-			var dg = this.getGridView();
-			var store = dg.store;
 			store.proxy.extraParams.uri = this.current_uri;
 			store.proxy.reader.uri = this.current_uri;
 			//store.setURI(this.current_uri);
