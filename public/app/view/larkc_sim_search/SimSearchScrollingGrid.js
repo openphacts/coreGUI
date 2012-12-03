@@ -146,6 +146,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		var cmp = record.data.compound_pref_label;
 		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
+		var cw_uri = record.data.cw_uri;
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -232,7 +233,11 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=PharmByCmpdNameForm&s=' + cmp);
+                                                if (cw_uri) {
+                                                    Ext.History.add('!p=PharmByCmpdNameForm&u=' + cw_uri);
+                                                } else {
+						    Ext.History.add('!p=PharmByCmpdNameForm&s=' + cmp);
+                                                }
 					}
 				},{
 					text: 'Copy Data',
