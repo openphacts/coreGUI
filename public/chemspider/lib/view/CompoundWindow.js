@@ -92,5 +92,5 @@
         this.show();
 
         this.loadingMask.show();
-    },
+    }
 });
