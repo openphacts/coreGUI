@@ -77,6 +77,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
+                header:'Assay Organism',
+                dataIndex:'assay_organism',
+                renderer: compoundProvenanceRenderer,
+                tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
+                    'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
+                    ' expressed in non-human cells, or pathogen-infected human cells)',
+                align:'center',
+                tdCls: 'gridRowPadding'
+            },
+            {
                 header:'Assay Description',
                 dataIndex:'assay_description',
                 width: 200,
