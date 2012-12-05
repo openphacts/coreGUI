@@ -14,8 +14,8 @@
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
 	var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
   </script>
-<!--[if lt IE 8]>
-<p div class="browser-warning">The OPS Explorer is currently only supported on IE8+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
+<!--[if lt IE 7]>
+<p div class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
 <![endif]-->
   <!-- console logging will not crash browsers that don't support it -->
   <%= javascript_include_tag 'ConsoleDummy.min.js' %>
