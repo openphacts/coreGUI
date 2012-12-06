@@ -60,7 +60,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function',fieldLabel:'Specific Function', renderer: provenanceTargetSummaryRenderer, cls:'target-descriptions'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
                                     {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'cellular_location', fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'},
 
                                     {
@@ -233,14 +233,30 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     addPDBImage:function (pdbIdPage) {
         //example http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF
-//        http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
-        var stringURL = new String(pdbIdPage);
+        //http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
+        //console.log(" pdbIdPage " + pdbIdPage);
+
+        var bits = new String(pdbIdPage);
+        var finalPDBValue = new String();
+        var pdbID, firstPDB;
+        bits = bits.split(",");
+
+        Ext.each(bits, function (item, index) {
+            //console.log(" item " + item);
+            pdbID = item.split('/').pop();
+            if (index == 0) {
+                firstPDB = pdbID;
+            }
+            finalPDBValue +=  '<a target=\'_blank\' href=\'' + item + '\'>' + pdbID + '</a>   '
+
+        }, this);
+
+        //console.log(" pdb " + finalPDBValue);
         var img = this.down('#target_image');
-        var pdbID = stringURL.split('/').pop();
         var pdbField = this.down('#pdb_id_page');
-        pdbField.setRawValue('<a target=\'_blank\' href=\'' + pdbIdPage + '\'>' + pdbID + '</a>');
+        pdbField.setRawValue(finalPDBValue);
         pdbField.show();
-        img.setSrc('http://www.rcsb.org/pdb/images/' + pdbID + '_asr_r_250.jpg');
+        img.setSrc('http://www.rcsb.org/pdb/images/' + firstPDB + '_asr_r_250.jpg');
         img.show();
     },
 
