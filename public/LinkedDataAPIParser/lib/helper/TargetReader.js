@@ -42,6 +42,12 @@ Ext.define('LDA.helper.TargetReader', {
             chembl_src = chemblData[LDA.helper.LDAConstants.LDA_IN_DATASET];
             chemblUri = chemblData[LDA.helper.LDAConstants.LDA_ABOUT];
             chemblLinkOut += chemblUri.split('/').pop();
+
+            // synomnys
+            var synonmysData;
+            if (chemblData['label']) {
+                synonmysData = chemblData['label'];
+            }
         }
 
         if (drugBankData != null) {
@@ -68,7 +74,6 @@ Ext.define('LDA.helper.TargetReader', {
             }
                 // add first pdb_id
         }
-
 
         var record = Ext.create('LDA.model.TargetModel', {
             cw_target_uri: pt[LDA.helper.LDAConstants.LDA_ABOUT],
@@ -99,7 +104,7 @@ Ext.define('LDA.helper.TargetReader', {
             organism_src: chembl_src,
             organism_item: chemblLinkOut,
 
-            synonyms: chemblData != null ? chemblData['label'] : null,
+            synonyms: chemblData != null ? synonmysData : null,
             synonyms_src: chembl_src,
             synonyms_item: chemblLinkOut,
 
