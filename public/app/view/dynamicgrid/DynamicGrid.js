@@ -6,7 +6,13 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.dynamicgrid',
 	requires: ['LDA.helper.FilterUnitsReader', 'LDA.store.FilterUnitsStore', 'LDA.model.FilterUnitsModel', 'Ext.grid.RowNumberer', 'Ext.form.*', 'Ext.ux.grid.FiltersFeature', 'Ext.selection.CellModel', 'LSP.view.dynamicgrid.feature.selectable', 'LSP.view.ux.download.FileDownload'],
-  exportStore: null,
+
+    viewConfig: {
+        enableTextSelection: true
+    },
+
+
+    exportStore: null,
 	exportCSVReady: false,
 	exportSDFReady: false,
   rowNumberer: true,
