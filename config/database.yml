@@ -25,6 +25,6 @@ test:
 production:
   adapter: postgresql
   username: postgres
-  database: lsp4all_devl
+  database: lsp4all_prod
   encoding: utf8
   template: template0
