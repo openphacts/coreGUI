@@ -246,17 +246,23 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
-//            console.log('synonyms');
-	    if (value != null) {
-            	this.addSynonyms(value);
-	    }
+        //console.log('synonyms');
+            if (value != null) {
+                var synonymsfield = this.down('#' + fieldId);
+                var syn = new String(value);
+                var synonymsValue = syn.replace(new RegExp(" ,", 'g'),",");
+                synonymsfield.setValue(synonymsValue);
+                synonymsfield.show();
+            }
         }
-        //else if (fieldId == 'keywords') {
-//            console.log('keywords');
-        //    if (value != null) {
-        //        this.addKeywords(value);
-        //    }
-        //}
+        else if (fieldId == 'keywords') {
+            if (value != null) {
+                var keywordfield = this.down('#' + fieldId);
+                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                keywordfield.setValue(keywordValue);
+                keywordfield.show();
+            }
+        }
         else if (fieldId == 'organism') {
             if (value != null) {
                 this.addOrganism(value);
@@ -266,6 +272,14 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 			if (value != "" && value != null) {
 				this.addPDBImage(value);
 			}
+        }
+        else if (fieldId == 'cellular_location') {
+            if (value != null) {
+                var cellfield = this.down('#' + fieldId);
+                var cellValue = value.replace(new RegExp(" ,", 'g'),",");
+                cellfield.setValue(cellValue);
+                cellfield.show();
+            }
         }
         else {
 //            console.log('standard field: ' + fieldId + ' : ' + value);
