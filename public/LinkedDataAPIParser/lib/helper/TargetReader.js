@@ -66,13 +66,8 @@ Ext.define('LDA.helper.TargetReader', {
         var pdb = uniprotData['seeAlso'];
         var pdbLink;
         if (pdb) {
-            //console.log(" PDB " + pdb.count);
-            if (pdb['item']) {
-                pdbLink = pdb[0];
-            } else {
-                pdbLink = pdb;
-            }
-                // add first pdb_id
+            //console.log(" PDB " + pdb);
+            pdbLink = pdb;
         }
 
         var record = Ext.create('LDA.model.TargetModel', {
