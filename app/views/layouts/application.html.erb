@@ -18,6 +18,7 @@
 <p div class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
 <![endif]-->
   <!-- console logging will not crash browsers that don't support it -->
+  <!-- see https://github.com/andyet/ConsoleDummy.js/ -->
   <%= javascript_include_tag '/ConsoleDummy.min.js' %>
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>
