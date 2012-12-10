@@ -1,0 +1,44 @@
+{
+	"format": "linked-data-api",
+	"version": "0.2",
+	"result": {
+		"_about": "http://ops2.few.vu.nl/pathway?uri=http%3A%2F%2Frdf.wikipathways.org%2FWP1019_r48131.ttl&_format=json",
+		"definition": "http://ops2.few.vu.nl/api-config",
+		"extendedMetadataVersion": "http://ops2.few.vu.nl/pathway?uri=http%3A%2F%2Frdf.wikipathways.org%2FWP1019_r48131.ttl&_format=json&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+		"primaryTopic": {
+			"_about": "http://rdf.wikipathways.org/WP1019_r48131.ttl",
+			"identifier": "http://indentifiers.org/wikipathways/WP1019_r48131",
+			"title": "FAS pathway and Stress induction of HSP regulation",
+			"description": "This pathway describes the Fas induced apoptosis and interplay with Hsp27 in response to stress.\n\nMore info: [http://www.biocarta.com/pathfiles/h_hsp27Pathway.asp BioCarta].",
+			"hasPart": [{
+				"_about": "http://identifiers.org/pubmed/10914538",
+				"type": "http://vocabularies.wikipathways.org/wp#PublicationReference"
+			}, {
+				"_about": "http://identifiers.org/hmdb/",
+				"type": ["http://vocabularies.wikipathways.org/wp#GeneProduct", "http://vocabularies.wikipathways.org/wp#Metabolite"]
+			}, {
+				"type": "http://vocabularies.wikipathways.org/wp#GeneProduct"
+			}, {
+				"type": "http://vocabularies.wikipathways.org/wp#GeneProduct"
+			}, {
+				"_about": "http://identifiers.org/cas/",
+				"type": "http://vocabularies.wikipathways.org/wp#Metabolite"
+			}, {
+				"type": "http://vocabularies.wikipathways.org/wp#GeneProduct"
+			}, {
+				"_about": "http://identifiers.org/ncbigene/",
+				"type": ["http://vocabularies.wikipathways.org/wp#GeneProduct", "http://vocabularies.wikipathways.org/wp#Metabolite"]
+			}, {
+				"type": "http://vocabularies.wikipathways.org/wp#GeneProduct"
+			}],
+			"inDataset": "http://www.wikipathways.org",
+			"organism": {
+				"_about": "http://identifiers.org/taxonomy/9913",
+				"label": "Bos taurus"
+			},
+			"pathwayOntology": "http://purl.obolibrary.org/obo/PW:0000237",
+			"isPrimaryTopicOf": "http://ops2.few.vu.nl/pathway?uri=http%3A%2F%2Frdf.wikipathways.org%2FWP1019_r48131.ttl&_format=json",
+			"page": "http://www.wikipathways.org/index.php/Pathway:WP1019_r48131"
+		}
+	}
+}
