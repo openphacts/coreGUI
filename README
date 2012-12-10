@@ -62,33 +62,30 @@ needed outside the scope of a single function.
       routes file \config\routes.rb so that ExtJS accepts gets or posts on these
       methods. 
       
-Use Firebug to track how this goes and for debugging any erros that might remain.             
+Use Firebug to track how this goes and for debugging any errors that might remain.             
 
 == Debugging the OPS GUI
 
 When developing the Javascript code for the GUI an essential tool to use is the 
 FireBug extension to Firefox. This tool (and others like it for Chrome) lets you
-see all comminicaiton between the web front end and the server. In addition,
-during development mode it allows for inspection of DOM obbjects and debugging of
+see all communication between the web front end and the server. In addition,
+during development mode it allows for inspection of DOM objects and debugging of
 the Javascript code. 
 
 For debugging the Ruby on Rails server part the best way is simply to look at the
 /log/development.log file and the console (see further down under Rails for details).
-For Ruby syntax use interactive ruby 'irb' on the command line. Start it by typing 'irb'. 
+For Ruby/Rails syntax use interactive rails console, start with 'rails c' from inside the project
+directory, this uses ruby IRB but includes all the rails specific code. 
 
 == About ExtJS
 
 ExtJS is a Javascript library the OPS project uses for building front ends and widgets.
 The ExtJS API documentation can be found here: coreGUI\public\ext\index.html
-Please read the ExtJS Guide on MVC design and try to stick too it as much as possible.
+Please read the ExtJS Guide on MVC design and try to stick to it as much as possible.
 Having the javascript code divided into model, store, controller and view makes the
 much easier to understand and reuse.
 
-For help with the ExtJS view part consider using the ExtJS Builder tool. A 30 day trial
-is available for the current version which is 1.2. Please be aware that this version do
-not support the ExtJS MVC concept as introduced with ExtJS 4.
-Version 2 of the ExtJS Builder is expected to support MVC and it will likely be out
-sometime durin Q1 2012. 
+For help with the ExtJS view part consider using the ExtJS Builder tool, a free trial is available.
 
 == About Rails
 
@@ -124,11 +121,8 @@ link:files/vendor/rails/actionpack/README.html.
 1. Change directory to <tt>coreAPI</tt> and start the web server:
        <tt>cd myapp; rails server</tt> (run with --help for options)
 
-2. Go to http://localhost:3000/ and you'll see:
-       "Welcome aboard: You're riding Ruby on Rails!"
-
-3. Follow the guidelines to start developing your application. You can find
-the following resources handy:
+2. Follow the guidelines to start developing the rails side of the application. 
+You may find the following resources handy:
 
 * The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
 * Ruby on Rails Tutorial Book: http://www.railstutorial.org/
