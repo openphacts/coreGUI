@@ -139,7 +139,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
 		displayField: 'activity_type',
-		valueField: 'activity_type',
+		valueField: 'about',
 		labelWidth: 100,
 		labelPad: 2,
 		padding: '0 2 0 0',

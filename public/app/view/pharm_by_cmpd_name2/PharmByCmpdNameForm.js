@@ -159,7 +159,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
 		displayField: 'activity_type',
-		valueField: 'activity_type',
+		valueField: 'about',
 		labelWidth: 100,
 		labelPad: 2,
 		padding: '0 2 0 0',

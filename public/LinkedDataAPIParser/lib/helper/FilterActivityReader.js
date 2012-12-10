@@ -9,10 +9,12 @@ Ext.define('LDA.helper.FilterActivityReader', {
 
         Ext.each(activities, function(match, index) {
             var about = match[LDA.helper.LDAConstants.LDA_ABOUT];
+            var about_split = about.split('/');
+            var api_label = about_split[about_split.length - 1].substr(1);
             var label = match[LDA.helper.LDAConstants.LDA_LABEL];
             var record = Ext.create('LDA.model.FilterActivityModel', {
                 activity_type: label,
-                about: about
+                about: api_label
             });
             records.push(record);
         });

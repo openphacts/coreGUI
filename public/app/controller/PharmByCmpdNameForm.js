@@ -66,7 +66,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	},
 	
    comboSelect: function(combo, records, eOpts) {
-	var activity = records[0].get('activity_type');
+	var activity = records[0].get('about');
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
