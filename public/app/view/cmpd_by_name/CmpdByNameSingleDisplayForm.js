@@ -390,6 +390,42 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         labelAlign:'left',
                                         fieldLabel:'Pathways'
 
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'wikiPathwayOrganism',
+                                        itemId:'wikiPathwayOrganism',
+                                        cls:'x-cmpfield',
+                                        fieldCls:'x-cmpDescriptions',
+                                        labelWidth:120,
+                                        padding:'10px 0 0 0',
+                                        labelAlign:'left',
+                                        fieldLabel:'Pathway Organism'
+
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'wikiPathwayTitle',
+                                        itemId:'wikiPathwayTitle',
+                                        cls:'x-cmpfield',
+                                        fieldCls:'x-cmpDescriptions',
+                                        labelWidth:120,
+                                        padding:'10px 0 0 0',
+                                        labelAlign:'left',
+                                        fieldLabel:'Pathway Title'
+
+                                    },
+                                    {
+                                        xtype:'displayfield',
+                                        name:'wikiPathwayDescription',
+                                        itemId:'wikiPathwayDescription',
+                                        cls:'x-cmpfield',
+                                        fieldCls:'x-cmpDescriptions',
+                                        labelWidth:120,
+                                        padding:'10px 0 0 0',
+                                        labelAlign:'left',
+                                        fieldLabel:'Pathway Description'
+
                                     }
 
                                 ]
@@ -631,6 +667,27 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     toggleProv:function (val) {
         compound_name_provenance = val;
         console.log(" Show provenance : " + compound_name_provenance);
+    },
+
+    setPathway: function(pathway) {
+        var title = pathway.data.title;
+        var description = pathway.data.description;
+        var organism = pathway.data.organismLabel;
+        var split_wp = pathway.data.identifier.split('/');
+        var wp = split_wp[split_wp.length - 1];
+        var wp_field = this.query('#wikiPathwayId')[0];
+        var wpLink =  '<div><a href="' + wikipathwaysImageUrl + wp + '" target="_blank">' + wp +  '</a>'+ '</div>';
+        wp_field.setValue(wpLink);
+        wp_field.show();
+        var wp_org_field = this.query('#wikiPathwayTitle')[0];
+        wp_org_field.setValue(title);
+        wp_org_field.show();
+        var wp_desc_field = this.query('#wikiPathwayDescription')[0];
+        wp_desc_field.setValue(description);
+        wp_desc_field.show();
+        var wp_org_field = this.query('#wikiPathwayOrganism')[0];
+        wp_org_field.setValue(organism);
+        wp_org_field.show();
     }
 
 

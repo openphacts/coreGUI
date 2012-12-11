@@ -3,15 +3,15 @@ Ext.define('LDA.helper.PathwayReader', {
     requires:['LDA.helper.LDAConstants'],
 
     readRecords:function (data) {
-	    var identifier, title, description, inDataset, organismAbout, organismLabel, pathwayOntology;
+	var identifier, title, description, inDataset, organismAbout, organismLabel, pathwayOntology;
         var pt = data['result']['primaryTopic'];
-        var identifier = em.identifier;
-        var title = em.title;
-        var description = em.description.
-        var inDataset = em.inDataset;
-        var organsimAbout = em.organism["_about"];
-        var organismLabel = em.organism["label"];
-        var pathwayOntology = em.pathwayOntology;
+        identifier = pt.identifier;
+        title = pt.title;
+        description = pt.description;
+        inDataset = pt.inDataset;
+        organsimAbout = pt.organism["_about"];
+        organismLabel = pt.organism["label"];
+        pathwayOntology = pt.pathwayOntology;
 
         var record = Ext.create('LDA.model.PathwayModel', {
             identifier:identifier,

@@ -98,10 +98,7 @@ Ext.define('LDA.helper.CompoundReader', {
             compound_pref_label_item: conceptWikiUri,
             meltingPoint: drugBankData != null ? drugBankData['meltingPoint'] : null,
             meltingPoint_src: drugBankData != null ? drugBankData[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
-            meltingPoint_item: drugbankLinkOut,
-
-            wikiPathwayId: 'WP722'
-
+            meltingPoint_item: drugbankLinkOut
 
     });
 

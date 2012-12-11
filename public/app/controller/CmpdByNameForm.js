@@ -65,6 +65,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
         var compound_panel = me.getFormView().down("CmpdByNameSingleDisplayForm");
         if (historyTokenObject.u) {
             var store = this.getStore("LDA.store.CompoundStore");
+            var pathway_store = Ext.create('LDA.store.PathwayStore', {});
             if (historyTokenObject.u != store.proxy.extraParams.uri) {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
@@ -72,8 +73,17 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
                 // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
+                pathway_store.proxy.extraParams.uri = historyTokenObject.u;
+                console.log('hello');
                 me.current_uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
+                pathway_store.load(function(records, operation, success) {
+                  if (success) {
+                      compound_panel.setPathway(records[0]);
+                  } else {
+
+                  }
+                });
                 store.load(function(records, operation, success) {
                     console.log('LSP.controller.CmpdByNameForm: store is loaded ' + success);
                     if (success) {
