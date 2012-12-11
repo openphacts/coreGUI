@@ -6,6 +6,12 @@ class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
+  # Given a wikipathway id, use the wp api to open
+  # the image in a page
+  def wikipathways_image
+    @wpid = params[:wpid]
+  end
+  
   # Given a list of chemspider ids, grab the data about each
   # id from the Linked Data API, create the tsv file and return it
   def chemspider_tab_separated_file

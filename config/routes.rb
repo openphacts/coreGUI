@@ -58,6 +58,7 @@ LSP4All::Application.routes.draw do
       get :tab_separated_file
       get :organisms
       get :chemspider_tab_separated_file
+      get :wikipathways_image
     end
   end
 
