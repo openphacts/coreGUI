@@ -35,8 +35,14 @@
 
 module ApplicationHelper
 
+  # Use git tags to show what version the app
+  # is at
   def app_version
-    `git describe --always --tags`.strip
+    begin
+      `git describe --always --tags`.strip
+    rescue Exception => e
+      'unknown'
+    end
   end
 
 end
