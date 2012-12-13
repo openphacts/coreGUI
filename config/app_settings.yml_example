@@ -13,6 +13,9 @@ defaults: &defaults
     compound_path: "/compound/pharmacology/pages"
     enzyme_path: "/target/enzyme/pharmacology/pages"
 
+  cw:
+    url : "http://where.the.api.is.located" #including http:// but no trailing slash
+
 development:
   <<: *defaults
 
