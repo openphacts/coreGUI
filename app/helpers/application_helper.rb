@@ -34,4 +34,9 @@
 
 
 module ApplicationHelper
+
+  def app_version
+    `git describe --always --tags`.strip
+  end
+
 end

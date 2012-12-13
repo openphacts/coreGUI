@@ -24,7 +24,15 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
             itemId:'fpUserMessage1',
             fieldCls:'fb-message',
             //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value:'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
+            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
+        }, 
+        {
+            xtype:'displayfield',
+            anchor:'100%',
+            itemId:'fbVersionId',
+            fieldCls:'fb-message',
+
+            value: 'version: ' + explorer_version
         },
         {
             xtype:'displayfield',
@@ -80,6 +88,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                 var feedbackData = Ext.create('LSP.model.Feedback', {
                     userEmail:userEmailField.getValue(),
                     feedbackText:feedbackTextArea.getValue(),
+                    versionNumber: explorer_version,
                     technicalInfo:Ext.History.getToken()
                 });
                 var fp = this.up('FeedbackPanel');

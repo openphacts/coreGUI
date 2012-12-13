@@ -7,8 +7,8 @@ class FeedbackMailer < ActionMailer::Base
   # @param [String] feedbackText
   # @param [String] userEmail
   # @param [String] technicalInfo
-  def feedback_email(feedbackText, userEmail, technicalInfo)
-    @feedbackData = {:text => feedbackText, :email => userEmail, :techInfo => technicalInfo}
+  def feedback_email(feedbackText, userEmail, technicalInfo, versionNumber)
+    @feedbackData = {:text => feedbackText, :email => userEmail, :techInfo => technicalInfo, :versionNumber => versionNumber}
     mail(:to => userEmail)
   end
 end
