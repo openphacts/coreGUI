@@ -18,6 +18,7 @@ defaults: &defaults
 
   enzyme:
     root_url : "/target/enzyme/root"
+    class_url : "/target/enzyme/members"
 
 development:
   <<: *defaults

@@ -71,11 +71,18 @@ class EnzymesController < ApplicationController
             console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
           end 
           unless response.nil?
-            puts response
             json = JSON.parse(response)
+            #check whether there is one or multiple sub enzymes, the response format changes
+            #depending on this ie is it 'has_member' => [{....}] or just 'has_member' => {....}
+            if json["result"]["primaryTopic"]["has_member"].class.eql?(Hash)             
+              about = json["result"]["primaryTopic"]["has_member"]["_about"]
+              name = json["result"]["primaryTopic"]["has_member"]["name"]
+              nodes.push( { :name => name, :ec_number => about.split("/").last, :id => about.split("/").last, :leaf => about[-1,1].eql?("-") ? false : true, :cls => about[-1,1].eql?("-") ? 'folder' : 'file' } )
+            else
             json["result"]["primaryTopic"]["has_member"].each { |d|
               nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
+          end
           end
         end
 
