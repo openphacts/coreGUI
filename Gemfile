@@ -28,12 +28,16 @@ gem 'jquery-rails'
 gem "uuidtools"
 gem 'authlogic'
 gem 'ancestry'
+# choose your database, uncomment the appropriate one or add another if you need to
 gem 'pg'
+#gem 'mysql2'
+#gem 'sqlite3'
+#gem 'activerecord-oracle_enhanced-adapter'
 gem 'rdf'
 gem 'sparql-client'
 gem 'fastercsv'
 #needed for some linux deploys
-gem 'therubyracer', :platforms => :ruby
+gem 'therubyracer', '~>0.10.0', :platforms => :ruby
 ##########################
 # end of OPS explorer gems
 ##########################
