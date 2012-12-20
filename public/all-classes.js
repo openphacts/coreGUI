@@ -12252,5 +12252,3 @@ Ext.define('LSP.view.Viewport', {
 })
 ;
 
-
-
