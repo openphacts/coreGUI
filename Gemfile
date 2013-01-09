@@ -29,11 +29,12 @@ gem "uuidtools"
 gem 'authlogic'
 gem 'ancestry'
 gem 'pg'
+#gem 'mysql2'
 gem 'rdf'
 gem 'sparql-client'
 gem 'fastercsv'
 #needed for some linux deploys
-gem 'therubyracer', :platforms => :ruby
+gem 'therubyracer', '~>0.10.0', :platforms => :ruby
 ##########################
 # end of OPS explorer gems
 ##########################

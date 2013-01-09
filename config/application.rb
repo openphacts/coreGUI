@@ -72,5 +72,6 @@ module LSP4All
 
     require File.expand_path(File.join(File.dirname(__FILE__), '../lib/app_settings'))
     AppSettings.config = YAML.load_file("config/app_settings.yml")[Rails.env]
+    ActionDispatch::ParamsParser::DEFAULT_PARSERS.delete(Mime::XML) 
   end
 end
