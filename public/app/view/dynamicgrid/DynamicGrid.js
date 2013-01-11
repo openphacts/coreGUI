@@ -21,6 +21,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 		var cmp = record.data.compound_pref_label;
 		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
+                var cw = record.data.cw_compound_uri;
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -44,7 +45,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw);
 					}
 				}, {
 					text: 'Search for compound by SMILES',
