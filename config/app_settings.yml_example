@@ -16,6 +16,10 @@ defaults: &defaults
   cw:
     url : "http://where.the.api.is.located" #including http:// but no trailing slash
 
+  enzyme:
+    root_url : "/target/enzyme/root"
+    class_url : "/target/enzyme/members"
+
 development:
   <<: *defaults
 

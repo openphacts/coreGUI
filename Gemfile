@@ -5,8 +5,6 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 gem 'json'
 
 # Gems used only for assets and not required
@@ -22,14 +20,25 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+##################
+# Database adapter
+##################
+# choose your database, uncomment the appropriate one or add another if you need to
+gem 'pg'
+#gem 'mysql2'
+#gem 'sqlite3'
+#gem 'activerecord-oracle_enhanced-adapter'
+#########################
+# end of Database adapter
+#########################
+
 ###################
 # OPS explorer gems
 ###################
 gem "uuidtools"
 gem 'authlogic'
 gem 'ancestry'
-gem 'pg'
-#gem 'mysql2'
 gem 'rdf'
 gem 'sparql-client'
 gem 'fastercsv'
