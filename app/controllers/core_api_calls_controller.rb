@@ -80,18 +80,19 @@ class CoreApiCallsController < ApplicationController
     # download the tsv file 250 records at a time
     begin
       url_path = "#{path}?".concat(url_params) #.concat("&_page=#{i}&_pageSize=250")
-      puts url_path
       response = Net::HTTP.get(domain, url_path)
       # only need the header line from the first response
       # i > 1 ? lines = response.lines.to_a[1..-1].join : lines = response
       tmpfile << response
       # i+=1
+ # while i <= number_of_pages
+      send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    #the tempfile seems to nave been removed already by this point in rails 3.2.11, no idea why that should be
+    #tmpfile.close(true)
     rescue Exception => e
       logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
       # TODO send an error response?
-    end # while i <= number_of_pages
-    send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
-    tmpfile.close(true)
+    end
   end
   
   def cmpd_name_lookup(substring = params[:query])
