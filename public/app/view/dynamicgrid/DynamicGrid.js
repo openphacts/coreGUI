@@ -20,8 +20,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
 		var tar = record.data.target_title;
+                var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
-                var cw = record.data.cw_compound_uri;
+                var cw_comp = record.data.cw_compound_uri;
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -45,7 +46,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&u=' + cw);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
 				}, {
 					text: 'Search for compound by SMILES',
@@ -63,7 +64,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for target by name');
 						//                        console.log(tar);
-						Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                                                if (cw_tar == "") {
+                                                    Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                                                } else {
+						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
+                                                }
 					}
 				}, {
 					text: 'Copy Data',
