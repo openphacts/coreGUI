@@ -54,6 +54,36 @@
   <%= javascript_include_tag '/downloadify/swfobject.js' %>
 
   <!-- Add string trim function for any browsers that don't support it -->
+
+  <script type="text/javascript">
+//TODO remove this when the firefox bug is sorted
+// Firefox 18 bug - https://bugzilla.mozilla.org/show_bug.cgi?id=828319
+// fix by http://www.sencha.com/forum/member.php?5833-Holger & http://www.sencha.com/forum/member.php?60876-Tyler___Durden
+// from http://www.sencha.com/forum/showthread.php?253345-FF-18-problem
+
+Ext.onReady(function(){
+
+   if (Ext.firefoxVersion >= 18) {
+      var noArgs = [];
+      Ext.override(Ext.Base, {
+      callParent : function(args) {
+         var method, superMethod = (method = this.callParent.caller) && (method.$previous || ((method = method.$owner ?
+method :
+method.caller) && method.$owner.superclass[method.$name]));
+
+         // Workarround for Firefox 18. I don't know why this works, but it does. Perhaps functions wich have
+         // a try-catch block are handled differently - additional comment by IAN - functions with try catch are not compiled by Ion Monkey
+         try {
+         } catch (e) {
+         }
+
+         return superMethod.apply(this, args || noArgs);
+      }
+     });
+  }
+});
+  </script>
+
   <script type="text/javascript">
     if (!String.prototype.trim) {
       String.prototype.trim = function() {
