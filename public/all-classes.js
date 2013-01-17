@@ -10311,8 +10311,9 @@ Ext.define('CS.view.CompoundWindow', {
         frame: true, 
         margin: '5 5 5 5'
     },
+    autoScroll: true,
     modal: false,
-    resizable: false,
+    resizable: true,
     autoShow: false,
     closeAction: 'hide',
     height: 650,
