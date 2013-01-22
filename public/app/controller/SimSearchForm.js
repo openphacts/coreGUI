@@ -31,11 +31,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     current_count: 0,
 
-	failed_to_load: 0,
+    missing_count: 0,
+
+    failed_to_load: 0,
 	
-	current_smiles: undefined,
+    current_smiles: undefined,
 	
-	current_mode: undefined,
+    current_mode: undefined,
+
+    success_count: 0,
 
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
@@ -115,6 +119,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
         csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
 	this.current_count = 0;
+        this.missing_count = 0;
+        this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
@@ -123,24 +129,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
-                    records[0].index = me.current_count;
+                    records[0].index = me.success_count;
+                    me.success_count++;
                     me.current_count++;
                     // There is only 1 compound record returned
                     me.getStrucGrid().getStore().add(records[0]);
                     //me.all_records.push(records[0]);
                     //console.log('Count is now ' + me.current_count);
                     if (me.current_count == me.total_count) {
-                        me.getSubmitButton().enable();
-                        //me.getSsform().doLayout();
-                        me.getSsform().setLoading(false);
-                        // TODO should check there are some records first
-                        me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}
-                        me.setTSVDownloadParams();
+                        me.setTitleAfterLoading();
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
@@ -148,18 +145,38 @@ Ext.define('LSP.controller.SimSearchForm', {
                     me.current_count++;
 					me.failed_to_load++;
 					if (me.current_count == me.total_count) {
-						me.getSubmitButton().enable();
-						me.getSsform().setLoading(false);
-						me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}					
+                                            me.setTitleAfterLoading();					
 					}
                 }
             });
         }
+    },
+
+    setTitleAfterLoading: function() {
+        this.getSubmitButton().enable();
+	this.getSsform().setLoading(false);
+	this.getStrucGrid().down('#tsvDownloadProxy_id').enable();
+	if (this.failed_to_load > 0) {
+          if (this.current_mode == 'exact') {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
+} else {
+
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        } else {
+if (this.current_mode == 'exact') {
+    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle);
+} else {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        }
+        this.setTSVDownloadParams();	
     },
 
     handleHistoryToken: function(historyTokenObject) {
