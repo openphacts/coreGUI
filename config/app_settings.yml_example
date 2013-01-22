@@ -2,11 +2,11 @@
 defaults: &defaults
   mail:
     #change to whatever is appropriate for your organisation
-    :to = ["a_developer@somewhere.com", "another_developer@somewhere.com",]
-    :password = "password"
-    :user = "whoisitfrom@somewhere.com"
-    :address = "smtp.somewhere.com"
-    :port = 587
+    to : ["a_developer@somewhere.com", "another_developer@somewhere.com"]
+    password : "password"
+    user : "whoisitfrom@somewhere.com"
+    address : "smtp.somewhere.com"
+    port : 587
   tsv:
     tsv_url : "where.the.api.is.located" #without the http:// bit and no trailing slash
     target_path : "/target/pharmacology/pages"
