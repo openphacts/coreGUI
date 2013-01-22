@@ -7,6 +7,7 @@ defaults: &defaults
     user : "whoisitfrom@somewhere.com"
     address : "smtp.somewhere.com"
     port : 587
+
   tsv:
     tsv_url : "where.the.api.is.located" #without the http:// bit and no trailing slash
     target_path : "/target/pharmacology/pages"
