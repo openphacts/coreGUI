@@ -17,6 +17,7 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.textmining.pmidTextMiningHitsForm',
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm',
+        'LSP.view.api_status.Status'
     ],
 
     activeItem:0,
