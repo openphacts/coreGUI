@@ -27,8 +27,8 @@ Ext.define('LSP.view.api_status.Status', {
         itemId:'status_form_lda_image',
         width:15,
         height:15,
-        hidden: true,
-        src:'./assets/target_placeholder.png'
+        hidden: false,
+        src:'./assets/question_mark.png'
     }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
@@ -47,8 +47,8 @@ Ext.define('LSP.view.api_status.Status', {
         itemId:'status_form_cw_image',
         width:15,
         height:15,
-        hidden: true,
-        src:'./assets/target_placeholder.png'
+        hidden: false,
+        src:'./assets/question_mark.png'
     }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
@@ -67,7 +67,7 @@ Ext.define('LSP.view.api_status.Status', {
         itemId:'status_form_cs_image',
         width:15,
         height:15,
-        hidden: true,
-        src:'./assets/target_placeholder.png'
+        hidden: false,
+        src:'./assets/question_mark.png'
     }]}]
 });
