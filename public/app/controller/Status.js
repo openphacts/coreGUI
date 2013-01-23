@@ -13,9 +13,17 @@ Ext.define('LSP.controller.Status', {
     }],
 
     init: function() {
-        this.testCompoundWiki();
-        this.testLDA();
-        this.testChemspider();
+var me=this;
+ var updateAPIStatus = function () {
+             me.testCompoundWiki();
+        me.testLDA();
+        me.testChemspider();
+ };
+var task = Ext.TaskManager.start({
+     run: updateAPIStatus,
+     interval: 600000
+ });
+
     },
 
    testChemspider: function() {
