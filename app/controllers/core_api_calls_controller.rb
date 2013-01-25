@@ -6,6 +6,25 @@ class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
+  def ims_status
+    uri = URI.parse("http://openphacts.cs.man.ac.uk:9090/QueryExpander/SqlCompatVersion")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    @status = true
+    begin
+      response = http.request(request)
+      response.body.to_i.is_a? Integer
+    rescue Exception => e
+      @status = false
+    end
+    puts @status
+    respond_to do |format|
+      format.json {
+        render :json => @status.to_json   
+      }
+    end
+  end
+
   # Given a list of chemspider ids, grab the data about each
   # id from the Linked Data API, create the tsv file and return it
   def chemspider_tab_separated_file
