@@ -69,5 +69,25 @@ Ext.define('LSP.view.api_status.Status', {
         height:15,
         hidden: false,
         src:'./assets/question_mark.png'
+    }]},{
+            xtype: 'container',
+            margin: '0 5 5 5',
+            name: 'form_fields',
+            layout: {
+                type: 'hbox'
+            },
+            style: 'background-color: #fff;',
+            items: [{
+        xtype: 'label',
+        text: 'IMS',
+        margin: '0 0 0 10'
+    }, {
+        xtype:'image',
+        name:'ims_image',
+        itemId:'status_form_ims_image',
+        width:15,
+        height:15,
+        hidden: false,
+        src:'./assets/question_mark.png'
     }]}]
 });

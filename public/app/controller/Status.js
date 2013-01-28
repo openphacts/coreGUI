@@ -10,6 +10,9 @@ Ext.define('LSP.controller.Status', {
     }, {
 	    ref: 'CSImage',
 	    selector: '#status_form_cs_image'
+    }, {
+	    ref: 'IMSImage',
+	    selector: '#status_form_ims_image'
     }],
 
     init: function() {
@@ -18,6 +21,7 @@ var me=this;
              me.testCompoundWiki();
         me.testLDA();
         me.testChemspider();
+        me.testIMS();
  };
 var task = Ext.TaskManager.start({
      run: updateAPIStatus,
@@ -25,6 +29,22 @@ var task = Ext.TaskManager.start({
  });
 
     },
+
+   testIMS: function() {
+     var me = this;
+     var ims_store = Ext.create('LDA.store.IMSStore', {});
+     ims_store.load(function(records, operation, success) {
+     if (records[0].data.status == 'true') {
+         console.log('IMS fetch success ' + records[0]);
+         me.getIMSImage().setSrc('./assets/tick.png');
+         me.getIMSImage().setVisible(true);
+      } else {
+         console.log('IMS fetch boom');
+         me.getIMSImage().setSrc('./assets/cancel.png');
+         me.getIMSImage().setVisible(true);
+      }
+      });
+   },
 
    testChemspider: function() {
        var me = this;
@@ -122,4 +142,4 @@ var task = Ext.TaskManager.start({
             });
         }
     }
-    });
+});

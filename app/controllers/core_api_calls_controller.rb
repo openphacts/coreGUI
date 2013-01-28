@@ -20,7 +20,7 @@ class CoreApiCallsController < ApplicationController
     puts @status
     respond_to do |format|
       format.json {
-        render :json => @status.to_json   
+        render :json => "[{'status' : '#{@status}'}]"   
       }
     end
   end
