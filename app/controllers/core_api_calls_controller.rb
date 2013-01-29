@@ -95,10 +95,13 @@ class CoreApiCallsController < ApplicationController
     number_of_pages = (params[:total_count].to_i / 250) + 1
     i = 1
     uuid = UUIDTools::UUID.random_create.to_s
-    tmpfile = Tempfile.new(uuid)
+    file = File.new(File.join(Rails.root, "filestore", uuid), "w")
     # download the tsv file 250 records at a time
     all_headers = []
-    FasterCSV.open(tmpfile.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       begin
         url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
         response = Net::HTTP.get(domain, url_path)
@@ -110,16 +113,18 @@ class CoreApiCallsController < ApplicationController
         end
         tab_data.each do |row|
           current_row = []
-          all_headers.each {|header| puts header ; header != nil ? current_row << row.values_at(header) : ''}
+          all_headers.each {|header| header != nil ? current_row << row.values_at(header) : ''}
           tab << current_row
         end
+        tsv_file.update_attributes(:percentage => 100 - 100/i)
         i+=1
       rescue Exception => e
         logger.error "An error occurred retrieving response for url_path: "  + e.to_s
         # TODO send an error response?
       end while i <= number_of_pages
     end
-    send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    tsv_file.update_attributes(:percentage => 100)
+    send_file file.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
     #the tempfile seems to nave been removed already by this point in rails 3.2.11, no idea why that should be
     #tmpfile.close(true)
   end
