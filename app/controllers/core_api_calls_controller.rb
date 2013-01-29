@@ -89,29 +89,39 @@ class CoreApiCallsController < ApplicationController
   def tab_separated_file
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
-    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&_pageSize=" + params[:total_count]
+    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv"
     params[:activity_type] ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
     params[:assay_organism] ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
-    # number_of_pages = (params[:total_count].to_i / 250) + 1
-    # i=1
+    number_of_pages = (params[:total_count].to_i / 250) + 1
+    i = 1
     uuid = UUIDTools::UUID.random_create.to_s
     tmpfile = Tempfile.new(uuid)
     # download the tsv file 250 records at a time
-    begin
-      url_path = "#{path}?".concat(url_params) #.concat("&_page=#{i}&_pageSize=250")
-      response = Net::HTTP.get(domain, url_path)
-      # only need the header line from the first response
-      # i > 1 ? lines = response.lines.to_a[1..-1].join : lines = response
-      tmpfile << response
-      # i+=1
- # while i <= number_of_pages
-      send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    all_headers = []
+    FasterCSV.open(tmpfile.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+      begin
+        url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+        response = Net::HTTP.get(domain, url_path)
+        tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers => true})
+        # only need the header line from the first response
+        if i == 1 
+          all_headers = tab_data.headers
+          tab << all_headers
+        end
+        tab_data.each do |row|
+          current_row = []
+          all_headers.each {|header| puts header ; header != nil ? current_row << row.values_at(header) : ''}
+          tab << current_row
+        end
+        i+=1
+      rescue Exception => e
+        logger.error "An error occurred retrieving response for url_path: "  + e.to_s
+        # TODO send an error response?
+      end while i <= number_of_pages
+    end
+    send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
     #the tempfile seems to nave been removed already by this point in rails 3.2.11, no idea why that should be
     #tmpfile.close(true)
-    rescue Exception => e
-      logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
-      # TODO send an error response?
-    end
   end
   
   def cmpd_name_lookup(substring = params[:query])
