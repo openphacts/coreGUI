@@ -42,6 +42,8 @@ gem 'ancestry'
 gem 'rdf'
 gem 'sparql-client'
 gem 'fastercsv'
+gem 'delayed_job_active_record'
+gem "daemons"
 #needed for some linux deploys
 gem 'therubyracer', '~>0.10.0', :platforms => :ruby
 ##########################
