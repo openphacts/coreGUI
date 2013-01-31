@@ -99,7 +99,18 @@ class CoreApiCallsController < ApplicationController
     end
   end
 
-  def download_tsv
+  def tsv_status
+    tsv_file = TsvFile.where(:uuid => params[:uuid]).first
+    status = tsv_file.status
+    percentage = tsv_file.percentage
+    respond_to do |format|
+      format.json {
+        render :json => "[{'status' : '#{status}','percentage' : '#{percentage}'}]"   
+      }
+    end
+  end
+
+  def tsv_download
     params[:uuid]
   end
   

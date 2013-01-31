@@ -66,6 +66,18 @@ Ext.define('LSP.view.Navigator', {
                         xtype:'Status'
                     }
                 ]
+            }, {
+                title:'Background Tasks',
+                border:false,
+                itemId: 'background_tasks_form',
+                autoScroll:true,
+                iconCls:'fb-accordion',
+                bodyBorder:false,
+                items:[
+                    {
+                        xtype:'BackgroundTasksForm'
+                    }
+                ]
             }
         ];
 

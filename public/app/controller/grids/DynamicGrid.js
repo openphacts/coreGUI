@@ -113,6 +113,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                console.log('success tsv create');
                uuid = records[0].data.uuid;
                me.current_jobs.push(uuid);
+               background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
+               background_tasks_form.fireEvent('taskadded', uuid);
            } else {
                console.log('fail tsv create');
            }
