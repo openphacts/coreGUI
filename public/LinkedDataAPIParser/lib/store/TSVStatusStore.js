@@ -6,6 +6,8 @@ Ext.define('LDA.store.TSVStatusStore', {
     startParam: undefined,
     limitParam: undefined, 
     task: undefined,   
+    UUID: undefined,
+    runner: undefined,
     proxy: {
 	type: 'ajax',
         timeout: 180000,
@@ -20,5 +22,25 @@ Ext.define('LDA.store.TSVStatusStore', {
 
     setTask: function(task) {
         this.task = task;
+    },
+
+    getTask: function() {
+        return this.task;
+    },
+
+    setUUID: function(uuid) {
+        this.UUID = uuid;
+    },
+
+    getUUID: function() {
+        return this.UUID;
+    },
+
+    setTaskRunner: function(runner) {
+        this.runner = runner;
+    },
+
+    getTaskRunner: function() {
+        return this.runner;
     }
 });

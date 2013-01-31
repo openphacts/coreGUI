@@ -17,17 +17,20 @@ Ext.define('LSP.controller.BackgroundTasks', {
 
    addNewTask: function(uuid) {
        console.log('adding task with uuid : ' + uuid);
+       var me= this;
        this.task_list.push(uuid);
        var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
-       task.down('#type').setText(uuid);
+       //task.down('#type').setText(uuid);
        task.down('#percentage').setText('blah');
        task.down('#status').setText('blah');
        this.getTasksContainer().add(task);
        var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
+       tsv_status_store.setUUID(uuid);
        tsv_status_store.setTask(task);
-       tsv_status_store.load(
+       var checkTSVStatus = function() {
+       this.load(
            {params: {
-               uuid : uuid
+               uuid : this.getUUID()
            },
        callback: function(records, operation, success) {
            if (success) {
@@ -35,10 +38,27 @@ Ext.define('LSP.controller.BackgroundTasks', {
                status = records[0].data.status;
                percentage = records[0].data.percentage;
                this.getTask().down('#percentage').setText(percentage);
-               this.getTask().down('#status').setText(status);               
+               this.getTask().down('#status').setText(status); 
+               if (status == 'finished' || status == 'failed') {
+                   this.getTaskRunner().destroy();
+               }              
            } else {
                console.log('fail tsv status');
            }
-       }});
+       }})
+   };
+var runner = new Ext.util.TaskRunner();
+tsv_status_store.setTaskRunner(runner);
+ var taskrunner = runner.start({
+     run: checkTSVStatus,
+     interval: 10000,
+     scope: tsv_status_store
+ });
+//var taskrunner = Ext.TaskManager.start({
+ //    run: checkTSVStatus,
+   //  interval: 10000,
+   //  scope: tsv_status_store
+ //});
+       
    }
 });
