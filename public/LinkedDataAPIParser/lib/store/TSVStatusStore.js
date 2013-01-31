@@ -8,6 +8,7 @@ Ext.define('LDA.store.TSVStatusStore', {
     task: undefined,   
     UUID: undefined,
     runner: undefined,
+    container: undefined,
     proxy: {
 	type: 'ajax',
         timeout: 180000,
@@ -42,5 +43,13 @@ Ext.define('LDA.store.TSVStatusStore', {
 
     getTaskRunner: function() {
         return this.runner;
+    },
+
+    setTasksContainer: function(container) {
+        this.container = container;
+    },
+
+    getTasksContainer: function() {
+       return this.container;
     }
 });

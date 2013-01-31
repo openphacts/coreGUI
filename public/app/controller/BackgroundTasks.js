@@ -27,6 +27,7 @@ Ext.define('LSP.controller.BackgroundTasks', {
        var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
        tsv_status_store.setUUID(uuid);
        tsv_status_store.setTask(task);
+       tsv_status_store.setTasksContainer(this.getTasksContainer());
        var checkTSVStatus = function() {
        this.load(
            {params: {
@@ -41,24 +42,31 @@ Ext.define('LSP.controller.BackgroundTasks', {
                this.getTask().down('#status').setText(status); 
                if (status == 'finished' || status == 'failed') {
                    this.getTaskRunner().destroy();
+                   tsv_download_button = Ext.create('Ext.Button', {
+                       text:'Download tsv file',
+                       tooltip:'Download results as a tab separated file',
+                       itemId:'tsvDownloadProxy_' + this.getUUID(),
+                       iconCls:'icon-csv',
+                       hidden:false,
+                       disabled: false,
+                       href: tsv_download_url,
+                       renderTo: Ext.getBody()
+                   });
+                   tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
+                   tsv_download_button.setParams();
+                   this.getTasksContainer().add(tsv_download_button);
                }              
            } else {
                console.log('fail tsv status');
            }
        }})
    };
-var runner = new Ext.util.TaskRunner();
-tsv_status_store.setTaskRunner(runner);
- var taskrunner = runner.start({
-     run: checkTSVStatus,
-     interval: 10000,
-     scope: tsv_status_store
- });
-//var taskrunner = Ext.TaskManager.start({
- //    run: checkTSVStatus,
-   //  interval: 10000,
-   //  scope: tsv_status_store
- //});
-       
+   var runner = new Ext.util.TaskRunner();
+   tsv_status_store.setTaskRunner(runner);
+   var taskrunner = runner.start({
+      run: checkTSVStatus,
+       interval: 10000,
+       scope: tsv_status_store
+    });       
    }
 });
