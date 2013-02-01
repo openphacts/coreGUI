@@ -114,7 +114,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                uuid = records[0].data.uuid;
                me.current_jobs.push(uuid);
                background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
-               background_tasks_form.fireEvent('taskadded', uuid);
+               background_tasks_form.fireEvent('taskadded', uuid, me.getGridView().getStore().getTypeName());
            } else {
                console.log('fail tsv create');
            }
@@ -576,6 +576,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     enableSubmit: function(lookup) {
         //use lookup.rawValue to get compound etc name
+        this.getGridView().getStore().setTypeName(lookup.rawValue);
         this.getSubmitButton().enable();
     },
     // 

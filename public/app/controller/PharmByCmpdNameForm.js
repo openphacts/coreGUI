@@ -102,7 +102,9 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			  // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
         var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
         var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-        cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+        cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
+        console.log('blah ' + cw_controller);
+        console.log('blah 2 ' + cw_dropdown);
         // Setting the uri for the LDA search
 				this.current_uri = historyTokenObject.u;
 				store.proxy.extraParams.uri = historyTokenObject.u;

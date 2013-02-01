@@ -15,14 +15,14 @@ Ext.define('LSP.controller.BackgroundTasks', {
         });
     },
 
-   addNewTask: function(uuid) {
+   addNewTask: function(uuid, type) {
        console.log('adding task with uuid : ' + uuid);
        var me= this;
        this.task_list.push(uuid);
        var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
-       //task.down('#type').setText(uuid);
-       task.down('#percentage').setText('blah');
-       task.down('#status').setText('blah');
+       task.down('#type').setText(type);
+       //task.down('#percentage').setText('blah');
+       //task.down('#status').setText('blah');
        this.getTasksContainer().add(task);
        var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
        tsv_status_store.setUUID(uuid);
@@ -38,8 +38,6 @@ Ext.define('LSP.controller.BackgroundTasks', {
                console.log('success tsv status');
                status = records[0].data.status;
                percentage = records[0].data.percentage;
-               this.getTask().down('#percentage').setText(percentage);
-               this.getTask().down('#status').setText(status);
                if (percentage != '0') {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
                }

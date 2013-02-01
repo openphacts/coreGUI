@@ -6,6 +6,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	BASE_URL: '',
 	remoteSort: true,
 	//gridController: undefined,
+        typeName: undefined,
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
 	proxy: {
 		type: 'jsonp',
@@ -102,6 +103,14 @@ Ext.define('LDA.store.basestores.BaseStore', {
 			uri: this.uri
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
-	}
+	},
+
+        setTypeName: function(type) {
+            this.typeName = type;
+        },
+
+        getTypeName: function() {
+            return this.typeName;
+        }
 
 });

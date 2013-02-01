@@ -23,16 +23,6 @@ Ext.define('LSP.view.background_tasks.BackgroundTask', {
                      itemId: 'type',
                      text: 'Type',
                      margin: '0 0 0 10'
-                   },{
-                     xtype: 'label',
-                     itemId: 'percentage',
-                     text: 'Percentage',
-                     margin: '0 0 0 10'
-                   },{
-                     xtype: 'label',
-                     itemId: 'status',
-                     text: 'Status',
-                     margin: '0 0 0 10'
                    }]}, {
                      xtype: 'progressbar',
                      itemId: 'progress'
