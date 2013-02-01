@@ -33,5 +33,8 @@ Ext.define('LSP.view.background_tasks.BackgroundTask', {
                      itemId: 'status',
                      text: 'Status',
                      margin: '0 0 0 10'
-                   }]}]
+                   }]}, {
+                     xtype: 'progressbar',
+                     itemId: 'progress'
+                   }]
 });

@@ -39,8 +39,12 @@ Ext.define('LSP.controller.BackgroundTasks', {
                status = records[0].data.status;
                percentage = records[0].data.percentage;
                this.getTask().down('#percentage').setText(percentage);
-               this.getTask().down('#status').setText(status); 
+               this.getTask().down('#status').setText(status);
+               if (percentage != '0') {
+                   this.getTask().down('#progress').updateProgress(percentage/100, '', true);
+               }
                if (status == 'finished' || status == 'failed') {
+                   this.getTask().down('#progress').hide();
                    this.getTaskRunner().destroy();
                    tsv_download_button = Ext.create('Ext.Button', {
                        text:'Download tsv file',
@@ -65,7 +69,7 @@ Ext.define('LSP.controller.BackgroundTasks', {
    tsv_status_store.setTaskRunner(runner);
    var taskrunner = runner.start({
       run: checkTSVStatus,
-       interval: 10000,
+       interval: 5000,
        scope: tsv_status_store
     });       
    }

@@ -575,6 +575,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     enableSubmit: function(lookup) {
+        //use lookup.rawValue to get compound etc name
         this.getSubmitButton().enable();
     },
     // 
