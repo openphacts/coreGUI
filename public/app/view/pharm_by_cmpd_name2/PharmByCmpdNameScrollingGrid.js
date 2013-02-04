@@ -159,6 +159,8 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             {
                 header:'Pubmed ID',
                 dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                 //renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
