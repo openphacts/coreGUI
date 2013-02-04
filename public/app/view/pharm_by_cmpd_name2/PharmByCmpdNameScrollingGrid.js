@@ -154,6 +154,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
+            },
+
+            {
+                header:'Pubmed ID',
+                dataIndex:'activity_pubmed_id',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
             }
         ],
 

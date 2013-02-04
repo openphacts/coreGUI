@@ -57,6 +57,7 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organism": "target_organisms",
 	"target_title": "target_names",
 	"assay_description": "assay_description",
-	"assay_organism": "assay_organism"
+	"assay_organism": "assay_organism",
+	"activity_pubmed_id": "pmid"
     }
 });
