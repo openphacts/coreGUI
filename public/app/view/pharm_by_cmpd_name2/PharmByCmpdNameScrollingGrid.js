@@ -202,7 +202,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                 if (this.columns[columnIndex].dataIndex == 'target_title') {
 
                     var output = new String();
-                    var targetNames = data.split(',');
+                    var targetNames = data;//.split(',');
                     //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
