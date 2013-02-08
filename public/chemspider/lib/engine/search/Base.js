@@ -89,7 +89,7 @@
                 }
                 else {
                     this.err = operation.error;
-                    this.fireEvent('failed', this, this.err);
+                    oThis.fireEvent('failed', this, this.err);
                 }
             }
         });

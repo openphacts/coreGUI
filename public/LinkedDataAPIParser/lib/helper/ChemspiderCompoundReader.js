@@ -44,8 +44,9 @@ Ext.define('LDA.helper.ChemspiderCompoundReader', {
     chemblValue != null ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = null;
     drugBankData != null ? drugbankLinkOut = 'http://www.drugbank.ca/drugs/' + drugbankUrl.split('/').pop()  : drugbankLinkOut = null;
 
-
-        var record = Ext.create('LDA.model.CompoundModel', {
+    var total, count, record, success;
+    if(em != null) {
+        record = Ext.create('LDA.model.CompoundModel', {
 	    csid: pt[LDA.helper.LDAConstants.LDA_ABOUT].substring(pt[LDA.helper.LDAConstants.LDA_ABOUT].lastIndexOf('/') + 1),
             cw_uri: cw_uri,
             cs_uri: pt[LDA.helper.LDAConstants.LDA_ABOUT] != null ? pt[LDA.helper.LDAConstants.LDA_ABOUT] : null,
@@ -99,12 +100,21 @@ Ext.define('LDA.helper.ChemspiderCompoundReader', {
             meltingPoint_item: drugbankLinkOut
 
         });
-
+ total = 1;
+ total = 1;
+ success = true;
+ message = 'loaded';
+} else {
+ total = 0;
+ count = 0;
+ success = false;
+ message = 'loaded';
+}
         return new Ext.data.ResultSet({
-            total: 1,
-            count: 1,
+            total: total,
+            count: count,
             records: [record],
-            success: true,
+            success: success,
             message: 'loaded'
         });
     }

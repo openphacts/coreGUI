@@ -9,9 +9,13 @@ Ext.define('LDA.helper.PathwayReader', {
         title = pt.title;
         description = pt.description;
         inDataset = pt.inDataset;
-        organsimAbout = pt.organism["_about"];
-        organismLabel = pt.organism["label"];
-        pathwayOntology = pt.pathwayOntology;
+        organism = pt.organism;
+        var organismAbout, organismLabel, pathwayOntology;
+        if (organism) {
+            organsimAbout = pt.organism["_about"];
+            organismLabel = pt.organism["label"];
+            pathwayOntology = pt.pathwayOntology;
+        }
 
         var record = Ext.create('LDA.model.PathwayModel', {
             identifier:identifier,

@@ -11,12 +11,13 @@
         frame: true, 
         margin: '5 5 5 5'
     },
+    autoScroll: true,
     modal: false,
-    resizable: false,
+    resizable: true,
     autoShow: false,
     closeAction: 'hide',
-    height: 650,
-    width: 800,
+    height: 550,
+    width: 700,
     initComponent: function () {
         //  create component for displaying general compound information
         this.compoundInfo = Ext.create('CS.view.Compound', {

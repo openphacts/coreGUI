@@ -60,14 +60,15 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organism": "target_organisms",
 	"target_title": "target_names",
 	"assay_description": "assay_description",
-	"assay_organism": "assay_organism"
+	"assay_organism": "assay_organism",
+	"activity_pubmed_id": "pmid"
     }
 });
 
 Ext.define('CW.config.Settings', {
     singleton: true,
-    searchByTagUrl: 'http://ops.conceptwiki.org/web-ws/concept/search/byTag',
-    getConceptUrl: 'http://ops.conceptwiki.org/web-ws/concept/get',
+    searchByTagUrl: cwBaseUrl + '/web-ws/concept/search/byTag',
+    getConceptUrl: cwBaseUrl + '/web-ws/concept/get',
     base_ops_uri: 'http://www.conceptwiki.org/concept/',
     lang_code: "en"
 });
@@ -832,6 +833,91 @@ Ext.define('LSP.view.Appmoduletree', {
  #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  #
  ########################################################################################*/
+
+Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
+    extend:'Ext.window.Window',
+    alias:'widget.KetcherForm',
+
+    requires:['Ext.form.Panel'],
+
+    title:'Draw structure',
+    layout:'fit',
+    modal:true,
+    autoShow:true,
+    height:570,
+    width:810,
+
+    initComponent:function () {
+        this.items = [
+            {
+                xtype:'form',
+                padding:'0 0 0 0',
+                border:false,
+                style:'background-color: #fff;',
+
+                items:[
+                    {
+                        xtype:'box',
+                        width:800,
+                        height:520,
+                        id:'ketcher_box_id',
+                        autoEl:{
+                            tag:'iframe',
+                            src:'ketcher/ketcher.html'
+                        }}
+                ]
+            }
+        ];
+
+        this.buttons = [
+            {
+                text:'Use structure',
+                action:'commit_structure'
+            },
+            {
+                text:'Cancel',
+                scope:this,
+                handler:this.close
+            }
+        ];
+
+        this.callParent(arguments);
+    }
+});
+
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
 Ext.define('LSP.store.NavigationTree', {
     extend:'Ext.data.TreeStore',
     // proxy:{
@@ -994,91 +1080,6 @@ Ext.define('LSP.store.NavigationTree', {
 //    }
 //]
 //}
-
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
-    extend:'Ext.window.Window',
-    alias:'widget.KetcherForm',
-
-    requires:['Ext.form.Panel'],
-
-    title:'Draw structure',
-    layout:'fit',
-    modal:true,
-    autoShow:true,
-    height:570,
-    width:810,
-
-    initComponent:function () {
-        this.items = [
-            {
-                xtype:'form',
-                padding:'0 0 0 0',
-                border:false,
-                style:'background-color: #fff;',
-
-                items:[
-                    {
-                        xtype:'box',
-                        width:800,
-                        height:520,
-                        id:'ketcher_box_id',
-                        autoEl:{
-                            tag:'iframe',
-                            src:'ketcher/ketcher.html'
-                        }}
-                ]
-            }
-        ];
-
-        this.buttons = [
-            {
-                text:'Use structure',
-                action:'commit_structure'
-            },
-            {
-                text:'Cancel',
-                scope:this,
-                handler:this.close
-            }
-        ];
-
-        this.callParent(arguments);
-    }
-});
 
 Ext.define('LSP.model.DynamicGrid', {
     extend:'Ext.data.Model',
@@ -1472,57 +1473,6 @@ Ext.define('CW.store.ConceptWikiLookup', {
     }
 });
 
-Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
-    extend:'Ext.form.ComboBox',
-    alias:'widget.conceptWikiProteinLookup',
-
-    store:Ext.create('Ext.data.Store', {
-        fields:[
-            {type:'string', name:'concept_label'},
-            {type:'string', name:'concept_url'},
-            {type:'string', name:'define_url'},
-            {type:'string', name:'concept_uuid'},
-            {type:'string', name:'concept_alt_labels'},
-            {type:'string', name:'tag_label'},
-            {type:'string', name:'tag_uuid'},
-            {type:'string', name:'match'}
-
-        ],
-        proxy:{
-            type:'ajax',
-            api:{
-                read:'/concept_wiki_api_calls/protein_lookup.json'
-            },
-            reader:{
-                type:'json'
-            }
-        }
-    }),
-    queryMode:'remote',
-    valueField:'concept_url',
-    displayField:'concept_label',
-    name:'protein_uri',
-    minChars:4,
-    hideTrigger:true,
-    forceSelection:true,
-    allowBlank:false,
-    typeAhead:true,
-    emptyText:'Start typing...',
-    margin:'5 5 5 5',
-    width:700,
-    fieldLabel:'Protein name',
-    labelWidth:120,
-    listConfig:{
-        loadingText:'Searching...',
-        emptyText:'No matching proteins found.',
-        getInnerTpl:function () {
-//                    return '<p><font face="verdana" color="grey"><small>Match: {match}</small></font><br/><b>{concept_label}</b> <a href="{define_url}" target="_blank">(definition)</a><br/ ><small>Alt. terms: <i>{concept_alt_labels}</i></small></p>';
-            return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{concept_label}</b> <a href="{define_url}" target="_blank">(definition)</a></p>';
-        }
-    }
-});
-         
-           
 /**
  * Created by JetBrains RubyMine.
  * User: jameseales
@@ -1534,392 +1484,6 @@ Ext.define('LSP.model.GuiComponent', {
     extend:'Ext.data.Model',
     fields:['xtype', 'url', 'id', 'text', 'home']
 });
-
-/**
- * Created by JetBrains RubyMine.
- * User: jameseales
- * Date: 05/03/2012
- * Time: 17:11
- * To change this template use File | Settings | File Templates.
- */
-
-Ext.define('LSP.view.target_by_name.TargetPanel', {
-    extend:'Ext.panel.Panel',
-    alias:'widget.TargetPanel',
-    title:'Target Data',
-    anchor:'100% 100%',
-    autoScroll:true,
-    bodyPadding:'10px',
-    layout:'anchor',
-
-    initComponent:function () {
-        this.items = [
-            {
-                xtype:'panel',
-                border:0,
-                layout:'anchor',
-                autoScroll:true,
-                itemId:'dp',
-                bodyPadding:'20px',
-                cls:'target-data-panel',
-                hidden:true,
-                items:[
-                    {
-                        xtype:'panel',
-                        border:0,
-                        anchor:'100%',
-                        itemId:'topPanel',
-                        layout:'column',
-                        autoScroll:true,
-                        items:[
-                            {
-                                xtype:'image',
-                                itemId:'target_image',
-                                width:150,
-                                height:150,
-                                src:'./assets/target_placeholder.png'
-                            },
-                            {
-                                xtype:'panel',
-                                bodyPadding:30,
-                                columnWidth:1.0,
-                                border:0,
-                                autoScroll:true,
-                                itemId:'textDataPanel',
-                                layout:'anchor',
-                                items:[
-                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel',renderer: provenanceTargetSummaryRenderer, fieldCls:'target-title'},
-                                    {xtype:'button', text:'Pharmacology Data', margin: '15 0 20 0', itemId:'pharmTargetButton', cls:'target-pharm-button'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type',renderer: provenanceTargetSummaryRenderer, cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Organism', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Description', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Synonyms', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function',fieldLabel:'Specific Function', renderer: provenanceTargetSummaryRenderer, cls:'target-descriptions'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'cellular_location', fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'},
-
-                                    {
-                                        xtype:'panel',
-                                        border:0,
-                                        anchor:'100%',
-                                        itemId:'numericDataPanel',
-                                        layout:'column',
-                                        bodyPadding:30,
-                                        items:[
-                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-
-                                        ]
-                                    }
-                                ]
-                            }
-
-                        ]
-                    }
-                ]
-            },
-            {
-                xtype:'displayfield',
-                border:0,
-                padding:'20px',
-                itemId:'msg',
-//                anchor:'100% 100%',
-                region:'center',
-                hidden:true,
-                fieldCls:'target-message',
-                value:'message here'
-            }
-        ];
-
-        // var store = Ext.create('LDA.store.TargetStore');
-        // store.addListener('load', this.showData, this);
-        this.callParent(arguments);
-    },
-
-    resetAllFields:function () {
-        var displayFields = this.query('displayfield');
-        Ext.each(displayFields, function (field) {
-            field.hide();
-        }, this);
-        var img = this.down('#target_image');
-        img.setSrc('./assets/target_placeholder.png');
-        this.doLayout();
-    },
-
-    showMessage:function (message) {
-        var dp = this.down('#dp');
-        var msg = this.down('#msg');
-        dp.setVisible(false);
-        msg.setValue(message);
-        msg.setVisible(true);
-    },
-
-    showData:function (store, records, successful) {
-		console.log('LSP.view.target_by_name.TargetPanel: showData()');
-        if (successful) {
-
-            var td = store.first().data;
-
-            if (records.length > 0 && td.hasOwnProperty('prefLabel')) { // TEMP FIX -- new coreAPI's returning an empty object
-
-                var dp = this.down('#dp');
-                var msg = this.down('#msg');
-                msg.setVisible(false);
-                this.setValues(store.first());
-                dp.setVisible(true);
-
-            } else {
-                this.showMessage('No records found within OPS for this search');
-            }
-        } else {
-            this.showMessage('Server did not respond');
-        }
-        this.up('TargetByNameForm').setLoading(false);
-        var searchButton = Ext.ComponentQuery.query('#TargetByNameSubmit_id')[0].enable();
-    },
-
-    clearDomBelow:function (domElement) {
-        if (domElement.hasChildNodes()) {
-            while (domElement.childNodes.length > 0) {
-                domElement.removeChild(domElement.firstChild);
-            }
-        }
-    },
-
-    // addKeywords not used, just rendered normally
-    addKeywords:function (keywords) {
-        var bits = keywords.split(',');
-        var keywordDisplayField = this.down('#keywords');
-        var bodyEl = keywordDisplayField.bodyEl;
-        var domElem = bodyEl.dom;
-        this.clearDomBelow(domElem);
-
-        var output;
-        if (target_name_provenance) {
-            var source = recordData.data['keywords_src'];
-            var sourceItem = recordData.data['keywords_item']
-            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-            cls += 'Icon';
-            cls = '/assets/' + cls + '.png';
-
-            output = '{kw} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
-        } else {
-            output = '{kw}'
-        }
-
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:output});
-        Ext.each(bits, function (keyword) {
-            tpl.append(bodyEl, {kw:keyword.trim()});
-        }, this);
-        keywordDisplayField.show();
-    },
-
-    addOrganism:function (organism) {
-        var organismDisplayField = this.down('#organism');
-        var bodyEl = organismDisplayField.bodyEl;
-        var domElem = bodyEl.dom;
-        this.clearDomBelow(domElem);
-
-        var output;
-        if (target_name_provenance) {
-            var sourceItem = recordData.data['organism_item'];
-            var source = recordData.data['organism_src'];
-            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-            cls += 'Icon';
-            cls = '/assets/' + cls + '.png';
-
-            output = '{org} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
-        } else {
-            output = '{org}'
-        }
-
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'output'});
-        tpl.append(bodyEl, {org:organism});
-        organismDisplayField.show();
-    },
-
-    addSynonyms:function (synonyms) {
-        var bits = synonyms.split(' , ');
-        var synonymsField = this.down('#synonyms');
-        var bodyEl = synonymsField.bodyEl;
-        var domElem = bodyEl.dom;
-        this.clearDomBelow(domElem);
-
-        var output;
-        if (target_name_provenance) {
-            var source = recordData.data['synonyms_src'];
-            var sourceItem = recordData.data['synonyms_item'];
-            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-            cls += 'Icon';
-            cls = '/assets/' + cls + '.png';
-
-            output = '{syn} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
-        } else {
-            output = '{syn}'
-        }
-
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:output});
-        Ext.each(bits, function (synonym) {
-            tpl.append(bodyEl, {syn:synonym});
-        }, this);
-        synonymsField.show();
-    },
-
-    addPDBImage:function (pdbIdPage) {
-        //example http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF
-        //http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
-        //console.log(" pdbIdPage " + pdbIdPage);
-
-        var bits = new String(pdbIdPage);
-        var finalPDBValue = new String();
-        var pdbID, firstPDB;
-        bits = bits.split(",");
-
-        Ext.each(bits, function (item, index) {
-            //console.log(" item " + item);
-            pdbID = item.split('/').pop();
-            if (index == 0) {
-                firstPDB = pdbID;
-            }
-            finalPDBValue +=  '<a target=\'_blank\' href=\'' + item + '\'>' + pdbID + '</a>   '
-
-        }, this);
-
-        //console.log(" pdb " + finalPDBValue);
-        var img = this.down('#target_image');
-        var pdbField = this.down('#pdb_id_page');
-        pdbField.setRawValue(finalPDBValue);
-        pdbField.show();
-        img.setSrc('http://www.rcsb.org/pdb/images/' + firstPDB + '_asr_r_250.jpg');
-        img.show();
-    },
-
-    setFieldValue:function (fieldId, value) {
-        if (fieldId == 'synonyms') {
-        //console.log('synonyms');
-            if (value != null) {
-                var synonymsfield = this.down('#' + fieldId);
-                var syn = new String(value);
-                var synonymsValue = syn.replace(new RegExp(" ,", 'g'),",");
-                synonymsfield.setValue(synonymsValue);
-                synonymsfield.show();
-            }
-        }
-        else if (fieldId == 'keywords') {
-            if (value != null) {
-                var keywordfield = this.down('#' + fieldId);
-                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
-                keywordfield.setValue(keywordValue);
-                keywordfield.show();
-            }
-        }
-        else if (fieldId == 'organism') {
-            if (value != null) {
-                this.addOrganism(value);
-            }
-        }
-        else if (fieldId == 'pdb_id_page') {
-			if (value != "" && value != null) {
-				this.addPDBImage(value);
-			}
-        }
-        else if (fieldId == 'cellular_location') {
-            if (value != null) {
-                var cellfield = this.down('#' + fieldId);
-                var cellValue = value.replace(new RegExp(" ,", 'g'),",");
-                cellfield.setValue(cellValue);
-                cellfield.show();
-            }
-        }
-        else {
-//            console.log('standard field: ' + fieldId + ' : ' + value);
-            var field = this.down('#' + fieldId);
-			if (field != null) {
-				field.setValue(value);
-	            field.show();
-			}
-        }
-    },
-
-    setValues:function (target) {
-        this.resetAllFields();
-        var td = target.data;
-        recordData = target;
-
-        var pharmButton = this.down('#pharmTargetButton');
-        pharmButton.hide();
-        pharmButton.setHandler(function () {
-                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.uri);
-            }
-        );
-        pharmButton.show();
-
-        for (var prop in td) {
-            if (td.hasOwnProperty(prop)) {
-               if (td[prop]){
-                   //console.log(prop);
-                   this.setFieldValue(prop, td[prop]);
-               }
-
-            }
-        }
-        this.doLayout();
-    },
-
-    toggleProv:function (val) {
-        target_name_provenance = val;
-        console.log(" Show provenance : " + target_name_provenance);
-    }
-
-});
-
-var target_name_provenance = false;
-var recordData;
-
-function provenanceTargetSummaryRenderer(value, field) {
-	//console.log("Target by name provenance renderer");
-
-    var sources = new Array();
-    sources['http://www.chemspider.com'] = "ChemSpider";
-    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
-    sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
-    sources['http://www.conceptwiki.org'] = "ConceptWiki";
-    sources['http://purl.uniprot.org'] = "UniProt";
-
-    if (target_name_provenance) {
-
-        var recdata = field.itemId;
-        var itemdata = recdata + '_item';
-        recdata += '_src';
-
-        var source = recordData.data[recdata];
-        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-        if (!cls) {
-            cls = 'defaultValue';
-        }
-        var iconCls = cls + 'Icon';
-        iconCls = '/assets/' + iconCls + '.png';
-
-        cls += LDAProvenanceMode;
-        cls += 'Summary';
-
-        var output;
-        //console.log(iconCls);
-        // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
-        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
-
-        return output;
-
-    } else {
-
-        return value;
-
-    }
-
-};
 
 Ext.define('LDA.model.SimModel', {
     extend:'Ext.data.Model',
@@ -2085,218 +1649,6 @@ Ext.define('LSP.controller.NavigationTree', {
     }
 
 });
-Ext.define('LSP.view.target_by_name.TargetByNameForm', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.TargetByNameForm',
-    closable: true,
-    header: false,
-    requires: ['LSP.view.dropdowns.conceptWikiProteinLookup',
-    // 'LSP.view.dynamicgrid.DynamicGrid',
-    'LSP.view.target_by_name.TargetPanel'],
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
-    initComponent: function() {
-
-        this.items = [{
-            xtype: 'label',
-            html: '<span style="font-family: verdana; color: grey; ">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</span>',
-            labelWidth: 400,
-            padding: '5 0 0 140'
-        }, {
-            xtype: 'container',
-            margin: '0 5 5 5',
-            name: 'form_fields',
-            layout: {
-                type: 'column'
-            },
-            style: 'background-color: #fff;',
-            items: [
-            Ext.create('CW.view.ConceptWikiLookup', {
-                //xtype: 'conceptWikiLookup',
-                fieldLabel: 'Target name',
-                itemId: 'targetByNameLookup',
-                store: Ext.create('CW.store.ConceptWikiLookup', {
-                    proxy: {
-                        type: 'jsonp',
-                        timeout: 5000,
-                        url: CW.config.Settings.searchByTagUrl,
-                        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
-                        extraParams: {
-                            'branch': 3 // Only show species results from swissprot
-                        }
-                    }
-                }),
-                name: 'protein_uri',
-                cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
-            }), {
-                xtype: 'button',
-                padding: '5 5 5 5',
-                text: 'Search',
-                itemId: 'TargetByNameSubmit_id',
-                disabled: true,
-                action: 'query_target_by_name'
-            },{
-                    xtype: 'radiogroup',
-                    width: 160,
-                    labelWidth: 65,
-                    fieldLabel: 'Provenance',
-                    itemId: 'provId',
-                    margin: '5 0 0 90',
-
-                    items: [{
-                        boxLabel: 'On',
-                        name: 'prov',
-                        inputValue: true
-                    }, {
-                        boxLabel: 'Off',
-                        name: 'prov',
-                        inputValue: false,
-                        checked: true
-                    }]
-                }]
-        }, {
-            xtype: 'TargetPanel',
-            flex: 1
-        }];
-        this.callParent(arguments);
-    }
-});
-
-Ext.define('LSP.controller.TargetByNameForm', {
-    extend: 'Ext.app.Controller',
-    // models: ['LDA.model.TargetModel'],
-    // stores: ['LDA.store.TargetStore'],
-    views: ['target_by_name.TargetByNameForm'],
-    current_uri: null,
-
-    refs: [{
-        ref: 'targetPanel',
-        selector: 'TargetPanel'
-    }, {
-        ref: 'formView',
-        selector: 'TargetByNameForm'
-    }, {
-        ref: 'submitButton',
-        selector: '#TargetByNameSubmit_id'
-
-    }, {
-        ref: 'lookup',
-        selector: '#targetByNameLookup'
-    }],
-
-    init: function() {
-        this.control({
-            'TargetByNameForm button[action=query_target_by_name]': {
-                click: this.submitQuery
-            },
-            'TargetByNameForm conceptWikiLookup': {
-                select: this.enableSubmit
-            },
-            'TargetByNameForm': {
-                historyToken: this.handleHistoryToken
-            },
-            'TargetByNameForm #provId': {
-                change: this.onProvChange
-            }
-        });
-    },
-
-    handleHistoryToken: function(historyTokenObject) {
-        console.log('LSP.controller.TargetByNameForm: handleHistoryToken()');
-        var me = this;
-        var target_panel = me.getFormView().down("TargetPanel");
-        if (historyTokenObject.u) {
-            this.current_uri = historyTokenObject.u;
-            var store = this.getStore("LDA.store.TargetStore");
-            if (historyTokenObject.u != store.proxy.extraParams.uri) {
-                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
-                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
-                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
-                // Setting the uri for the LDA search
-                store.proxy.extraParams.uri = historyTokenObject.u;
-                me.getFormView().setLoading(true);
-                store.load(function(records, operation, success) {
-                    if (success) {
-                        console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
-                        me.getSubmitButton().enable();
-                        target_panel.setValues(records[0]);
-                        target_panel.recordData = records[0];
-                        target_panel.down("#dp").setVisible(true);
-                        target_panel.down('#msg').setVisible(false);
-                        me.getFormView().setLoading(false);
-                    } else {
-                        Ext.MessageBox.show({
-                            title: 'Info',
-                            msg: 'We are sorry but the OPS system returned an error.',
-                            buttons: Ext.MessageBox.OK,
-                            icon: Ext.MessageBox.INFO
-                        });
-                        me.getSubmitButton().enable();
-                        target_panel.down("#dp").setVisible(false);
-                        me.getFormView().setLoading(false);
-                    }
-                });
-            }
-        } else if (historyTokenObject.s) {
-            var lookup = this.getLookup();
-            lookup.setRawValue(historyTokenObject.s);
-            lookup.doQuery(historyTokenObject.s);
-        }
-    },
-
-    enableSubmit: function() {
-        var form = this.getFormView();
-        var button = this.getSubmitButton();
-        button.enable();
-    },
-
-    submitQuery: function(button) {
-        button.disable();
-        var me = this;
-        var form = this.getFormView();
-        var target_panel = me.getFormView().down("TargetPanel");
-        var target_uri = form.getValues().protein_uri;
-        if (this.current_uri == target_uri) {
-            var store = this.getStore("LDA.store.TargetStore");
-            store.proxy.extraParams.uri = this.current_uri;
-            me.getFormView().setLoading(true);
-            store.load(function(records, operation, success) {
-                if (success) {
-                    console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
-                    me.getSubmitButton().enable();
-                    target_panel.setValues(records[0]);
-                    target_panel.recordData = records[0];
-                    target_panel.down("#dp").setVisible(true);
-                    target_panel.down('#msg').setVisible(false);
-                    me.getFormView().setLoading(false);
-                } else {
-                    Ext.MessageBox.show({
-                        title: 'Info',
-                        msg: 'We are sorry but the OPS system returned an error.',
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.INFO
-                    });
-                    me.getSubmitButton().enable();
-                    target_panel.down("#dp").setVisible(false);
-                    me.getFormView().setLoading(false);
-                }
-            });
-        } else {
-            Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
-        }
-    },
-
-    onProvChange: function(field, newVal, oldVal) {
-        var dg = this.getTargetPanel();
-        dg.toggleProv(newVal['prov']);
-        dg.setValues(dg.recordData);
-
-    }
-});
-
 Ext.define('CW.view.ConceptWikiLookup', {
     extend:'Ext.form.ComboBox',
     alias:'widget.conceptWikiLookup',
@@ -2323,7 +1675,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
     hideTrigger:true,
     forceSelection:true,
     allowBlank:false,
-    typeAhead:true,
+    typeAhead:false,
     emptyText:'Start typing...',
     margin:'5 5 5 5',
     width:700,
@@ -2335,7 +1687,8 @@ Ext.define('CW.view.ConceptWikiLookup', {
         getInnerTpl:function () {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
-    }
+    },
+    autoSelect: false
 });
          
 
@@ -3534,6 +2887,11 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
     }
 });
 
+Ext.define('LDA.model.FilterUnitsModel', {
+    extend:'Ext.data.Model',
+    fields:['activity_type', 'unit', 'about']
+});
+
 Ext.define('LSP.view.ux.download.FileDownload', {
     extend: 'Ext.Component',
     alias: 'widget.FileDownload',
@@ -3558,11 +2916,6 @@ Ext.define('LSP.view.ux.download.FileDownload', {
             }
         }
     }
-});
-
-Ext.define('LDA.model.FilterUnitsModel', {
-    extend:'Ext.data.Model',
-    fields:['activity_type', 'unit', 'about']
 });
 
 /* 
@@ -3629,6 +2982,443 @@ Ext.require('Ext.grid.feature.Feature', function () {
         }
     });
 });  
+Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
+    extend:'Ext.form.ComboBox',
+    alias:'widget.conceptWikiProteinLookup',
+
+    store:Ext.create('Ext.data.Store', {
+        fields:[
+            {type:'string', name:'concept_label'},
+            {type:'string', name:'concept_url'},
+            {type:'string', name:'define_url'},
+            {type:'string', name:'concept_uuid'},
+            {type:'string', name:'concept_alt_labels'},
+            {type:'string', name:'tag_label'},
+            {type:'string', name:'tag_uuid'},
+            {type:'string', name:'match'}
+
+        ],
+        proxy:{
+            type:'ajax',
+            api:{
+                read:'/concept_wiki_api_calls/protein_lookup.json'
+            },
+            reader:{
+                type:'json'
+            }
+        }
+    }),
+    queryMode:'remote',
+    valueField:'concept_url',
+    displayField:'concept_label',
+    name:'protein_uri',
+    minChars:4,
+    hideTrigger:true,
+    forceSelection:true,
+    allowBlank:false,
+    typeAhead:true,
+    emptyText:'Start typing...',
+    margin:'5 5 5 5',
+    width:700,
+    fieldLabel:'Protein name',
+    labelWidth:120,
+    listConfig:{
+        loadingText:'Searching...',
+        emptyText:'No matching proteins found.',
+        getInnerTpl:function () {
+//                    return '<p><font face="verdana" color="grey"><small>Match: {match}</small></font><br/><b>{concept_label}</b> <a href="{define_url}" target="_blank">(definition)</a><br/ ><small>Alt. terms: <i>{concept_alt_labels}</i></small></p>';
+            return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{concept_label}</b> <a href="{define_url}" target="_blank">(definition)</a></p>';
+        }
+    }
+});
+         
+           
+/**
+ * Created by JetBrains RubyMine.
+ * User: jameseales
+ * Date: 05/03/2012
+ * Time: 17:11
+ * To change this template use File | Settings | File Templates.
+ */
+
+Ext.define('LSP.view.target_by_name.TargetPanel', {
+    extend:'Ext.panel.Panel',
+    alias:'widget.TargetPanel',
+    title:'Target Data',
+    anchor:'100% 100%',
+    autoScroll:true,
+    bodyPadding:'10px',
+    layout:'anchor',
+
+    initComponent:function () {
+        this.items = [
+            {
+                xtype:'panel',
+                border:0,
+                layout:'anchor',
+                autoScroll:true,
+                itemId:'dp',
+                bodyPadding:'20px',
+                cls:'target-data-panel',
+                hidden:true,
+                items:[
+                    {
+                        xtype:'panel',
+                        border:0,
+                        anchor:'100%',
+                        itemId:'topPanel',
+                        layout:'column',
+                        autoScroll:true,
+                        items:[
+                            {
+                                xtype:'image',
+                                itemId:'target_image',
+                                width:150,
+                                height:150,
+                                src:'./assets/target_placeholder.png'
+                            },
+                            {
+                                xtype:'panel',
+                                bodyPadding:30,
+                                columnWidth:1.0,
+                                border:0,
+                                autoScroll:true,
+                                itemId:'textDataPanel',
+                                layout:'anchor',
+                                items:[
+                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel',renderer: provenanceTargetSummaryRenderer, fieldCls:'target-title'},
+                                    {xtype:'button', text:'Pharmacology Data', margin: '15 0 20 0', itemId:'pharmTargetButton', cls:'target-pharm-button'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type',renderer: provenanceTargetSummaryRenderer, cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Organism', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Description', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Synonyms', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function',fieldLabel:'Specific Function', renderer: provenanceTargetSummaryRenderer, cls:'target-descriptions'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'cellular_location', fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'},
+
+                                    {
+                                        xtype:'panel',
+                                        border:0,
+                                        anchor:'100%',
+                                        itemId:'numericDataPanel',
+                                        layout:'column',
+                                        bodyPadding:30,
+                                        items:[
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+
+                                        ]
+                                    }
+                                ]
+                            }
+
+                        ]
+                    }
+                ]
+            },
+            {
+                xtype:'displayfield',
+                border:0,
+                padding:'20px',
+                itemId:'msg',
+//                anchor:'100% 100%',
+                region:'center',
+                hidden:true,
+                fieldCls:'target-message',
+                value:'message here'
+            }
+        ];
+
+        // var store = Ext.create('LDA.store.TargetStore');
+        // store.addListener('load', this.showData, this);
+        this.callParent(arguments);
+    },
+
+    resetAllFields:function () {
+        var displayFields = this.query('displayfield');
+        Ext.each(displayFields, function (field) {
+            field.hide();
+        }, this);
+        var img = this.down('#target_image');
+        img.setSrc('./assets/target_placeholder.png');
+        this.doLayout();
+    },
+
+    showMessage:function (message) {
+        var dp = this.down('#dp');
+        var msg = this.down('#msg');
+        dp.setVisible(false);
+        msg.setValue(message);
+        msg.setVisible(true);
+    },
+
+    showData:function (store, records, successful) {
+		console.log('LSP.view.target_by_name.TargetPanel: showData()');
+        if (successful) {
+
+            var td = store.first().data;
+
+            if (records.length > 0 && td.hasOwnProperty('prefLabel')) { // TEMP FIX -- new coreAPI's returning an empty object
+
+                var dp = this.down('#dp');
+                var msg = this.down('#msg');
+                msg.setVisible(false);
+                this.setValues(store.first());
+                dp.setVisible(true);
+
+            } else {
+                this.showMessage('No records found within OPS for this search');
+            }
+        } else {
+            this.showMessage('Server did not respond');
+        }
+        this.up('TargetByNameForm').setLoading(false);
+        var searchButton = Ext.ComponentQuery.query('#TargetByNameSubmit_id')[0].enable();
+    },
+
+    clearDomBelow:function (domElement) {
+        if (domElement.hasChildNodes()) {
+            while (domElement.childNodes.length > 0) {
+                domElement.removeChild(domElement.firstChild);
+            }
+        }
+    },
+
+    // addKeywords not used, just rendered normally
+    addKeywords:function (keywords) {
+        var bits = keywords.split(',');
+        var keywordDisplayField = this.down('#keywords');
+        var bodyEl = keywordDisplayField.bodyEl;
+        var domElem = bodyEl.dom;
+        this.clearDomBelow(domElem);
+
+        var output;
+        if (target_name_provenance) {
+            var source = recordData.data['keywords_src'];
+            var sourceItem = recordData.data['keywords_item']
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{kw} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{kw}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:output});
+        Ext.each(bits, function (keyword) {
+            tpl.append(bodyEl, {kw:keyword.trim()});
+        }, this);
+        keywordDisplayField.show();
+    },
+
+    addOrganism:function (organism) {
+        var organismDisplayField = this.down('#organism');
+        var bodyEl = organismDisplayField.bodyEl;
+        var domElem = bodyEl.dom;
+        this.clearDomBelow(domElem);
+
+        var output;
+        if (target_name_provenance) {
+            var sourceItem = recordData.data['organism_item'];
+            var source = recordData.data['organism_src'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{org} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{org}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'output'});
+        tpl.append(bodyEl, {org:organism});
+        organismDisplayField.show();
+    },
+
+    addSynonyms:function (synonyms) {
+        var bits = synonyms.split(' , ');
+        var synonymsField = this.down('#synonyms');
+        var bodyEl = synonymsField.bodyEl;
+        var domElem = bodyEl.dom;
+        this.clearDomBelow(domElem);
+
+        var output;
+        if (target_name_provenance) {
+            var source = recordData.data['synonyms_src'];
+            var sourceItem = recordData.data['synonyms_item'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{syn} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{syn}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:output});
+        Ext.each(bits, function (synonym) {
+            tpl.append(bodyEl, {syn:synonym});
+        }, this);
+        synonymsField.show();
+    },
+
+    addPDBImage:function (pdbIdPage) {
+        //example http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF
+        //http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
+        //console.log(" pdbIdPage " + pdbIdPage);
+
+        var bits = new String(pdbIdPage);
+        var finalPDBValue = new String();
+        var pdbID, firstPDB;
+        bits = bits.split(",");
+
+        Ext.each(bits, function (item, index) {
+            //console.log(" item " + item);
+            pdbID = item.split('/').pop();
+            if (index == 0) {
+                firstPDB = pdbID;
+            }
+            finalPDBValue +=  '<a target=\'_blank\' href=\'' + item + '\'>' + pdbID + '</a>   '
+
+        }, this);
+
+        //console.log(" pdb " + finalPDBValue);
+        var img = this.down('#target_image');
+        var pdbField = this.down('#pdb_id_page');
+        pdbField.setRawValue(finalPDBValue);
+        pdbField.show();
+        img.setSrc('http://www.rcsb.org/pdb/images/' + firstPDB + '_asr_r_250.jpg');
+        img.show();
+    },
+
+    setFieldValue:function (fieldId, value) {
+        if (fieldId == 'synonyms') {
+        //console.log('synonyms');
+            if (value != null) {
+                var synonymsfield = this.down('#' + fieldId);
+                var syn = new String(value);
+                var synonymsValue = syn.replace(new RegExp(" ,", 'g'),",");
+                synonymsfield.setValue(synonymsValue);
+                synonymsfield.show();
+            }
+        }
+        else if (fieldId == 'keywords') {
+            if (value != null) {
+                var keywordfield = this.down('#' + fieldId);
+                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                keywordfield.setValue(keywordValue);
+                keywordfield.show();
+            }
+        }
+        else if (fieldId == 'organism') {
+            if (value != null) {
+                this.addOrganism(value);
+            }
+        }
+        else if (fieldId == 'pdb_id_page') {
+			if (value != "" && value != null) {
+				this.addPDBImage(value);
+			}
+        }
+        else if (fieldId == 'cellular_location') {
+            if (value != null) {
+                var cellfield = this.down('#' + fieldId);
+                var cellValue = value.replace(new RegExp(" ,", 'g'),",");
+                cellfield.setValue(cellValue);
+                cellfield.show();
+            }
+        }
+        else {
+//            console.log('standard field: ' + fieldId + ' : ' + value);
+            var field = this.down('#' + fieldId);
+			if (field != null) {
+				field.setValue(value);
+	            field.show();
+			}
+        }
+    },
+
+    setValues:function (target) {
+        this.resetAllFields();
+        var td = target.data;
+        recordData = target;
+
+        var pharmButton = this.down('#pharmTargetButton');
+        pharmButton.hide();
+        pharmButton.setHandler(function () {
+                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.uri);
+            }
+        );
+        pharmButton.show();
+
+        for (var prop in td) {
+            if (td.hasOwnProperty(prop)) {
+               if (td[prop]){
+                   //console.log(prop);
+                   this.setFieldValue(prop, td[prop]);
+               }
+
+            }
+        }
+        this.doLayout();
+    },
+
+    toggleProv:function (val) {
+        target_name_provenance = val;
+        console.log(" Show provenance : " + target_name_provenance);
+    }
+
+});
+
+var target_name_provenance = false;
+var recordData;
+
+function provenanceTargetSummaryRenderer(value, field) {
+	//console.log("Target by name provenance renderer");
+
+    var sources = new Array();
+    sources['http://www.chemspider.com'] = "ChemSpider";
+    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
+    sources['http://www.conceptwiki.org'] = "ConceptWiki";
+    sources['http://purl.uniprot.org'] = "UniProt";
+
+    if (target_name_provenance) {
+
+        var recdata = field.itemId;
+        var itemdata = recdata + '_item';
+        recdata += '_src';
+
+        var source = recordData.data[recdata];
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
+
+        cls += LDAProvenanceMode;
+        cls += 'Summary';
+
+        var output;
+        //console.log(iconCls);
+        // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+
+        return output;
+
+    } else {
+
+        return value;
+
+    }
+
+};
+
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
@@ -3738,6 +3528,218 @@ Ext.define('LSP.view.dataview.StructureViewer', {
         this.callParent(arguments);
     }
 });
+Ext.define('LSP.view.target_by_name.TargetByNameForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.TargetByNameForm',
+    closable: true,
+    header: false,
+    requires: ['LSP.view.dropdowns.conceptWikiProteinLookup',
+    // 'LSP.view.dynamicgrid.DynamicGrid',
+    'LSP.view.target_by_name.TargetPanel'],
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
+    initComponent: function() {
+
+        this.items = [{
+            xtype: 'label',
+            html: '<span style="font-family: verdana; color: grey; ">Hint: Start typing in protein name and species. E.g. \"Adenosine receptor A2a (Homo sapiens)\"</span>',
+            labelWidth: 400,
+            padding: '5 0 0 140'
+        }, {
+            xtype: 'container',
+            margin: '0 5 5 5',
+            name: 'form_fields',
+            layout: {
+                type: 'column'
+            },
+            style: 'background-color: #fff;',
+            items: [
+            Ext.create('CW.view.ConceptWikiLookup', {
+                //xtype: 'conceptWikiLookup',
+                fieldLabel: 'Target name',
+                itemId: 'targetByNameLookup',
+                store: Ext.create('CW.store.ConceptWikiLookup', {
+                    proxy: {
+                        type: 'jsonp',
+                        timeout: 5000,
+                        url: CW.config.Settings.searchByTagUrl,
+                        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                        extraParams: {
+                            'branch': 3 // Only show species results from swissprot
+                        }
+                    }
+                }),
+                name: 'protein_uri',
+                cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+            }), {
+                xtype: 'button',
+                padding: '5 5 5 5',
+                text: 'Search',
+                itemId: 'TargetByNameSubmit_id',
+                disabled: true,
+                action: 'query_target_by_name'
+            },{
+                    xtype: 'radiogroup',
+                    width: 160,
+                    labelWidth: 65,
+                    fieldLabel: 'Provenance',
+                    itemId: 'provId',
+                    margin: '5 0 0 90',
+
+                    items: [{
+                        boxLabel: 'On',
+                        name: 'prov',
+                        inputValue: true
+                    }, {
+                        boxLabel: 'Off',
+                        name: 'prov',
+                        inputValue: false,
+                        checked: true
+                    }]
+                }]
+        }, {
+            xtype: 'TargetPanel',
+            flex: 1
+        }];
+        this.callParent(arguments);
+    }
+});
+
+Ext.define('LSP.controller.TargetByNameForm', {
+    extend: 'Ext.app.Controller',
+    // models: ['LDA.model.TargetModel'],
+    // stores: ['LDA.store.TargetStore'],
+    views: ['target_by_name.TargetByNameForm'],
+    current_uri: null,
+
+    refs: [{
+        ref: 'targetPanel',
+        selector: 'TargetPanel'
+    }, {
+        ref: 'formView',
+        selector: 'TargetByNameForm'
+    }, {
+        ref: 'submitButton',
+        selector: '#TargetByNameSubmit_id'
+
+    }, {
+        ref: 'lookup',
+        selector: '#targetByNameLookup'
+    }],
+
+    init: function() {
+        this.control({
+            'TargetByNameForm button[action=query_target_by_name]': {
+                click: this.submitQuery
+            },
+            'TargetByNameForm conceptWikiLookup': {
+                select: this.enableSubmit
+            },
+            'TargetByNameForm': {
+                historyToken: this.handleHistoryToken
+            },
+            'TargetByNameForm #provId': {
+                change: this.onProvChange
+            }
+        });
+    },
+
+    handleHistoryToken: function(historyTokenObject) {
+        console.log('LSP.controller.TargetByNameForm: handleHistoryToken()');
+        var me = this;
+        var target_panel = me.getFormView().down("TargetPanel");
+        if (historyTokenObject.u) {
+            this.current_uri = historyTokenObject.u;
+            var store = this.getStore("LDA.store.TargetStore");
+            if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
+                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                // Setting the uri for the LDA search
+                store.proxy.extraParams.uri = historyTokenObject.u;
+                me.getFormView().setLoading(true);
+                store.load(function(records, operation, success) {
+                    if (success) {
+                        console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
+                        me.getSubmitButton().enable();
+                        target_panel.setValues(records[0]);
+                        target_panel.recordData = records[0];
+                        target_panel.down("#dp").setVisible(true);
+                        target_panel.down('#msg').setVisible(false);
+                        me.getFormView().setLoading(false);
+                    } else {
+                        Ext.MessageBox.show({
+                            title: 'Info',
+                            msg: 'We are sorry but the OPS system returned an error.',
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.INFO
+                        });
+                        me.getSubmitButton().enable();
+                        target_panel.down("#dp").setVisible(false);
+                        me.getFormView().setLoading(false);
+                    }
+                });
+            }
+        } else if (historyTokenObject.s) {
+            var lookup = this.getLookup();
+            lookup.setRawValue(historyTokenObject.s);
+            lookup.doQuery(historyTokenObject.s);
+        }
+    },
+
+    enableSubmit: function() {
+        var form = this.getFormView();
+        var button = this.getSubmitButton();
+        button.enable();
+    },
+
+    submitQuery: function(button) {
+        button.disable();
+        var me = this;
+        var form = this.getFormView();
+        var target_panel = me.getFormView().down("TargetPanel");
+        var target_uri = form.getValues().protein_uri;
+        if (this.current_uri == target_uri) {
+            var store = this.getStore("LDA.store.TargetStore");
+            store.proxy.extraParams.uri = this.current_uri;
+            me.getFormView().setLoading(true);
+            store.load(function(records, operation, success) {
+                if (success) {
+                    console.log('LSP.controller.TargetByNameForm: store is loaded ' + success);
+                    me.getSubmitButton().enable();
+                    target_panel.setValues(records[0]);
+                    target_panel.recordData = records[0];
+                    target_panel.down("#dp").setVisible(true);
+                    target_panel.down('#msg').setVisible(false);
+                    me.getFormView().setLoading(false);
+                } else {
+                    Ext.MessageBox.show({
+                        title: 'Info',
+                        msg: 'We are sorry but the OPS system returned an error.',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.INFO
+                    });
+                    me.getSubmitButton().enable();
+                    target_panel.down("#dp").setVisible(false);
+                    me.getFormView().setLoading(false);
+                }
+            });
+        } else {
+            Ext.History.add('!p=TargetByNameForm&u=' + target_uri);
+        }
+    },
+
+    onProvChange: function(field, newVal, oldVal) {
+        var dg = this.getTargetPanel();
+        dg.toggleProv(newVal['prov']);
+        dg.setValues(dg.recordData);
+
+    }
+});
+
 Ext.define('LDA.store.basestores.BaseStore', {
 	extend: 'Ext.data.Store',
 	requires: ['LDA.helper.LDAConstants'],
@@ -3883,7 +3885,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
 		var tar = record.data.target_title;
+                var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
+                var cw_comp = record.data.cw_compound_uri;
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -3907,7 +3911,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
 				}, {
 					text: 'Search for compound by SMILES',
@@ -3925,7 +3929,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for target by name');
 						//                        console.log(tar);
-						Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                                                if (cw_tar == "") {
+                                                    Ext.History.add('!p=TargetByNameForm&s=' + tar);
+                                                } else {
+						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
+                                                }
 					}
 				}, {
 					text: 'Copy Data',
@@ -5154,11 +5162,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     current_count: 0,
 
-	failed_to_load: 0,
+    missing_count: 0,
+
+    failed_to_load: 0,
 	
-	current_smiles: undefined,
+    current_smiles: undefined,
 	
-	current_mode: undefined,
+    current_mode: undefined,
+
+    success_count: 0,
 
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
@@ -5238,6 +5250,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
         csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
 	this.current_count = 0;
+        this.missing_count = 0;
+        this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
@@ -5246,24 +5260,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
-                    records[0].index = me.current_count;
+                    records[0].index = me.success_count;
+                    me.success_count++;
                     me.current_count++;
                     // There is only 1 compound record returned
                     me.getStrucGrid().getStore().add(records[0]);
                     //me.all_records.push(records[0]);
                     //console.log('Count is now ' + me.current_count);
                     if (me.current_count == me.total_count) {
-                        me.getSubmitButton().enable();
-                        //me.getSsform().doLayout();
-                        me.getSsform().setLoading(false);
-                        // TODO should check there are some records first
-                        me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}
-                        me.setTSVDownloadParams();
+                        me.setTitleAfterLoading();
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
@@ -5271,18 +5276,38 @@ Ext.define('LSP.controller.SimSearchForm', {
                     me.current_count++;
 					me.failed_to_load++;
 					if (me.current_count == me.total_count) {
-						me.getSubmitButton().enable();
-						me.getSsform().setLoading(false);
-						me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}					
+                                            me.setTitleAfterLoading();					
 					}
                 }
             });
         }
+    },
+
+    setTitleAfterLoading: function() {
+        this.getSubmitButton().enable();
+	this.getSsform().setLoading(false);
+	this.getStrucGrid().down('#tsvDownloadProxy_id').enable();
+	if (this.failed_to_load > 0) {
+          if (this.current_mode == 'exact') {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
+} else {
+
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        } else {
+if (this.current_mode == 'exact') {
+    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle);
+} else {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        }
+        this.setTSVDownloadParams();	
     },
 
     handleHistoryToken: function(historyTokenObject) {
@@ -5494,254 +5519,230 @@ Ext.define('LSP.controller.SimSearchForm', {
     }
 });
 
-/**
- * Created with JetBrains RubyMine.
- * User: jameseales
- * Date: 12/07/2012
- * Time: 14:10
- * To change this template use File | Settings | File Templates.
- */
-Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
-        extend:'LSP.view.dynamicgrid.DynamicGrid',
-        alias:'widget.PharmByTargetNameScrollingGrid',
-        layout:'fit',
-        // verticalScrollerType:Ext.create('LDA.helper.DynamicPagingToolbar', {itemId:'pager_id'}),
-        disableSelection:true,
-        invalidateScrollerOnRefresh:false,
-        requires:[
-        ],
-        listeners:{
-            'sortchange':function (ct, column, direction, eOpts) {
-                console.log('PharmByTargetNameGrid: sortchange()');
-                this.setLoading(true);
-            }
-        },
-        store:'TargetPharmacologyPaginatedStore',
-        exportStore:null,
-        getExportStore:function () {
-            if (this.exportStore == null) {
-                this.exportStore = Ext.create('LDA.store.TargetPharmacologyPaginatedStore', {});
-            }
-            return this.exportStore;
-        },
-        columns://TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)
-        // defaults:{
-        //                 renderer:function (value, metaData, record, rowIndex, colIndex, store, view) {
-        //                     if (LDAProvenanceMode != LDA_PROVENANCE_OFF) {
-        //                         var data = this.columns[colIndex].dataIndex;
-        //                         data += '_src';
-        //                         var source = record.data[data];
-        //                         var cls = LDA_SRC_CLS_MAPPINGS[source];
-        //                         if (!cls) {
-        //                             cls = 'defaultValue';
-        //                         }
-        //                         //                    console.log(data + ' : ' + source + ' : ' + cls);
-        //                         cls += LDAProvenanceMode;
-        //                         if (LDAProvenanceMode == LDA_PROVENANCE_COLOUR) {
-        //                             return '<div class="' + cls + '">' + value + '</div>';
-        //                         } else if (LDAProvenanceMode == LDA_PROVENANCE_ICON) {
-        //                             //this needs an img adding in
-        //                             return '<div class="' + cls + '">' + value + '</div>';
-        //                         } else if (LDAProvenanceMode == LDA_PROVENANCE_TEXT) {
-        //                             return '<div class="' + cls + '">' + value + ' (' + source + ')</div>';
-        //                         }
-        //                     } else {
-        //                         return value;
-        //                     }
-        //                 }
-        //             },
+var target_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}]
+});
+Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
+	extend: 'Ext.form.Panel',
+	alias: 'widget.PharmByTargetNameForm',
+	closable: true,
+	// requires: ['LSP.view.dynamicgrid.DynamicGrid'],
+    header: false,
+    layout: {
+		type: 'vbox',
+		align: 'stretch'
+	},
+	// Use a PagingGridScroller (this is interchangeable with a PagingToolbar)
+	verticalScrollerType: 'paginggridscroller',
+	// do not reset the scrollbar when the view refreshs
+	invalidateScrollerOnRefresh: false,
+	// infinite scrolling does not support selection
+	disableSelection: true,
+	initComponent: function() {
+		console.log('PharmByTargetNameForm: constructor()');
+		this.items = [{
+			xtype: 'label',
+			html: '<span style="font-family: verdana; color: grey; ">Hint: Type in protein name and species. E.g. \"ADA protein human\"</span>',
+			labelWidth: 400,
+			padding: '5 0 0 140'
+		}, {
+			xtype: 'container',
+			margin: '0 5 5 5',
+			name: 'form_fields',
+			layout: {
+				type: 'column'
+			},
+			style: 'background-color: #fff;',
+			items: [
+			Ext.create('CW.view.ConceptWikiLookup', {
+				xtype: 'conceptWikiLookup',
+				fieldLabel: 'Protein name',
+				itemId: 'pharmByProteinCWLookup',
+				store: Ext.create('CW.store.ConceptWikiLookup', {
+					proxy: {
+						type: 'jsonp',
+				        timeout: 5000,
+				        url: CW.config.Settings.searchByTagUrl,
+				        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+						extraParams: {
+							'branch': 3 // Only show species results from swissprot
+						}
+					}
+				}),
+				name: 'protein_uri',
+				cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+			}),
+			{
+				xtype: 'button',
+				itemId: 'pharmByTargetSubmit_id',
+				padding: '5 5 5 5',
+				text: 'Search...',
+				disabled: true,
+				name: 'query_summit_button',
+				action: 'query_pharm_by_target_name'
+			}]
+		}, {
+			xtype: 'container',
+			margin: '0 5 5 5',
+			name: 'filter_fields',
+			layout: {
+				type: 'column'
+			},
+			style: 'background-color: #fff;',
+			items: [{
+				xtype: 'button',
+				itemId: 'addFilterButton_id',
+				iconCls: 'icon-new',
+				padding: '5 5 5 5',
+				tooltip: 'Show or hide filter selector',
+				action: 'add_filter_form'
+			}, {
+                xtype: 'label',
+                forId: 'addFilterButton_id',
+                text: 'Filter',
+                margin: '5 5 5 5'
+            }, {
+				xtype: 'radiogroup',
+				width: 200,
+				fieldLabel: 'Provenance',
+				itemId: 'provId',
+				margin: '5 5 5 65',
 
-            [
-                {
-                    xtype:'rownumberer',
-                    width:40
-                },
-                {
-                    //TODO: renderer for chemical structure image (from chemspider?)
-                    header:'Structure',
-                    dataIndex:'cs_compound_uri',
-                    xtype:'templatecolumn',
-                    width:135,
-                    tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
-                    sortable:false
-                },
-                {
-                    header:'Compound Name',
-                    dataIndex:'compound_pref_label',
-                    width: 180,
-                    renderer:targetProvenanceRenderer,
-                    //align:'center',
-                    tdCls: 'wrap gridDescriptiveRowPadding'
+				items: [{
+					boxLabel: 'On',
+					name: 'prov',
+					inputValue: true
+				}, {
+					boxLabel: 'Off',
+					name: 'prov',
+					inputValue: false,
+					checked: true
+				}]
+			}, {
+				xtype: 'button',
+				name: 'provHelp',
+                margin: '5 0 0 0',
+                iconCls: 'provenanceHelpIcon',
+				tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+			}]
+		}, {
+            xtype: 'container',
+            margin: '0 5 5 5',
+            name: 'filter_selector_container',
+	    itemId: 'filterSelectorContainer_id',
+	    hidden: true,
+            layout: {
+                type: 'vbox'
+            },
+            style: 'background-color: #fff;',
+            items: [{xtype: 'container',
+            margin: '0 5 5 5',
+            name: 'activity_selector_container',
+	    itemId: 'activitySelectorContainer_id',
+	    hidden: false,
+            layout: {
+                type: 'hbox'
+            },
+            style: 'background-color: #fff;',
+            items: [{
+		xtype: 'combobox',
+		itemId: 'activity_combobox_id',
+		fieldLabel: 'Activity Type',
+		store: Ext.create('LDA.store.FilterActivityStore', {}),
+		queryMode: 'remote',
+		displayField: 'activity_type',
+		valueField: 'about',
+		labelWidth: 100,
+		labelPad: 2,
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	}, {
+		xtype: 'combobox',
+		itemId: 'conditions_combobox_id',
+		fieldLabel: 'Conditions',
+		store: target_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 70,
+		labelPad: 2,
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	}, {
+		xtype: 'textfield',
+		itemId: 'value_textfield_id',
+		name: 'value',
+		fieldLabel: 'Value',
+		allowBlank: false,
+		labelWidth: 50,
+		labelPad: 2,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a value...'
+		// requires a non-empty value
+	}, {
+		xtype: 'combobox',
+		itemId: 'unit_combobox_id',
+		fieldLabel: 'Unit',
+		store: Ext.create('Ext.data.Store', {
+			model: 'LSP.model.unit',
+			fields: ['unit', 'name']
+		}),
+		queryMode: 'local',
+		displayField: 'unit',
+		valueField: 'name',
+		labelWidth: 50,
+		labelPad: 2,
+		padding: '0 10 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	}, {
+		xtype: 'button',
+		itemId: 'addCompletedActivityFilter_id',
+		iconCls: 'icon-new',
+		padding: '5 5 5 5',
+		tooltip: 'Add this activity filter',
+		action: 'add_completed_activity_filter'
+	}]}, {
+            xtype: 'OrganismFilterForm',
+            itemId: 'organismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'organism_filter_fields',
+            hidden: false
+}]}, {
+			xtype: 'container',
+			itemId: 'completedFilterContainer_id',
+			margin: '0 5 5 5',
+			name: 'completed_filter_container',
+			hidden: true
+		}, {
+			xtype: 'PharmByTargetNameScrollingGrid',
+			itemId: 'pharmByTargetNameGrid',
+			title: 'Pharmacology by Target name search results',
+			gridBaseTitle: 'Pharmacology by Target name search results',
+			flex: 1
+		}];
+		this.callParent(arguments);
+	}
+});
 
-                },
-                {
-                    header:'Target Name',
-                    dataIndex:'target_pref_label',
-                    width: 180,
-                    renderer:targetProvenanceRenderer,
-                    //align:'center',
-                    tdCls: 'wrap gridDescriptiveRowPadding'
-                },
-                {
-                    header:'Target Organism',
-                    dataIndex:'target_organism',
-                    width: 130,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Assay Organism',
-                    dataIndex:'assay_organism',
-                    tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
-                        'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
-                        ' expressed in non-human cells, or pathogen-infected human cells)',
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Assay Description',
-                    dataIndex:'assay_description',
-                    width: 150,
-                    tdCls: 'wrap gridDescriptiveRowPadding',
-                    renderer:targetProvenanceRenderer
-                    //align:'center'
-                },
-                {
-                    header:'Activity Type',
-                    dataIndex:'activity_activity_type',
-                    width: 72,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Relation',
-                    dataIndex:'activity_relation',
-                    width: 52,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Value',
-                    dataIndex:'activity_standard_value',
-                    width: 60,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Units',
-                    dataIndex:'activity_standard_units',
-                    width: 60,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'Mol Weight',
-                    dataIndex:'compound_full_mwt',
-                    width: 80,
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'SMILES',
-                    dataIndex:'compound_smiles',
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'InChi',
-                    dataIndex:'compound_inchi',
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                },
-                {
-                    header:'InChi Key',
-                    dataIndex:'compound_inchikey',
-                    renderer:targetProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-
-                }
-            ],
-
-        target_prov: false,
-
-        toggleProv:function (val) {
-            this.target_prov = val;
-            console.log(" Show target provenance : " + this.target_prov);
-            this.doLayout();
-        }
-
-    }
-);
-
-function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
-	//console.log("Target Pharmacology provenance renderer");
-
-    //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (this.target_prov) {
-
-        var recdata = this.columns[columnIndex].dataIndex;
-        var itemdata = recdata + '_item';
-        recdata += '_src';
-        var source = record.data[recdata];
-        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-        if (!cls) {
-            cls = 'defaultValue';
-        }
-        var iconCls = cls + 'Icon';
-        iconCls = '/assets/' + iconCls + '.png';
-        //console.log(iconCls);
-        cls += LDAProvenanceMode;
-        if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
-
-            if (record.data[recdata] && data) {
-
-                // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-            } else {
-
-                return '<div class="' + cls + '">' + data + '</div>'
-
-            }
-
-        }
-        //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
-        //this needs an img adding in
-        //    return '<div class="' + cls + '">' + data + '</div>';
-        //} else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_TEXT) {
-        //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
-        //}
-    } else {
-        return data;
-    }
-    return data;
-}
-;
-
-//{
-//    header:'Chemspider ID',
-//    dataIndex:'cs_compound_uri',
-//	sortable:false,
-//    renderer:targetProvenanceRenderer,
-//    align: 'center'
-//},
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
     extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByEnzymeFamilyScrollingGrid',
@@ -6128,6 +6129,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
+            },
+
+            {
+                header:'Pubmed ID',
+                dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
             }
         ],
 
@@ -6170,21 +6181,19 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                     //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
+                    Ext.each(targetURIs, function (target, index) {
                         var url = targetURIs[index];
-                        if (url) {
+                        if (url && targetURIs.length > 1) {
                             //console.log( ' url ' + url);
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
-
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });
@@ -6225,315 +6234,254 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
 //    align: 'center'
 //},
 
-var target_condition = Ext.create('Ext.data.Store', {
-	fields: ['symbol', 'name'],
-	data: [{
-		"symbol": "=",
-		"name": "="
-	}, {
-		"symbol": ">",
-		"name": ">"
-	}, {
-		"symbol": "<",
-		"name": "<"
-	}, {
-		"symbol": "<=",
-		"name": "<="
-	}, {
-		"symbol": ">=",
-		"name": ">="
-	}]
-});
-Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
-	extend: 'Ext.form.Panel',
-	alias: 'widget.PharmByTargetNameForm',
-	closable: true,
-	// requires: ['LSP.view.dynamicgrid.DynamicGrid'],
-    header: false,
-    layout: {
-		type: 'vbox',
-		align: 'stretch'
-	},
-	// Use a PagingGridScroller (this is interchangeable with a PagingToolbar)
-	verticalScrollerType: 'paginggridscroller',
-	// do not reset the scrollbar when the view refreshs
-	invalidateScrollerOnRefresh: false,
-	// infinite scrolling does not support selection
-	disableSelection: true,
-	initComponent: function() {
-		console.log('PharmByTargetNameForm: constructor()');
-		this.items = [{
-			xtype: 'label',
-			html: '<span style="font-family: verdana; color: grey; ">Hint: Type in protein name and species. E.g. \"ADA protein human\"</span>',
-			labelWidth: 400,
-			padding: '5 0 0 140'
-		}, {
-			xtype: 'container',
-			margin: '0 5 5 5',
-			name: 'form_fields',
-			layout: {
-				type: 'column'
-			},
-			style: 'background-color: #fff;',
-			items: [
-			Ext.create('CW.view.ConceptWikiLookup', {
-				xtype: 'conceptWikiLookup',
-				fieldLabel: 'Protein name',
-				itemId: 'pharmByProteinCWLookup',
-				store: Ext.create('CW.store.ConceptWikiLookup', {
-					proxy: {
-						type: 'jsonp',
-				        timeout: 5000,
-				        url: CW.config.Settings.searchByTagUrl,
-				        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
-						extraParams: {
-							'branch': 3 // Only show species results from swissprot
-						}
-					}
-				}),
-				name: 'protein_uri',
-				cwTagUuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
-			}),
-			{
-				xtype: 'button',
-				itemId: 'pharmByTargetSubmit_id',
-				padding: '5 5 5 5',
-				text: 'Search...',
-				disabled: true,
-				name: 'query_summit_button',
-				action: 'query_pharm_by_target_name'
-			}]
-		}, {
-			xtype: 'container',
-			margin: '0 5 5 5',
-			name: 'filter_fields',
-			layout: {
-				type: 'column'
-			},
-			style: 'background-color: #fff;',
-			items: [{
-				xtype: 'button',
-				itemId: 'addFilterButton_id',
-				iconCls: 'icon-new',
-				padding: '5 5 5 5',
-				tooltip: 'Show or hide filter selector',
-				action: 'add_filter_form'
-			}, {
-                xtype: 'label',
-                forId: 'addFilterButton_id',
-                text: 'Filter',
-                margin: '5 5 5 5'
-            }, {
-				xtype: 'radiogroup',
-				width: 200,
-				fieldLabel: 'Provenance',
-				itemId: 'provId',
-				margin: '5 5 5 65',
+/**
+ * Created with JetBrains RubyMine.
+ * User: jameseales
+ * Date: 12/07/2012
+ * Time: 14:10
+ * To change this template use File | Settings | File Templates.
+ */
+Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
+        extend:'LSP.view.dynamicgrid.DynamicGrid',
+        alias:'widget.PharmByTargetNameScrollingGrid',
+        layout:'fit',
+        // verticalScrollerType:Ext.create('LDA.helper.DynamicPagingToolbar', {itemId:'pager_id'}),
+        disableSelection:true,
+        invalidateScrollerOnRefresh:false,
+        requires:[
+        ],
+        listeners:{
+            'sortchange':function (ct, column, direction, eOpts) {
+                console.log('PharmByTargetNameGrid: sortchange()');
+                this.setLoading(true);
+            }
+        },
+        store:'TargetPharmacologyPaginatedStore',
+        exportStore:null,
+        getExportStore:function () {
+            if (this.exportStore == null) {
+                this.exportStore = Ext.create('LDA.store.TargetPharmacologyPaginatedStore', {});
+            }
+            return this.exportStore;
+        },
+        columns://TODO: removed this rendering because it stops the download as csv from working (this.geCell(record,index) fails with undefined error)
+        // defaults:{
+        //                 renderer:function (value, metaData, record, rowIndex, colIndex, store, view) {
+        //                     if (LDAProvenanceMode != LDA_PROVENANCE_OFF) {
+        //                         var data = this.columns[colIndex].dataIndex;
+        //                         data += '_src';
+        //                         var source = record.data[data];
+        //                         var cls = LDA_SRC_CLS_MAPPINGS[source];
+        //                         if (!cls) {
+        //                             cls = 'defaultValue';
+        //                         }
+        //                         //                    console.log(data + ' : ' + source + ' : ' + cls);
+        //                         cls += LDAProvenanceMode;
+        //                         if (LDAProvenanceMode == LDA_PROVENANCE_COLOUR) {
+        //                             return '<div class="' + cls + '">' + value + '</div>';
+        //                         } else if (LDAProvenanceMode == LDA_PROVENANCE_ICON) {
+        //                             //this needs an img adding in
+        //                             return '<div class="' + cls + '">' + value + '</div>';
+        //                         } else if (LDAProvenanceMode == LDA_PROVENANCE_TEXT) {
+        //                             return '<div class="' + cls + '">' + value + ' (' + source + ')</div>';
+        //                         }
+        //                     } else {
+        //                         return value;
+        //                     }
+        //                 }
+        //             },
 
-				items: [{
-					boxLabel: 'On',
-					name: 'prov',
-					inputValue: true
-				}, {
-					boxLabel: 'Off',
-					name: 'prov',
-					inputValue: false,
-					checked: true
-				}]
-			}, {
-				xtype: 'button',
-				name: 'provHelp',
-                margin: '5 0 0 0',
-                iconCls: 'provenanceHelpIcon',
-				tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
-			}]
-		}, {
-            xtype: 'container',
-            margin: '0 5 5 5',
-            name: 'filter_selector_container',
-	    itemId: 'filterSelectorContainer_id',
-	    hidden: true,
-            layout: {
-                type: 'vbox'
-            },
-            style: 'background-color: #fff;',
-            items: [{xtype: 'container',
-            margin: '0 5 5 5',
-            name: 'activity_selector_container',
-	    itemId: 'activitySelectorContainer_id',
-	    hidden: false,
-            layout: {
-                type: 'hbox'
-            },
-            style: 'background-color: #fff;',
-            items: [{
-		xtype: 'combobox',
-		itemId: 'activity_combobox_id',
-		fieldLabel: 'Activity Type',
-		store: Ext.create('LDA.store.FilterActivityStore', {}),
-		queryMode: 'remote',
-		displayField: 'activity_type',
-		valueField: 'activity_type',
-		labelWidth: 100,
-		labelPad: 2,
-		padding: '0 2 0 0',
-		emptyText: 'Use drop down...',
-		editable: false
-	}, {
-		xtype: 'combobox',
-		itemId: 'conditions_combobox_id',
-		fieldLabel: 'Conditions',
-		store: target_condition,
-		queryMode: 'local',
-		displayField: 'symbol',
-		valueField: 'name',
-		labelWidth: 70,
-		labelPad: 2,
-		padding: '0 2 0 0',
-		emptyText: 'Use drop down...',
-		editable: false
-	}, {
-		xtype: 'textfield',
-		itemId: 'value_textfield_id',
-		name: 'value',
-		fieldLabel: 'Value',
-		allowBlank: false,
-		labelWidth: 50,
-		labelPad: 2,
-		padding: '0 2 0 0',
-		emptyText: 'Enter a value...'
-		// requires a non-empty value
-	}, {
-		xtype: 'combobox',
-		itemId: 'unit_combobox_id',
-		fieldLabel: 'Unit',
-		store: Ext.create('Ext.data.Store', {
-			model: 'LSP.model.unit',
-			fields: ['unit', 'name']
-		}),
-		queryMode: 'local',
-		displayField: 'unit',
-		valueField: 'name',
-		labelWidth: 50,
-		labelPad: 2,
-		padding: '0 10 0 0',
-		emptyText: 'Use drop down...',
-		editable: false
-	}, {
-		xtype: 'button',
-		itemId: 'addCompletedActivityFilter_id',
-		iconCls: 'icon-new',
-		padding: '5 5 5 5',
-		tooltip: 'Add this activity filter',
-		action: 'add_completed_activity_filter'
-	}]}, {
-            xtype: 'OrganismFilterForm',
-            itemId: 'organismFilterContainer_id',
-            margin: '0 5 5 5',
-            name: 'organism_filter_fields',
-            hidden: false
-}]}, {
-			xtype: 'container',
-			itemId: 'completedFilterContainer_id',
-			margin: '0 5 5 5',
-			name: 'completed_filter_container',
-			hidden: true
-		}, {
-			xtype: 'PharmByTargetNameScrollingGrid',
-			itemId: 'pharmByTargetNameGrid',
-			title: 'Pharmacology by Target name search results',
-			gridBaseTitle: 'Pharmacology by Target name search results',
-			flex: 1
-		}];
-		this.callParent(arguments);
-	}
-});
+            [
+                {
+                    xtype:'rownumberer',
+                    width:40
+                },
+                {
+                    //TODO: renderer for chemical structure image (from chemspider?)
+                    header:'Structure',
+                    dataIndex:'cs_compound_uri',
+                    xtype:'templatecolumn',
+                    width:135,
+                    tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                    sortable:false
+                },
+                {
+                    header:'Compound Name',
+                    dataIndex:'compound_pref_label',
+                    width: 180,
+                    renderer:targetProvenanceRenderer,
+                    //align:'center',
+                    tdCls: 'wrap gridDescriptiveRowPadding'
 
-Ext.define('LSP.model.Organism', {
-    extend: 'Ext.data.Model',
-    fields: [
-        {name: 'name',     type: 'string'},
-        {name: 'abbr',      type: 'string'}
-    ]
-});
-var assay_organism = Ext.create('Ext.data.Store', {
-     model: 'LSP.model.Organism',
-     proxy: {
-         type: 'ajax',
-         url: '/core_api_calls/organisms.json',
-         model: 'LSP.model.Organism',
-         reader: {
-             type: 'json'
-         }
-     }
- });
-//var assay_organism = Ext.create('Ext.data.Store', {
-//	fields: ['abbr', 'name'],
-//	data: [{
-//		"abbr": "Homo sapiens",
-//		"name": "Homo sapiens"
-//	}, {
-//		"abbr": "Mus musculus",
-//		"name": "Mus musculus"
-//	}, {
-//		"abbr": "Rattus norvegicus",
-//		"name": "Rattus norvegicus"
-//	}, {
-//		"abbr": "Cavia porcellus",
-//		"name": "Cavia porcellus"
-//	}, {
-//		"abbr": "Equus caballus",
-//		"name": "Equus caballus"
-//	}, {
-//		"abbr": "Ovis aries",
-//		"name": "Ovis aries"
-//	}]
-//});
-Ext.define('LSP.view.filter.OrganismFilterForm', {
-	extend: 'Ext.container.Container',
-	alias: 'widget.OrganismFilterForm',
-	closable: true,
-	layout: {
-		type: 'hbox'
-	},
-	refs: [{
-		ref: 'organism_combobox',
-		selector: '#organism_combobox_id'
-	}, {
-		ref: 'organism_textfield',
-		selector: '#organism_textfield_id'
-	}],
-	headerPosition: 'right',
-	frame: true,
-	padding: '0 0 5 0',
-	items: [{
-		xtype: 'combobox',
-		itemId: 'organism_combobox_id',
-		fieldLabel: 'Assay Organism',
-		store: assay_organism,
-		queryMode: 'remote',
-		displayField: 'abbr',
-		valueField: 'name',
-		labelWidth: 100,
-		width: 400,
-		labelPad: 2,
-		padding: '0 2 0 0',
-		emptyText: 'Enter the name of an organism...',
-    		minChars:3,
-    		hideTrigger:true,
-    		listConfig:{
-        		emptyText:'No organisms found which match your text, try entering some different text.'
-		}
-	}, {
-		xtype: 'button',
-		itemId: 'addCompletedOrganismFilter_id',
-		iconCls: 'icon-new',
-		padding: '5 5 5 5',
-		tooltip: 'Add this organism filter',
-		action: 'add_completed_organism_filter'
-	}]
-});
+                },
+                {
+                    header:'Target Name',
+                    dataIndex:'target_pref_label',
+                    width: 180,
+                    renderer:targetProvenanceRenderer,
+                    //align:'center',
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Target Organism',
+                    dataIndex:'target_organism',
+                    width: 130,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism',
+                    tooltip: 'Name of the organism for the assay system (e.g., the organism, tissue or cell line in ' +
+                        'which an assay was performed). May differ from the target organism (e.g., for a human protein' +
+                        ' expressed in non-human cells, or pathogen-infected human cells)',
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
 
+                },
+                {
+                    header:'Assay Description',
+                    dataIndex:'assay_description',
+                    width: 150,
+                    tdCls: 'wrap gridDescriptiveRowPadding',
+                    renderer:targetProvenanceRenderer
+                    //align:'center'
+                },
+                {
+                    header:'Activity Type',
+                    dataIndex:'activity_activity_type',
+                    width: 72,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'Relation',
+                    dataIndex:'activity_relation',
+                    width: 52,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'Value',
+                    dataIndex:'activity_standard_value',
+                    width: 60,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Units',
+                    dataIndex:'activity_standard_units',
+                    width: 60,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'Mol Weight',
+                    dataIndex:'compound_full_mwt',
+                    width: 80,
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'SMILES',
+                    dataIndex:'compound_smiles',
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'InChi',
+                    dataIndex:'compound_inchi',
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                },
+                {
+                    header:'InChi Key',
+                    dataIndex:'compound_inchikey',
+                    renderer:targetProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+
+                }
+            ],
+
+        target_prov: false,
+
+        toggleProv:function (val) {
+            this.target_prov = val;
+            console.log(" Show target provenance : " + this.target_prov);
+            this.doLayout();
+        }
+
+    }
+);
+
+function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, store) {
+	//console.log("Target Pharmacology provenance renderer");
+
+    //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
+    if (this.target_prov) {
+
+        var recdata = this.columns[columnIndex].dataIndex;
+        var itemdata = recdata + '_item';
+        recdata += '_src';
+        var source = record.data[recdata];
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
+        //console.log(iconCls);
+        cls += LDAProvenanceMode;
+        if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
+
+            if (record.data[recdata] && data) {
+
+                // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+            } else {
+
+                return '<div class="' + cls + '">' + data + '</div>'
+
+            }
+
+        }
+        //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
+        //this needs an img adding in
+        //    return '<div class="' + cls + '">' + data + '</div>';
+        //} else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_TEXT) {
+        //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
+        //}
+    } else {
+        return data;
+    }
+    return data;
+}
+;
+
+//{
+//    header:'Chemspider ID',
+//    dataIndex:'cs_compound_uri',
+//	sortable:false,
+//    renderer:targetProvenanceRenderer,
+//    align: 'center'
+//},
 Ext.define('LDA.model.FilterActivityModel', {
     extend:'Ext.data.Model',
     fields:['activity_type', 'about']
@@ -6617,7 +6565,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
     },
 
    comboSelect: function(combo, records, eOpts) {
-	var activity = records[0].get('activity_type');
+	var activity = records[0].get('about');
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
@@ -6701,10 +6649,12 @@ Ext.define('LDA.helper.FilterActivityReader', {
 
         Ext.each(activities, function(match, index) {
             var about = match[LDA.helper.LDAConstants.LDA_ABOUT];
+            var about_split = about.split('/');
+            var api_label = about_split[about_split.length - 1].substr(1);
             var label = match[LDA.helper.LDAConstants.LDA_LABEL];
             var record = Ext.create('LDA.model.FilterActivityModel', {
                 activity_type: label,
-                about: about
+                about: api_label
             });
             records.push(record);
         });
@@ -6832,6 +6782,91 @@ Ext.define('LSP.view.filter.ActivityFilterForm', {
 		padding: '5 5 5 5',
 		tooltip: 'Add this activity filter',
 		action: 'add_completed_activity_filter'
+	}]
+});
+
+Ext.define('LSP.model.Organism', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'abbr',      type: 'string'}
+    ]
+});
+var assay_organism = Ext.create('Ext.data.Store', {
+     model: 'LSP.model.Organism',
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/organisms.json',
+         model: 'LSP.model.Organism',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
+//var assay_organism = Ext.create('Ext.data.Store', {
+//	fields: ['abbr', 'name'],
+//	data: [{
+//		"abbr": "Homo sapiens",
+//		"name": "Homo sapiens"
+//	}, {
+//		"abbr": "Mus musculus",
+//		"name": "Mus musculus"
+//	}, {
+//		"abbr": "Rattus norvegicus",
+//		"name": "Rattus norvegicus"
+//	}, {
+//		"abbr": "Cavia porcellus",
+//		"name": "Cavia porcellus"
+//	}, {
+//		"abbr": "Equus caballus",
+//		"name": "Equus caballus"
+//	}, {
+//		"abbr": "Ovis aries",
+//		"name": "Ovis aries"
+//	}]
+//});
+Ext.define('LSP.view.filter.OrganismFilterForm', {
+	extend: 'Ext.container.Container',
+	alias: 'widget.OrganismFilterForm',
+	closable: true,
+	layout: {
+		type: 'hbox'
+	},
+	refs: [{
+		ref: 'organism_combobox',
+		selector: '#organism_combobox_id'
+	}, {
+		ref: 'organism_textfield',
+		selector: '#organism_textfield_id'
+	}],
+	headerPosition: 'right',
+	frame: true,
+	padding: '0 0 5 0',
+	items: [{
+		xtype: 'combobox',
+		itemId: 'organism_combobox_id',
+		fieldLabel: 'Assay Organism',
+		store: assay_organism,
+		queryMode: 'remote',
+		displayField: 'abbr',
+		valueField: 'name',
+		labelWidth: 100,
+		width: 400,
+		labelPad: 2,
+		padding: '0 2 0 0',
+		emptyText: 'Enter the name of an organism...',
+    		minChars:3,
+    		hideTrigger:true,
+    		listConfig:{
+        		emptyText:'No organisms found which match your text, try entering some different text.'
+		}
+	}, {
+		xtype: 'button',
+		itemId: 'addCompletedOrganismFilter_id',
+		iconCls: 'icon-new',
+		padding: '5 5 5 5',
+		tooltip: 'Add this organism filter',
+		action: 'add_completed_organism_filter'
 	}]
 });
 
@@ -7102,7 +7137,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
 		displayField: 'activity_type',
-		valueField: 'activity_type',
+		valueField: 'about',
 		labelWidth: 100,
 		labelPad: 2,
 		padding: '0 2 0 0',
@@ -7247,7 +7282,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	},
 	
    comboSelect: function(combo, records, eOpts) {
-	var activity = records[0].get('activity_type');
+	var activity = records[0].get('about');
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
@@ -7555,7 +7590,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
 		displayField: 'activity_type',
-		valueField: 'activity_type',
+		valueField: 'about',
 		labelWidth: 100,
 		labelPad: 2,
 		padding: '0 2 0 0',
@@ -7706,7 +7741,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
     },
 
    comboSelect: function(combo, records, eOpts) {
-	var activity = records[0].get('activity_type');
+	var activity = records[0].get('about');
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
@@ -7823,70 +7858,6 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 })
 ;
 
-/**
- *
- *  Base64 encode / decode
- *  http://www.webtoolkit.info/
- *
- **/
-
-(function () {
-
-    // private property
-    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-    // private method for UTF-8 encoding
-    function utf8Encode(string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-        for (var n = 0; n < string.length; n++) {
-            var c = string.charCodeAt(n);
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-        }
-        return utftext;
-    }
-
-    Ext.define("Ext.ux.exporter.Base64", {
-        statics:{
-            //This was the original line, which tries to use Firefox's built in Base64 encoder, but this kept throwing exceptions....
-            // encode : (typeof btoa == 'function') ? function(input) { return btoa(input); } : function (input) {
-            encode:function (input) {
-                var output = "";
-                var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-                var i = 0;
-                input = utf8Encode(input);
-                while (i < input.length) {
-                    chr1 = input.charCodeAt(i++);
-                    chr2 = input.charCodeAt(i++);
-                    chr3 = input.charCodeAt(i++);
-                    enc1 = chr1 >> 2;
-                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                    enc4 = chr3 & 63;
-                    if (isNaN(chr2)) {
-                        enc3 = enc4 = 64;
-                    } else if (isNaN(chr3)) {
-                        enc4 = 64;
-                    }
-                    output = output +
-                        keyStr.charAt(enc1) + keyStr.charAt(enc2) +
-                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
-                }
-                return output;
-            }}
-    });
-})();
 /**
  * @class Ext.ux.Exporter.Button
  * @extends Ext.Component
@@ -8142,6 +8113,70 @@ Ext.define('Ext.ux.grid.menu.ListMenu', {
     }
 });
 
+/**
+ *
+ *  Base64 encode / decode
+ *  http://www.webtoolkit.info/
+ *
+ **/
+
+(function () {
+
+    // private property
+    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    // private method for UTF-8 encoding
+    function utf8Encode(string) {
+        string = string.replace(/\r\n/g, "\n");
+        var utftext = "";
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n);
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            }
+            else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+        }
+        return utftext;
+    }
+
+    Ext.define("Ext.ux.exporter.Base64", {
+        statics:{
+            //This was the original line, which tries to use Firefox's built in Base64 encoder, but this kept throwing exceptions....
+            // encode : (typeof btoa == 'function') ? function(input) { return btoa(input); } : function (input) {
+            encode:function (input) {
+                var output = "";
+                var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+                var i = 0;
+                input = utf8Encode(input);
+                while (i < input.length) {
+                    chr1 = input.charCodeAt(i++);
+                    chr2 = input.charCodeAt(i++);
+                    chr3 = input.charCodeAt(i++);
+                    enc1 = chr1 >> 2;
+                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                    enc4 = chr3 & 63;
+                    if (isNaN(chr2)) {
+                        enc3 = enc4 = 64;
+                    } else if (isNaN(chr3)) {
+                        enc4 = 64;
+                    }
+                    output = output +
+                        keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
+                }
+                return output;
+            }}
+    });
+})();
 /**
  * @class Ext.ux.grid.menu.RangeMenu
  * @extends Ext.menu.Menu
@@ -8876,6 +8911,300 @@ Ext.define('Ext.ux.grid.filter.BooleanFilter', {
 });
 
 /**
+ * @class Ext.ux.grid.filter.ListFilter
+ * @extends Ext.ux.grid.filter.Filter
+ * <p>List filters are able to be preloaded/backed by an Ext.data.Store to load
+ * their options the first time they are shown. ListFilter utilizes the
+ * {@link Ext.ux.grid.menu.ListMenu} component.</p>
+ * <p>Although not shown here, this class accepts all configuration options
+ * for {@link Ext.ux.grid.menu.ListMenu}.</p>
+ *
+ * <p><b><u>Example Usage:</u></b></p>
+ * <pre><code>
+var filters = Ext.create('Ext.ux.grid.GridFilters', {
+    ...
+    filters: [{
+        type: 'list',
+        dataIndex: 'size',
+        phpMode: true,
+        // options will be used as data to implicitly creates an ArrayStore
+        options: ['extra small', 'small', 'medium', 'large', 'extra large']
+    }]
+});
+ * </code></pre>
+ *
+ */
+Ext.define('Ext.ux.grid.filter.ListFilter', {
+    extend: 'Ext.ux.grid.filter.Filter',
+    alias: 'gridfilter.list',
+
+    /**
+     * @cfg {Array} options
+     * <p><code>data</code> to be used to implicitly create a data store
+     * to back this list when the data source is <b>local</b>. If the
+     * data for the list is remote, use the <code>{@link #store}</code>
+     * config instead.</p>
+     * <br><p>Each item within the provided array may be in one of the
+     * following formats:</p>
+     * <div class="mdetail-params"><ul>
+     * <li><b>Array</b> :
+     * <pre><code>
+options: [
+    [11, 'extra small'],
+    [18, 'small'],
+    [22, 'medium'],
+    [35, 'large'],
+    [44, 'extra large']
+]
+     * </code></pre>
+     * </li>
+     * <li><b>Object</b> :
+     * <pre><code>
+labelField: 'name', // override default of 'text'
+options: [
+    {id: 11, name:'extra small'},
+    {id: 18, name:'small'},
+    {id: 22, name:'medium'},
+    {id: 35, name:'large'},
+    {id: 44, name:'extra large'}
+]
+     * </code></pre>
+     * </li>
+     * <li><b>String</b> :
+     * <pre><code>
+     * options: ['extra small', 'small', 'medium', 'large', 'extra large']
+     * </code></pre>
+     * </li>
+     */
+    /**
+     * @cfg {Boolean} phpMode
+     * <p>Adjust the format of this filter. Defaults to false.</p>
+     * <br><p>When GridFilters <code>@cfg encode = false</code> (default):</p>
+     * <pre><code>
+// phpMode == false (default):
+filter[0][data][type] list
+filter[0][data][value] value1
+filter[0][data][value] value2
+filter[0][field] prod
+
+// phpMode == true:
+filter[0][data][type] list
+filter[0][data][value] value1, value2
+filter[0][field] prod
+     * </code></pre>
+     * When GridFilters <code>@cfg encode = true</code>:
+     * <pre><code>
+// phpMode == false (default):
+filter : [{"type":"list","value":["small","medium"],"field":"size"}]
+
+// phpMode == true:
+filter : [{"type":"list","value":"small,medium","field":"size"}]
+     * </code></pre>
+     */
+    phpMode : false,
+    /**
+     * @cfg {Ext.data.Store} store
+     * The {@link Ext.data.Store} this list should use as its data source
+     * when the data source is <b>remote</b>. If the data for the list
+     * is local, use the <code>{@link #options}</code> config instead.
+     */
+
+    /**
+     * @private
+     * Template method that is to initialize the filter.
+     * @param {Object} config
+     */
+    init : function (config) {
+        this.dt = Ext.create('Ext.util.DelayedTask', this.fireUpdate, this);
+    },
+
+    /**
+     * @private @override
+     * Creates the Menu for this filter.
+     * @param {Object} config Filter configuration
+     * @return {Ext.menu.Menu}
+     */
+    createMenu: function(config) {
+        var menu = Ext.create('Ext.ux.grid.menu.ListMenu', config);
+        menu.on('checkchange', this.onCheckChange, this);
+        return menu;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return the value of the filter.
+     * @return {String} The value of this filter
+     */
+    getValue : function () {
+        return this.menu.getSelected();
+    },
+    /**
+     * @private
+     * Template method that is to set the value of the filter.
+     * @param {Object} value The value to set the filter
+     */
+    setValue : function (value) {
+        this.menu.setSelected(value);
+        this.fireEvent('update', this);
+    },
+
+    /**
+     * @private
+     * Template method that is to return <tt>true</tt> if the filter
+     * has enough configuration information to be activated.
+     * @return {Boolean}
+     */
+    isActivatable : function () {
+        return this.getValue().length > 0;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return serialized filter data for
+     * transmission to the server.
+     * @return {Object/Array} An object or collection of objects containing
+     * key value pairs representing the current configuration of the filter.
+     */
+    getSerialArgs : function () {
+        return {type: 'list', value: this.phpMode ? this.getValue().join(',') : this.getValue()};
+    },
+
+    /** @private */
+    onCheckChange : function(){
+        this.dt.delay(this.updateBuffer);
+    },
+
+
+    /**
+     * Template method that is to validate the provided Ext.data.Record
+     * against the filters configuration.
+     * @param {Ext.data.Record} record The record to validate
+     * @return {Boolean} true if the record is valid within the bounds
+     * of the filter, false otherwise.
+     */
+    validateRecord : function (record) {
+        var valuesArray = this.getValue();
+        return Ext.Array.indexOf(valuesArray, record.get(this.dataIndex)) > -1;
+    }
+});
+
+/**
+ * @class Ext.ux.grid.filter.NumericFilter
+ * @extends Ext.ux.grid.filter.Filter
+ * Filters using an Ext.ux.grid.menu.RangeMenu.
+ * <p><b><u>Example Usage:</u></b></p>
+ * <pre><code>
+var filters = Ext.create('Ext.ux.grid.GridFilters', {
+    ...
+    filters: [{
+        type: 'numeric',
+        dataIndex: 'price'
+    }]
+});
+ * </code></pre>
+ * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
+ * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
+ */
+Ext.define('Ext.ux.grid.filter.NumericFilter', {
+    extend: 'Ext.ux.grid.filter.Filter',
+    alias: 'gridfilter.numeric',
+    uses: ['Ext.form.field.Number'],
+
+    /**
+     * @private @override
+     * Creates the Menu for this filter.
+     * @param {Object} config Filter configuration
+     * @return {Ext.menu.Menu}
+     */
+    createMenu: function(config) {
+        var me = this,
+            menu;
+        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
+        menu.on('update', me.fireUpdate, me);
+        return menu;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return the value of the filter.
+     * @return {String} The value of this filter
+     */
+    getValue : function () {
+        return this.menu.getValue();
+    },
+
+    /**
+     * @private
+     * Template method that is to set the value of the filter.
+     * @param {Object} value The value to set the filter
+     */
+    setValue : function (value) {
+        this.menu.setValue(value);
+    },
+
+    /**
+     * @private
+     * Template method that is to return <tt>true</tt> if the filter
+     * has enough configuration information to be activated.
+     * @return {Boolean}
+     */
+    isActivatable : function () {
+        var values = this.getValue(),
+            key;
+        for (key in values) {
+            if (values[key] !== undefined) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return serialized filter data for
+     * transmission to the server.
+     * @return {Object/Array} An object or collection of objects containing
+     * key value pairs representing the current configuration of the filter.
+     */
+    getSerialArgs : function () {
+        var key,
+            args = [],
+            values = this.menu.getValue();
+        for (key in values) {
+            args.push({
+                type: 'numeric',
+                comparison: key,
+                value: values[key]
+            });
+        }
+        return args;
+    },
+
+    /**
+     * Template method that is to validate the provided Ext.data.Record
+     * against the filters configuration.
+     * @param {Ext.data.Record} record The record to validate
+     * @return {Boolean} true if the record is valid within the bounds
+     * of the filter, false otherwise.
+     */
+    validateRecord : function (record) {
+        var val = record.get(this.dataIndex),
+            values = this.getValue(),
+            isNumber = Ext.isNumber;
+        if (isNumber(values.eq) && val != values.eq) {
+            return false;
+        }
+        if (isNumber(values.lt) && val >= values.lt) {
+            return false;
+        }
+        if (isNumber(values.gt) && val <= values.gt) {
+            return false;
+        }
+        return true;
+    }
+});
+
+/**
  * @class Ext.ux.grid.filter.DateFilter
  * @extends Ext.ux.grid.filter.Filter
  * Filter by a configurable Ext.picker.DatePicker menu
@@ -9345,300 +9674,6 @@ Ext.define('Ext.ux.grid.filter.StringFilter', {
         }
         // restart the timer
         this.updateTask.delay(this.updateBuffer);
-    }
-});
-
-/**
- * @class Ext.ux.grid.filter.NumericFilter
- * @extends Ext.ux.grid.filter.Filter
- * Filters using an Ext.ux.grid.menu.RangeMenu.
- * <p><b><u>Example Usage:</u></b></p>
- * <pre><code>
-var filters = Ext.create('Ext.ux.grid.GridFilters', {
-    ...
-    filters: [{
-        type: 'numeric',
-        dataIndex: 'price'
-    }]
-});
- * </code></pre>
- * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
- * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
- */
-Ext.define('Ext.ux.grid.filter.NumericFilter', {
-    extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.numeric',
-    uses: ['Ext.form.field.Number'],
-
-    /**
-     * @private @override
-     * Creates the Menu for this filter.
-     * @param {Object} config Filter configuration
-     * @return {Ext.menu.Menu}
-     */
-    createMenu: function(config) {
-        var me = this,
-            menu;
-        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
-        menu.on('update', me.fireUpdate, me);
-        return menu;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return the value of the filter.
-     * @return {String} The value of this filter
-     */
-    getValue : function () {
-        return this.menu.getValue();
-    },
-
-    /**
-     * @private
-     * Template method that is to set the value of the filter.
-     * @param {Object} value The value to set the filter
-     */
-    setValue : function (value) {
-        this.menu.setValue(value);
-    },
-
-    /**
-     * @private
-     * Template method that is to return <tt>true</tt> if the filter
-     * has enough configuration information to be activated.
-     * @return {Boolean}
-     */
-    isActivatable : function () {
-        var values = this.getValue(),
-            key;
-        for (key in values) {
-            if (values[key] !== undefined) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return serialized filter data for
-     * transmission to the server.
-     * @return {Object/Array} An object or collection of objects containing
-     * key value pairs representing the current configuration of the filter.
-     */
-    getSerialArgs : function () {
-        var key,
-            args = [],
-            values = this.menu.getValue();
-        for (key in values) {
-            args.push({
-                type: 'numeric',
-                comparison: key,
-                value: values[key]
-            });
-        }
-        return args;
-    },
-
-    /**
-     * Template method that is to validate the provided Ext.data.Record
-     * against the filters configuration.
-     * @param {Ext.data.Record} record The record to validate
-     * @return {Boolean} true if the record is valid within the bounds
-     * of the filter, false otherwise.
-     */
-    validateRecord : function (record) {
-        var val = record.get(this.dataIndex),
-            values = this.getValue(),
-            isNumber = Ext.isNumber;
-        if (isNumber(values.eq) && val != values.eq) {
-            return false;
-        }
-        if (isNumber(values.lt) && val >= values.lt) {
-            return false;
-        }
-        if (isNumber(values.gt) && val <= values.gt) {
-            return false;
-        }
-        return true;
-    }
-});
-
-/**
- * @class Ext.ux.grid.filter.ListFilter
- * @extends Ext.ux.grid.filter.Filter
- * <p>List filters are able to be preloaded/backed by an Ext.data.Store to load
- * their options the first time they are shown. ListFilter utilizes the
- * {@link Ext.ux.grid.menu.ListMenu} component.</p>
- * <p>Although not shown here, this class accepts all configuration options
- * for {@link Ext.ux.grid.menu.ListMenu}.</p>
- *
- * <p><b><u>Example Usage:</u></b></p>
- * <pre><code>
-var filters = Ext.create('Ext.ux.grid.GridFilters', {
-    ...
-    filters: [{
-        type: 'list',
-        dataIndex: 'size',
-        phpMode: true,
-        // options will be used as data to implicitly creates an ArrayStore
-        options: ['extra small', 'small', 'medium', 'large', 'extra large']
-    }]
-});
- * </code></pre>
- *
- */
-Ext.define('Ext.ux.grid.filter.ListFilter', {
-    extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.list',
-
-    /**
-     * @cfg {Array} options
-     * <p><code>data</code> to be used to implicitly create a data store
-     * to back this list when the data source is <b>local</b>. If the
-     * data for the list is remote, use the <code>{@link #store}</code>
-     * config instead.</p>
-     * <br><p>Each item within the provided array may be in one of the
-     * following formats:</p>
-     * <div class="mdetail-params"><ul>
-     * <li><b>Array</b> :
-     * <pre><code>
-options: [
-    [11, 'extra small'],
-    [18, 'small'],
-    [22, 'medium'],
-    [35, 'large'],
-    [44, 'extra large']
-]
-     * </code></pre>
-     * </li>
-     * <li><b>Object</b> :
-     * <pre><code>
-labelField: 'name', // override default of 'text'
-options: [
-    {id: 11, name:'extra small'},
-    {id: 18, name:'small'},
-    {id: 22, name:'medium'},
-    {id: 35, name:'large'},
-    {id: 44, name:'extra large'}
-]
-     * </code></pre>
-     * </li>
-     * <li><b>String</b> :
-     * <pre><code>
-     * options: ['extra small', 'small', 'medium', 'large', 'extra large']
-     * </code></pre>
-     * </li>
-     */
-    /**
-     * @cfg {Boolean} phpMode
-     * <p>Adjust the format of this filter. Defaults to false.</p>
-     * <br><p>When GridFilters <code>@cfg encode = false</code> (default):</p>
-     * <pre><code>
-// phpMode == false (default):
-filter[0][data][type] list
-filter[0][data][value] value1
-filter[0][data][value] value2
-filter[0][field] prod
-
-// phpMode == true:
-filter[0][data][type] list
-filter[0][data][value] value1, value2
-filter[0][field] prod
-     * </code></pre>
-     * When GridFilters <code>@cfg encode = true</code>:
-     * <pre><code>
-// phpMode == false (default):
-filter : [{"type":"list","value":["small","medium"],"field":"size"}]
-
-// phpMode == true:
-filter : [{"type":"list","value":"small,medium","field":"size"}]
-     * </code></pre>
-     */
-    phpMode : false,
-    /**
-     * @cfg {Ext.data.Store} store
-     * The {@link Ext.data.Store} this list should use as its data source
-     * when the data source is <b>remote</b>. If the data for the list
-     * is local, use the <code>{@link #options}</code> config instead.
-     */
-
-    /**
-     * @private
-     * Template method that is to initialize the filter.
-     * @param {Object} config
-     */
-    init : function (config) {
-        this.dt = Ext.create('Ext.util.DelayedTask', this.fireUpdate, this);
-    },
-
-    /**
-     * @private @override
-     * Creates the Menu for this filter.
-     * @param {Object} config Filter configuration
-     * @return {Ext.menu.Menu}
-     */
-    createMenu: function(config) {
-        var menu = Ext.create('Ext.ux.grid.menu.ListMenu', config);
-        menu.on('checkchange', this.onCheckChange, this);
-        return menu;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return the value of the filter.
-     * @return {String} The value of this filter
-     */
-    getValue : function () {
-        return this.menu.getSelected();
-    },
-    /**
-     * @private
-     * Template method that is to set the value of the filter.
-     * @param {Object} value The value to set the filter
-     */
-    setValue : function (value) {
-        this.menu.setSelected(value);
-        this.fireEvent('update', this);
-    },
-
-    /**
-     * @private
-     * Template method that is to return <tt>true</tt> if the filter
-     * has enough configuration information to be activated.
-     * @return {Boolean}
-     */
-    isActivatable : function () {
-        return this.getValue().length > 0;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return serialized filter data for
-     * transmission to the server.
-     * @return {Object/Array} An object or collection of objects containing
-     * key value pairs representing the current configuration of the filter.
-     */
-    getSerialArgs : function () {
-        return {type: 'list', value: this.phpMode ? this.getValue().join(',') : this.getValue()};
-    },
-
-    /** @private */
-    onCheckChange : function(){
-        this.dt.delay(this.updateBuffer);
-    },
-
-
-    /**
-     * Template method that is to validate the provided Ext.data.Record
-     * against the filters configuration.
-     * @param {Ext.data.Record} record The record to validate
-     * @return {Boolean} true if the record is valid within the bounds
-     * of the filter, false otherwise.
-     */
-    validateRecord : function (record) {
-        var valuesArray = this.getValue();
-        return Ext.Array.indexOf(valuesArray, record.get(this.dataIndex)) > -1;
     }
 });
 
@@ -10303,12 +10338,13 @@ Ext.define('CS.view.CompoundWindow', {
         frame: true, 
         margin: '5 5 5 5'
     },
+    autoScroll: true,
     modal: false,
-    resizable: false,
+    resizable: true,
     autoShow: false,
     closeAction: 'hide',
-    height: 650,
-    width: 800,
+    height: 550,
+    width: 700,
     initComponent: function () {
         //  create component for displaying general compound information
         this.compoundInfo = Ext.create('CS.view.Compound', {
@@ -11698,16 +11734,72 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             anchor:'100%',
-            itemId:'fpUserMessage1',
+
+            value:'Open PHACTS Explorer <a href="http://www.openphacts.org/explorer" target="_blank">homepage</a>',
             fieldCls:'fb-message',
-            //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value:'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
+            itemId:'homepage'
         },
         {
             xtype:'displayfield',
             value:'<br>',
             itemId:'spacer2'
         },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'Watch <a href="http://www.openphacts.org/tutorials" target="_blank">tutorials</a>',
+            itemId:'tutorial'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer3'
+        },
+        {
+            xtype:'displayfield',
+            anchor:'100%',
+            itemId:'fpUserMessage1',
+            fieldCls:'fb-message',
+            //fieldCls:'fb-message',
+            //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
+            value: 'Give us <a href="http://www.openphacts.org/explorer/160" target="_blank">feedback</a>.'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+
+            value:'Please note that we read everything, but can\'t always respond.',
+            itemId:'feedbackText'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer4'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer-" target="_blank">known issues</a>',
+            itemId:'issues'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer5'
+        },
+        {
+            xtype:'displayfield',
+            anchor:'100%',
+            itemId:'fbVersionId',
+            fieldCls:'fb-message',
+
+            value: 'version: ' + explorer_version
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer6'
+        }/*,     OLD INLINE EXPLORE FEEDBACK MECHANISM
         {
             xtype:'textfield',
             anchor:'100%',
@@ -11757,6 +11849,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                 var feedbackData = Ext.create('LSP.model.Feedback', {
                     userEmail:userEmailField.getValue(),
                     feedbackText:feedbackTextArea.getValue(),
+                    versionNumber: explorer_version,
                     technicalInfo:Ext.History.getToken()
                 });
                 var fp = this.up('FeedbackPanel');
@@ -11787,9 +11880,10 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                     }
                 });
             }
-        }
+        } */
     ]
 });
+
 Ext.define('LSP.view.Navigator', {
     extend:'Ext.Panel',
     alias:'widget.navigator',
@@ -11836,7 +11930,7 @@ Ext.define('LSP.view.Navigator', {
 //                ]
 //            },
             {
-                title:'Feedback',
+                title:'Help and Feedback',
                 border:false,
                 autoScroll:true,
                 iconCls:'fb-accordion',
@@ -12239,6 +12333,4 @@ Ext.define('LSP.view.Viewport', {
     }
 })
 ;
-
-
 
