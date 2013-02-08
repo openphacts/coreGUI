@@ -83,12 +83,13 @@ class CoreApiCallsController < ApplicationController
       response = Net::HTTP.get(domain, url_path)
       # only need the header line from the first response
       # i > 1 ? lines = response.lines.to_a[1..-1].join : lines = response
+      puts response
       tmpfile << response
       # i+=1
  # while i <= number_of_pages
       send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
     #the tempfile seems to nave been removed already by this point in rails 3.2.11, no idea why that should be
-    #tmpfile.close(true)
+      tmpfile.close
     rescue Exception => e
       logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
       # TODO send an error response?
