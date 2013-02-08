@@ -60,7 +60,8 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organism": "target_organisms",
 	"target_title": "target_names",
 	"assay_description": "assay_description",
-	"assay_organism": "assay_organism"
+	"assay_organism": "assay_organism",
+	"activity_pubmed_id": "pmid"
     }
 });
 
@@ -1674,7 +1675,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
     hideTrigger:true,
     forceSelection:true,
     allowBlank:false,
-    typeAhead:true,
+    typeAhead:false,
     emptyText:'Start typing...',
     margin:'5 5 5 5',
     width:700,
@@ -1686,7 +1687,8 @@ Ext.define('CW.view.ConceptWikiLookup', {
         getInnerTpl:function () {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
-    }
+    },
+    autoSelect: false
 });
          
 
@@ -6127,6 +6129,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
+            },
+
+            {
+                header:'Pubmed ID',
+                dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
             }
         ],
 
@@ -6169,21 +6181,19 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                     //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
+                    Ext.each(targetURIs, function (target, index) {
                         var url = targetURIs[index];
-                        if (url) {
+                        if (url && targetURIs.length > 1) {
                             //console.log( ' url ' + url);
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
-
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });
@@ -10333,8 +10343,8 @@ Ext.define('CS.view.CompoundWindow', {
     resizable: true,
     autoShow: false,
     closeAction: 'hide',
-    height: 650,
-    width: 800,
+    height: 550,
+    width: 700,
     initComponent: function () {
         //  create component for displaying general compound information
         this.compoundInfo = Ext.create('CS.view.Compound', {
@@ -11724,11 +11734,59 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             anchor:'100%',
+
+            value:'Open PHACTS Explorer <a href="http://www.openphacts.org/explorer" target="_blank">homepage</a>',
+            fieldCls:'fb-message',
+            itemId:'homepage'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer2'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'Watch <a href="http://www.openphacts.org/tutorials" target="_blank">tutorials</a>',
+            itemId:'tutorial'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer3'
+        },
+        {
+            xtype:'displayfield',
+            anchor:'100%',
             itemId:'fpUserMessage1',
             fieldCls:'fb-message',
+            //fieldCls:'fb-message',
             //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
-        }, 
+            value: 'Give us <a href="http://www.openphacts.org/explorer/160" target="_blank">feedback</a>.'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+
+            value:'Please note that we read everything, but can\'t always respond.',
+            itemId:'feedbackText'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer4'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer-" target="_blank">known issues</a>',
+            itemId:'issues'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer5'
+        },
         {
             xtype:'displayfield',
             anchor:'100%',
@@ -11740,8 +11798,8 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             value:'<br>',
-            itemId:'spacer2'
-        },
+            itemId:'spacer6'
+        }/*,     OLD INLINE EXPLORE FEEDBACK MECHANISM
         {
             xtype:'textfield',
             anchor:'100%',
@@ -11822,7 +11880,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                     }
                 });
             }
-        }
+        } */
     ]
 });
 
@@ -11872,7 +11930,7 @@ Ext.define('LSP.view.Navigator', {
 //                ]
 //            },
             {
-                title:'Feedback',
+                title:'Help and Feedback',
                 border:false,
                 autoScroll:true,
                 iconCls:'fb-accordion',
