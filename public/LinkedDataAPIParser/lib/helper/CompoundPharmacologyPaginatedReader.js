@@ -87,7 +87,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 assay_description = onAssay['description'];
                 var chembleAssayLink = chembldAssayLink + chembl_assay_uri.split('/').pop();
                 assay_description_item = chembleAssayLink;
-                assay_organism = onAssay['assay_organism'];
+                assay_organism = onAssay['organism'];
                 assay_organism_item = chembleAssayLink;
 
                 var target = onAssay['target'];
@@ -104,7 +104,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 }
                 var target_title = target_inner['title'];
                 target_title_item = chembl_assay_uri;
-                var target_organism = target_inner['target_organisms'];
+                var target_organism = target_inner['organism'];
                 target_organism_item = chembl_assay_uri;
                 var target_concatenated_uris = target_inner['concatenatedURIs'];
             }
