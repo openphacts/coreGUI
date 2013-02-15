@@ -87,26 +87,20 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 assay_description = onAssay['description'];
                 var chembleAssayLink = chembldAssayLink + chembl_assay_uri.split('/').pop();
                 assay_description_item = chembleAssayLink;
-                assay_organism = onAssay['assay_organism'];
+                assay_organism = onAssay['organism'];
                 assay_organism_item = chembleAssayLink;
 
                 var target = onAssay['target'];
-            }
-            if (target != null) {
-                // sometimes an array, sometimes a hash
-                var target_inner;
-                try {
-                    target_inner = target.pop();
-                } catch (err) {
-                    // not an array this time
-                    // not very nice but we have to deal with the inconsistency somehow
-                    target_inner = target;
-                }
-                var target_title = target_inner['title'];
-                target_title_item = chembl_assay_uri;
-                var target_organism = target_inner['target_organisms'];
-                target_organism_item = chembl_assay_uri;
-                var target_concatenated_uris = target_inner['concatenatedURIs'];
+                var targets = new Array();
+                var target_organisms = new Array();
+
+                Ext.each(target, function (item, index) {
+                    var target_inner = {};
+                    target_inner['title'] = item['title'];
+                    target_inner['src'] = item['_about'];
+                    targets.push(target_inner);
+                    target_organisms.push(item['organism']);
+                });
             }
 
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
@@ -134,14 +128,14 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_inchikey:compound_inchikey,
                 compound_drug_type:compound_drug_type,
                 compound_generic_name:compound_generic_name,
-                target_title:target_title,
-                target_concatenated_uris:target_concatenated_uris,
+                targets:targets,
+                //target_concatenated_uris:target_concatenated_uris,
 
                 compound_inchikey_src:cs_src,
                 compound_drug_type_src:drugbank_src,
                 compound_generic_name_src:drugbank_src,
                 target_title_src:chembl_src,
-                target_concatenated_uris_src:chembl_src,
+                //target_concatenated_uris_src:chembl_src,
 
 
                 //for target
@@ -157,7 +151,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 chembl_assay_uri:chembl_assay_uri,
                 chembl_target_uri:undefined,
                 //this is labelled assay_organism - actually now seems to be target_organisms
-                target_organism:target_organism,
+                target_organisms:target_organisms,
                 target_pref_label:undefined,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
@@ -181,8 +175,8 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_activity_type_src:chembl_src,
 				activity_pubmed_id:activity_pubmed_id,
 
-                target_title_item:target_title_item,
-                target_organism_item:target_organism_item,
+                //target_title_item:target_title_item,
+                //target_organism_item:target_organism_item,
                 assay_description_item:assay_description_item,
                 assay_organism_item:assay_organism_item,
                 activity_activity_type_item:activity_activity_type_item,

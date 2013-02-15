@@ -61,16 +61,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
-                header:'Target Name',
+                header:'Target Names',
                 width: 180,
-                dataIndex:'target_title',
+                dataIndex:'targets',
                 renderer:compoundProvenanceRenderer,
                 tdCls: 'wrap gridDescriptiveRowPadding'
                 //align:'center'
             },
             {
-                header:'Target Organism',
-                dataIndex:'target_organism',
+                header:'Target Organisms',
+                dataIndex:'target_organisms',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -244,6 +244,23 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
+if (this.columns[columnIndex].dataIndex == 'targets') {
+    console.log('target_title ' +  data.length);
+    var target_names = "";
+    Ext.each(data, function (target, index) {
+        target_names += target.title;
+        target_names += "<br>";
+    });
+    return "<div>" + target_names + "</div>";
+} else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+    console.log('target_organism ' + data.length);
+    var target_organisms = "";
+    Ext.each(data, function (target, index) {
+        target_organisms += target;
+        target_organisms += "<br>";
+    });
+    return "<div>" + target_organisms + "</div>";
+}
         return data;
     }
     return data;
