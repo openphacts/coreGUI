@@ -37,6 +37,15 @@ Ext.define('CW.view.ConceptWikiLookup', {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
     },
-    autoSelect: false
+    autoSelect: false,
+    listeners: {
+        beforequery: function() {
+            this.store.setQueryValue(this.rawValue);
+            this.store.setComboBox(this);
+        }
+}, initComponent: function() {
+        this.addEvents('matchingconcept');
+        this.callParent(arguments);
+    },
 });
          
