@@ -19,22 +19,32 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-		var tar = record.data.target_organisms[0];
+                var target_organisms = record.data.target_organisms;
+                var tar;
+                if (target_organisms) {
+	            tar = record.data.target_organisms[0];
+                }
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
                 var cw_comp = record.data.cw_compound_uri;
                 
-                target_items = new Array();
-                Ext.each(record.data.target_organisms, function (item, index) {
-                    target_items.push({
-					text: item,
+                var menu_item;
+                if(record.data.target_organisms.length >1) {
+                    target_items = new Array();
+                    Ext.each(record.data.target_organisms, function (item, index) {
+                        target_items.push({
+			                text: item,
 					iconCls: 'menu-search-target',
 					handler: function() {
-                                               Ext.History.add('!p=TargetByNameForm&s=' + item);
+                                           Ext.History.add('!p=TargetByNameForm&s=' + item);
 					}
-				});
-                });
-                var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
+				    });
+                    });
+                    var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
+                } else {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.target_organisms[0])}}); 
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -60,11 +70,12 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						//                        console.log(cmp);
 						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
-				}, {
-                                   text: 'View target info',
-                                   iconCls: 'menu-search-target',
-                                   menu: target_menu
-                                },
+				}, //{
+                                //   text: 'View target info',
+                                //   iconCls: 'menu-search-target',
+                                //   menu: target_menu
+                                //},
+                                   menu_item,
                                    {
 					text: 'Search for compound by SMILES',
 					itemId: 'searchForCompoundBySMILES',
