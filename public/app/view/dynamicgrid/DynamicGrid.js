@@ -19,10 +19,22 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-		var tar = record.data.target_title;
+		var tar = record.data.target_organisms[0];
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
                 var cw_comp = record.data.cw_compound_uri;
+                
+                target_items = new Array();
+                Ext.each(record.data.target_organisms, function (item, index) {
+                    target_items.push({
+					text: item,
+					iconCls: 'menu-search-target',
+					handler: function() {
+                                               Ext.History.add('!p=TargetByNameForm&s=' + item);
+					}
+				});
+                });
+                var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -49,19 +61,11 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
 				}, {
-					text: 'View target info',
-					itemId: 'searchForTarget',
-					iconCls: 'menu-search-target',
-					handler: function() {
-						//                        console.log('Search for target by name');
-						//                        console.log(tar);
-                                                if (cw_tar == "") {
-                                                    Ext.History.add('!p=TargetByNameForm&s=' + tar);
-                                                } else {
-						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
-                                                }
-					}
-				}, {
+                                   text: 'View target info',
+                                   iconCls: 'menu-search-target',
+                                   menu: target_menu
+                                },
+                                   {
 					text: 'Search for compound by SMILES',
 					itemId: 'searchForCompoundBySMILES',
 					iconCls: 'menu-search-compound',
