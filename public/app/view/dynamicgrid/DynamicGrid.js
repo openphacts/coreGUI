@@ -40,7 +40,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
@@ -49,16 +49,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
 				}, {
-					text: 'Search for compound by SMILES',
-					itemId: 'searchForCompoundBySMILES',
-					iconCls: 'menu-search-compound',
-					handler: function() {
-						//                        console.log('Search for compound by SMILES');
-						//                        console.log(cmp);
-						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
-					}
-				}, {
-					text: 'Search for target by name',
+					text: 'View target info',
 					itemId: 'searchForTarget',
 					iconCls: 'menu-search-target',
 					handler: function() {
@@ -69,6 +60,15 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                                                 } else {
 						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
                                                 }
+					}
+				}, {
+					text: 'Search for compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
 					text: 'Copy Data',
@@ -89,7 +89,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
