@@ -95,7 +95,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
 				}, {
 					text: 'Search for compound by SMILES',
