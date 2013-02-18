@@ -1454,6 +1454,8 @@ Ext.define('LSP.controller.Settings', {
 Ext.define('CW.store.ConceptWikiLookup', {
     extend: 'Ext.data.Store',
     requires: ['CW.model.ConceptWikiLookup', 'CW.config.Settings'],
+    queryValue: undefined,
+    comboBox: undefined,
     model: 'CW.model.ConceptWikiLookup',
 	proxy: {
         type: 'jsonp',
@@ -1470,7 +1472,33 @@ Ext.define('CW.store.ConceptWikiLookup', {
         //            url: CW.config.Settings.searchByTagUrl,
         //            reader: Ext.create('CW.helper.ConceptWikiJSONReader')
         //        });
+    },
+     listeners: {
+            load: function () {
+                var me = this;
+                Ext.each(this.data.items, function (item, index) {
+                    if(item.data.pref_label == this.store.queryValue) {
+                        me.getComboBox().setValue(item);
+                        me.getComboBox().fireEvent('matchingconcept');
+                    }
+                });
+            }
+    },
+    setQueryValue: function(queryValue) {
+        this.queryValue = queryValue;
+    },
+
+    getQueryValue: function(){
+        return this.queryValue;
+    },
+    setComboBox: function(comboBox) {
+        this.comboBox = comboBox;
+    },
+
+    getComboBox: function(){
+        return this.comboBox;
     }
+
 });
 
 /**
@@ -1688,7 +1716,16 @@ Ext.define('CW.view.ConceptWikiLookup', {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
     },
-    autoSelect: false
+    autoSelect: false,
+    listeners: {
+        beforequery: function() {
+            this.store.setQueryValue(this.rawValue);
+            this.store.setComboBox(this);
+        }
+}, initComponent: function() {
+        this.addEvents('matchingconcept');
+        this.callParent(arguments);
+    },
 });
          
 
@@ -6539,7 +6576,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 click: this.submitQuery
             },
             'PharmByTargetNameForm conceptWikiLookup': {
-                select: this.enableSubmit
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
             'PharmByTargetNameForm': {
                 afterrender: this.prepGrid,
@@ -7256,7 +7294,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				click: this.submitQuery
 			},
 			'PharmByCmpdNameForm conceptWikiLookup': {
-				select: this.enableSubmit
+				select: this.enableSubmit,
+                                matchingconcept: this.enableSubmit
 			},
 			'PharmByCmpdNameForm': {
 				historyToken: this.handleHistoryToken,
