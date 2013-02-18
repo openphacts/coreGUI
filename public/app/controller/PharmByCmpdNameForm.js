@@ -40,7 +40,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				click: this.submitQuery
 			},
 			'PharmByCmpdNameForm conceptWikiLookup': {
-				select: this.enableSubmit
+				select: this.enableSubmit,
+                                matchingconcept: this.enableSubmit
 			},
 			'PharmByCmpdNameForm': {
 				historyToken: this.handleHistoryToken,
