@@ -23,6 +23,17 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
                 var cw_comp = record.data.cw_compound_uri;
+                var cs_compound_uri = record.data.cs_compound_uri;
+                var menu_item;
+                if (cs_compound_uri != null) {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -75,6 +86,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		} else {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -110,7 +124,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					text: 'Copy Data',
 					menu: cmpValueMenu
 				}]
-			});
+			});                        
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 

@@ -147,6 +147,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
 		var cw_uri = record.data.cw_uri;
+                var cs_compound_uri = record.data.cs_uri;
+                var menu_item;
+                if (cs_compound_uri != null) {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -195,6 +206,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		} else {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -229,7 +243,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 				}, {
 					text: 'View compound pharmacology info',
 					itemId: 'searchForPharmacologyByCompound',
-					iconCls: 'menu-search-pharma-by-compound',
+					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
@@ -244,6 +258,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 
