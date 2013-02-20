@@ -87,7 +87,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 assay_description = onAssay['description'];
                 var chembleAssayLink = chembldAssayLink + chembl_assay_uri.split('/').pop();
                 assay_description_item = chembleAssayLink;
-                assay_organism = onAssay['assay_organism'];
+                assay_organism = onAssay['organism'];
                 assay_organism_item = chembleAssayLink;
 
                 var target = onAssay['target'];
@@ -104,7 +104,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 }
                 var target_title = target_inner['title'];
                 target_title_item = chembl_assay_uri;
-                var target_organism = target_inner['target_organisms'];
+                var target_organism = target_inner['organism'];
                 target_organism_item = chembl_assay_uri;
                 var target_concatenated_uris = target_inner['concatenatedURIs'];
             }
@@ -120,6 +120,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             activity_standard_units_item = chemblActivityLink;
             var activity_relation = item['relation'];
             activity_relation_item = chemblActivityLink;
+			var activity_pubmed_id = item['pmid'];
 
             var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
                 //for page
@@ -178,6 +179,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
                 activity_activity_type_src:chembl_src,
+				activity_pubmed_id:activity_pubmed_id,
 
                 target_title_item:target_title_item,
                 target_organism_item:target_organism_item,
@@ -192,6 +194,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_inchi_item:compound_inchi_item,
                 compound_inchikey_item:compound_inchikey_item,
                 compound_pref_label_item:compound_pref_label_item
+				
             });
 
 

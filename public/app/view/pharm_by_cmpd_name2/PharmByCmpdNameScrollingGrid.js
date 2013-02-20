@@ -154,6 +154,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
+            },
+
+            {
+                header:'Pubmed ID',
+                dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
             }
         ],
 
@@ -196,21 +206,19 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                     //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
+                    Ext.each(targetURIs, function (target, index) {
                         var url = targetURIs[index];
-                        if (url) {
+                        if (url && targetURIs.length > 1) {
                             //console.log( ' url ' + url);
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
-
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });

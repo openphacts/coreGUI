@@ -37,7 +37,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 click: this.submitQuery
             },
             'PharmByTargetNameForm conceptWikiLookup': {
-                select: this.enableSubmit
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
             'PharmByTargetNameForm': {
                 afterrender: this.prepGrid,

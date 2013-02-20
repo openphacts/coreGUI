@@ -24,7 +24,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
     hideTrigger:true,
     forceSelection:true,
     allowBlank:false,
-    typeAhead:true,
+    typeAhead:false,
     emptyText:'Start typing...',
     margin:'5 5 5 5',
     width:700,
@@ -36,6 +36,16 @@ Ext.define('CW.view.ConceptWikiLookup', {
         getInnerTpl:function () {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
-    }
+    },
+    autoSelect: false,
+    listeners: {
+        beforequery: function() {
+            this.store.setQueryValue(this.rawValue);
+            this.store.setComboBox(this);
+        }
+}, initComponent: function() {
+        this.addEvents('matchingconcept');
+        this.callParent(arguments);
+    },
 });
          

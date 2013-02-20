@@ -45,7 +45,7 @@ Ext.define('LSP.view.Navigator', {
 //                ]
 //            },
             {
-                title:'Feedback',
+                title:'Help and Feedback',
                 border:false,
                 autoScroll:true,
                 iconCls:'fb-accordion',

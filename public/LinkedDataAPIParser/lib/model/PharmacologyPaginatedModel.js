@@ -52,6 +52,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'activity_standard_units',
         'activity_standard_value',
         'activity_activity_type',
+		'activity_pubmed_id',
 
         'compound_full_mwt_src',
         'compound_pref_label_src',

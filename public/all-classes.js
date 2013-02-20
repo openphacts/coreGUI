@@ -60,7 +60,8 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organism": "target_organisms",
 	"target_title": "target_names",
 	"assay_description": "assay_description",
-	"assay_organism": "assay_organism"
+	"assay_organism": "assay_organism",
+	"activity_pubmed_id": "pmid"
     }
 });
 
@@ -1453,6 +1454,8 @@ Ext.define('LSP.controller.Settings', {
 Ext.define('CW.store.ConceptWikiLookup', {
     extend: 'Ext.data.Store',
     requires: ['CW.model.ConceptWikiLookup', 'CW.config.Settings'],
+    queryValue: undefined,
+    comboBox: undefined,
     model: 'CW.model.ConceptWikiLookup',
 	proxy: {
         type: 'jsonp',
@@ -1469,7 +1472,33 @@ Ext.define('CW.store.ConceptWikiLookup', {
         //            url: CW.config.Settings.searchByTagUrl,
         //            reader: Ext.create('CW.helper.ConceptWikiJSONReader')
         //        });
+    },
+     listeners: {
+            load: function () {
+                var me = this;
+                Ext.each(this.data.items, function (item, index) {
+                    if(item.data.pref_label == this.store.queryValue) {
+                        me.getComboBox().setValue(item);
+                        me.getComboBox().fireEvent('matchingconcept');
+                    }
+                });
+            }
+    },
+    setQueryValue: function(queryValue) {
+        this.queryValue = queryValue;
+    },
+
+    getQueryValue: function(){
+        return this.queryValue;
+    },
+    setComboBox: function(comboBox) {
+        this.comboBox = comboBox;
+    },
+
+    getComboBox: function(){
+        return this.comboBox;
     }
+
 });
 
 /**
@@ -1674,7 +1703,7 @@ Ext.define('CW.view.ConceptWikiLookup', {
     hideTrigger:true,
     forceSelection:true,
     allowBlank:false,
-    typeAhead:true,
+    typeAhead:false,
     emptyText:'Start typing...',
     margin:'5 5 5 5',
     width:700,
@@ -1686,7 +1715,17 @@ Ext.define('CW.view.ConceptWikiLookup', {
         getInnerTpl:function () {
             return '<p><span style="font-family: verdana; color: grey; "><small>Match: {match}</small></span><br/><b>{pref_label}</b> <a href="http://ops.conceptwiki.org/wiki/#/concept/{uuid}/view" target="_blank">(definition)</a></p>';
         }                                                                                                                                                                                        
-    }
+    },
+    autoSelect: false,
+    listeners: {
+        beforequery: function() {
+            this.store.setQueryValue(this.rawValue);
+            this.store.setComboBox(this);
+        }
+}, initComponent: function() {
+        this.addEvents('matchingconcept');
+        this.callParent(arguments);
+    },
 });
          
 
@@ -5160,11 +5199,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     current_count: 0,
 
-	failed_to_load: 0,
+    missing_count: 0,
+
+    failed_to_load: 0,
 	
-	current_smiles: undefined,
+    current_smiles: undefined,
 	
-	current_mode: undefined,
+    current_mode: undefined,
+
+    success_count: 0,
 
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
@@ -5244,6 +5287,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
         csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
 	this.current_count = 0;
+        this.missing_count = 0;
+        this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
@@ -5252,24 +5297,15 @@ Ext.define('LSP.controller.SimSearchForm', {
 					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
-                    records[0].index = me.current_count;
+                    records[0].index = me.success_count;
+                    me.success_count++;
                     me.current_count++;
                     // There is only 1 compound record returned
                     me.getStrucGrid().getStore().add(records[0]);
                     //me.all_records.push(records[0]);
                     //console.log('Count is now ' + me.current_count);
                     if (me.current_count == me.total_count) {
-                        me.getSubmitButton().enable();
-                        //me.getSsform().doLayout();
-                        me.getSsform().setLoading(false);
-                        // TODO should check there are some records first
-                        me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}
-                        me.setTSVDownloadParams();
+                        me.setTitleAfterLoading();
                     }
                 } else {
                     // keep track of failed requests since they count towards the total
@@ -5277,18 +5313,38 @@ Ext.define('LSP.controller.SimSearchForm', {
                     me.current_count++;
 					me.failed_to_load++;
 					if (me.current_count == me.total_count) {
-						me.getSubmitButton().enable();
-						me.getSsform().setLoading(false);
-						me.getStrucGrid().down('#tsvDownloadProxy_id').enable();
-						if (me.failed_to_load > 0) {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' (Failed to load ' + me.failed_to_load + ' records out of ' + me.total_count + ')');
-						} else {
-							me.getStrucGrid().setTitle(me.getStrucGrid().gridBaseTitle + ' ('  + me.total_count + ' records)');
-						}					
+                                            me.setTitleAfterLoading();					
 					}
                 }
             });
         }
+    },
+
+    setTitleAfterLoading: function() {
+        this.getSubmitButton().enable();
+	this.getSsform().setLoading(false);
+	this.getStrucGrid().down('#tsvDownloadProxy_id').enable();
+	if (this.failed_to_load > 0) {
+          if (this.current_mode == 'exact') {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
+} else {
+
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        } else {
+if (this.current_mode == 'exact') {
+    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle);
+} else {
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
+            if (this.missing_count > 0) {
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+            }
+}
+        }
+        this.setTSVDownloadParams();	
     },
 
     handleHistoryToken: function(historyTokenObject) {
@@ -6110,6 +6166,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 align:'center',
                 tdCls: 'gridRowPadding'
 
+            },
+
+            {
+                header:'Pubmed ID',
+                dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
             }
         ],
 
@@ -6152,21 +6218,19 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                     //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
                     var targetURIs = record.data['target_concatenated_uris'].split(',');
                     var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
+                    Ext.each(targetURIs, function (target, index) {
                         var url = targetURIs[index];
-                        if (url) {
+                        if (url && targetURIs.length > 1) {
                             //console.log( ' url ' + url);
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
-
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });
@@ -6512,7 +6576,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 click: this.submitQuery
             },
             'PharmByTargetNameForm conceptWikiLookup': {
-                select: this.enableSubmit
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
             'PharmByTargetNameForm': {
                 afterrender: this.prepGrid,
@@ -7229,7 +7294,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 				click: this.submitQuery
 			},
 			'PharmByCmpdNameForm conceptWikiLookup': {
-				select: this.enableSubmit
+				select: this.enableSubmit,
+                                matchingconcept: this.enableSubmit
 			},
 			'PharmByCmpdNameForm': {
 				historyToken: this.handleHistoryToken,
@@ -10316,8 +10382,8 @@ Ext.define('CS.view.CompoundWindow', {
     resizable: true,
     autoShow: false,
     closeAction: 'hide',
-    height: 650,
-    width: 800,
+    height: 550,
+    width: 700,
     initComponent: function () {
         //  create component for displaying general compound information
         this.compoundInfo = Ext.create('CS.view.Compound', {
@@ -11707,11 +11773,59 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             anchor:'100%',
+
+            value:'Open PHACTS Explorer <a href="http://www.openphacts.org/explorer" target="_blank">homepage</a>',
+            fieldCls:'fb-message',
+            itemId:'homepage'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer2'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'Watch <a href="http://www.openphacts.org/tutorials" target="_blank">tutorials</a>',
+            itemId:'tutorial'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer3'
+        },
+        {
+            xtype:'displayfield',
+            anchor:'100%',
             itemId:'fpUserMessage1',
             fieldCls:'fb-message',
+            //fieldCls:'fb-message',
             //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
-        }, 
+            value: 'Give us <a href="http://www.openphacts.org/explorer/160" target="_blank">feedback</a>.'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+
+            value:'Please note that we read everything, but can\'t always respond.',
+            itemId:'feedbackText'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer4'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer-" target="_blank">known issues</a>',
+            itemId:'issues'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer5'
+        },
         {
             xtype:'displayfield',
             anchor:'100%',
@@ -11723,8 +11837,8 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             value:'<br>',
-            itemId:'spacer2'
-        },
+            itemId:'spacer6'
+        }/*,     OLD INLINE EXPLORE FEEDBACK MECHANISM
         {
             xtype:'textfield',
             anchor:'100%',
@@ -11805,7 +11919,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                     }
                 });
             }
-        }
+        } */
     ]
 });
 
@@ -11855,7 +11969,7 @@ Ext.define('LSP.view.Navigator', {
 //                ]
 //            },
             {
-                title:'Feedback',
+                title:'Help and Feedback',
                 border:false,
                 autoScroll:true,
                 iconCls:'fb-accordion',

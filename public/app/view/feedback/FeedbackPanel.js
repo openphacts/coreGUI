@@ -21,11 +21,59 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             anchor:'100%',
+
+            value:'Open PHACTS Explorer <a href="http://www.openphacts.org/explorer" target="_blank">homepage</a>',
+            fieldCls:'fb-message',
+            itemId:'homepage'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer2'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'Watch <a href="http://www.openphacts.org/tutorials" target="_blank">tutorials</a>',
+            itemId:'tutorial'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer3'
+        },
+        {
+            xtype:'displayfield',
+            anchor:'100%',
             itemId:'fpUserMessage1',
             fieldCls:'fb-message',
+            //fieldCls:'fb-message',
             //value:'Please provide your feedback here. Unfortunately we can\'t promise to respond to every piece of feedback but we will read them.'
-            value: 'You can use this form to give us feedback or report any problems you encounter.  Please note that we read everything, but can\'t always respond.'
-        }, 
+            value: 'Give us <a href="http://www.openphacts.org/explorer/160" target="_blank">feedback</a>.'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+
+            value:'Please note that we read everything, but can\'t always respond.',
+            itemId:'feedbackText'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer4'
+        },
+        {
+            xtype:'displayfield',
+            fieldCls:'fb-message',
+            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer-" target="_blank">known issues</a>',
+            itemId:'issues'
+        },
+        {
+            xtype:'displayfield',
+            value:'<br>',
+            itemId:'spacer5'
+        },
         {
             xtype:'displayfield',
             anchor:'100%',
@@ -37,8 +85,8 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             value:'<br>',
-            itemId:'spacer2'
-        },
+            itemId:'spacer6'
+        }/*,     OLD INLINE EXPLORE FEEDBACK MECHANISM
         {
             xtype:'textfield',
             anchor:'100%',
@@ -119,6 +167,6 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
                     }
                 });
             }
-        }
+        } */
     ]
 });
