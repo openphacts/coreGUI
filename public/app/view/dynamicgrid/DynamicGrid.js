@@ -29,21 +29,23 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                 var cw_comp = record.data.cw_compound_uri;
                 
                 var menu_item;
-                if(record.data.target_organisms.length >1) {
+                if (target_organisms) {
+                if (record.data.target_organisms.length >1) {
                     target_items = new Array();
                     Ext.each(record.data.target_organisms, function (item, index) {
                         target_items.push({
-			                text: item,
+			                text: item.organism,
 					iconCls: 'menu-search-target',
 					handler: function() {
-                                           Ext.History.add('!p=TargetByNameForm&s=' + item);
+                                           Ext.History.add('!p=TargetByNameForm&s=' + item.organism);
 					}
 				    });
                     });
                     var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
                     menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
                 } else {
-                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.target_organisms[0])}}); 
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.target_organisms[0].organism)}}); 
+                }
                 }
 
 		if (tar) {
