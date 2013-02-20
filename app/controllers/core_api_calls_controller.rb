@@ -112,7 +112,7 @@ class CoreApiCallsController < ApplicationController
 
   def tsv_download
     @tsv_file = TsvFile.where(:uuid => params[:uuid]).first
-    if @tsv_file.status == "finished" && @tsv_file.percentage == "100"
+    if @tsv_file.status == "finished" && @tsv_file.percentage == 100
       send_file File.join(Rails.root, 'filestore', @tsv_file.uuid), :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
     else
       render :layout => false
