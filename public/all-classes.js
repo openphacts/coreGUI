@@ -61,7 +61,9 @@ Ext.define('LDA.helper.LDAConstants', {
 	"target_title": "target_names",
 	"assay_description": "assay_description",
 	"assay_organism": "assay_organism",
-	"activity_pubmed_id": "pmid"
+	"activity_pubmed_id": "pmid",
+        "targets": "target_name",
+        "target_organisms": "target_organisms"
     }
 });
 
@@ -268,6 +270,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         itemId:'pharmCompoundButton',
                                         renderer: provenanceSummaryRenderer
 
+                                    },
+                                    {
+                                        xtype:'button',
+                                        margin:'0 10 0 0',
+                                        text:'Structure Search',
+                                        itemId:'pharmCompoundStructureButton',
+                                        renderer: provenanceSummaryRenderer
                                     },
                                     {
                                         xtype:'button',
@@ -574,6 +583,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             }
         );
         pharmButton.show();
+
+        var structureButton = this.down('#pharmCompoundStructureButton');
+        structureButton.hide();
+        structureButton.setHandler(function () {
+                Ext.History.add('!p=SimSearchForm&sm=' + compound.data.compound_smiles + '&st=exact');
+            });
+        structureButton.show();
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
@@ -3921,19 +3937,103 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-		var tar = record.data.target_title;
+                var target_organisms = record.data.target_organisms;
+                var tar;
+                if (target_organisms) {
+	            tar = record.data.target_organisms[0];
+                }
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
                 var cw_comp = record.data.cw_compound_uri;
+                var cs_compound_uri = record.data.cs_compound_uri;
+                var cs_menu_item;
+                if (cs_compound_uri != null) {
+                    cs_menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
+                var menu_item;
+                if (target_organisms) {
+                if (record.data.target_organisms.length >1) {
+                    target_items = new Array();
+                    target_text_items = new Array();
+
+                    Ext.each(record.data.target_organisms, function (item, index) {
+                        target_items.push({
+			                text: item.organism,
+					iconCls: 'menu-search-target',
+					handler: function() {
+                                           Ext.History.add('!p=TargetByNameForm&s=' + item.organism);
+					}
+				    });
+                        target_text_items.push({xtype: 'textfield', value: item.organism});
+                    });
+                    var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
+                    var target_text = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_text_items});
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
+                    text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: target_text_items});        
+                } else {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.target_organisms[0].organism)}}); 
+                    text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: record.data.target_organisms[0].organism});
+                }
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
 				items: [{
 					xtype: 'textfield',
 					value: cmp
-				}, {
+				}, 
+                                 text_menu_item, 
+                                {
 					xtype: 'textfield',
-					value: tar
+					value: smi
+				}]
+			});
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'View compound info',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
+					}
+				}, //{
+                                //   text: 'View target info',
+                                //   iconCls: 'menu-search-target',
+                                //   menu: target_menu
+                                //},
+                                   menu_item,
+                                   {
+					text: 'Search for compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+                        if (cs_menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        }
+			contextMenu.showAt(x, y);
+		} else {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
 				}, {
 					xtype: 'textfield',
 					value: smi
@@ -3942,7 +4042,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
@@ -3960,59 +4060,13 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for target by name',
-					itemId: 'searchForTarget',
-					iconCls: 'menu-search-target',
-					handler: function() {
-						//                        console.log('Search for target by name');
-						//                        console.log(tar);
-                                                if (cw_tar == "") {
-                                                    Ext.History.add('!p=TargetByNameForm&s=' + tar);
-                                                } else {
-						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
-                                                }
-					}
-				}, {
 					text: 'Copy Data',
 					menu: cmpValueMenu
 				}]
-			});
-			contextMenu.showAt(x, y);
-		} else {
-			var cmpValueMenu = new Ext.menu.Menu({
-				items: [{
-					xtype: 'textfield',
-					value: cmp
-				}, {
-					xtype: 'textfield',
-					value: smi
-				}]
-			});
-
-			var contextMenu = new Ext.menu.Menu({
-				items: [{
-					text: 'Search for compound by name',
-					itemId: 'searchForCompoundByName',
-					iconCls: 'menu-search-compound',
-					handler: function() {
-						//                        console.log('Search for compound by name');
-						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
-					}
-				}, {
-					text: 'Search for compound by SMILES',
-					itemId: 'searchForCompoundBySMILES',
-					iconCls: 'menu-search-compound',
-					handler: function() {
-						//                        console.log('Search for compound by SMILES');
-						//                        console.log(cmp);
-						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
-					}
-				}, {
-					text: 'Copy Data',
-					menu: cmpValueMenu
-				}]
-			});
+			});                        
+                        if (cs_menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 
@@ -4146,14 +4200,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         console.log('DynamicGrid: init()');
         this.control({
             'dynamicgrid': {
-                itemdblclick: function(view, record, item, index, e, opts) {
-                    if (record.data.cs_compound_uri !== undefined) {
-                        var csid = record.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                        if (parseInt(csid) >= 1) {
-                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
-                        }
-                    }
-                },
                 itemcontextmenu: function(view, record, itemHTMLElement, index, eventObject, eOpts) {
                     eventObject.preventDefault();
                     //                    console.log('itemcontextmenu');
@@ -4807,6 +4853,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
 		var cw_uri = record.data.cw_uri;
+                var cs_compound_uri = record.data.cs_uri;
+                var menu_item;
+                if (cs_compound_uri != null) {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -4824,13 +4881,22 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for a compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_uri);
+					}
+				}, {
+					text: 'View target info',
+					itemId: 'searchForTarget',
+					iconCls: 'menu-search-target',
+					handler: function() {
+						//                        console.log('Search for target by name');
+						//                        console.log(tar);
+						Ext.History.add('!p=TargetByNameForm&s=' + tar);
 					}
 				}, {
 					text: 'Search for a compound by SMILES',
@@ -4842,19 +4908,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for a target by name',
-					itemId: 'searchForTarget',
-					iconCls: 'menu-search-target',
-					handler: function() {
-						//                        console.log('Search for target by name');
-						//                        console.log(tar);
-						Ext.History.add('!p=TargetByNameForm&s=' + tar);
-					}
-				}, {
 					text: 'Copy Data',
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		} else {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -4869,13 +4929,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for a compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_uri);
 					}
 				}, {
 					text: 'Search for a compound by SMILES',
@@ -4887,9 +4947,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for Pharmacology by Compound',
+					text: 'View compound pharmacology info',
 					itemId: 'searchForPharmacologyByCompound',
-					iconCls: 'menu-search-pharma-by-compound',
+					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
@@ -4904,6 +4964,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 
@@ -6073,16 +6136,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
-                header:'Target Name',
+                header:'Target Names',
                 width: 180,
-                dataIndex:'target_title',
+                dataIndex:'targets',
                 renderer:compoundProvenanceRenderer,
                 tdCls: 'wrap gridDescriptiveRowPadding'
                 //align:'center'
             },
             {
-                header:'Target Organism',
-                dataIndex:'target_organism',
+                header:'Target Organisms',
+                dataIndex:'target_organisms',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -6207,37 +6270,38 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
         cls += LDAProvenanceMode;
+
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
-            if (record.data[recdata] && data) {
+            if (record.data[recdata] && data || this.columns[columnIndex].dataIndex == 'targets' || this.columns[columnIndex].dataIndex == 'target_organisms' ) {
+                if (this.columns[columnIndex].dataIndex == 'targets') {
 
-                if (this.columns[columnIndex].dataIndex == 'target_title') {
-
+                    //loops through arrays
                     var output = new String();
-                    var targetNames = data.split(',');
-                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
-                    var targetURIs = record.data['target_concatenated_uris'].split(',');
-                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetURIs, function (target, index) {
-                        var url = targetURIs[index];
-                        if (url && targetURIs.length > 1) {
-                            //console.log( ' url ' + url);
-                            //var targetId = url.split('/').pop();
-                            var linkOut = targetBaseURL + url.split('/').pop();
-                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-                        } else {
-                            var onlyTarget = targetURIs[0].split('/').pop();
-                            var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-                        }
+                    Ext.each(data, function (target, index) {
+                        var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
+                        var targetIconCls = targetcls + 'Icon';
+                        targetIconCls = '/assets/' + targetIconCls + '.png';
+                        targetcls += LDAProvenanceMode;
+                        output += '<div class="' + targetcls + '">' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return output;
-
                 }
 
+                if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+                    //loops through arrays
+                    var organismsOutput = new String();
+                    Ext.each(data, function (organism, index) {
+                        var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
+                        var organismIconCls = organismCls + 'Icon';
+                        organismIconCls = '/assets/' + organismIconCls + '.png';
+                        organismCls += LDAProvenanceMode;
+                        organismsOutput += '<div class="' + organismCls + '">' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
+
+                    });
+                    return organismsOutput;
+                }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
                 return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
@@ -6256,12 +6320,28 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
+        if (this.columns[columnIndex].dataIndex == 'targets') {
+            //console.log('target_title ' + data.length);
+            var target_names = "";
+            Ext.each(data, function (target, index) {
+                target_names += target.title;
+                //console.log(" TARGET NAME SRC " + target['src']);
+                target_names += "<br><br>";
+            });
+            return "<div>" + target_names + "</div>";
+        } else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+            //console.log('target_organism ' + data.length);
+            var target_organisms = "";
+            Ext.each(data, function (target, index) {
+                target_organisms += target['organism'];
+                target_organisms += "<br><br>";
+            });
+            return "<div>" + target_organisms + "</div>";
+        }
         return data;
     }
     return data;
-}
-;
-
+};
 
 //{
 //    header:'Chemspider ID',
@@ -6271,6 +6351,31 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
 //    align: 'center'
 //},
 
+
+/*
+ var output = new String();
+ var targetNames = data.split(',');
+ //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
+ var targetURIs = record.data['target_concatenated_uris'].split(',');
+ var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
+ Ext.each(targetURIs, function (target, index) {
+ var url = targetURIs[index];
+ if (url && targetURIs.length > 1) {
+ //console.log( ' url ' + url);
+ //var targetId = url.split('/').pop();
+ var linkOut = targetBaseURL + url.split('/').pop();
+ //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
+ output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+ } else {
+ var onlyTarget = targetURIs[0].split('/').pop();
+ var linkOutfirst = targetBaseURL + onlyTarget;
+ output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+ }
+
+ });
+ return output;
+ */
 /**
  * Created with JetBrains RubyMine.
  * User: jameseales
