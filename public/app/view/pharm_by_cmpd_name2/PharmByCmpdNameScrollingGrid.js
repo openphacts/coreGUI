@@ -195,37 +195,38 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
         cls += LDAProvenanceMode;
+
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
-            if (record.data[recdata] && data) {
+            if (record.data[recdata] && data || this.columns[columnIndex].dataIndex == 'targets' || this.columns[columnIndex].dataIndex == 'target_organisms' ) {
+                if (this.columns[columnIndex].dataIndex == 'targets') {
 
-                if (this.columns[columnIndex].dataIndex == 'target_title') {
-
+                    //loops through arrays
                     var output = new String();
-                    var targetNames = data.split(',');
-                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
-                    var targetURIs = record.data['target_concatenated_uris'].split(',');
-                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetURIs, function (target, index) {
-                        var url = targetURIs[index];
-                        if (url && targetURIs.length > 1) {
-                            //console.log( ' url ' + url);
-                            //var targetId = url.split('/').pop();
-                            var linkOut = targetBaseURL + url.split('/').pop();
-                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-                        } else {
-                            var onlyTarget = targetURIs[0].split('/').pop();
-                            var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-                        }
+                    Ext.each(data, function (target, index) {
+                        var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
+                        var targetIconCls = targetcls + 'Icon';
+                        targetIconCls = '/assets/' + targetIconCls + '.png';
+                        targetcls += LDAProvenanceMode;
+                        output += '<div class="' + targetcls + '">' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return output;
-
                 }
 
+                if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+                    //loops through arrays
+                    var organismsOutput = new String();
+                    Ext.each(data, function (organism, index) {
+                        var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
+                        var organismIconCls = organismCls + 'Icon';
+                        organismIconCls = '/assets/' + organismIconCls + '.png';
+                        organismCls += LDAProvenanceMode;
+                        organismsOutput += '<div class="' + organismCls + '">' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
+
+                    });
+                    return organismsOutput;
+                }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
                 return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
@@ -244,29 +245,28 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
-if (this.columns[columnIndex].dataIndex == 'targets') {
-    console.log('target_title ' +  data.length);
-    var target_names = "";
-    Ext.each(data, function (target, index) {
-        target_names += target.title;
-        target_names += "<br>";
-    });
-    return "<div>" + target_names + "</div>";
-} else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
-    console.log('target_organism ' + data.length);
-    var target_organisms = "";
-    Ext.each(data, function (target, index) {
-        target_organisms += target;
-        target_organisms += "<br>";
-    });
-    return "<div>" + target_organisms + "</div>";
-}
+        if (this.columns[columnIndex].dataIndex == 'targets') {
+            //console.log('target_title ' + data.length);
+            var target_names = "";
+            Ext.each(data, function (target, index) {
+                target_names += target.title;
+                //console.log(" TARGET NAME SRC " + target['src']);
+                target_names += "<br><br>";
+            });
+            return "<div>" + target_names + "</div>";
+        } else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+            //console.log('target_organism ' + data.length);
+            var target_organisms = "";
+            Ext.each(data, function (target, index) {
+                target_organisms += target['organism'];
+                target_organisms += "<br><br>";
+            });
+            return "<div>" + target_organisms + "</div>";
+        }
         return data;
     }
     return data;
-}
-;
-
+};
 
 //{
 //    header:'Chemspider ID',
@@ -275,3 +275,29 @@ if (this.columns[columnIndex].dataIndex == 'targets') {
 //    renderer: compoundProvenanceRenderer,
 //    align: 'center'
 //},
+
+
+/*
+ var output = new String();
+ var targetNames = data.split(',');
+ //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
+ var targetURIs = record.data['target_concatenated_uris'].split(',');
+ var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
+ Ext.each(targetURIs, function (target, index) {
+ var url = targetURIs[index];
+ if (url && targetURIs.length > 1) {
+ //console.log( ' url ' + url);
+ //var targetId = url.split('/').pop();
+ var linkOut = targetBaseURL + url.split('/').pop();
+ //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
+ output += '<div class="' + cls + '">' + targetNames[index] + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+ } else {
+ var onlyTarget = targetURIs[0].split('/').pop();
+ var linkOutfirst = targetBaseURL + onlyTarget;
+ output += '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+ }
+
+ });
+ return output;
+ */
