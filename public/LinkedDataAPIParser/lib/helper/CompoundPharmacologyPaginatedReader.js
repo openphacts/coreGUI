@@ -95,11 +95,26 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 var target_organisms = new Array();
 
                 Ext.each(target, function (item, index) {
+
+                    // For Target
                     var target_inner = {};
                     target_inner['title'] = item['title'];
-                    target_inner['src'] = item['_about'];
+                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    if (item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                        target_inner['item'] = targetLink;
+                    }
                     targets.push(target_inner);
-                    target_organisms.push(item['organism']);
+
+                    // For Organism
+                    var organism_inner = {};
+                    organism_inner['organism'] = item['organism'];
+                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET];
+                    if (item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                        organism_inner['item'] = organismLink;
+                    }
+                    target_organisms.push(organism_inner);
                 });
             }
 
