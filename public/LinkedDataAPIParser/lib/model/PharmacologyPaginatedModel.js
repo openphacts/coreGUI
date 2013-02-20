@@ -43,8 +43,9 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'chembl_assay_uri',
         'chembl_target_uri',
         //this is labelled assay_organism
-        'target_organism',
+        'target_organisms',
         'target_pref_label',
+        'targets',
         //this value is missing totally from compound pharmacology paginated
         'assay_organism',
         'assay_description',

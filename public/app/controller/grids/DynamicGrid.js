@@ -49,14 +49,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         console.log('DynamicGrid: init()');
         this.control({
             'dynamicgrid': {
-                itemdblclick: function(view, record, item, index, e, opts) {
-                    if (record.data.cs_compound_uri !== undefined) {
-                        var csid = record.data.cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                        if (parseInt(csid) >= 1) {
-                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
-                        }
-                    }
-                },
                 itemcontextmenu: function(view, record, itemHTMLElement, index, eventObject, eOpts) {
                     eventObject.preventDefault();
                     //                    console.log('itemcontextmenu');

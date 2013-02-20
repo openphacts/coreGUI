@@ -8,14 +8,13 @@ $ git clone git@github.com:openphacts/coreGUI/whatever_branch_you_are_interested
 
 == Git Flow
 
-We would like you to use the tool Git Flow to develop feature branches etc. Please
-take a look at the Git Flow tutorial.
+It may help to use the Git Flow tool (https://github.com/nvie/gitflow) or concepts to develop feature branches etc.
 
 == Setting it up
 
 To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
 wiki.openphacts.org and follow the instructions there.
-In case of problems contact Sune Askjaer on suap@lundbeck.com.
+In case of problems send feedback at http://www.openphacts.org/explorer/160 or contact pmu@openphacts.org
 
 == Adding a new tab and form to the Navigation tree
 
