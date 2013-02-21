@@ -105,7 +105,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
        var target_organism_item;
 	   var target_concatenated_uris;
        var chemblTargetLink = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
-
+       var target_organisms = new Array();
+       var targets = new Array();
 	    if (target != null) {
 		chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
 		//target_pref_label = target['prefLabel'];
@@ -121,6 +122,13 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 		target_organism = target['target_organism'];
         target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
 		target_concatenated_uris = target['concatenatedURIs'];
+            var target_organisms_inner = {};
+            target_organisms_inner['organism'] = target_organism;
+            target_organisms_inner['src'] = target_organism_item;
+            target_organisms.push(target_organisms_inner);
+            var targets_inner = {};
+            targets_inner['title'] = target_pref_label;
+            targets.push(targets_inner);
 	    }
 
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
@@ -171,10 +179,11 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,
                 chembl_target_uri:chembl_target_uri,
-                //this is labelled assay_organism
-                target_organism:target_organism,
+
+                target_organism :target_organism,
+                target_organisms: target_organisms,
                 target_pref_label:target_pref_label,
-                //this value is missing totally from compound pharmacology paginated
+
                 assay_organism:assay_organism,
                 assay_description:assay_description,
                 activity_relation:activity_relation,
@@ -207,14 +216,13 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 target_pref_label_item: target_pref_label_item,
                 assay_organism_item: assay_organism_item,
                 assay_description_item: assay_description_item,
-                target_organism_item:target_organism_item
+                target_organism_item:target_organism_item,
+                targets: targets
             });
 
 
             records.push(record);
 
-//            console.log('LDA.model.TargetPaginatedModel: TargetPharmacologyPaginated');
-//            console.log(JSON.stringify(record));
         });
 		var total_count = this.total_count;
         return new Ext.data.ResultSet(

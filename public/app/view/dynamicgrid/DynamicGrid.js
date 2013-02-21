@@ -19,10 +19,10 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-                var target_organisms = record.data.target_organisms;
+                var targets = record.data.targets;
                 var tar;
-                if (target_organisms) {
-	            tar = record.data.target_organisms[0];
+                if (targets) {
+	            tar = record.data.targets[0];
                 }
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
@@ -40,21 +40,21 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                 }
                 var menu_item;
                 var target_items = new Array();;
-                if (target_organisms) {
-                if (record.data.target_organisms.length >1) {
+                if (targets) {
+                if (record.data.targets.length >1) {
                     //target_items = new Array();
                     target_text_items = new Array();
 
-                    Ext.each(record.data.target_organisms, function (item, index) {
-                        if (item.organism != '') {
+                    Ext.each(record.data.targets, function (item, index) {
+                        if (item.title != '') {
                         target_items.push({
-			                text: item.organism,
+			                text: item.title,
 					iconCls: 'menu-search-target',
 					handler: function() {
-                                           Ext.History.add('!p=TargetByNameForm&s=' + item.organism);
+                                           Ext.History.add('!p=TargetByNameForm&s=' + item.title);
 					}
 				    });
-                        target_text_items.push({xtype: 'textfield', value: item.organism});
+                        target_text_items.push({xtype: 'textfield', value: item.title});
                         }
                     });
                     var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
@@ -62,8 +62,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                     menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
                     text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: target_text_items});        
                 } else {
-                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.target_organisms[0].organism)}}); 
-                    text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: record.data.target_organisms[0].organism});
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.targets[0].title)}}); 
+                    text_menu_item = {xtype: 'textfield', value: record.data.targets[0].title};
                 }
                 }
 
@@ -78,7 +78,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					value: smi
 				}]
 			});
-                        if (target_items.length > 0) {
+                        if (text_menu_item != null) {
                           cmpValueMenu.insert(1, text_menu_item);
                         }
 
@@ -107,7 +107,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					menu: cmpValueMenu
 				}]
 			});
-                        if (target_items.length > 0) {
+                        if (targets.length > 0) {
                             contextMenu.insert(contextMenu.items.length -2, menu_item);
                         }
                         if (cs_menu_item != null) {
