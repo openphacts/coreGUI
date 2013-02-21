@@ -46,6 +46,6 @@ Ext.define('CW.view.ConceptWikiLookup', {
 }, initComponent: function() {
         this.addEvents('matchingconcept');
         this.callParent(arguments);
-    },
+    }
 });
          
