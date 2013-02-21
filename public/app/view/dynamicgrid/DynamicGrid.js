@@ -62,7 +62,12 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                     menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
                     text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: target_text_items});        
                 } else {
+                    var target_cw_uri = record.data.targets[0].cw_uri;
+                    if (target_cw_uri != null && target_cw_uri != "") {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&u=' + target_cw_uri)}}); 
+                    } else {
                     menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.targets[0].title)}}); 
+                    }
                     text_menu_item = {xtype: 'textfield', value: record.data.targets[0].title};
                 }
                 }

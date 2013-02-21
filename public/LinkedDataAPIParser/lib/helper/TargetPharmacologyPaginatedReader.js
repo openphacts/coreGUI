@@ -128,6 +128,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             target_organisms.push(target_organisms_inner);
             var targets_inner = {};
             targets_inner['title'] = target_pref_label;
+            targets_inner['cw_uri'] = target_pref_label_item;
             targets.push(targets_inner);
 	    }
 
