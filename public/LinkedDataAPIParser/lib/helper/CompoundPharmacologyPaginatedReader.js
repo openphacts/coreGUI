@@ -94,25 +94,29 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 var targets = new Array();
                 var target_organisms = new Array();
 
-                Ext.each(target, function (item, index) {
+                Ext.each(target, function (target_item, index) {
 
                     // For Target
                     var target_inner = {};
-                    target_inner['title'] = item['title'];
-                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET];
-                    if (item[LDA.helper.LDAConstants.LDA_ABOUT]) {
-                        var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                    target_inner['title'] = target_item['title'] ? target_item['title'] : '';
+                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
                         target_inner['item'] = targetLink;
+                    } else {
+                        target_inner['item'] = '';
                     }
                     targets.push(target_inner);
 
                     // For Organism
                     var organism_inner = {};
-                    organism_inner['organism'] = item['organism'];
-                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET];
-                    if (item[LDA.helper.LDAConstants.LDA_ABOUT]) {
-                        var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                    organism_inner['organism'] = target_item['organism'] ? target_item['organism'] : '';
+                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
                         organism_inner['item'] = organismLink;
+                    } else {
+                        organism_inner['item'] = '';
                     }
                     target_organisms.push(organism_inner);
                 });

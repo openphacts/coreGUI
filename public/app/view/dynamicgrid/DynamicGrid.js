@@ -39,12 +39,14 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                     }}); 
                 }
                 var menu_item;
+                var target_items = new Array();;
                 if (target_organisms) {
                 if (record.data.target_organisms.length >1) {
-                    target_items = new Array();
+                    //target_items = new Array();
                     target_text_items = new Array();
 
                     Ext.each(record.data.target_organisms, function (item, index) {
+                        if (item.organism != '') {
                         target_items.push({
 			                text: item.organism,
 					iconCls: 'menu-search-target',
@@ -53,6 +55,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					}
 				    });
                         target_text_items.push({xtype: 'textfield', value: item.organism});
+                        }
                     });
                     var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
                     var target_text = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_text_items});
@@ -70,12 +73,14 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					xtype: 'textfield',
 					value: cmp
 				}, 
-                                 text_menu_item, 
                                 {
 					xtype: 'textfield',
 					value: smi
 				}]
 			});
+                        if (target_items.length > 0) {
+                          cmpValueMenu.insert(1, text_menu_item);
+                        }
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
@@ -87,12 +92,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						//                        console.log(cmp);
 						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
 					}
-				}, //{
-                                //   text: 'View target info',
-                                //   iconCls: 'menu-search-target',
-                                //   menu: target_menu
-                                //},
-                                   menu_item,
+				},
                                    {
 					text: 'Search for compound by SMILES',
 					itemId: 'searchForCompoundBySMILES',
@@ -107,6 +107,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (target_items.length > 0) {
+                            contextMenu.insert(contextMenu.items.length -2, menu_item);
+                        }
                         if (cs_menu_item != null) {
                           contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
                         }
