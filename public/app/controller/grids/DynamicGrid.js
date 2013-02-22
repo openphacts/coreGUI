@@ -487,6 +487,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     } else {
                         // for paginated grid use this
                         // grid_store.load();
+                        grid_view.setLoading(false);
                         grid_store.guaranteeRange(0, 49);
                     }
                 } else {
