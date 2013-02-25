@@ -40,7 +40,8 @@ Ext.create('Ext.app.Application', {
 //        'pathwayByProteinForm',
 //        'PharmByTargetNameFormInf',
         'CW.controller.ConceptWikiLookup',
-        'Status'
+        'Status',
+        'BackgroundTasks'
     ],
 
     // autoCreateViewport:true,

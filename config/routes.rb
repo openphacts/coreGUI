@@ -59,6 +59,8 @@ LSP4All::Application.routes.draw do
       get :organisms
       get :chemspider_tab_separated_file
       get :ims_status
+      get :tsv_download
+      get :tsv_status
     end
   end
 

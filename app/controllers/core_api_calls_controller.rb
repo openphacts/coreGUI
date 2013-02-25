@@ -84,34 +84,38 @@ class CoreApiCallsController < ApplicationController
   end
 
   # Given query params, a URI and total count of results download them all
-  # as a tsv file and return it. The download request batches of 250 from
+  # as a tsv file and return it. The download requests batches of 250 from
   # the Linked Data API server
   def tab_separated_file
-    domain = AppSettings.config["tsv"]["tsv_url"]
-    path = AppSettings.config["tsv"][params[:request_type] + "_path"]
-    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&_pageSize=" + params[:total_count]
-    params[:activity_type] ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
-    params[:assay_organism] ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
-    # number_of_pages = (params[:total_count].to_i / 250) + 1
-    # i=1
     uuid = UUIDTools::UUID.random_create.to_s
-    tmpfile = Tempfile.new(uuid)
-    # download the tsv file 250 records at a time
-    begin
-      url_path = "#{path}?".concat(url_params) #.concat("&_page=#{i}&_pageSize=250")
-      response = Net::HTTP.get(domain, url_path)
-      # only need the header line from the first response
-      # i > 1 ? lines = response.lines.to_a[1..-1].join : lines = response
-      puts response
-      tmpfile << response
-      # i+=1
- # while i <= number_of_pages
-      send_file tmpfile.path, :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
-    #the tempfile seems to nave been removed already by this point in rails 3.2.11, no idea why that should be
-      tmpfile.close
-    rescue Exception => e
-      logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
-      # TODO send an error response?
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    tsv_file.process params
+    respond_to do |format|
+      format.json {
+        render :json => "[{'uuid' : '#{uuid}'}]"   
+      }
+    end
+  end
+
+  def tsv_status
+    tsv_file = TsvFile.where(:uuid => params[:uuid]).first
+    status = tsv_file.status
+    percentage = tsv_file.percentage
+    respond_to do |format|
+      format.json {
+        render :json => "[{'status' : '#{status}','percentage' : '#{percentage}'}]"   
+      }
+    end
+  end
+
+  def tsv_download
+    @tsv_file = TsvFile.where(:uuid => params[:uuid]).first
+    if @tsv_file.status == "finished" && @tsv_file.percentage == 100
+      send_file File.join(Rails.root, 'filestore', @tsv_file.uuid), :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    else
+      render :layout => false
     end
   end
   

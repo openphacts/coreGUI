@@ -44,6 +44,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         ref: 'gridView',
         selector: 'dynamicgrid'
     }],
+    
+    current_jobs: new Array(),
 
     init: function() {
         console.log('DynamicGrid: init()');
@@ -57,6 +59,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             },
             'dynamicgrid toolbar #sdfDownloadProxy_id': {
                 click: this.prepSDFile
+            },
+'dynamicgrid toolbar #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         })
     },
@@ -64,6 +69,49 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
 
     testThis: function(args) {},
+
+    prepareTSVDownload: function() {
+       var me = this;
+       var gridview = this.getGridView();
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       Ext.each(this.getFilters(), function(filter, index) {
+            if (filter.filterType == "activity") {
+                activity_value_type = gridview.store.getActivityConditionParam();
+                activity_type = gridview.store.activity_type;
+                activity_value = gridview.store.activity_value;
+                activity_unit = gridview.store.activity_unit;
+            } else if (filter.filterType == "organism") {
+                assay_organism = gridview.store.assay_organism;
+            }
+        });
+        uri = gridview.store.proxy.extraParams.uri;
+        total_count = gridview.store.getTotalCount();
+        request_type = gridview.store.REQUEST_TYPE;
+        
+       tsv_request_store.load(
+           {params: {
+               activity_value_type : activity_value_type,
+               activity_type : activity_type,
+               activity_value : activity_value,
+               activity_unit : activity_unit,
+               assay_organism : assay_organism,
+               uri : uri,
+               total_count : total_count,
+               request_type : request_type
+           },
+       callback: function(records, operation, success) {
+           if (success) {
+               console.log('success tsv create');
+               uuid = records[0].data.uuid;
+               me.current_jobs.push(uuid);
+               background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
+               background_tasks_form.fireEvent('taskadded', uuid, me.getGridView().getStore().getTypeName());
+           } else {
+               console.log('fail tsv create');
+           }
+       }});
+    },
 
     setTSVDownloadParams: function() {
         var tsv_download_button = this.getTsvDownloadButton();
@@ -520,6 +568,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     },
 
     enableSubmit: function(lookup) {
+        //use lookup.rawValue to get compound etc name
+        this.getGridView().getStore().setTypeName(lookup.rawValue);
         this.getSubmitButton().enable();
     },
     // 
