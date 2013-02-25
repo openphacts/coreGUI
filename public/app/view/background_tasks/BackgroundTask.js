@@ -4,7 +4,12 @@ Ext.define('LSP.view.background_tasks.BackgroundTask', {
     closable: true,
     header: false,
     layout:'fit',
-    border:false,
+    margin: 2,
+    border: 1,
+style: {
+    borderColor: 'lightblue',
+    borderStyle: 'solid'
+},
     layout: {
         type: 'vbox',
         align: 'stretch'
@@ -25,6 +30,7 @@ Ext.define('LSP.view.background_tasks.BackgroundTask', {
                      margin: '0 0 0 10'
                    }]}, {
                      xtype: 'progressbar',
-                     itemId: 'progress'
+                     itemId: 'progress',
+                     margin: '2'
                    }]
 });

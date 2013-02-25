@@ -54,12 +54,13 @@ Ext.define('LSP.controller.BackgroundTasks', {
                        iconCls:'icon-csv',
                        hidden:false,
                        disabled: false,
+                       margin: '2',
                        href: tsv_download_url,
                        renderTo: Ext.getBody()
                    });
                    tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
                    tsv_download_button.setParams();
-                   this.getTasksContainer().add(tsv_download_button);
+                   this.getTask().add(tsv_download_button);
                }              
            } else {
                console.log('fail tsv status');
