@@ -66,11 +66,18 @@ Ext.define('LSP.controller.SimSearchForm', {
                     //                    console.log('itemcontextmenu');
                     this.getStrucGrid().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
+            },
+            'SimSearchForm #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         });
 
 
-    },    
+    }, 
+
+    prepareTSVDownload: function() {
+        console.log('Sim Search TSV download');
+    },   
 
     setTSVDownloadParams: function() {
         var tsv_download_button = this.getTsvDownloadButton();
