@@ -19,8 +19,9 @@ Ext.define('LSP.controller.BackgroundTasks', {
        console.log('adding task with uuid : ' + uuid);
        var me= this;
        this.task_list.push(uuid);
+       var resource_type = type;
        var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
-       task.down('#type').setText(type);
+       task.down('#type').setText(type + "....creating");
        //task.down('#percentage').setText('blah');
        //task.down('#status').setText('blah');
        this.getTasksContainer().add(task);
@@ -40,9 +41,11 @@ Ext.define('LSP.controller.BackgroundTasks', {
                percentage = records[0].data.percentage;
                if (percentage != '0') {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
+                   this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
                }
                if (status == 'finished' || status == 'failed') {
                    this.getTask().down('#progress').hide();
+                   this.getTask().down('#type').setText(type + "...ready for download");
                    this.getTaskRunner().destroy();
                    tsv_download_button = Ext.create('Ext.Button', {
                        text:'Download tsv file',
