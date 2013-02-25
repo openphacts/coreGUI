@@ -67,7 +67,7 @@ Ext.define('LSP.view.Navigator', {
                     }
                 ]
             }, {
-                title:'Background Tasks',
+                title:'TSV Downloads',
                 border:false,
                 itemId: 'background_tasks_form',
                 autoScroll:true,
