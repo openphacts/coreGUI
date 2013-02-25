@@ -66,6 +66,9 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
+            },
+            'PharmEnzymeForm #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         });
     },
@@ -105,6 +108,8 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 			//use the reader uri when retrieving the count after store load
 			store.proxy.reader.uri = "http://purl.uniprot.org/enzyme/" + historyTokenObject.ec;
             this.fetchTotalResults();
+            //TODO get the name of the enzymes
+            //this.getGridView().getStore().setTypeName(sel_data.name);
         }
     },
 
@@ -161,6 +166,7 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 	            enz_name_field.setValue(sel_data.name);
 	            this.hideEnzyme('');
 		    this.getSubmitButton().enable();
+                    this.getGridView().getStore().setTypeName(sel_data.name);
 //	        }
 	    },
 

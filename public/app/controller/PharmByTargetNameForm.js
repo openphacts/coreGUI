@@ -59,6 +59,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm #activity_combobox_id': {
                 select: this.comboSelect,
                 scope: this
+            },
+'PharmByTargetNameForm #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         });
     },

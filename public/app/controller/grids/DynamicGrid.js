@@ -59,9 +59,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             },
             'dynamicgrid toolbar #sdfDownloadProxy_id': {
                 click: this.prepSDFile
-            },
-'dynamicgrid toolbar #tsvDownloadProxy_id': {
-                click: this.prepareTSVDownload
             }
         })
     },

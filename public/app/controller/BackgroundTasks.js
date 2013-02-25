@@ -15,6 +15,14 @@ Ext.define('LSP.controller.BackgroundTasks', {
         });
     },
 
+   removeTask: function() {
+       runner = this.getTaskRunner();
+       if (runner) {
+           runner.destroy();
+       }
+       this.close();
+   },
+
    addNewTask: function(uuid, type) {
        console.log('adding task with uuid : ' + uuid);
        var me= this;
@@ -22,8 +30,10 @@ Ext.define('LSP.controller.BackgroundTasks', {
        var resource_type = type;
        var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
        task.down('#type').setText(type + "....creating");
-       //task.down('#percentage').setText('blah');
-       //task.down('#status').setText('blah');
+       task.down('#type').setHeight('auto');
+       task.down('#cancel_button').on({
+          click: {fn: me.removeTask, scope: task}
+       });
        this.getTasksContainer().add(task);
        var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
        tsv_status_store.setUUID(uuid);
@@ -73,6 +83,7 @@ Ext.define('LSP.controller.BackgroundTasks', {
       run: checkTSVStatus,
        interval: 5000,
        scope: tsv_status_store
-    });       
+    });
+   task.setTaskRunner(runner);       
    }
 });
