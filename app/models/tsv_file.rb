@@ -30,7 +30,7 @@ class TsvFile < ActiveRecord::Base
             all_headers.each {|header| header != nil ? current_row << row.values_at(header) : ''}
             tab << current_row
           end
-          self.update_attributes(:percentage => i/number_of_pages.to_f * 100)
+          self.update_attributes(:percentage => 100/number_of_pages.to_f * i)
           i+=1
         end
       end
@@ -52,7 +52,7 @@ class TsvFile < ActiveRecord::Base
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
     first = true
     i = 1
-    total = params[:csids].size
+    total = JSON.parse(params[:csids]).size
     FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       tab << all_headers
       JSON.parse(params[:csids]).each do |csid|
@@ -71,7 +71,8 @@ class TsvFile < ActiveRecord::Base
         rescue Exception => e
           logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
         end
-        self.update_attributes(:percentage => i/total.to_f * 100)
+        pct = 100/total.to_f * i
+        self.update_attributes(:percentage => pct)
         i += 1
       end  
     end
