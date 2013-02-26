@@ -52,9 +52,11 @@ class TsvFile < ActiveRecord::Base
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
     first = true
     i = 1
+    total = params[:csids].size
     FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       tab << all_headers
-      params[:csids].each do |csid|
+      JSON.parse(params[:csids]).each do |csid|
+        
         url_params = "uri=" + CGI::escape("http://rdf.chemspider.com/#{csid}") + "&_format=tsv"
         begin
           url_path = "#{path}?".concat(url_params)

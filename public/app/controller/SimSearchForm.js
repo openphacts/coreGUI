@@ -43,6 +43,8 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     csids: undefined,
 
+    current_jobs: new Array(),
+
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
         this.control({
@@ -80,7 +82,7 @@ Ext.define('LSP.controller.SimSearchForm', {
     prepareTSVDownload: function() {
        console.log('Sim Search TSV download');
        var me = this;
-       var gridview = this.getGridView();
+       var gridview = this.getStrucGrid();
        var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
        tsv_request_store.proxy.url = cs_download_url;
@@ -89,7 +91,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 
        tsv_request_store.load(
            {params: {
-               csdis : me.csids,
+               csids : Ext.encode(me.csids),
                total_count : total_count,
                request_type : request_type
            },
@@ -99,7 +101,7 @@ Ext.define('LSP.controller.SimSearchForm', {
                uuid = records[0].data.uuid;
                me.current_jobs.push(uuid);
                background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
-               background_tasks_form.fireEvent('taskadded', uuid, me.getGridView().getStore().getTypeName());
+               background_tasks_form.fireEvent('taskadded', uuid, me.getStrucGrid().getStore().getTypeName());
            } else {
                console.log('fail tsv create');
            }
@@ -226,6 +228,7 @@ if (this.current_mode == 'exact') {
         //this_gridview.store.remove(current_records);
 		this_gridview.store.removeAll();
         // me.getStrucGrid().recordsLoaded = 0;
+        this_gridview.getStore().setTypeName(me.current_smiles + " : " + me.current_mode);
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, rid) {

@@ -27,7 +27,7 @@ style: {
             items: [{
                      xtype: 'button',             
                      icon: 'assets/cancel.png',
-                     renderTo: Ext.getBody(),
+                     //renderTo: Ext.getBody(),
                      itemId: 'cancel_button',
                      tooltip: 'Remove this item',
                      height: 20,

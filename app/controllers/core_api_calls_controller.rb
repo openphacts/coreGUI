@@ -28,6 +28,7 @@ class CoreApiCallsController < ApplicationController
   # Given a list of chemspider ids, grab the data about each
   # id from the Linked Data API, create the tsv file and return it
   def chemspider_tab_separated_file
+    puts params[:csids]
     uuid = UUIDTools::UUID.random_create.to_s
     tsv_file = TsvFile.new
     tsv_file.save
