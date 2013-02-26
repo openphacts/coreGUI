@@ -30,7 +30,7 @@ class TsvFile < ActiveRecord::Base
             all_headers.each {|header| header != nil ? current_row << row.values_at(header) : ''}
             tab << current_row
           end
-          self.update_attributes(:percentage => 100 - 100/i)
+          self.update_attributes(:percentage => i/number_of_pages.to_f * 100)
           i+=1
         end
       end
@@ -71,7 +71,7 @@ class TsvFile < ActiveRecord::Base
         rescue Exception => e
           logger.error "An error occurred retrieving response for #{url_path} : "  + e.to_s
         end
-        self.update_attributes(:percentage => 100 - 100/i)
+        self.update_attributes(:percentage => i/total.to_f * 100)
         i += 1
       end  
     end
