@@ -19,19 +19,111 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	defaultWidth: 200,
 	showMenu: function(x, y, record) {
 		var cmp = record.data.compound_pref_label;
-		var tar = record.data.target_title;
+                var targets = record.data.targets;
+                var tar;
+                if (targets) {
+	            tar = record.data.targets[0];
+                }
                 var cw_tar = record.data.target_pref_label_item
 		var smi = record.data.compound_smiles;
                 var cw_comp = record.data.cw_compound_uri;
+                var cs_compound_uri = record.data.cs_compound_uri;
+                var cs_menu_item;
+                if (cs_compound_uri != null) {
+                    cs_menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
+                var menu_item;
+                var target_items = new Array();;
+                if (targets) {
+                if (record.data.targets.length >1) {
+                    //target_items = new Array();
+                    target_text_items = new Array();
+
+                    Ext.each(record.data.targets, function (item, index) {
+                        if (item.title != '') {
+                        target_items.push({
+			                text: item.title,
+					iconCls: 'menu-search-target',
+					handler: function() {
+                                           Ext.History.add('!p=TargetByNameForm&s=' + item.title);
+					}
+				    });
+                        target_text_items.push({xtype: 'textfield', value: item.title});
+                        }
+                    });
+                    var target_menu = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_items});
+                    var target_text = Ext.create('Ext.menu.Menu', {text: 'View target info', items: target_text_items});
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', menu: target_menu});
+                    text_menu_item = Ext.create('Ext.menu.Item', {text: 'Copy target data', menu: target_text_items});        
+                } else {
+                    var target_cw_uri = record.data.targets[0].cw_uri;
+                    if (target_cw_uri != null && target_cw_uri != "") {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&u=' + target_cw_uri)}}); 
+                    } else {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View target info', iconCls: 'menu-search-target', handler: function() {Ext.History.add('!p=TargetByNameForm&s=' + record.data.targets[0].title)}}); 
+                    }
+                    text_menu_item = {xtype: 'textfield', value: record.data.targets[0].title};
+                }
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
 				items: [{
 					xtype: 'textfield',
 					value: cmp
-				}, {
+				}, 
+                                {
 					xtype: 'textfield',
-					value: tar
+					value: smi
+				}]
+			});
+                        if (text_menu_item != null) {
+                          cmpValueMenu.insert(1, text_menu_item);
+                        }
+
+			var contextMenu = new Ext.menu.Menu({
+				items: [{
+					text: 'View compound info',
+					itemId: 'searchForCompoundByName',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by name');
+						//                        console.log(cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_comp);
+					}
+				},
+                                   {
+					text: 'Search for compound by SMILES',
+					itemId: 'searchForCompoundBySMILES',
+					iconCls: 'menu-search-compound',
+					handler: function() {
+						//                        console.log('Search for compound by SMILES');
+						//                        console.log(cmp);
+						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
+					}
+				}, {
+					text: 'Copy Data',
+					menu: cmpValueMenu
+				}]
+			});
+                        if (targets.length > 0) {
+                            contextMenu.insert(contextMenu.items.length -2, menu_item);
+                        }
+                        if (cs_menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        }
+			contextMenu.showAt(x, y);
+		} else {
+			var cmpValueMenu = new Ext.menu.Menu({
+				items: [{
+					xtype: 'textfield',
+					value: cmp
 				}, {
 					xtype: 'textfield',
 					value: smi
@@ -40,7 +132,7 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
@@ -58,59 +150,13 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for target by name',
-					itemId: 'searchForTarget',
-					iconCls: 'menu-search-target',
-					handler: function() {
-						//                        console.log('Search for target by name');
-						//                        console.log(tar);
-                                                if (cw_tar == "") {
-                                                    Ext.History.add('!p=TargetByNameForm&s=' + tar);
-                                                } else {
-						    Ext.History.add('!p=TargetByNameForm&u=' + cw_tar);
-                                                }
-					}
-				}, {
 					text: 'Copy Data',
 					menu: cmpValueMenu
 				}]
-			});
-			contextMenu.showAt(x, y);
-		} else {
-			var cmpValueMenu = new Ext.menu.Menu({
-				items: [{
-					xtype: 'textfield',
-					value: cmp
-				}, {
-					xtype: 'textfield',
-					value: smi
-				}]
-			});
-
-			var contextMenu = new Ext.menu.Menu({
-				items: [{
-					text: 'Search for compound by name',
-					itemId: 'searchForCompoundByName',
-					iconCls: 'menu-search-compound',
-					handler: function() {
-						//                        console.log('Search for compound by name');
-						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
-					}
-				}, {
-					text: 'Search for compound by SMILES',
-					itemId: 'searchForCompoundBySMILES',
-					iconCls: 'menu-search-compound',
-					handler: function() {
-						//                        console.log('Search for compound by SMILES');
-						//                        console.log(cmp);
-						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
-					}
-				}, {
-					text: 'Copy Data',
-					menu: cmpValueMenu
-				}]
-			});
+			});                        
+                        if (cs_menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 
@@ -144,8 +190,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 	                    iconCls:'icon-csv',
 	                    hidden:false,
                             disabled: true,
-                            href: tsv_download_url,
-                            renderTo: Ext.getBody()	
+                            //href: tsv_download_url,
+                            //renderTo: Ext.getBody()	
 	                },
 			    // 	                {
 			    // 	                    xtype:'exporterbutton',

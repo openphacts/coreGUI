@@ -41,6 +41,10 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     success_count: 0,
 
+    csids: undefined,
+
+    current_jobs: new Array(),
+
     init: function() {
         console.log('LSP.controller.SimSearchForm: init()');
         this.control({
@@ -66,23 +70,58 @@ Ext.define('LSP.controller.SimSearchForm', {
                     //                    console.log('itemcontextmenu');
                     this.getStrucGrid().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
+            },
+            'SimSearchForm #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         });
 
 
-    },    
+    }, 
+
+    prepareTSVDownload: function() {
+       console.log('Sim Search TSV download');
+       var me = this;
+       var gridview = this.getStrucGrid();
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       tsv_request_store.proxy.url = cs_download_url;
+       total_count = gridview.store.getTotalCount();
+       request_type = gridview.store.REQUEST_TYPE;
+
+       tsv_request_store.load(
+           {params: {
+               csids : Ext.encode(me.csids),
+               total_count : total_count,
+               request_type : request_type
+           },
+       callback: function(records, operation, success) {
+           if (success) {
+               console.log('success tsv create');
+               uuid = records[0].data.uuid;
+               me.current_jobs.push(uuid);
+               background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
+               background_tasks_form.fireEvent('taskadded', uuid, me.getStrucGrid().getStore().getTypeName());
+           } else {
+               console.log('fail tsv create');
+           }
+       }});
+    },   
 
     setTSVDownloadParams: function() {
         var tsv_download_button = this.getTsvDownloadButton();
         var tsv_download_params = new Array();
         var grid_store = this.getStrucGrid().getStore();
         var items = grid_store.data.items;
+        var csid_array = new Array();
         Ext.each(items, function(item, index) {
             tsv_download_params.push("csids[]=" + item.data.csid);
+            csid_array.push(item.data.csid);
         });
         total_params = tsv_download_params.join("&");
         tsv_download_button.href = cs_download_url + "?" + total_params
         tsv_download_button.setParams();
+        this.csids = csid_array;
     },
 
     prepGrid: function() {
@@ -189,6 +228,7 @@ if (this.current_mode == 'exact') {
         //this_gridview.store.remove(current_records);
 		this_gridview.store.removeAll();
         // me.getStrucGrid().recordsLoaded = 0;
+        this_gridview.getStore().setTypeName(me.current_smiles + " : " + me.current_mode);
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, rid) {

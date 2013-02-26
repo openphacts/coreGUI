@@ -58,7 +58,9 @@ Ext.define('LDA.helper.LDAConstants', {
 	"target_title": "target_names",
 	"assay_description": "assay_description",
 	"assay_organism": "assay_organism",
-	"activity_pubmed_id": "pmid"
+	"activity_pubmed_id": "pmid",
+        "targets": "target_name",
+        "target_organisms": "target_organisms"
     },
     LDAUnits: {
 	    "percentage": "%",
@@ -66,5 +68,4 @@ Ext.define('LDA.helper.LDAConstants', {
 	    "nanomolar": "nM",
 	    "micromolar": "μM"
 }
-
 });

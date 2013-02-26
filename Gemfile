@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -42,6 +42,8 @@ gem 'ancestry'
 gem 'rdf'
 gem 'sparql-client'
 gem 'fastercsv'
+gem 'delayed_job_active_record'
+gem "daemons"
 #needed for some linux deploys
 gem 'therubyracer', '~>0.10.0', :platforms => :ruby
 ##########################

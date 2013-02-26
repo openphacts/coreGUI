@@ -28,7 +28,8 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 click: this.submitQuery
             },
             'CmpdByNameForm conceptWikiLookup': {
-                select: this.enableSubmit
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
             'CmpdByNameForm': {
                 historyToken: this.handleHistoryToken

@@ -147,6 +147,17 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 		var tar = record.data.target_title;
 		var smi = record.data.compound_smiles;
 		var cw_uri = record.data.cw_uri;
+                var cs_compound_uri = record.data.cs_uri;
+                var menu_item;
+                if (cs_compound_uri != null) {
+                    menu_item = Ext.create('Ext.menu.Item', {text: 'View chemspider info', iconCls: 'menu-search-compound', handler: function() {
+                        var csid = cs_compound_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+                        if (parseInt(csid) >= 1) {
+                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
+                        }
+
+                    }}); 
+                }
 
 		if (tar) {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -164,13 +175,22 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for a compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_uri);
+					}
+				}, {
+					text: 'View target info',
+					itemId: 'searchForTarget',
+					iconCls: 'menu-search-target',
+					handler: function() {
+						//                        console.log('Search for target by name');
+						//                        console.log(tar);
+						Ext.History.add('!p=TargetByNameForm&s=' + tar);
 					}
 				}, {
 					text: 'Search for a compound by SMILES',
@@ -182,19 +202,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for a target by name',
-					itemId: 'searchForTarget',
-					iconCls: 'menu-search-target',
-					handler: function() {
-						//                        console.log('Search for target by name');
-						//                        console.log(tar);
-						Ext.History.add('!p=TargetByNameForm&s=' + tar);
-					}
-				}, {
 					text: 'Copy Data',
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		} else {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -209,13 +223,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 
 			var contextMenu = new Ext.menu.Menu({
 				items: [{
-					text: 'Search for a compound by name',
+					text: 'View compound info',
 					itemId: 'searchForCompoundByName',
 					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
-						Ext.History.add('!p=CmpdByNameForm&s=' + cmp);
+						Ext.History.add('!p=CmpdByNameForm&u=' + cw_uri);
 					}
 				}, {
 					text: 'Search for a compound by SMILES',
@@ -227,9 +241,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 						Ext.History.add('!p=SimSearchForm&sm=' + smi + '&st=exact');
 					}
 				}, {
-					text: 'Search for Pharmacology by Compound',
+					text: 'View compound pharmacology info',
 					itemId: 'searchForPharmacologyByCompound',
-					iconCls: 'menu-search-pharma-by-compound',
+					iconCls: 'menu-search-compound',
 					handler: function() {
 						//                        console.log('Search for compound by name');
 						//                        console.log(cmp);
@@ -244,6 +258,9 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
 					menu: cmpValueMenu
 				}]
 			});
+                        if (menu_item != null) {
+                          contextMenu.insert(contextMenu.items.length -1 , menu_item);
+                        }
 			contextMenu.showAt(x, y);
 		}
 

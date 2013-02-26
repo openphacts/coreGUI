@@ -26,7 +26,8 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 click: this.submitQuery
             },
             'TargetByNameForm conceptWikiLookup': {
-                select: this.enableSubmit
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
             'TargetByNameForm': {
                 historyToken: this.handleHistoryToken

@@ -195,6 +195,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'button',
+                                        margin:'0 10 0 0',
+                                        text:'Structure Search',
+                                        itemId:'pharmCompoundStructureButton',
+                                        renderer: provenanceSummaryRenderer
+                                    },
+                                    {
+                                        xtype:'button',
                                         margin:'0 0 0 10',
                                         text:'View in ChemBioNavigator',
                                         itemId:'cbnLinkout',
@@ -498,6 +505,13 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
             }
         );
         pharmButton.show();
+
+        var structureButton = this.down('#pharmCompoundStructureButton');
+        structureButton.hide();
+        structureButton.setHandler(function () {
+                Ext.History.add('!p=SimSearchForm&sm=' + compound.data.compound_smiles + '&st=exact');
+            });
+        structureButton.show();
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
