@@ -6,7 +6,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	BASE_URL: '',
 	remoteSort: true,
 	//gridController: undefined,
-        typeName: undefined,
+        typeName: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
 	proxy: {
 		type: 'jsonp',

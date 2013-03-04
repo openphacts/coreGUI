@@ -4,11 +4,12 @@ class TsvFile < ActiveRecord::Base
 
   # Use with delayed job to process tsv downloads in the background
   def process params
+    url_path = ''
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv"
-    params[:activity_type] ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
-    params[:assay_organism] ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
+    params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
+    params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
     number_of_pages = (params[:total_count].to_i / 250) + 1
     i = 1
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
@@ -37,7 +38,7 @@ class TsvFile < ActiveRecord::Base
       self.update_attributes(:percentage => 100, :status => "finished")
     rescue Exception => e
       self.update_attributes(:status => "failed")
-      logger.error "An error occurred retrieving response for url_path: "  + e.to_s
+      logger.error "An error occurred retrieving response for #{url_path}: " + e.to_s
       # TODO send an error response?
     end
   end
@@ -46,6 +47,7 @@ class TsvFile < ActiveRecord::Base
   # Use with delayed job to process chemspider tsv downloads in the background
   def process_chemspider params
     # no guarantee you will get all the headers so here is a complete list, might change in the future so be aware
+    url_path = ''
     all_headers = ["http://www.chemspider.com", "inchi", "inchikey", "smiles", "hba", "hbd", "logp", "psa", "ro5_violations", "http://www.conceptwiki.org", "prefLabel", "http://linkedlifedata.com/resource/drugbank", "biotransformation", "description", "meltingPoint", "proteinBinding", "toxicity", "http://data.kasabi.com/dataset/chembl-rdf", "full_mwt", "molform", "mw_freebase", "rtb", "isPrimaryTopicOf"]
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = "/compound"

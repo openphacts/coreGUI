@@ -53,7 +53,7 @@ Ext.define('LSP.controller.BackgroundTasks', {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
                    this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
                }
-               if (status == 'finished' || status == 'failed') {
+               if (status == 'finished') {
                    this.getTask().down('#progress').hide();
                    this.getTask().down('#type').setText(type + "...ready for download");
                    this.getTaskRunner().destroy();
@@ -71,6 +71,10 @@ Ext.define('LSP.controller.BackgroundTasks', {
                    tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
                    tsv_download_button.setParams();
                    this.getTask().add(tsv_download_button);
+               } else if (status == 'failed') {
+	               this.getTask().down('#progress').hide();
+                   this.getTask().down('#type').setText(type + "...FAILED");
+                   this.getTaskRunner().destroy(); 
                }              
            } else {
                console.log('fail tsv status');
