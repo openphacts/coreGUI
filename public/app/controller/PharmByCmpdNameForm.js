@@ -91,8 +91,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                                         unit = Ext.create('LSP.model.Unit', {unit: record.data.unit+ ' (' + unit_abbr + ')', name: record.data.unit});
                                         units_store.add(unit);		
 				    });
-				me.getUnitsCombo().setLoading(false);
 				}
+				me.getUnitsCombo().setLoading(false);
         	});
 	}
    },
