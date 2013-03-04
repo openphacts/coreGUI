@@ -72,6 +72,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
        var gridview = this.getGridView();
        var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
        Ext.each(this.getFilters(), function(filter, index) {
             if (filter.filterType == "activity") {
                 activity_value_type = gridview.store.getActivityConditionParam();
