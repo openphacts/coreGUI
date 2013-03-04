@@ -293,7 +293,7 @@ function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, 
                 return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
-                data == null ? data = 'N/A' : ''
+                data == null ? data = '' : ''
                 return '<div class="' + cls + '">' + data + '</div>'
 
             }
