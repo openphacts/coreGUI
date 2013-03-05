@@ -1731,7 +1731,7 @@ Ext.define('LSP.controller.BackgroundTasks', {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
                    this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
                }
-               if (status == 'finished' || status == 'failed') {
+               if (status == 'finished') {
                    this.getTask().down('#progress').hide();
                    this.getTask().down('#type').setText(type + "...ready for download");
                    this.getTaskRunner().destroy();
@@ -1749,6 +1749,10 @@ Ext.define('LSP.controller.BackgroundTasks', {
                    tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
                    tsv_download_button.setParams();
                    this.getTask().add(tsv_download_button);
+               } else if (status == 'failed') {
+	               this.getTask().down('#progress').hide();
+                   this.getTask().down('#type').setText(type + "...FAILED");
+                   this.getTaskRunner().destroy(); 
                }              
            } else {
                console.log('fail tsv status');
@@ -4163,7 +4167,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	BASE_URL: '',
 	remoteSort: true,
 	//gridController: undefined,
-        typeName: undefined,
+        typeName: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
 	proxy: {
 		type: 'jsonp',
@@ -4473,8 +4477,8 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 
 	            tbar:[{
 	                    xtype:'button',
-	                    text:'Download tsv file',
-	                    tooltip:'Download results as a tab separated file',
+	                    text:'Prepare tsv file',
+	                    tooltip:'Prepare results as a tab separated file',
 	                    itemId:'tsvDownloadProxy_id',
 	                    iconCls:'icon-csv',
 	                    hidden:false,
@@ -4602,6 +4606,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
        var gridview = this.getGridView();
        var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
        Ext.each(this.getFilters(), function(filter, index) {
             if (filter.filterType == "activity") {
                 activity_value_type = gridview.store.getActivityConditionParam();
@@ -5428,7 +5433,7 @@ function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, 
                 return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
-                data == null ? data = 'N/A' : ''
+                data == null ? data = '' : ''
                 return '<div class="' + cls + '">' + data + '</div>'
 
             }
@@ -6127,7 +6132,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		console.log('PharmByTargetNameForm: constructor()');
 		this.items = [{
 			xtype: 'label',
-			html: '<span style="font-family: verdana; color: grey; ">Hint: Type in protein name and species. E.g. \"ADA protein human\"</span>',
+			html: '<span style="font-family: verdana; color: grey; ">Hint: Type in protein name and species. E.g. \"ADA protein human\" and select a result</span>',
 			labelWidth: 400,
 			padding: '5 0 0 140'
 		}, {
@@ -7182,12 +7187,14 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 
    comboSelect: function(combo, records, eOpts) {
 	var activity = records[0].get('about');
+	var me = this;
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
 		this.getUnitsCombo().clearValue();
 		units_store.removeAll();
 		this.current_activity_combo_select = activity;
+		this.getUnitsCombo().setLoading('Fetching units...');
 		var filter_units_store = Ext.create('LDA.store.FilterUnitsStore',{activity_type: activity});
         	filter_units_store.load(function(records, operation, success) {
 				store_records = records;
@@ -7195,10 +7202,13 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
 				store_success = operation.success;
 				if (store_success) {
 				    Ext.each(records, function (record, index) {
-                                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit, name: record.data.unit});
-                                        units_store.add(unit);		
+						unit_abbr = LDA.helper.LDAConstants.LDAUnits[record.data.unit];
+						unit_abbr == null ? unit_abbr = 'unknown abbreviation' : ''
+                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit+ ' (' + unit_abbr + ')', name: record.data.unit});
+                        units_store.add(unit);	
 				    });
 				}
+				me.getUnitsCombo().setLoading(false);
         	});
 	}
    },
@@ -7639,7 +7649,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
         console.log('PharmByCmpdNameForm: initComponent()');
         this.items = [{
             xtype: 'label',
-            html: '<span style="font-family: verdana; color: grey; ">Hint: Type in compound name. E.g. \"Aspirin\"</span>',
+            html: '<span style="font-family: verdana; color: grey; ">Hint: Type in compound name. E.g. \"Aspirin\" and select a result</span>',
             labelWidth: 400,
             padding: '5 0 0 140'
         }, {
@@ -7923,8 +7933,8 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                                         unit = Ext.create('LSP.model.Unit', {unit: record.data.unit+ ' (' + unit_abbr + ')', name: record.data.unit});
                                         units_store.add(unit);		
 				    });
-				me.getUnitsCombo().setLoading(false);
 				}
+				me.getUnitsCombo().setLoading(false);
         	});
 	}
    },
@@ -8372,12 +8382,14 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 
    comboSelect: function(combo, records, eOpts) {
 	var activity = records[0].get('about');
+	var me = this;
 	// only fetch new units if the selected activity is different than before
 	if (this.current_activity_combo_select != activity) {
 		var units_store = this.getUnitsCombo().getStore();
 		this.getUnitsCombo().clearValue();
 		units_store.removeAll();
 		this.current_activity_combo_select = activity;
+		this.getUnitsCombo().setLoading('Fetching units...');
 		var filter_units_store = Ext.create('LDA.store.FilterUnitsStore',{activity_type: activity});
         	filter_units_store.load(function(records, operation, success) {
 				store_records = records;
@@ -8385,10 +8397,13 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 				store_success = operation.success;
 				if (store_success) {
 				    Ext.each(records, function (record, index) {
-                                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit, name: record.data.unit});
-                                        units_store.add(unit);		
+						unit_abbr = LDA.helper.LDAConstants.LDAUnits[record.data.unit];
+						unit_abbr == null ? unit_abbr = 'unknown abbreviation' : ''
+                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit+ ' (' + unit_abbr + ')', name: record.data.unit});
+                        units_store.add(unit);		
 				    });
 				}
+				me.getUnitsCombo().setLoading(false);			
         	});
 	}
    },
