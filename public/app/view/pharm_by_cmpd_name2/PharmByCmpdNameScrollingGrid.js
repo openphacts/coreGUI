@@ -139,7 +139,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
-                header:'InChi',
+                header:'InChI',
                 dataIndex:'compound_inchi',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
@@ -148,7 +148,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             },
 
             {
-                header:'InChi Key',
+                header:'InChIKey',
                 dataIndex:'compound_inchikey',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
@@ -157,7 +157,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             },
 
             {
-                header:'Pubmed ID',
+                header:'PubMed ID',
                 dataIndex:'activity_pubmed_id',
                 xtype:'templatecolumn',
                 tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
