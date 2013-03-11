@@ -121,14 +121,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'InChi',
+                    header:'InChI',
                     dataIndex:'compound_inchi',
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
                 {
-                    header:'InChi Key',
+                    header:'InChIKey',
                     dataIndex:'compound_inchikey',
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
