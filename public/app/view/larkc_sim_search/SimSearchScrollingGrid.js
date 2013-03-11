@@ -119,14 +119,14 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
-        header: 'InChi',
+        header: 'InChI',
         dataIndex: 'inchi',
         renderer:structureProvenanceRenderer,
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
-        header: 'InChi Key',
+        header: 'InChIKey',
         dataIndex: 'inchi_key',
         renderer:structureProvenanceRenderer,
         width: 135,
