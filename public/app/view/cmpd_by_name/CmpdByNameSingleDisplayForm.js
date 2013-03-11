@@ -301,7 +301,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChl',
+                                        fieldLabel:'Standard InChI',
                                         renderer: provenanceSummaryRenderer
                                     },
                                     {
@@ -314,7 +314,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChiKey',
+                                        fieldLabel:'Standard InChIKey',
                                         renderer: provenanceSummaryRenderer
                                     },
                                     {
