@@ -145,6 +145,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             activity_standard_units_item = chemblActivityLink;
             var activity_relation = item['relation'];
             activity_relation_item = chemblActivityLink;
+            var activity_pubmed_id = item['pmid'];
 
             var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
                 //for page
@@ -191,6 +192,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 activity_standard_units:activity_standard_units,
                 activity_standard_value:activity_standard_value,
                 activity_activity_type:activity_activity_type,
+                activity_pubmed_id: activity_pubmed_id,
 
                 compound_full_mwt_src:chembl_src,
                 compound_pref_label_src:cw_src,
