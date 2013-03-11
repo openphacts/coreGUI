@@ -166,7 +166,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'InChi',
+                    header:'InChI',
                     dataIndex:'compound_inchi',
                     renderer:targetProvenanceRenderer,
                     align:'center',
@@ -174,7 +174,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'InChi Key',
+                    header:'InChIKey',
                     dataIndex:'compound_inchikey',
                     renderer:targetProvenanceRenderer,
                     align:'center',
