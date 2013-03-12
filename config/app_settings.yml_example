@@ -1,5 +1,8 @@
 # config/application.yml
 defaults: &defaults
+  dj: #password protect the delayed job web ui route
+    user: "someone" #change
+    password: "something" #make sure it is not easy to guess
   mail:
     #change to whatever is appropriate for your organisation
     to : ["a_developer@somewhere.com", "another_developer@somewhere.com"]
