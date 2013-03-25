@@ -2,6 +2,10 @@ LSP4All::Application.routes.draw do
 
   get "home/index", :as => :home
 
+  if Rails.env.development?
+    match 'test' => 'home#test'
+  end
+
   resources :users
   resources :application_modules
 
@@ -47,10 +51,16 @@ LSP4All::Application.routes.draw do
       post :compound_info
       post :pmid2title
       post :pmid2abstract
-      post :get_chem_info4known_csids
+      get :get_chem_info4known_csids
       get :pmid2concepts
       get :wiki_pathways_by_compound
       get :wiki_pathways_by_protein
+      get :tab_separated_file
+      get :organisms
+      get :chemspider_tab_separated_file
+      get :ims_status
+      get :tsv_download
+      get :tsv_status
     end
   end
 
@@ -71,6 +81,24 @@ LSP4All::Application.routes.draw do
   resources :feedback do
     collection do
       post :index
+    end
+  end
+
+  resources :linked_data_api do
+    collection do
+      get :index
+      post :compound
+      post :target
+      post :compound_pharmacology_paginated
+      post :compound_pharmacology_count
+      post :compound_pharmacology
+      post :target_pharmacology
+      get :compound
+      get :target
+      get :compound_pharmacology_paginated
+      get :compound_pharmacology_count
+      get :compound_pharmacology
+      get :target_pharmacology
     end
   end
 

@@ -1,7 +1,104 @@
 require 'results_formatter'
+require 'uuidtools'
+require 'tempfile'
+
 class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
+
+  def ims_status
+    uri = URI.parse("http://openphacts.cs.man.ac.uk:9090/QueryExpander/SqlCompatVersion")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    @status = true
+    begin
+      response = http.request(request)
+      response.body.to_i.is_a? Integer
+    rescue Exception => e
+      @status = false
+    end
+    puts @status
+    respond_to do |format|
+      format.json {
+        render :json => "[{'status' : '#{@status}'}]"   
+      }
+    end
+  end
+
+  # Given a list of chemspider ids, grab the data about each
+  # id from the Linked Data API, create the tsv file and return it
+  def chemspider_tab_separated_file
+    puts params[:csids]
+    uuid = UUIDTools::UUID.random_create.to_s
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    tsv_file.process_chemspider params
+    respond_to do |format|
+      format.json {
+        render :json => "[{'uuid' : '#{uuid}'}]"   
+      }
+    end
+  end
+
+  # Get the list of organisms for use in the filter
+  # autocompleter
+  def organisms
+    organisms = []
+    query = params[:query]
+    f = File.open(File.join(Rails.root,'config','organisms.txt'),'r')
+    f.each_line do |line|
+      if line.downcase.starts_with? query.downcase
+       org = { "name" => line, "abbr" => line }
+       organisms.push(org)
+      end
+    end
+    f.close
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => organisms.to_xml }
+      format.json {
+        render :json => organisms.to_json
+      }
+    end
+  end
+
+  # Given query params, a URI and total count of results download them all
+  # as a tsv file and return it. The download requests batches of 250 from
+  # the Linked Data API server
+  def tab_separated_file
+    uuid = UUIDTools::UUID.random_create.to_s
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    tsv_file.process params
+    respond_to do |format|
+      format.json {
+        render :json => "[{'uuid' : '#{uuid}'}]"   
+      }
+    end
+  end
+
+  def tsv_status
+    tsv_file = TsvFile.where(:uuid => params[:uuid]).first
+    status = tsv_file.status
+    percentage = tsv_file.percentage
+    respond_to do |format|
+      format.json {
+        render :json => "[{'status' : '#{status}','percentage' : '#{percentage}'}]"   
+      }
+    end
+  end
+
+  def tsv_download
+    @tsv_file = TsvFile.where(:uuid => params[:uuid]).first
+    if @tsv_file.status == "finished" && @tsv_file.percentage == 100
+      send_file File.join(Rails.root, 'filestore', @tsv_file.uuid), :filename => 'output.tsv', :content_type => "text/tab-separated-values", :disposition => 'attachment', :stream => false
+    else
+      render :layout => false
+    end
+  end
   
   def cmpd_name_lookup(substring = params[:query])
       options = Hash.new
@@ -165,7 +262,8 @@ class CoreApiCallsController < ApplicationController
         return
       end      
       col_results = compound_info_list(results)
-      render :json => ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json, :layout => false     
+      results = ResultsFormatter.construct_column_objects(ResultsFormatter.format_chemspider_results(col_results)).to_json
+      render :json => results, :layout => false     
    end
    
    def compound_info_list(csid_array)

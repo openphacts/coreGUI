@@ -1,23 +1,41 @@
 /*
-This file is part of Ext JS 4.1
+Ext JS 4.1 - JavaScript Library
+Copyright (c) 2006-2012, Sencha Inc.
+All rights reserved.
+licensing@sencha.com
 
-Copyright (c) 2011-2012 Sencha Inc
+http://www.sencha.com/license
 
-Contact:  http://www.sencha.com/contact
+Open Source License
+------------------------------------------------------------------------------------------
+This version of Ext JS is licensed under the terms of the Open Source GPL 3.0 license. 
 
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
+http://www.gnu.org/licenses/gpl.html
 
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+There are several FLOSS exceptions available for use with this release for
+open source applications that are distributed under a license other than GPL.
 
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
+* Open Source License Exception for Applications
 
-Build date: 2012-04-20 14:10:47 (19f55ab932145a3443b228045fa80950dfeaf9cc)
+  http://www.sencha.com/products/floss-exception.php
+
+* Open Source License Exception for Development
+
+  http://www.sencha.com/products/ux-exception.php
+
+
+Alternate Licensing
+------------------------------------------------------------------------------------------
+Commercial and OEM Licenses are available for an alternate download of Ext JS.
+This is the appropriate option if you are creating proprietary applications and you are 
+not prepared to distribute and share the source code of your application under the 
+GPL v3 license. Please visit http://www.sencha.com/license for more details.
+
+--
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF THIRD-PARTY INTELLECTUAL PROPERTY RIGHTS.  See the GNU General Public License for more details.
 */
+//@tag foundation,core
 /**
  * @class Ext
  * @singleton
@@ -577,7 +595,7 @@ Ext._startTime = new Date().getTime();
         /**
          * Clone simple variables including array, {}-like objects, DOM nodes and Date without keeping the old reference.
          * A reference for the object itself is returned if it's not a direct decendant of Object. For model cloning,
-         * see {@link Model#copy Model.copy}.
+         * see {@link Ext.data.Model#copy Model.copy}.
          * 
          * @param {Object} item The variable to clone
          * @return {Object} clone
@@ -749,6 +767,9 @@ Ext.globalEval = Ext.global.execScript
         }());
     };
 
+//@tag foundation,core
+//@require ../Ext.js
+
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @docauthor Jacky Nguyen <jacky@sencha.com>
@@ -756,36 +777,43 @@ Ext.globalEval = Ext.global.execScript
  *
  * A utility class that wrap around a string version number and provide convenient
  * method to perform comparison. See also: {@link Ext.Version#compare compare}. Example:
-
-    var version = new Ext.Version('1.0.2beta');
-    console.log("Version is " + version); // Version is 1.0.2beta
-
-    console.log(version.getMajor()); // 1
-    console.log(version.getMinor()); // 0
-    console.log(version.getPatch()); // 2
-    console.log(version.getBuild()); // 0
-    console.log(version.getRelease()); // beta
-
-    console.log(version.isGreaterThan('1.0.1')); // True
-    console.log(version.isGreaterThan('1.0.2alpha')); // True
-    console.log(version.isGreaterThan('1.0.2RC')); // False
-    console.log(version.isGreaterThan('1.0.2')); // False
-    console.log(version.isLessThan('1.0.2')); // True
-
-    console.log(version.match(1.0)); // True
-    console.log(version.match('1.0.2')); // True
-
- * @markdown
+ *
+ *     var version = new Ext.Version('1.0.2beta');
+ *     console.log("Version is " + version); // Version is 1.0.2beta
+ *
+ *     console.log(version.getMajor()); // 1
+ *     console.log(version.getMinor()); // 0
+ *     console.log(version.getPatch()); // 2
+ *     console.log(version.getBuild()); // 0
+ *     console.log(version.getRelease()); // beta
+ *
+ *     console.log(version.isGreaterThan('1.0.1')); // True
+ *     console.log(version.isGreaterThan('1.0.2alpha')); // True
+ *     console.log(version.isGreaterThan('1.0.2RC')); // False
+ *     console.log(version.isGreaterThan('1.0.2')); // False
+ *     console.log(version.isLessThan('1.0.2')); // True
+ *
+ *     console.log(version.match(1.0)); // True
+ *     console.log(version.match('1.0.2')); // True
+ *
  */
 (function() {
 
 // Current core version
-var version = '4.1.0', Version;
+var version = '4.1.1.1', Version;
     Ext.Version = Version = Ext.extend(Object, {
 
         /**
-         * @param {String/Number} version The version number in the follow standard format: major[.minor[.patch[.build[release]]]]
-         * Examples: 1.0 or 1.2.3beta or 1.2.3.4RC
+         * @param {String/Number} version The version number in the following standard format:
+         *
+         *     major[.minor[.patch[.build[release]]]]
+         *
+         * Examples:
+         *
+         *     1.0
+         *     1.2.3beta
+         *     1.2.3.4RC
+         *
          * @return {Ext.Version} this
          */
         constructor: function(version) {
@@ -921,13 +949,13 @@ var version = '4.1.0', Version;
 
         /**
          * Returns whether this version matches the supplied argument. Example:
-         * <pre><code>
-         * var version = new Ext.Version('1.0.2beta');
-         * console.log(version.match(1)); // True
-         * console.log(version.match(1.0)); // True
-         * console.log(version.match('1.0.2')); // True
-         * console.log(version.match('1.0.2RC')); // False
-         * </code></pre>
+         *
+         *     var version = new Ext.Version('1.0.2beta');
+         *     console.log(version.match(1)); // True
+         *     console.log(version.match(1.0)); // True
+         *     console.log(version.match('1.0.2')); // True
+         *     console.log(version.match('1.0.2RC')); // False
+         *
          * @param {String/Number} target The version to compare with
          * @return {Boolean} True if this version matches the target, false otherwise
          */
@@ -1045,6 +1073,9 @@ var version = '4.1.0', Version;
         }
     });
 
+    /**
+     * @class Ext
+     */
     Ext.apply(Ext, {
         /**
          * @private
@@ -1088,20 +1119,19 @@ var version = '4.1.0', Version;
         /**
          * Create a closure for deprecated code.
          *
-    // This means Ext.oldMethod is only supported in 4.0.0beta and older.
-    // If Ext.getVersion('extjs') returns a version that is later than '4.0.0beta', for example '4.0.0RC',
-    // the closure will not be invoked
-    Ext.deprecate('extjs', '4.0.0beta', function() {
-        Ext.oldMethod = Ext.newMethod;
-
-        ...
-    });
-
+         *     // This means Ext.oldMethod is only supported in 4.0.0beta and older.
+         *     // If Ext.getVersion('extjs') returns a version that is later than '4.0.0beta', for example '4.0.0RC',
+         *     // the closure will not be invoked
+         *     Ext.deprecate('extjs', '4.0.0beta', function() {
+         *         Ext.oldMethod = Ext.newMethod;
+         *
+         *         ...
+         *     });
+         *
          * @param {String} packageName The package name
          * @param {String} since The last version before it's deprecated
          * @param {Function} closure The callback function to be executed with the specified version is less than the current version
-         * @param {Object} scope The execution scope (<tt>this</tt>) if the closure
-         * @markdown
+         * @param {Object} scope The execution scope (`this`) if the closure
          */
         deprecate: function(packageName, since, closure, scope) {
             if (Version.compare(Ext.getVersion(packageName), since) < 1) {
@@ -1113,6 +1143,9 @@ var version = '4.1.0', Version;
     Ext.setVersion('core', version);
 
 }());
+
+//@tag foundation,core
+//@require ../version/Version.js
 
 /**
  * @class Ext.String
@@ -1447,6 +1480,11 @@ Ext.htmlDecode = Ext.String.htmlDecode;
  * @inheritdoc Ext.String#urlAppend
  */
 Ext.urlAppend = Ext.String.urlAppend;
+
+//@tag foundation,core
+//@require String.js
+//@define Ext.Number
+
 /**
  * @class Ext.Number
  *
@@ -1622,6 +1660,10 @@ Ext.Number = new function() {
         return me.from.apply(this, arguments);
     };
 };
+
+//@tag foundation,core
+//@require Number.js
+
 /**
  * @class Ext.Array
  * @singleton
@@ -2810,6 +2852,9 @@ Ext.Number = new function() {
     };
 }());
 
+//@tag foundation,core
+//@require Array.js
+
 /**
  * @class Ext.Function
  *
@@ -3295,6 +3340,9 @@ Ext.pass = Ext.Function.alias(Ext.Function, 'pass');
  * @inheritdoc Ext.Function#bind
  */
 Ext.bind = Ext.Function.alias(Ext.Function, 'bind');
+
+//@tag foundation,core
+//@require Function.js
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
@@ -3864,6 +3912,7 @@ Ext.merge = Ext.Object.merge;
 
 /**
  * @private
+ * @member Ext
  */
 Ext.mergeIf = Ext.Object.mergeIf;
 
@@ -3900,6 +3949,10 @@ Ext.urlDecode = function() {
 };
 
 }());
+
+//@tag foundation,core
+//@require Object.js
+//@define Ext.Date
 
 /**
  * @class Ext.Date
@@ -4032,8 +4085,8 @@ function xf(format) {
 
 Ext.Date = {
     /**
-     * Returns the current timestamp
-     * @return {Number} The current timestamp
+     * Returns the current timestamp.
+     * @return {Number} Milliseconds since UNIX epoch.
      * @method
      */
     now: Date.now || function() {
@@ -5365,6 +5418,9 @@ var utilDate = Ext.Date;
 
 }());
 
+//@tag foundation,core
+//@require ../lang/Date.js
+
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @docauthor Jacky Nguyen <jacky@sencha.com>
@@ -5409,6 +5465,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          * @param config
          */
         extend: function(parent) {
@@ -5455,11 +5513,15 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         $onExtended: [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         triggerExtended: function() {
             var callbacks = this.$onExtended,
@@ -5476,6 +5538,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         onExtended: function(fn, scope) {
             this.$onExtended.push({
@@ -5488,6 +5552,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          * @param config
          */
         addConfig: function(config, fullMerge) {
@@ -5550,7 +5616,9 @@ var noArgs = [],
             for (name in members) {
                 if (members.hasOwnProperty(name)) {
                     member = members[name];
-                    if (typeof member == 'function') {
+                    if (typeof member == 'function' && !member.$isClass && member !== Ext.emptyFn && member !== Ext.identityFn) {
+                        member.$owner = this;
+                        member.$name = name;
                         member.displayName = Ext.getClassName(this) + '.' + name;
                     }
                     this[name] = member;
@@ -5562,6 +5630,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          * @param {Object} members
          */
         addInheritableStatics: function(members) {
@@ -5605,7 +5675,7 @@ var noArgs = [],
          *         }
          *     });
          *
-         *      My.awesome.Cat.implement({
+         *      My.awesome.Cat.addMembers({
          *          meow: function() {
          *             alert('Meowww...');
          *          }
@@ -5653,6 +5723,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          * @param name
          * @param member
          */
@@ -5669,7 +5741,10 @@ var noArgs = [],
         },
 
         /**
-         * @private
+         * Adds members to class.
+         * @static
+         * @inheritable
+         * @deprecated 4.1 Use {@link #addMembers} instead.
          */
         implement: function() {
             this.addMembers.apply(this, arguments);
@@ -5860,13 +5935,24 @@ var noArgs = [],
 
             // This code is intentionally inlined for the least number of debugger stepping
             return (method = this.callParent.caller) && (method.$previous ||
-                  ((method = method.$owner ? method : method.caller) &&
-                        method.$owner.superclass.$class[method.$name])).apply(this, args || noArgs);
+                ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass.self[method.$name])).apply(this, args || noArgs);
+        },
+
+        // Documented downwards
+        callSuper: function(args) {
+            var method;
+
+            // This code is intentionally inlined for the least number of debugger stepping
+            return (method = this.callSuper.caller) &&
+                ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass.self[method.$name]).apply(this, args || noArgs);
         },
 
         /**
          * Used internally by the mixins pre-processor
          * @private
+         * @static
          * @inheritable
          */
         mixin: function(name, mixinClass) {
@@ -5958,6 +6044,8 @@ var noArgs = [],
 
         /**
          * @private
+         * @static
+         * @inheritable
          */
         addXtype: function(xtype) {
             var prototype = this.prototype,
@@ -5984,16 +6072,22 @@ var noArgs = [],
     });
 
     Base.implement({
+        /** @private */
         isInstance: true,
 
+        /** @private */
         $className: 'Ext.Base',
 
+        /** @private */
         configClass: Ext.emptyFn,
 
+        /** @private */
         initConfigList: [],
 
+        /** @private */
         configMap: {},
 
+        /** @private */
         initConfigMap: {},
 
         /**
@@ -6135,6 +6229,9 @@ var noArgs = [],
          *
          *      alert(My.Derived2.method(10); // now alerts 40
          *
+         * To override a method and replace it and also call the superclass method, use
+         * {@link #callSuper}. This is often done to patch a method to fix a bug.
+         *
          * @protected
          * @param {Array/Arguments} args The arguments, either an array or the `arguments` object
          * from the current method, for example: `this.callParent(arguments)`
@@ -6168,6 +6265,88 @@ var noArgs = [],
                 if (!(methodName in parentClass)) {
                     throw new Error("this.callParent() was called but there's no such method (" + methodName +
                                 ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
+                }
+            }
+
+            return superMethod.apply(this, args || noArgs);
+        },
+
+        /**
+         * This method is used by an override to call the superclass method but bypass any
+         * overridden method. This is often done to "patch" a method that contains a bug
+         * but for whatever reason cannot be fixed directly.
+         *
+         * Consider:
+         *
+         *      Ext.define('Ext.some.Class', {
+         *          method: function () {
+         *              console.log('Good');
+         *          }
+         *      });
+         *
+         *      Ext.define('Ext.some.DerivedClass', {
+         *          method: function () {
+         *              console.log('Bad');
+         *
+         *              // ... logic but with a bug ...
+         *
+         *              this.callParent();
+         *          }
+         *      });
+         *
+         * To patch the bug in `DerivedClass.method`, the typical solution is to create an
+         * override:
+         *
+         *      Ext.define('App.paches.DerivedClass', {
+         *          override: 'Ext.some.DerivedClass',
+         *
+         *          method: function () {
+         *              console.log('Fixed');
+         *
+         *              // ... logic but with bug fixed ...
+         *
+         *              this.callSuper();
+         *          }
+         *      });
+         *
+         * The patch method cannot use `callParent` to call the superclass `method` since
+         * that would call the overridden method containing the bug. In other words, the
+         * above patch would only produce "Fixed" then "Good" in the console log, whereas,
+         * using `callParent` would produce "Fixed" then "Bad" then "Good".
+         *
+         * @protected
+         * @param {Array/Arguments} args The arguments, either an array or the `arguments` object
+         * from the current method, for example: `this.callSuper(arguments)`
+         * @return {Object} Returns the result of calling the superclass method
+         */
+        callSuper: function(args) {
+            // NOTE: this code is deliberately as few expressions (and no function calls)
+            // as possible so that a debugger can skip over this noise with the minimum number
+            // of steps. Basically, just hit Step Into until you are where you really wanted
+            // to be.
+            var method,
+                superMethod = (method = this.callSuper.caller) &&
+                    ((method = method.$owner ? method : method.caller) &&
+                        method.$owner.superclass[method.$name]);
+
+            if (!superMethod) {
+                method = this.callSuper.caller;
+                var parentClass, methodName;
+
+                if (!method.$owner) {
+                    if (!method.caller) {
+                        throw new Error("Attempting to call a protected method from the public scope, which is not allowed");
+                    }
+
+                    method = method.caller;
+                }
+
+                parentClass = method.$owner.superclass;
+                methodName = method.$name;
+
+                if (!(methodName in parentClass)) {
+                    throw new Error("this.callSuper() was called but there's no such method (" + methodName +
+                        ") found in the parent class (" + (Ext.getClassName(parentClass) || 'Object') + ")");
                 }
             }
 
@@ -6241,7 +6420,7 @@ var noArgs = [],
          *
          * @protected
          * @param {Object} config
-         * @return {Object} mixins The mixin prototypes as key - value pairs
+         * @return {Ext.Base} this
          */
         initConfig: function(config) {
             var instanceConfig = config,
@@ -6335,8 +6514,11 @@ var noArgs = [],
         },
 
         /**
-         *
-         * @param name
+         * Returns the initial configuration passed to constructor when instantiating
+         * this class.
+         * @param {String} [name] Name of the config option to return.
+         * @return {Object/Mixed} The full config object or a single config value
+         * when `name` parameter specified.
          */
         getInitialConfig: function(name) {
             var config = this.config;
@@ -6381,6 +6563,9 @@ var noArgs = [],
             }
         },
 
+        /**
+         * @private
+         */
         destroy: function() {
             this.destroy = Ext.emptyFn;
         }
@@ -6420,6 +6605,9 @@ var noArgs = [],
     Ext.Base = Base;
 
 }(Ext.Function.flexSetter));
+
+//@tag foundation,core
+//@require Base.js
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
@@ -6514,21 +6702,9 @@ var noArgs = [],
             var name, i;
 
             if (!Class) {
-                // This "helped" a bit in IE8 when we create 450k instances (3400ms->2700ms),
-                // but removes some flexibility as a result because overrides cannot override
-                // the constructor method... kept in case we want to reconsider because it is
-                // more involved than just use the pass 'constructor'
-                //
-                //if (data.hasOwnProperty('constructor')) {
-                //    Class = data.constructor;
-                //    delete data.constructor;
-                //    Class.$owner = Class;
-                //    Class.$name = 'constructor';
-                //} else {
                 Class = makeCtor(
                     data.$className
                 );
-                //}
             }
 
             for (i = 0; i < baseStaticMemberLength; i++) {
@@ -6712,7 +6888,7 @@ var noArgs = [],
          *
          * @private
          * @param {String} name The pre-processor name. Note that it needs to be registered with
-         * {@link Ext#registerPreprocessor registerPreprocessor} before this
+         * {@link Ext.Class#registerPreprocessor registerPreprocessor} before this
          * @param {String} offset The insertion position. Four possible values are:
          * 'first', 'last', or: 'before', 'after' (relative to the name provided in the third argument)
          * @param {String} relativeName
@@ -7058,8 +7234,9 @@ var noArgs = [],
 
         if (Class) {
             cls = new ExtClass(Class, members);
-        }
-        else {
+            // The 'constructor' is given as 'Class' but also needs to be on prototype
+            cls.prototype.constructor = Class;
+        } else {
             cls = new ExtClass(members);
         }
 
@@ -7075,6 +7252,9 @@ var noArgs = [],
     };
 
 }());
+
+//@tag foundation,core
+//@require Class.js
 
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
@@ -7270,6 +7450,16 @@ var noArgs = [],
  * @singleton
  */
 (function(Class, alias, arraySlice, arrayFrom, global) {
+
+    // Creates a constructor that has nothing extra in its scope chain.
+    function makeCtor () {
+        function constructor () {
+            // Opera has some problems returning from a constructor when Dragonfly isn't running. The || null seems to
+            // be sufficient to stop it misbehaving. Known to be required against 10.53, 11.51 and 11.61.
+            return this.constructor.apply(this, arguments) || null;
+        }
+        return constructor;
+    }
 
     var Manager = Ext.ClassManager = {
 
@@ -7646,6 +7836,58 @@ var noArgs = [],
         },
 
         /**
+         * Adds a batch of class name to alias mappings
+         * @param {Object} aliases The set of mappings of the form
+         * className : [values...]
+         */
+        addNameAliasMappings: function(aliases){
+            var aliasToNameMap = this.maps.aliasToName,
+                nameToAliasesMap = this.maps.nameToAliases,
+                className, aliasList, alias, i;
+
+            for (className in aliases) {
+                aliasList = nameToAliasesMap[className] ||
+                    (nameToAliasesMap[className] = []);
+
+                for (i = 0; i < aliases[className].length; i++) {
+                    alias = aliases[className][i];
+                    if (!aliasToNameMap[alias]) {
+                        aliasToNameMap[alias] = className;
+                        aliasList.push(alias);
+                    }
+                }
+
+            }
+            return this;
+        },
+
+        /**
+         *
+         * @param {Object} alternates The set of mappings of the form
+         * className : [values...]
+         */
+        addNameAlternateMappings: function(alternates) {
+            var alternateToName = this.maps.alternateToName,
+                nameToAlternates = this.maps.nameToAlternates,
+                className, aliasList, alternate, i;
+
+            for (className in alternates) {
+                aliasList = nameToAlternates[className] ||
+                    (nameToAlternates[className] = []);
+
+                for (i  = 0; i < alternates[className].length; i++) {
+                    alternate = alternates[className];
+                    if (!alternateToName[alternate]) {
+                        alternateToName[alternate] = className;
+                        aliasList.push(alternate);
+                    }
+                }
+
+            }
+            return this;
+        },
+
+        /**
          * Get a reference to the class by its alias.
          *
          * @param {String} alias
@@ -7718,13 +7960,22 @@ var noArgs = [],
          * @deprecated 4.1.0 Use {@link Ext#define} instead, as that also supports creating overrides.
          */
         create: function(className, data, createdFn) {
-            if (typeof className != 'string') {
+            if (className != null && typeof className != 'string') {
                 throw new Error("[Ext.define] Invalid class name '" + className + "' specified, must be a non-empty string");
+            }
+
+            var ctor = makeCtor();
+            if (typeof data == 'function') {
+                data = data(ctor);
+            }
+
+            if (className) {
+                ctor.displayName = className;
             }
 
             data.$className = className;
 
-            return new Class(data, function() {
+            return new Class(ctor, data, function() {
                 var postprocessorStack = data.postprocessors || Manager.defaultPostprocessors,
                     registeredPostprocessors = Manager.postprocessors,
                     postprocessors = [],
@@ -7770,13 +8021,17 @@ var noArgs = [],
                 createdFn = clsData.createdFn;
 
             if (!postprocessor) {
-                me.set(className, cls);
-
-                if (createdFn) {
-                     createdFn.call(cls, cls);
+                if (className) {
+                    me.set(className, cls);
                 }
 
-                me.triggerCreated(className);
+                if (createdFn) {
+                    createdFn.call(cls, cls);
+                }
+
+                if (className) {
+                    me.triggerCreated(className);
+                }
                 return;
             }
 
@@ -8356,7 +8611,7 @@ var noArgs = [],
          *      Ext.define('My.awesome.Class', {
          *          someProperty: 'something',
          *
-         *          someMethod: function() {
+         *          someMethod: function(s) {
          *              alert(s + this.someProperty);
          *          }
          *
@@ -8367,7 +8622,48 @@ var noArgs = [],
          *
          *      obj.someMethod('Say '); // alerts 'Say something'
          *
-         * To defines an override, include the `override` property. The content of an
+         * To create an anonymous class, pass `null` for the `className`:
+         * 
+         *      Ext.define(null, {
+         *          constructor: function () {
+         *              // ...
+         *          }
+         *      });
+         *
+         * In some cases, it is helpful to create a nested scope to contain some private
+         * properties. The best way to do this is to pass a function instead of an object
+         * as the second parameter. This function will be called to produce the class
+         * body:
+         * 
+         *      Ext.define('MyApp.foo.Bar', function () {
+         *          var id = 0;
+         *          
+         *          return {
+         *              nextId: function () {
+         *                  return ++id;
+         *              }
+         *          };
+         *      });
+         * 
+         * When using this form of `Ext.define`, the function is passed a reference to its
+         * class. This can be used as an efficient way to access any static properties you
+         * may have:
+         * 
+         *      Ext.define('MyApp.foo.Bar', function (Bar) {
+         *          return {
+         *              statics: {
+         *                  staticMethod: function () {
+         *                      // ...
+         *                  }
+         *              },
+         *              
+         *              method: function () {
+         *                  return Bar.staticMethod();
+         *              }
+         *          };
+         *      });
+         *
+         * To define an override, include the `override` property. The content of an
          * override is aggregated with the specified class in order to extend or modify
          * that class. This can be as simple as setting default property values or it can
          * extend and/or replace methods. This can also extend the statics of the class.
@@ -8446,6 +8742,7 @@ var noArgs = [],
          * It is highly recommended to follow this simple convention:
          *  - The root and the class name are 'CamelCased'
          *  - Everything else is lower-cased
+         * Pass `null` to create an anonymous class.
          * @param {Object} data The key - value pairs of properties to apply to this class. Property names can be of any valid
          * strings, except those in the reserved listed below:
          *  - `mixins`
@@ -8632,6 +8929,10 @@ var noArgs = [],
 
 }(Ext.Class, Ext.Function.alias, Array.prototype.slice, Ext.Array.from, Ext.global));
 
+//@tag foundation,core
+//@require ClassManager.js
+//@define Ext.Loader
+
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @docauthor Jacky Nguyen <jacky@sencha.com>
@@ -8714,7 +9015,7 @@ var noArgs = [],
  * Ext.Loader will automatically fetch all dependencies on demand as they're needed during run-time. For example:
  *
  *     Ext.onReady(function(){
- *         var window = Ext.createWidget('window', {
+ *         var window = Ext.widget('window', {
  *             width: 500,
  *             height: 300,
  *             layout: {
@@ -8935,6 +9236,21 @@ Ext.Loader = new function() {
 
             return Loader;
         }),
+
+        /**
+         * Sets a batch of path entries
+         *
+         * @param {Object } paths a set of className: path mappings
+         * @return {Ext.Loader} this
+         */
+        addClassPathMappings: function(paths) {
+            var name;
+
+            for(name in paths){
+                Loader.config.paths[name] = paths[name];
+            }
+            return Loader;
+        },
 
         /**
          * Translates a className to a file path by adding the
@@ -9390,7 +9706,8 @@ Ext.Loader = new function() {
             var config = Loader.getConfig(),
                 noCacheUrl = url + (config.disableCaching ? ('?' + config.disableCachingParam + '=' + Ext.Date.now()) : ''),
                 isCrossOriginRestricted = false,
-                xhr, status, onScriptError;
+                xhr, status, onScriptError,
+                debugSourceURL = "";
 
             scope = scope || Loader;
 
@@ -9432,7 +9749,11 @@ Ext.Loader = new function() {
                 ) {
                     // Debugger friendly, file names are still shown even though they're eval'ed code
                     // Breakpoints work on both Firebug and Chrome's Web Inspector
-                    Ext.globalEval(xhr.responseText + "\n//@ sourceURL=" + url);
+                    if (!Ext.isIE) {
+                        debugSourceURL = "\n//@ sourceURL=" + url;
+                    }
+
+                    Ext.globalEval(xhr.responseText + debugSourceURL);
 
                     onLoad.call(scope);
                 }
@@ -9803,6 +10124,7 @@ Ext.Loader = new function() {
     /**
      * @member Ext
      * @method onReady
+     * @ignore
      */
     Ext.onReady = function(fn, scope, options) {
         Loader.onReady(fn, scope, true, options);
@@ -9994,6 +10316,46 @@ Ext.Loader = new function() {
 
     Manager.onCreated(Loader.historyPush);
 };
+
+// simple mechanism for automated means of injecting large amounts of dependency info
+// at the appropriate time in the load cycle
+if (Ext._classPathMetadata) {
+    Ext.Loader.addClassPathMappings(Ext._classPathMetadata);
+    Ext._classPathMetadata = null;
+}
+
+// initalize the default path of the framework
+(function() {
+    var scripts = document.getElementsByTagName('script'),
+        currentScript = scripts[scripts.length - 1],
+        src = currentScript.src,
+        path = src.substring(0, src.lastIndexOf('/') + 1),
+        Loader = Ext.Loader;
+
+    if(src.indexOf("/platform/core/src/class/") != -1) {
+        path = path + "../../../../extjs/";
+    } else if(src.indexOf("/core/src/class/") != -1) {
+        path = path + "../../../";
+    }
+
+    Loader.setConfig({
+        enabled: true,
+        disableCaching: true,
+        paths: {
+            'Ext': path + 'src'
+        }
+    });
+})();
+
+// allows a tools like dynatrace to deterministically detect onReady state by invoking
+// a callback (intended for external consumption)
+Ext._endTime = new Date().getTime();
+if (Ext._beforereadyhandler){
+    Ext._beforereadyhandler();
+}
+
+//@tag foundation,core
+//@require ../class/Loader.js
 
 /**
  * @author Brian Moeskau <brian@sencha.com>
@@ -10318,12 +10680,15 @@ Ext.deprecated = function (suggestion) {
     poll();
 }());
 
+//@tag extras,core
+//@require ../lang/Error.js
 
 /**
- * @class Ext.JSON
- * Modified version of Douglas Crockford's JSON.js that doesn't
- * mess with the Object prototype
- * http://www.json.org/js.html
+ * Modified version of [Douglas Crockford's JSON.js][dc] that doesn't
+ * mess with the Object prototype.
+ *
+ * [dc]: http://www.json.org/js.html
+ *
  * @singleton
  */
 Ext.JSON = (new(function() {
@@ -10351,7 +10716,7 @@ Ext.JSON = (new(function() {
         } else if (Ext.isDate(o)) {
             return Ext.JSON.encodeDate(o);
         } else if (Ext.isString(o)) {
-            return encodeString(o);
+            return Ext.JSON.encodeString(o);
         } else if (typeof o == "number") {
             //don't use isNumber here, since finite checks happen inside isNumber
             return isFinite(o) ? String(o) : "null";
@@ -10397,7 +10762,7 @@ Ext.JSON = (new(function() {
             i;
 
         for (i = 0; i < len; i += 1) {
-            a.push(doEncode(o[i], cnewline), sep);
+            a.push(Ext.JSON.encodeValue(o[i], cnewline), sep);
         }
 
         // Overwrite trailing comma (or empty string)
@@ -10414,7 +10779,7 @@ Ext.JSON = (new(function() {
 
         for (i in o) {
             if (!useHasOwn || o.hasOwnProperty(i)) {
-                a.push(doEncode(i) + ': ' + doEncode(o[i], cnewline), sep);
+                a.push(Ext.JSON.encodeValue(i) + ': ' + Ext.JSON.encodeValue(o[i], cnewline), sep);
             }
         }
 
@@ -10433,7 +10798,7 @@ Ext.JSON = (new(function() {
             len = o.length,
             i;
         for (i = 0; i < len; i += 1) {
-            a.push(doEncode(o[i]), ',');
+            a.push(Ext.JSON.encodeValue(o[i]), ',');
         }
         // Overwrite trailing comma (or empty string)
         a[a.length - 1] = ']';
@@ -10449,13 +10814,29 @@ Ext.JSON = (new(function() {
             i;
         for (i in o) {
             if (!useHasOwn || o.hasOwnProperty(i)) {
-                a.push(doEncode(i), ":", doEncode(o[i]), ',');
+                a.push(Ext.JSON.encodeValue(i), ":", Ext.JSON.encodeValue(o[i]), ',');
             }
         }
         // Overwrite trailing comma (or empty string)
         a[a.length - 1] = '}';
         return a.join("");
     };
+    
+    /**
+     * Encodes a String. This returns the actual string which is inserted into the JSON string as the literal
+     * expression. **The returned value includes enclosing double quotation marks.**
+     *
+     * To override this:
+     *
+     *     Ext.JSON.encodeString = function(s) {
+     *         return 'Foo' + s;
+     *     };
+     *
+     * @param {String} s The String to encode
+     * @return {String} The string literal to use in a JSON string.
+     * @method
+     */
+    me.encodeString = encodeString;
 
     /**
      * The function which {@link #encode} uses to encode all javascript values to their JSON representations
@@ -10470,15 +10851,16 @@ Ext.JSON = (new(function() {
     me.encodeValue = doEncode;
 
     /**
-     * Encodes a Date. This returns the actual string which is inserted into the JSON string as the literal expression.
-     * **The returned value includes enclosing double quotation marks.**
+     * Encodes a Date. This returns the actual string which is inserted into the JSON string as the literal
+     * expression. **The returned value includes enclosing double quotation marks.**
      *
-     * The default return format is "yyyy-mm-ddThh:mm:ss".
+     * The default return format is `"yyyy-mm-ddThh:mm:ss"`.
      *
      * To override this:
-     *    Ext.JSON.encodeDate = function(d) {
-     *        return Ext.Date.format(d, '"Y-m-d"');
-     *    };
+     *
+     *     Ext.JSON.encodeDate = function(d) {
+     *         return Ext.Date.format(d, '"Y-m-d"');
+     *     };
      *
      * @param {Date} d The Date to encode
      * @return {String} The string literal to use in a JSON string.
@@ -10495,9 +10877,10 @@ Ext.JSON = (new(function() {
     /**
      * Encodes an Object, Array or other value.
      * 
-     * If the environment's native JSON encoding is not being used ({@link Ext#USE_NATIVE_JSON} is not set, or the environment does not support it), then 
-     * ExtJS's encoding will be used. This allows the developer to add a `toJSON` method to their classes which need serializing to return a valid
-     * JSON representation of the object.
+     * If the environment's native JSON encoding is not being used ({@link Ext#USE_NATIVE_JSON} is not set,
+     * or the environment does not support it), then ExtJS's encoding will be used. This allows the developer
+     * to add a `toJSON` method to their classes which need serializing to return a valid JSON representation
+     * of the object.
      * 
      * @param {Object} o The variable to encode
      * @return {String} The JSON string
@@ -10511,9 +10894,11 @@ Ext.JSON = (new(function() {
     };
 
     /**
-     * Decodes (parses) a JSON string to an object. If the JSON is invalid, this function throws a SyntaxError unless the safe option is set.
+     * Decodes (parses) a JSON string to an object. If the JSON is invalid, this function throws
+     * a SyntaxError unless the safe option is set.
+     *
      * @param {String} json The JSON string
-     * @param {Boolean} safe (optional) Whether to return null or throw an exception if the JSON is invalid.
+     * @param {Boolean} [safe=false] True to return null, false to throw an exception if the JSON is invalid.
      * @return {Object} The resulting object
      */
     me.decode = function(json, safe) {
@@ -10549,6 +10934,10 @@ Ext.encode = Ext.JSON.encode;
  * @inheritdoc Ext.JSON#decode
  */
 Ext.decode = Ext.JSON.decode;
+
+//@tag extras,core
+//@require misc/JSON.js
+
 /**
  * @class Ext
  *
@@ -10630,6 +11019,14 @@ Ext.apply(Ext, {
         }
 
         return entry;
+    },
+    
+    updateCacheEntry: function(cacheItem, dom){
+        cacheItem.dom = dom;
+        if (cacheItem.el) {
+            cacheItem.el.dom = dom;
+        }
+        return cacheItem;
     },
 
     /**
@@ -10790,6 +11187,7 @@ Ext.apply(Ext, {
     /**
      * Alias for {@link Ext.String#htmlEncode}.
      * @inheritdoc Ext.String#htmlEncode
+     * @ignore
      */
     htmlEncode : function(value) {
         return Ext.String.htmlEncode(value);
@@ -10798,6 +11196,7 @@ Ext.apply(Ext, {
     /**
      * Alias for {@link Ext.String#htmlDecode}.
      * @inheritdoc Ext.String#htmlDecode
+     * @ignore
      */
     htmlDecode : function(value) {
          return Ext.String.htmlDecode(value);
@@ -10806,6 +11205,7 @@ Ext.apply(Ext, {
     /**
      * Alias for {@link Ext.String#urlAppend}.
      * @inheritdoc Ext.String#urlAppend
+     * @ignore
      */
     urlAppend : function(url, s) {
         return Ext.String.urlAppend(url, s);
@@ -11052,7 +11452,7 @@ Opera 11.11 - Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11
     nullLog = function () {};
     nullLog.info = nullLog.warn = nullLog.error = Ext.emptyFn;
 
-    Ext.setVersion('extjs', '4.1.0');
+    Ext.setVersion('extjs', '4.1.1.1');
     Ext.apply(Ext, {
         /**
          * @property {String} SSL_SECURE_URL
@@ -11177,16 +11577,12 @@ Opera 11.11 - Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11
                             delete cache[id];
                         }
 
-                        // removing an iframe this way can cause severe leaks
-                        // fixes leak issue with htmleditor in themes example
-                        if (n.tagName.toUpperCase() != 'IFRAME') {
-                            if (isIE8 && n.parentNode) {
-                                n.parentNode.removeChild(n);
-                            }
-                            d = d || document.createElement('div');
-                            d.appendChild(n);
-                            d.innerHTML = '';
+                        if (isIE8 && n.parentNode) {
+                            n.parentNode.removeChild(n);
                         }
+                        d = d || document.createElement('div');
+                        d.appendChild(n);
+                        d.innerHTML = '';
                     }
                 };
             }())
@@ -11625,23 +12021,23 @@ Opera 11.11 - Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11
          * The `Ext.log.out` array can also be written to a popup window by entering the
          * following in the URL bar (a "bookmarklet"):
          *
-         *    javascript:void(Ext.log.show());
+         *     javascript:void(Ext.log.show());
          *
          * If additional parameters are passed, they are joined and appended to the message.
          * A technique for tracing entry and exit of a function is this:
          *
-         *      function foo () {
-         *          Ext.log({ indent: 1 }, '>> foo');
+         *     function foo () {
+         *         Ext.log({ indent: 1 }, '>> foo');
          *
-         *          // log statements in here or methods called from here will be indented
-         *          // by one step
+         *         // log statements in here or methods called from here will be indented
+         *         // by one step
          *
-         *          Ext.log({ outdent: 1 }, '<< foo');
-         *      }
+         *         Ext.log({ outdent: 1 }, '<< foo');
+         *     }
          *
          * This method does nothing in a release build.
          *
-         * @param {String/Object} message The message to log or an options object with any
+         * @param {String/Object} [options] The message to log or an options object with any
          * of the following properties:
          *
          *  - `msg`: The message to log (required).
@@ -11650,6 +12046,9 @@ Opera 11.11 - Opera/9.80 (Windows NT 6.1; U; en) Presto/2.8.131 Version/11.11
          *  - `stack`: True to include a stack trace in the log.
          *  - `indent`: Cause subsequent log statements to be indented one step.
          *  - `outdent`: Cause this and following statements to be one step less indented.
+         *
+         * @param {String...} [message] The message to log (required unless specified in
+         * options object).
          *
          * @method
          */
@@ -11827,53 +12226,63 @@ Ext.application = function(config) {
     });
 };
 
+//@tag extras,core
+//@require ../Ext-more.js
+//@define Ext.util.Format
+
 /**
  * @class Ext.util.Format
-
-This class is a centralized place for formatting functions. It includes
-functions to format various different types of data, such as text, dates and numeric values.
-
-__Localization__
-This class contains several options for localization. These can be set once the library has loaded,
-all calls to the functions from that point will use the locale settings that were specified.
-Options include:
-- thousandSeparator
-- decimalSeparator
-- currenyPrecision
-- currencySign
-- currencyAtEnd
-This class also uses the default date format defined here: {@link Ext.Date#defaultFormat}.
-
-__Using with renderers__
-There are two helper functions that return a new function that can be used in conjunction with
-grid renderers:
-
-    columns: [{
-        dataIndex: 'date',
-        renderer: Ext.util.Format.dateRenderer('Y-m-d')
-    }, {
-        dataIndex: 'time',
-        renderer: Ext.util.Format.numberRenderer('0.000')
-    }]
-
-Functions that only take a single argument can also be passed directly:
-    columns: [{
-        dataIndex: 'cost',
-        renderer: Ext.util.Format.usMoney
-    }, {
-        dataIndex: 'productCode',
-        renderer: Ext.util.Format.uppercase
-    }]
-
-__Using with XTemplates__
-XTemplates can also directly use Ext.util.Format functions:
-
-    new Ext.XTemplate([
-        'Date: {startDate:date("Y-m-d")}',
-        'Cost: {cost:usMoney}'
-    ]);
-
- * @markdown
+ *  
+ * This class is a centralized place for formatting functions. It includes
+ * functions to format various different types of data, such as text, dates and numeric values.
+ *  
+ * ## Localization
+ *
+ * This class contains several options for localization. These can be set once the library has loaded,
+ * all calls to the functions from that point will use the locale settings that were specified.
+ *
+ * Options include:
+ *
+ * - thousandSeparator
+ * - decimalSeparator
+ * - currenyPrecision
+ * - currencySign
+ * - currencyAtEnd
+ *
+ * This class also uses the default date format defined here: {@link Ext.Date#defaultFormat}.
+ *
+ * ## Using with renderers
+ *
+ * There are two helper functions that return a new function that can be used in conjunction with
+ * grid renderers:
+ *  
+ *     columns: [{
+ *         dataIndex: 'date',
+ *         renderer: Ext.util.Format.dateRenderer('Y-m-d')
+ *     }, {
+ *         dataIndex: 'time',
+ *         renderer: Ext.util.Format.numberRenderer('0.000')
+ *     }]
+ *  
+ * Functions that only take a single argument can also be passed directly:
+ *
+ *     columns: [{
+ *         dataIndex: 'cost',
+ *         renderer: Ext.util.Format.usMoney
+ *     }, {
+ *         dataIndex: 'productCode',
+ *         renderer: Ext.util.Format.uppercase
+ *     }]
+ *  
+ * ## Using with XTemplates
+ *
+ * XTemplates can also directly use Ext.util.Format functions:
+ *  
+ *     new Ext.XTemplate([
+ *         'Date: {startDate:date("Y-m-d")}',
+ *         'Cost: {cost:usMoney}'
+ *     ]);
+ *
  * @singleton
  */
 (function() {
@@ -11893,54 +12302,59 @@ XTemplates can also directly use Ext.util.Format functions:
         I18NFormatCleanRe;
 
     Ext.apply(UtilFormat, {
+        //<locale>
         /**
          * @property {String} thousandSeparator
-         * <p>The character that the {@link #number} function uses as a thousand separator.</p>
-         * <p>This may be overridden in a locale file.</p>
+         * The character that the {@link #number} function uses as a thousand separator.
+         *
+         * This may be overridden in a locale file.
          */
-        //<locale>
         thousandSeparator: ',',
         //</locale>
 
+        //<locale>
         /**
          * @property {String} decimalSeparator
-         * <p>The character that the {@link #number} function uses as a decimal point.</p>
-         * <p>This may be overridden in a locale file.</p>
+         * The character that the {@link #number} function uses as a decimal point.
+         *
+         * This may be overridden in a locale file.
          */
-        //<locale>
         decimalSeparator: '.',
         //</locale>
 
+        //<locale>
         /**
          * @property {Number} currencyPrecision
-         * <p>The number of decimal places that the {@link #currency} function displays.</p>
-         * <p>This may be overridden in a locale file.</p>
+         * The number of decimal places that the {@link #currency} function displays.
+         *
+         * This may be overridden in a locale file.
          */
-        //<locale>
         currencyPrecision: 2,
         //</locale>
 
+         //<locale>
         /**
          * @property {String} currencySign
-         * <p>The currency sign that the {@link #currency} function displays.</p>
-         * <p>This may be overridden in a locale file.</p>
+         * The currency sign that the {@link #currency} function displays.
+         *
+         * This may be overridden in a locale file.
          */
-         //<locale>
         currencySign: '$',
         //</locale>
 
+        //<locale>
         /**
          * @property {Boolean} currencyAtEnd
-         * <p>This may be set to <code>true</code> to make the {@link #currency} function
-         * append the currency sign to the formatted value.</p>
-         * <p>This may be overridden in a locale file.</p>
+         * This may be set to <code>true</code> to make the {@link #currency} function
+         * append the currency sign to the formatted value.
+         *
+         * This may be overridden in a locale file.
          */
-        //<locale>
         currencyAtEnd: false,
         //</locale>
 
         /**
-         * Checks a reference and converts it to empty string if it is undefined
+         * Checks a reference and converts it to empty string if it is undefined.
          * @param {Object} value Reference to check
          * @return {Object} Empty string if converted, otherwise the original value
          */
@@ -11949,9 +12363,9 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Checks a reference and converts it to the default value if it's empty
+         * Checks a reference and converts it to the default value if it's empty.
          * @param {Object} value Reference to check
-         * @param {String} defaultValue The value to insert of it's undefined (defaults to "")
+         * @param {String} [defaultValue=""] The value to insert of it's undefined.
          * @return {String}
          */
         defaultValue : function(value, defaultValue) {
@@ -11959,11 +12373,12 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Returns a substring from within an original string
+         * Returns a substring from within an original string.
          * @param {String} value The original text
          * @param {Number} start The start index of the substring
          * @param {Number} length The length of the substring
          * @return {String} The substring
+         * @method
          */
         substr : 'ab'.substr(-1) != 'b'
         ? function (value, start, length) {
@@ -11977,7 +12392,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Converts a string to all lower case letters
+         * Converts a string to all lower case letters.
          * @param {String} value The text to convert
          * @return {String} The converted text
          */
@@ -11986,7 +12401,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Converts a string to all upper case letters
+         * Converts a string to all upper case letters.
          * @param {String} value The text to convert
          * @return {String} The converted text
          */
@@ -11995,7 +12410,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Format a number as US currency
+         * Format a number as US currency.
          * @param {Number/String} value The numeric value to format
          * @return {String} The formatted currency string
          */
@@ -12004,11 +12419,13 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Format a number as a currency
+         * Format a number as a currency.
          * @param {Number/String} value The numeric value to format
-         * @param {String} sign The currency sign to use (defaults to {@link #currencySign})
-         * @param {Number} decimals The number of decimals to use for the currency (defaults to {@link #currencyPrecision})
-         * @param {Boolean} end True if the currency sign should be at the end of the string (defaults to {@link #currencyAtEnd})
+         * @param {String} [sign] The currency sign to use (defaults to {@link #currencySign})
+         * @param {Number} [decimals] The number of decimals to use for the currency
+         * (defaults to {@link #currencyPrecision})
+         * @param {Boolean} [end] True if the currency sign should be at the end of the string
+         * (defaults to {@link #currencyAtEnd})
          * @return {String} The formatted currency string
          */
         currency: function(v, currencySign, decimals, end) {
@@ -12035,9 +12452,9 @@ XTemplates can also directly use Ext.util.Format functions:
 
         /**
          * Formats the passed date using the specified format pattern.
-         * @param {String/Date} value The value to format. If a string is passed, it is converted to a Date by the Javascript
-         * Date object's <a href="http://www.w3schools.com/jsref/jsref_parse.asp">parse()</a> method.
-         * @param {String} format (Optional) Any valid date format string. Defaults to {@link Ext.Date#defaultFormat}.
+         * @param {String/Date} value The value to format. If a string is passed, it is converted to a Date
+         * by the Javascript's built-in Date#parse method.
+         * @param {String} [format] Any valid date format string. Defaults to {@link Ext.Date#defaultFormat}.
          * @return {String} The formatted date string.
          */
         date: function(v, format) {
@@ -12051,7 +12468,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Returns a date rendering function that can be reused to apply a date format multiple times efficiently
+         * Returns a date rendering function that can be reused to apply a date format multiple times efficiently.
          * @param {String} format Any valid date format string. Defaults to {@link Ext.Date#defaultFormat}.
          * @return {Function} The date formatting function
          */
@@ -12062,7 +12479,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Strips all HTML tags
+         * Strips all HTML tags.
          * @param {Object} value The text from which to strip tags
          * @return {String} The stripped text
          */
@@ -12071,7 +12488,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Strips all script tags
+         * Strips all script tags.
          * @param {Object} value The text from which to strip script tags
          * @return {String} The stripped text
          */
@@ -12080,7 +12497,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Simple format for a file size (xxx bytes, xxx KB, xxx MB)
+         * Simple format for a file size (xxx bytes, xxx KB, xxx MB).
          * @param {Number/String} size The numeric value to format
          * @return {String} The formatted file size
          */
@@ -12095,9 +12512,10 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * It does simple math for use in a template, for example:<pre><code>
-         * var tpl = new Ext.Template('{value} * 10 = {value:math("* 10")}');
-         * </code></pre>
+         * It does simple math for use in a template, for example:
+         *
+         *     var tpl = new Ext.Template('{value} * 10 = {value:math("* 10")}');
+         *
          * @return {Function} A function that operates on the passed value.
          * @method
          */
@@ -12128,30 +12546,40 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * <p>Formats the passed number according to the passed format string.</p>
-         * <p>The number of digits after the decimal separator character specifies the number of
-         * decimal places in the resulting string. The <u>local-specific</u> decimal character is used in the result.</p>
-         * <p>The <i>presence</i> of a thousand separator character in the format string specifies that
-         * the <u>locale-specific</u> thousand separator (if any) is inserted separating thousand groups.</p>
-         * <p>By default, "," is expected as the thousand separator, and "." is expected as the decimal separator.</p>
-         * <p><b>New to Ext JS 4</b></p>
-         * <p>Locale-specific characters are always used in the formatted output when inserting
-         * thousand and decimal separators.</p>
-         * <p>The format string must specify separator characters according to US/UK conventions ("," as the
-         * thousand separator, and "." as the decimal separator)</p>
-         * <p>To allow specification of format strings according to local conventions for separator characters, add
-         * the string <code>/i</code> to the end of the format string.</p>
-         * <div style="margin-left:40px">examples (123456.789):
-         * <div style="margin-left:10px">
-         * 0 - (123456) show only digits, no precision<br>
-         * 0.00 - (123456.78) show only digits, 2 precision<br>
-         * 0.0000 - (123456.7890) show only digits, 4 precision<br>
-         * 0,000 - (123,456) show comma and digits, no precision<br>
-         * 0,000.00 - (123,456.78) show comma and digits, 2 precision<br>
-         * 0,0.00 - (123,456.78) shortcut method, show comma and digits, 2 precision<br>
-         * To allow specification of the formatting string using UK/US grouping characters (,) and decimal (.) for international numbers, add /i to the end.
-         * For example: 0.000,00/i
-         * </div></div>
+         * Formats the passed number according to the passed format string.
+         *
+         * The number of digits after the decimal separator character specifies the number of
+         * decimal places in the resulting string. The *local-specific* decimal character is
+         * used in the result.
+         *
+         * The *presence* of a thousand separator character in the format string specifies that
+         * the *locale-specific* thousand separator (if any) is inserted separating thousand groups.
+         *
+         * By default, "," is expected as the thousand separator, and "." is expected as the decimal separator.
+         *
+         * ## New to Ext JS 4
+         *
+         * Locale-specific characters are always used in the formatted output when inserting
+         * thousand and decimal separators.
+         *
+         * The format string must specify separator characters according to US/UK conventions ("," as the
+         * thousand separator, and "." as the decimal separator)
+         *
+         * To allow specification of format strings according to local conventions for separator characters, add
+         * the string `/i` to the end of the format string.
+         *
+         * examples (123456.789):
+         * 
+         * - `0` - (123456) show only digits, no precision
+         * - `0.00` - (123456.78) show only digits, 2 precision
+         * - `0.0000` - (123456.7890) show only digits, 4 precision
+         * - `0,000` - (123,456) show comma and digits, no precision
+         * - `0,000.00` - (123,456.78) show comma and digits, 2 precision
+         * - `0,0.00` - (123,456.78) shortcut method, show comma and digits, 2 precision
+         *
+         * To allow specification of the formatting string using UK/US grouping characters (,) and
+         * decimal (.) for international numbers, add /i to the end. For example: 0.000,00/i
+         *
          * @param {Number} v The number to format.
          * @param {String} format The way you would like to format this text.
          * @return {String} The formatted number.
@@ -12253,7 +12681,9 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Returns a number rendering function that can be reused to apply a number format multiple times efficiently
+         * Returns a number rendering function that can be reused to apply a number format multiple
+         * times efficiently.
+         *
          * @param {String} format Any valid number format string for {@link #number}
          * @return {Function} The number formatting function
          */
@@ -12265,20 +12695,22 @@ XTemplates can also directly use Ext.util.Format functions:
 
         /**
          * Selectively do a plural form of a word based on a numeric value. For example, in a template,
-         * {commentCount:plural("Comment")}  would result in "1 Comment" if commentCount was 1 or would be "x Comments"
-         * if the value is 0 or greater than 1.
+         * `{commentCount:plural("Comment")}`  would result in `"1 Comment"` if commentCount was 1 or
+         * would be `"x Comments"` if the value is 0 or greater than 1.
+         *
          * @param {Number} value The value to compare against
          * @param {String} singular The singular form of the word
-         * @param {String} plural (optional) The plural form of the word (defaults to the singular with an "s")
+         * @param {String} [plural] The plural form of the word (defaults to the singular with an "s")
          */
         plural : function(v, s, p) {
             return v +' ' + (v == 1 ? s : (p ? p : s+'s'));
         },
 
         /**
-         * Converts newline characters to the HTML tag &lt;br/>
+         * Converts newline characters to the HTML tag `<br/>`
+         *
          * @param {String} The string value to format.
-         * @return {String} The string with embedded &lt;br/> tags in place of newlines.
+         * @return {String} The string with embedded `<br/>` tags in place of newlines.
          */
         nl2br : function(v) {
             return Ext.isEmpty(v) ? '' : v.replace(nl2brRe, '<br/>');
@@ -12334,8 +12766,10 @@ XTemplates can also directly use Ext.util.Format functions:
         trim : Ext.String.trim,
 
         /**
-         * Parses a number or string representing margin sizes into an object. Supports CSS-style margin declarations
-         * (e.g. 10, "10", "10 10", "10 10 10" and "10 10 10 10" are all valid options and would return the same result)
+         * Parses a number or string representing margin sizes into an object.
+         * Supports CSS-style margin declarations (e.g. 10, "10", "10 10", "10 10 10" and
+         * "10 10 10 10" are all valid options and would return the same result).
+         *
          * @param {Number/String} v The encoded margins
          * @return {Object} An object with margin sizes for top, right, bottom and left
          */
@@ -12367,7 +12801,7 @@ XTemplates can also directly use Ext.util.Format functions:
         },
 
         /**
-         * Escapes the passed string for use in a regular expression
+         * Escapes the passed string for use in a regular expression.
          * @param {String} str
          * @return {String}
          */
@@ -12376,6 +12810,11 @@ XTemplates can also directly use Ext.util.Format functions:
         }
     });
 }());
+
+//@tag extras,core
+//@require Format.js
+//@define Ext.util.TaskManager
+//@define Ext.TaskManager
 
 /**
  * Provides the ability to execute one or more arbitrary tasks in a asynchronous manner.
@@ -12405,7 +12844,7 @@ XTemplates can also directly use Ext.util.Format functions:
  *
  * To end a running task:
  * 
- *      task.destroy();
+ *      Ext.TaskManager.stop(task);
  *
  * If a task needs to be started and stopped repeated over time, you can create a
  * {@link Ext.util.TaskRunner.Task Task} instance.
@@ -12795,6 +13234,9 @@ function () {
     proto.destroy = proto.stop;
 });
 
+//@tag extras,core
+//@require ../util/TaskManager.js
+
 /**
  * @class Ext.perf.Accumulator
  * @private
@@ -13040,6 +13482,9 @@ function () {
     Ext.perf.getTimestamp = this.getTimestamp;
 });
 
+//@tag extras,core
+//@require Accumulator.js
+
 /**
  * @class Ext.perf.Monitor
  * @singleton
@@ -13128,6 +13573,23 @@ Ext.define('Ext.perf.Monitor', {
         });
 
         return ret;
+    },
+
+    reset: function(){
+        Ext.each(this.accumulators, function(accum){
+            var me = accum;
+            me.count = me.childCount = me.depth = me.maxDepth = 0;
+            me.pure = {
+                min: Number.MAX_VALUE,
+                max: 0,
+                sum: 0
+            };
+            me.total = {
+                min: Number.MAX_VALUE,
+                max: 0,
+                sum: 0
+            };
+        });
     },
 
     updateGC: function () {
@@ -13237,6 +13699,10 @@ Ext.define('Ext.perf.Monitor', {
         this.watchGC();
     }
 });
+
+//@tag extras,core
+//@require perf/Monitor.js
+//@define Ext.Supports
 
 /**
  * @class Ext.is
@@ -13618,7 +14084,7 @@ Ext.supports = {
         },
 
         /**
-         * @property SVG True if the device supports SVG
+         * @property Svg True if the device supports SVG
          * @type {Boolean}
          */
         {
@@ -13640,7 +14106,7 @@ Ext.supports = {
         },
 
         /**
-         * @property VML True if the device supports VML
+         * @property Vml True if the device supports VML
          * @type {Boolean}
          */
         {
@@ -13901,6 +14367,9 @@ Ext.supports = {
 
 Ext.supports.init(); // run the "early" detections now
 
+//@tag dom,core
+//@require ../Support.js
+//@define Ext.util.DelayedTask
 
 /**
  * @class Ext.util.DelayedTask
@@ -13973,6 +14442,11 @@ Ext.util.DelayedTask = function(fn, scope, args) {
         }
     };
 };
+
+//@tag dom,core
+//@define Ext.util.Event
+//@require Ext.util.DelayedTask
+
 Ext.require('Ext.util.DelayedTask', function() {
 
     /**
@@ -13983,6 +14457,8 @@ Ext.require('Ext.util.DelayedTask', function() {
      * @private
      */
     Ext.util.Event = Ext.extend(Object, (function() {
+        var noOptions = {};
+
         function createTargeted(handler, listener, o, scope){
             return function(){
                 if (o.target === arguments[0]){
@@ -14059,31 +14535,31 @@ Ext.require('Ext.util.DelayedTask', function() {
                 }
             },
 
-            createListener: function(fn, scope, o) {
-                o = o || {};
+            createListener: function(fn, scope, options) {
+                options = options || noOptions;
                 scope = scope || this.observable;
 
                 var listener = {
                         fn: fn,
                         scope: scope,
-                        o: o,
+                        o: options,
                         ev: this
                     },
                     handler = fn;
 
                 // The order is important. The 'single' wrapper must be wrapped by the 'buffer' and 'delayed' wrapper
                 // because the event removal that the single listener does destroys the listener's DelayedTask(s)
-                if (o.single) {
-                    handler = createSingle(handler, listener, o, scope);
+                if (options.single) {
+                    handler = createSingle(handler, listener, options, scope);
                 }
-                if (o.target) {
-                    handler = createTargeted(handler, listener, o, scope);
+                if (options.target) {
+                    handler = createTargeted(handler, listener, options, scope);
                 }
-                if (o.delay) {
-                    handler = createDelayed(handler, listener, o, scope);
+                if (options.delay) {
+                    handler = createDelayed(handler, listener, options, scope);
                 }
-                if (o.buffer) {
-                    handler = createBuffered(handler, listener, o, scope);
+                if (options.buffer) {
+                    handler = createBuffered(handler, listener, options, scope);
                 }
 
                 listener.fireFn = handler;
@@ -14100,7 +14576,11 @@ Ext.require('Ext.util.DelayedTask', function() {
                     listener = listeners[i];
                     if (listener) {
                         s = listener.scope;
-                        if (listener.fn == fn && (s == scope || s == this.observable)) {
+
+                        // Compare the listener's scope with *JUST THE PASSED SCOPE* if one is passed, and only fall back to the owning Observable if none is passed.
+                        // We cannot use the test (s == scope || s == this.observable)
+                        // Otherwise, if the Observable itself adds Ext.emptyFn as a listener, and then Ext.emptyFn is added under another scope, there will be a false match.
+                        if (listener.fn == fn && (s == (scope || this.observable))) {
                             return i;
                         }
                     }
@@ -14187,6 +14667,10 @@ Ext.require('Ext.util.DelayedTask', function() {
     }()));
 });
 
+//@tag dom,core
+//@require util/Event.js
+//@define Ext.EventManager
+
 /**
  * @class Ext.EventManager
  * Registers event handlers that want to receive a normalized EventObject instead of the standard browser event and provides
@@ -14204,7 +14688,11 @@ Ext.EventManager = new function() {
                 baseCSSPrefix = Ext.baseCSSPrefix,
                 cls = [baseCSSPrefix + 'body'],
                 htmlCls = [],
-                html;
+                supportsLG = Ext.supports.CSS3LinearGradient,
+                supportsBR = Ext.supports.CSS3BorderRadius,
+                resetCls = [],
+                html,
+                resetElementSpec;
 
             if (!bd) {
                 return false;
@@ -14308,13 +14796,45 @@ Ext.EventManager = new function() {
             if (Ext.isLinux) {
                 add('linux');
             }
-            if (!Ext.supports.CSS3BorderRadius) {
+            if (!supportsBR) {
                 add('nbr');
             }
-            if (!Ext.supports.CSS3LinearGradient) {
+            if (!supportsLG) {
                 add('nlg');
             }
-            if (!Ext.scopeResetCSS) {
+
+            // If we are not globally resetting scope, but just resetting it in a wrapper around
+            // serarately rendered widgets, then create a common reset element for use when creating
+            // measurable elements. Using a common DomHelper spec.
+            if (Ext.scopeResetCSS) {
+
+                // Create Ext.resetElementSpec for use in Renderable when wrapping top level Components.
+                resetElementSpec = Ext.resetElementSpec = {
+                    cls: baseCSSPrefix + 'reset'
+                };
+                
+                if (!supportsLG) {
+                    resetCls.push(baseCSSPrefix + 'nlg');
+                }
+                
+                if (!supportsBR) {
+                    resetCls.push(baseCSSPrefix + 'nbr');
+                }
+                
+                if (resetCls.length) {                    
+                    resetElementSpec.cn = {
+                        cls: resetCls.join(' ')
+                    };
+                }
+                
+                Ext.resetElement = Ext.getBody().createChild(resetElementSpec);
+                if (resetCls.length) {
+                    Ext.resetElement = Ext.get(Ext.resetElement.dom.firstChild);
+                }
+            }
+            // Otherwise, the common reset element is the document body
+            else {
+                Ext.resetElement = Ext.getBody();
                 add('reset');
             }
 
@@ -14483,11 +15003,12 @@ Ext.EventManager = new function() {
         },
 
         /**
-         * Adds a listener to be notified when the document is ready (before onload and before images are loaded). Can be
-         * accessed shorthanded as Ext.onReady().
+         * Adds a listener to be notified when the document is ready (before onload and before images are loaded).
+         *
          * @param {Function} fn The method the event invokes.
-         * @param {Object} scope (optional) The scope (<code>this</code> reference) in which the handler function executes. Defaults to the browser window.
-         * @param {Boolean} options (optional) Options object as passed to {@link Ext.Element#addListener}.
+         * @param {Object} [scope] The scope (`this` reference) in which the handler function executes.
+         * Defaults to the browser window.
+         * @param {Object} [options] Options object as passed to {@link Ext.Element#addListener}.
          */
         onDocumentReady: function(fn, scope, options) {
             options = options || {};
@@ -14837,10 +15358,10 @@ Ext.EventManager = new function() {
                     if (options.delegate) {
                         // double up '\' characters so escape sequences survive the
                         // string-literal translation
-                        f.push('var t = e.getTarget("' + (options.delegate + '').replace(escapeRx, '\\\\') + '", this);');
+                        f.push('var result, t = e.getTarget("' + (options.delegate + '').replace(escapeRx, '\\\\') + '", this);');
                         f.push('if(!t) {return;}');
                     } else {
-                        f.push('var t = e.target;');
+                        f.push('var t = e.target, result;');
                     }
 
                     if (options.target) {
@@ -14873,7 +15394,7 @@ Ext.EventManager = new function() {
                     }
 
                     // finally call the actual handler fn
-                    f.push('fn.call(scope || dom, e, t, options);');
+                    f.push('result = fn.call(scope || dom, e, t, options);');
 
                     if(options.single) {
                         f.push('evtMgr.removeListener(dom, ename, fn, scope);');
@@ -14894,11 +15415,12 @@ Ext.EventManager = new function() {
                     if(options.buffer) {
                         f.push('}, ' + options.buffer + ');');
                     }
+                    f.push('return result;')
 
                     gen = Ext.cacheableFunctionFactory('e', 'options', 'fn', 'scope', 'ename', 'dom', 'wrap', 'args', 'X', 'evtMgr', f.join('\n'));
                 }
 
-                gen.call(dom, e, options, fn, scope, ename, dom, wrap, args, Ext, EventManager);
+                return gen.call(dom, e, options, fn, scope, ename, dom, wrap, args, Ext, EventManager);
             };
             return wrap;
         },
@@ -15224,7 +15746,8 @@ Ext.EventManager = new function() {
                     scrollable = false;
                 }
 
-                if (scrollable) {
+                // on IE8, when running within an iFrame, document.body is not immediately available
+                if (scrollable && document.body) {
                     EventManager.onReadyEvent({
                         type:'doScroll'
                     });
@@ -15271,8 +15794,11 @@ Ext.EventManager = new function() {
 
                 //are we in an IFRAME? (doScroll ineffective here)
                 try {
-                    topContext = !window.frameElement;
+                    topContext = window.frameElement === undefined;
                 } catch(e) {
+                    // If we throw an exception, it means we're probably getting access denied,
+                    // which means we're in an iframe cross domain.
+                    topContext = false;
                 }
 
                 if (!topContext || !doc.documentElement.doScroll) {
@@ -15352,6 +15878,10 @@ Ext.EventManager = new function() {
 
     Ext.onReady(initExtCss);
 };
+
+//@tag dom,core
+//@require EventManager.js
+//@define Ext.EventObject
 
 /**
  * @class Ext.EventObject
@@ -16235,6 +16765,9 @@ Ext.EventObject = new Ext.EventObjectImpl();
 });
 
 
+//@tag dom,core
+//@require ../EventObject.js
+
 /**
  * @class Ext.dom.AbstractQuery
  * @private
@@ -16308,18 +16841,20 @@ Ext.define('Ext.dom.AbstractQuery', {
 
 });
 
+//@tag dom,core
+//@require AbstractQuery.js
+
 /**
- * @class Ext.dom.AbstractHelper
- * @private
  * Abstract base class for {@link Ext.dom.Helper}.
  * @private
  */
 Ext.define('Ext.dom.AbstractHelper', {
     emptyTags : /^(?:br|frame|hr|img|input|link|meta|range|spacer|wbr|area|param|col)$/i,
-    confRe : /tag|children|cn|html|tpl|tplData$/i,
+    confRe : /(?:tag|children|cn|html|tpl|tplData)$/i,
     endRe : /end/i,
 
-    attribXlat: { cls : 'class', htmlFor : 'for' },
+    // Since cls & for are reserved words, we need to transform them
+    attributeTransform: { cls : 'class', htmlFor : 'for' },
 
     closeTags: {},
 
@@ -16360,7 +16895,7 @@ Ext.define('Ext.dom.AbstractHelper', {
                             buffer.push(' ', attr, '="');
                             me.generateStyles(val, buffer).push('"');
                         } else {
-                            buffer.push(' ', me.attribXlat[attr] || attr, '="', val, '"');
+                            buffer.push(' ', me.attributeTransform[attr] || attr, '="', val, '"');
                         }
                     }
                 }
@@ -16600,6 +17135,12 @@ Ext.define('Ext.dom.AbstractHelper', {
 
 });
 
+//@tag dom,core
+//@require AbstractHelper.js
+//@require Ext.Supports
+//@require Ext.EventManager
+//@define Ext.dom.AbstractElement
+
 /**
  * @class Ext.dom.AbstractElement
  * @extend Ext.Base
@@ -16636,7 +17177,7 @@ Ext.define('Ext.dom.AbstractElement', {
         get: function(el) {
             var me = this,
                 El = Ext.dom.Element,
-                cache,
+                cacheItem,
                 extEl,
                 dom,
                 id;
@@ -16652,13 +17193,13 @@ Ext.define('Ext.dom.AbstractElement', {
                     return El.get(document);
                 }
                 
-                cache = Ext.cache[el];
+                cacheItem = Ext.cache[el];
                 // This code is here to catch the case where we've got a reference to a document of an iframe
                 // It getElementById will fail because it's not part of the document, so if we're skipping
                 // GC it means it's a window/document object that isn't the default window/document, which we have
                 // already handled above
-                if (cache && cache.skipGarbageCollection) {
-                    extEl = cache.el;
+                if (cacheItem && cacheItem.skipGarbageCollection) {
+                    extEl = cacheItem.el;
                     return extEl;
                 }
                 
@@ -16666,32 +17207,34 @@ Ext.define('Ext.dom.AbstractElement', {
                     return null;
                 }
 
-                if (cache && cache.el) {
-                    extEl = cache.el;
-                    extEl.dom = dom;
+                if (cacheItem && cacheItem.el) {
+                    extEl = Ext.updateCacheEntry(cacheItem, dom).el;
                 } else {
                     // Force new element if there's a cache but no el attached
-                    extEl = new El(dom, !!cache);
+                    extEl = new El(dom, !!cacheItem);
                 }
                 return extEl;
             } else if (el.tagName) { // dom element
                 if (!(id = el.id)) {
                     id = Ext.id(el);
                 }
-                cache = Ext.cache[id];
-                if (cache && cache.el) {
-                    extEl = Ext.cache[id].el;
-                    extEl.dom = el;
+                cacheItem = Ext.cache[id];
+                if (cacheItem && cacheItem.el) {
+                    extEl = Ext.updateCacheEntry(cacheItem, el).el;
                 } else {
                     // Force new element if there's a cache but no el attached
-                    extEl = new El(el, !!cache);
+                    extEl = new El(el, !!cacheItem);
                 }
                 return extEl;
             } else if (el instanceof me) {
                 if (el != me.docEl && el != me.winEl) {
+                    id = el.id;
                     // refresh dom element in case no longer valid,
                     // catch case where it hasn't been appended
-                    el.dom = document.getElementById(el.id) || el.dom;
+                    cacheItem = Ext.cache[id];
+                    if (cacheItem) {
+                        Ext.updateCacheEntry(cacheItem, document.getElementById(id) || el.dom);
+                    }
                 }
                 return el;
             } else if (el.isComposite) {
@@ -16823,9 +17366,9 @@ myElement.dom.className = Ext.core.Element.removeCls(this.initialClasses, 'x-inv
          * Visibility mode constant for use with {@link Ext.dom.Element#setVisibilityMode}. 
          * Use the CSS 'visibility' property to hide the element.
          *
-         * Note that in this mode, {@link #isVisible} may return true for an element even though 
-         * it actually has a parent element that is hidden. For this reason, and in most cases,
-         * using the {@link #OFFSETS} mode is a better choice.
+         * Note that in this mode, {@link Ext.dom.Element#isVisible isVisible} may return true
+         * for an element even though it actually has a parent element that is hidden. For this
+         * reason, and in most cases, using the {@link #OFFSETS} mode is a better choice.
          * @static
          * @inheritable
          */
@@ -17116,6 +17659,10 @@ myElement.dom.className = Ext.core.Element.removeCls(this.initialClasses, 'x-inv
 }, function() {
     var AbstractElement = this;
 
+    /**
+     * @private
+     * @member Ext
+     */
     Ext.getDetachedBody = function () {
         var detachedEl = AbstractElement.detachedBodyEl;
 
@@ -17128,6 +17675,10 @@ myElement.dom.className = Ext.core.Element.removeCls(this.initialClasses, 'x-inv
         return detachedEl;
     };
 
+    /**
+     * @private
+     * @member Ext
+     */
     Ext.getElementById = function (id) {
         var el = document.getElementById(id),
             detachedBodyEl;
@@ -17281,6 +17832,11 @@ myElement.dom.className = Ext.core.Element.removeCls(this.initialClasses, 'x-inv
 });
 
 }());
+
+//@tag dom,core
+//@require AbstractElement.js
+//@define Ext.dom.AbstractElement-static
+//@define Ext.dom.AbstractElement
 
 /**
  * @class Ext.dom.AbstractElement
@@ -17755,6 +18311,10 @@ Ext.dom.AbstractElement.addInheritableStatics({
     });
 }());
 
+//@tag dom,core
+//@require Ext.dom.AbstractElement-static
+//@define Ext.dom.AbstractElement-alignment
+
 /**
  * @class Ext.dom.AbstractElement
  */
@@ -17927,6 +18487,11 @@ Ext.dom.AbstractElement.override({
 
 });
 
+//@tag dom,core
+//@require Ext.dom.AbstractElement-alignment
+//@define Ext.dom.AbstractElement-insertion
+//@define Ext.dom.AbstractElement
+
 /**
  * @class Ext.dom.AbstractElement
  */
@@ -18097,14 +18662,19 @@ Ext.dom.AbstractElement.addMethods({
      * Creates and wraps this element with another element
      * @param {Object} [config] DomHelper element config object for the wrapper element or null for an empty div
      * @param {Boolean} [returnDom=false] True to return the raw DOM element instead of Ext.dom.AbstractElement
+     * @param {String} [selector] A {@link Ext.dom.Query DomQuery} selector to select a descendant node within the created element to use as the wrapping element.
      * @return {HTMLElement/Ext.dom.AbstractElement} The newly created wrapper element
      */
-    wrap: function(config, returnDom) {
-        var newEl = Ext.core.DomHelper.insertBefore(this.dom, config || {tag: "div"}, !returnDom),
-            d = newEl.dom || newEl;
+    wrap: function(config, returnDom, selector) {
+        var newEl = Ext.core.DomHelper.insertBefore(this.dom, config || {tag: "div"}, true),
+            target = newEl;
+        
+        if (selector) {
+            target = Ext.DomQuery.selectNode(selector, newEl.dom);
+        }
 
-        d.appendChild(this.dom);
-        return newEl;
+        target.appendChild(this.dom);
+        return returnDom ? newEl.dom : newEl;
     },
 
     /**
@@ -18120,6 +18690,11 @@ Ext.dom.AbstractElement.addMethods({
         return returnEl ? Ext.get(el) : el;
     }
 });
+
+//@tag dom,core
+//@require Ext.dom.AbstractElement-insertion
+//@define Ext.dom.AbstractElement-position
+//@define Ext.dom.AbstractElement
 
 /**
  * @class Ext.dom.AbstractElement
@@ -18434,8 +19009,8 @@ Element.override({
      * @return {Object} box An object in the format
      *
      *     {
-     *         x: <Element's X position>,
-     *         y: <Element's Y position>,
+     *         left: <Element's X position>,
+     *         top: <Element's Y position>,
      *         width: <Element's width>,
      *         height: <Element's height>,
      *         bottom: <Element's lower bound>,
@@ -18477,6 +19052,11 @@ Element.override({
 });
 
 }());
+
+//@tag dom,core
+//@require Ext.dom.AbstractElement-position
+//@define Ext.dom.AbstractElement-style
+//@define Ext.dom.AbstractElement
 
 /**
  * @class Ext.dom.AbstractElement
@@ -18937,7 +19517,7 @@ Element.override({
          *
          *     // change the height to 150px and animate with a custom configuration
          *     Ext.fly('elId').setHeight(150, {
-         *         duration : .5, // animation will have a duration of .5 seconds
+         *         duration : 500, // animation will have a duration of .5 seconds
          *         // will change the content to "finished"
          *         callback: function(){ this.{@link #update}("finished"); }
          *     });
@@ -19326,6 +19906,11 @@ Element.override({
     });
 }());
 
+//@tag dom,core
+//@require Ext.dom.AbstractElement-style
+//@define Ext.dom.AbstractElement-traversal
+//@define Ext.dom.AbstractElement
+
 /**
  * @class Ext.dom.AbstractElement
  */
@@ -19390,6 +19975,7 @@ Ext.dom.AbstractElement.override({
     /**
      * Creates a {@link Ext.CompositeElement} for child nodes based on the passed CSS selector (the selector should not contain an id).
      * @param {String} selector The CSS selector
+     * @param {Boolean} [unique] True to create a unique Ext.Element for each element. Defaults to a shared flyweight object.
      * @return {Ext.CompositeElement} The composite element
      */
     select: function(selector, composite) {
@@ -19430,8 +20016,8 @@ Ext.dom.AbstractElement.override({
         // Pull the ID from the DOM (Ext.id also ensures that there *is* an ID).
         // If this object is a Flyweight, it will not have an ID
         id = Ext.id(me.dom);
-        // Escape . or :
-        id = id.replace(/[\.:]/g, "\\$0");
+        // Escape "invalid" chars
+        id = Ext.escapeId(id);
         node = Ext.DomQuery.selectNode('#' + id + " > " + selector, me.dom);
         return returnDom ? node : Ext.get(node);
     },
@@ -19507,10 +20093,14 @@ Ext.dom.AbstractElement.override({
     }
 });
 
+//@tag dom,core
+//@define Ext.DomHelper
+//@define Ext.core.DomHelper
+//@require Ext.dom.AbstractElement-traversal
+
 /**
- * @class Ext.dom.Helper
- * @extends Ext.dom.AbstractHelper
- * @alternateClassName Ext.DomHelper
+ * @class Ext.DomHelper
+ * @extends Ext.dom.Helper
  * @alternateClassName Ext.core.DomHelper
  * @singleton
  *
@@ -19669,8 +20259,16 @@ var afterbegin = 'afterbegin',
         beforeend: ['BeforeEnd', 'lastChild']
     };
 
+/**
+ * The actual class of which {@link Ext.DomHelper} is instance of.
+ * 
+ * Use singleton {@link Ext.DomHelper} instead.
+ * 
+ * @private
+ */
 Ext.define('Ext.dom.Helper', {
     extend: 'Ext.dom.AbstractHelper',
+    requires:['Ext.dom.AbstractElement'],
 
     tableRe: /^table|tbody|tr|td$/i,
 
@@ -19972,6 +20570,12 @@ Ext.define('Ext.dom.Helper', {
 
 }());
 
+//@tag dom,core
+//@require Helper.js
+//@define Ext.dom.Query
+//@define Ext.core.Query
+//@define Ext.DomQuery
+
 /*
  * This is code is also distributed under MIT license for use
  * with jQuery and prototype JavaScript libraries.
@@ -20100,6 +20704,18 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
             return (hasEscapes)
                 ? selector.replace(longHex, longHexToChar)
                 : selector;
+        },
+        
+        // checks if the path has escaping & does any appropriate replacements
+        setupEscapes = function(path){
+            hasEscapes = (path.indexOf('\\') > -1);
+            if (hasEscapes) {
+                path = path
+                    .replace(shortHex, shortToLongHex)
+                    .replace(nonHex, charToLongHex)
+                    .replace(escapes, '\\\\');  // double the '\' for js compilation
+            }
+            return path;
         };
 
     // this eval is stop the compressor from
@@ -20481,13 +21097,7 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
                 lmode = path.match(modeRe),
                 tokenMatch, matched, j, t, m;
 
-            hasEscapes = (path.indexOf('\\') > -1);
-            if (hasEscapes) {
-                path = path
-                    .replace(shortHex, shortToLongHex)
-                    .replace(nonHex, charToLongHex)
-                    .replace(escapes, '\\\\');  // double the '\' for js compilation
-            }
+            path = setupEscapes(path);
 
             if(lmode && lmode[1]){
                 fn[fn.length] = 'mode="'+lmode[1].replace(trimRe, "")+'";';
@@ -20586,6 +21196,7 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
                 subPath = paths[i].replace(trimRe, "");
                 // compile and place in cache
                 if(!cache[subPath]){
+                    // When we compile, escaping is handled inside the compile method
                     cache[subPath] = Ext.DomQuery.compile(subPath, type);
                     if(!cache[subPath]){
                         Ext.Error.raise({
@@ -20594,6 +21205,10 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
                             msg: subPath + ' is not a valid selector'
                         });
                     }
+                } else {
+                    // If we've already compiled, we still need to check if the
+                    // selector has escaping and setup the appropriate flags
+                    setupEscapes(subPath);
                 }
                 result = cache[subPath](root);
                 if(result && result != document){
@@ -20680,10 +21295,15 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
          */
         selectValue : function(path, root, defaultValue){
             path = path.replace(trimRe, "");
-            if(!valueCache[path]){
+            if (!valueCache[path]) {
                 valueCache[path] = Ext.DomQuery.compile(path, "select");
+            } else {
+                setupEscapes(path);
             }
-            var n = valueCache[path](root), v;
+            
+            var n = valueCache[path](root), 
+                v;
+                
             n = n[0] ? n[0] : n;
 
             // overcome a limitation of maximum textnode size
@@ -20739,9 +21359,12 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
          */
         filter : function(els, ss, nonMatches){
             ss = ss.replace(trimRe, "");
-            if(!simpleCache[ss]){
+            if (!simpleCache[ss]) {
                 simpleCache[ss] = Ext.DomQuery.compile(ss, "simple");
+            } else {
+                setupEscapes(ss);
             }
+            
             var result = simpleCache[ss](els);
             return nonMatches ? quickDiff(result, els) : result;
         },
@@ -21040,6 +21663,11 @@ Ext.dom.Query = Ext.core.DomQuery = Ext.DomQuery = (function(){
 Ext.query = Ext.DomQuery.select;
 
 
+//@tag dom,core
+//@require Query.js
+//@define Ext.dom.Element
+//@require Ext.dom.AbstractElement
+
 /**
  * @class Ext.dom.Element
  * @alternateClassName Ext.Element
@@ -21084,7 +21712,7 @@ Ext.query = Ext.DomQuery.select;
  *
  *     Option    Default   Description
  *     --------- --------  ---------------------------------------------
- *     {@link Ext.fx.Anim#duration duration}  .35       The duration of the animation in seconds
+ *     {@link Ext.fx.Anim#duration duration}  350       The duration of the animation in milliseconds
  *     {@link Ext.fx.Anim#easing easing}    easeOut   The easing method
  *     {@link Ext.fx.Anim#callback callback}  none      A function to execute when the anim completes
  *     {@link Ext.fx.Anim#scope scope}     this      The scope (this) of the callback function
@@ -21093,7 +21721,7 @@ Ext.query = Ext.DomQuery.select;
  *
  *     // Element animation options object
  *     var opt = {
- *         {@link Ext.fx.Anim#duration duration}: 1,
+ *         {@link Ext.fx.Anim#duration duration}: 1000,
  *         {@link Ext.fx.Anim#easing easing}: 'elasticIn',
  *         {@link Ext.fx.Anim#callback callback}: this.foo,
  *         {@link Ext.fx.Anim#scope scope}: this
@@ -21382,6 +22010,8 @@ var HIDDEN = 'hidden',
     mask : function(msg, msgCls /* private - passed by AbstractComponent.mask to avoid the need to interrogate the DOM to get the height*/, elHeight) {
         var me            = this,
             dom           = me.dom,
+            // In some cases, setExpression will exist but not be of a function type,
+            // so we check it explicitly here to stop IE throwing errors
             setExpression = dom.style.setExpression,
             data          = (me.$cache || me.getCache()).data,
             maskEl        = data.maskEl,
@@ -21430,13 +22060,19 @@ var HIDDEN = 'hidden',
         // Fix for https://sencha.jira.com/browse/EXTJSIV-19.
         // IE6 strict mode and IE6-9 quirks mode takes off left+right padding when calculating width!
         if (!Ext.supports.IncludePaddingInWidthCalculation && setExpression) {
-            maskEl.dom.style.setExpression('width', 'this.parentNode.clientWidth + "px"');
+            // In an occasional case setExpression will throw an exception
+            try {
+                maskEl.dom.style.setExpression('width', 'this.parentNode.clientWidth + "px"');
+            } catch (e) {}
         }
 
         // Some versions and modes of IE subtract top+bottom padding when calculating height.
         // Different versions from those which make the same error for width!
         if (!Ext.supports.IncludePaddingInHeightCalculation && setExpression) {
-            maskEl.dom.style.setExpression('height', 'this.parentNode.' + (dom == DOC.body ? 'scrollHeight' : 'offsetHeight') + ' + "px"');
+            // In an occasional case setExpression will throw an exception
+            try {
+                maskEl.dom.style.setExpression('height', 'this.parentNode.' + (dom == DOC.body ? 'scrollHeight' : 'offsetHeight') + ' + "px"');
+            } catch (e) {}
         }
         // ie will not expand full height automatically
         else if (Ext.isIE && !(Ext.isIE7 && Ext.isStrict) && me.getStyle('height') == 'auto') {
@@ -22221,6 +22857,65 @@ var HIDDEN = 'hidden',
         },
 
         /**
+         * @private.
+         * Currently used for updating grid cells without modifying DOM structure
+         *
+         * Synchronizes content of this Element with the content of the passed element.
+         * 
+         * Style and CSS class are copied from source into this Element, and contents are synched
+         * recursively. If a child node is a text node, the textual data is copied.
+         */
+        syncContent: function(source) {
+            source = Ext.getDom(source);
+            var me = this,
+                sourceNodes = source.childNodes,
+                sourceLen = sourceNodes.length,
+                dest = me.dom,
+                destNodes = dest.childNodes,
+                destLen = destNodes.length,
+                i,  destNode, sourceNode,
+                nodeType;
+
+            // Copy top node's style and CSS class
+            dest.style.cssText = source.style.cssText;
+            dest.className = source.className;
+
+            // If the number of child nodes does not match, fall back to replacing innerHTML
+            if (sourceLen !== destLen) {
+                source.innerHTML = dest.innerHTML;
+                return;
+            }
+
+            // Loop through source nodes.
+            // If there are fewer, we must remove excess
+            for (i = 0; i < sourceLen; i++) {
+                sourceNode = sourceNodes[i];
+                destNode = destNodes[i];
+                nodeType = sourceNode.nodeType;
+
+                // If node structure is out of sync, just drop innerHTML in and return
+                if (nodeType !== destNode.nodeType || (nodeType === 1 && sourceNode.tagName !== destNode.tagName)) {
+                    dest.innerHTML = source.innerHTML;
+                    return;
+                }
+
+                // Update text node
+                if (nodeType === 3) {
+                    destNode.data = sourceNode.data;
+                }
+                // Sync element content
+                else {
+                    if (sourceNode.id && destNode.id !== sourceNode.id) {
+                        destNode.id = sourceNode.id;
+                    }
+                    destNode.style.cssText = sourceNode.style.cssText;
+                    destNode.className = sourceNode.className;
+                    Ext.fly(destNode).syncContent(sourceNode);
+                }
+            }
+        },
+
+        /**
          * Updates the innerHTML of this element, optionally searching for and processing scripts.
          * @param {String} html The new HTML
          * @param {Boolean} [loadScripts] True to look for and process scripts (defaults to false)
@@ -22324,7 +23019,16 @@ var HIDDEN = 'hidden',
          */
         getScopeParent: function() {
             var parent = this.dom.parentNode;
-            return Ext.scopeResetCSS ? parent.parentNode : parent;
+            if (Ext.scopeResetCSS) {
+                // If it's a normal reset, we will be wrapped in a single x-reset element, so grab the parent
+                parent = parent.parentNode;
+                if (!Ext.supports.CSS3LinearGradient || !Ext.supports.CSS3BorderRadius) {
+                    // In the cases where we have nbr or nlg, it will be wrapped in a second element,
+                    // so we need to go and get the parent again.
+                    parent = parent.parentNode;
+                }
+            }
+            return parent;
         },
 
         /**
@@ -22365,7 +23069,7 @@ var HIDDEN = 'hidden',
     if (Ext.isIE) {
         El.prototype.getById = function (id, asDom) {
             var dom = this.dom,
-                cached, el, ret;
+                cacheItem, el, ret;
 
             if (dom) {
                 // for normal elements getElementById is the best solution, but if the el is
@@ -22377,10 +23081,9 @@ var HIDDEN = 'hidden',
                     } else {
                         // calling El.get here is a real hit (2x slower) because it has to
                         // redetermine that we are giving it a dom el.
-                        cached = EC[id];
-                        if (cached && cached.el) {
-                            ret = cached.el;
-                            ret.dom = el;
+                        cacheItem = EC[id];
+                        if (cacheItem && cacheItem.el) {
+                            ret = Ext.updateCacheEntry(cacheItem, el).el;
                         } else {
                             ret = new Element(el);
                         }
@@ -22445,6 +23148,11 @@ var HIDDEN = 'hidden',
 });
 
 }());
+
+//@tag dom,core
+//@require Element.js
+//@define Ext.dom.Element-alignment
+//@define Ext.dom.Element
 
 /**
  * @class Ext.dom.Element
@@ -22765,7 +23473,7 @@ Ext.dom.Element.override((function() {
             }
             var thisRegion = this.getRegion(),
                     vector = [0, 0],
-                    shadowSize = this.shadow && this.shadow.offset,
+                    shadowSize = (this.shadow && !this.shadowDisabled) ? this.shadow.getShadowSize() : undefined,
                     overflowed = false;
 
             // Shift this region to occupy the proposed position
@@ -22774,9 +23482,8 @@ Ext.dom.Element.override((function() {
             }
 
             // Reduce the constrain region to allow for shadow
-            // TODO: Rewrite the Shadow class. When that's done, get the extra for each side from the Shadow.
             if (shadowSize) {
-                constrainTo.adjust(0, -shadowSize, -shadowSize, shadowSize);
+                constrainTo.adjust(shadowSize[0], -shadowSize[1], -shadowSize[2], shadowSize[3]);
             }
 
             // Constrain the X coordinate by however much this Element overflows
@@ -22818,6 +23525,12 @@ Ext.dom.Element.override((function() {
         }
     };
 }()));
+
+//@tag dom,core
+//@require Ext.dom.Element-alignment
+//@define Ext.dom.Element-anim
+//@define Ext.dom.Element
+
 /**
  * @class Ext.dom.Element
  */
@@ -22843,7 +23556,38 @@ Ext.dom.Element.override((function() {
  */
 
 Ext.dom.Element.override({
-    // @private override base Ext.util.Animate mixin for animate for backwards compatibility
+    /**
+     * Performs custom animation on this Element.
+     *
+     * The following properties may be specified in `from`, `to`, and `keyframe` objects:
+     *
+     *   - `x` - The page X position in pixels.
+     *
+     *   - `y` - The page Y position in pixels
+     *
+     *   - `left` - The element's CSS `left` value. Units must be supplied.
+     *
+     *   - `top` - The element's CSS `top` value. Units must be supplied.
+     *
+     *   - `width` - The element's CSS `width` value. Units must be supplied.
+     *
+     *   - `height` - The element's CSS `height` value. Units must be supplied.
+     *
+     *   - `scrollLeft` - The element's `scrollLeft` value.
+     *
+     *   - `scrollTop` - The element's `scrollTop` value.
+     *
+     *   - `opacity` - The element's `opacity` value. This must be a value between `0` and `1`.
+     *
+     * **Be aware** that animating an Element which is being used by an Ext Component without in some way informing the
+     * Component about the changed element state will result in incorrect Component behaviour. This is because the
+     * Component will be using the old state of the element. To avoid this problem, it is now possible to directly
+     * animate certain properties of Components.
+     *
+     * @param {Object} config  Configuration for {@link Ext.fx.Anim}.
+     * Note that the {@link Ext.fx.Anim#to to} config is required.
+     * @return {Ext.dom.Element} this
+     */
     animate: function(config) {
         var me = this,
             listeners,
@@ -22869,7 +23613,7 @@ Ext.dom.Element.override({
         return me;
     },
 
-    // @private override base Ext.util.Animate mixin for animate for backwards compatibility
+    // @private - process the passed fx configuration.
     anim: function(config) {
         if (!Ext.isObject(config)) {
             return (config) ? {} : false;
@@ -23097,17 +23841,17 @@ Ext.dom.Element.override({
                 case 'bl':
                     anim = {
                         from: {
-                            x: box.x + box.width,
+                            y: box.y + box.height,
                             width: '0px',
                             height: '0px'
                         },
                         to: {
-                            x: box.x,
+                            y: box.y,
                             width: box.width + 'px',
                             height: box.height + 'px'
                         }
                     };
-                    elStyle.right = '0px';
+                    elStyle.bottom = '0px';
                     break;
                 case 'br':
                     anim = {
@@ -23128,17 +23872,17 @@ Ext.dom.Element.override({
                 case 'tr':
                     anim = {
                         from: {
-                            y: box.y + box.height,
+                            x: box.x + box.width,
                             width: '0px',
                             height: '0px'
                         },
                         to: {
-                            y: box.y,
+                            x: box.x,
                             width: box.width + 'px',
                             height: box.height + 'px'
                         }
                     };
-                    elStyle.bottom = '0px';
+                    elStyle.right = '0px';
                     break;
             }
 
@@ -23380,18 +24124,17 @@ Ext.dom.Element.override({
      *     el.frame();
      *
      *     // custom: 3 red ripples lasting 3 seconds total
-     *     el.frame("#ff0000", 3, { duration: 3 });
+     *     el.frame("#ff0000", 3, { duration: 3000 });
      *
      *     // common config options shown with default values
      *     el.frame("#C3DAF9", 1, {
-     *         duration: 1 //duration of each individual ripple.
+     *         duration: 1000 // duration of each individual ripple.
      *         // Note: Easing is not configurable and will be ignored if included
      *     });
      *
-     * @param {String} color (optional) The color of the border. Should be a 6 char hex color without the leading #
-     * (defaults to light blue: 'C3DAF9').
-     * @param {Number} count (optional) The number of ripples to display (defaults to 1)
-     * @param {Object} options (optional) Object literal with any of the Fx config options
+     * @param {String} [color='#C3DAF9'] The hex color value for the border.
+     * @param {Number} [count=1] The number of ripples to display.
+     * @param {Object} [options] Object literal with any of the Fx config options
      * @return {Ext.dom.Element} The Element
      */
     frame : function(color, count, obj){
@@ -23620,12 +24363,12 @@ Ext.dom.Element.override({
     },
 
    /**
-    * @deprecated 4.0
     * Creates a pause before any subsequent queued effects begin. If there are no effects queued after the pause it will
     * have no effect. Usage:
     *
     *     el.pause(1);
     *
+    * @deprecated 4.0 Use the `delay` config to {@link #animate} instead.
     * @param {Number} seconds The length of time to pause (in seconds)
     * @return {Ext.Element} The Element
     */
@@ -23721,7 +24464,6 @@ Ext.dom.Element.override({
     },
 
     /**
-     * @deprecated 4.0
      * Animates the transition of an element's dimensions from a starting height/width to an ending height/width. This
      * method is a convenience implementation of {@link #shift}. Usage:
      *
@@ -23734,10 +24476,11 @@ Ext.dom.Element.override({
      *         [element's width],
      *         [element's height], {
      *             easing: 'easeOut',
-     *             duration: .35
+     *             duration: 350
      *         }
      *     );
      *
+     * @deprecated 4.0 Just use {@link #animate} instead.
      * @param {Number} width The new width (pass undefined to keep the original width)
      * @param {Number} height The new height (pass undefined to keep the original height)
      * @param {Object} options (optional) Object literal with any of the Fx config options
@@ -23752,7 +24495,6 @@ Ext.dom.Element.override({
     },
 
     /**
-     * @deprecated 4.0
      * Animates the transition of any combination of an element's dimensions, xy position and/or opacity. Any of these
      * properties not specified in the config object will not be changed. This effect requires that at least one new
      * dimension, position or opacity setting must be passed in on the config object in order for the function to have
@@ -23769,9 +24511,10 @@ Ext.dom.Element.override({
      *         y: [element's y position],
      *         opacity: [element's opacity],
      *         easing: 'easeOut',
-     *         duration: .35
+     *         duration: 350
      *     });
      *
+     * @deprecated 4.0 Just use {@link #animate} instead.
      * @param {Object} options Object literal with any of the Fx config options
      * @return {Ext.Element} The Element
      */
@@ -23780,6 +24523,11 @@ Ext.dom.Element.override({
         return this;
     }
 });
+
+//@tag dom,core
+//@require Ext.dom.Element-anim
+//@define Ext.dom.Element-dd
+//@define Ext.dom.Element
 
 /**
  * @class Ext.dom.Element
@@ -23821,6 +24569,11 @@ Ext.dom.Element.override({
         return Ext.apply(dd, overrides);
     }
 });
+
+//@tag dom,core
+//@require Ext.dom.Element-dd
+//@define Ext.dom.Element-fx
+//@define Ext.dom.Element
 
 /**
  * @class Ext.dom.Element
@@ -24017,6 +24770,11 @@ Element.override({
 
 }());
 
+//@tag dom,core
+//@require Ext.dom.Element-fx
+//@define Ext.dom.Element-position
+//@define Ext.dom.Element
+
 /**
  * @class Ext.dom.Element
  */
@@ -24131,22 +24889,74 @@ Element.override({
         return me;
     },
 
+    pxRe: /^\d+(?:\.\d*)?px$/i,
+
+    /**
+     * Returns the x-coordinate of this element reletive to its `offsetParent`.
+     * @return {Number} The local x-coordinate (relative to the `offsetParent`).
+     */
+    getLocalX: function() {
+        var me = this,
+            offsetParent,
+            x = me.getStyle(LEFT);
+
+        if (!x || x === AUTO) {
+            return 0;
+        }
+        if (x && me.pxRe.test(x)) {
+            return parseFloat(x);
+        }
+
+        x = me.getX();
+
+        offsetParent = me.dom.offsetParent;
+        if (offsetParent) {
+            x -= Ext.fly(offsetParent).getX();
+        }
+
+        return x;
+    },
+
+    /**
+     * Returns the y-coordinate of this element reletive to its `offsetParent`.
+     * @return {Number} The local y-coordinate (relative to the `offsetParent`).
+     */
+    getLocalY: function() {
+        var me = this,
+            offsetParent,
+            y = me.getStyle(TOP);
+
+        if (!y || y === AUTO) {
+            return 0;
+        }
+        if (y && me.pxRe.test(y)) {
+            return parseFloat(y);
+        }
+
+        y = me.getY();
+
+        offsetParent = me.dom.offsetParent;
+        if (offsetParent) {
+            y -= Ext.fly(offsetParent).getY();
+        }
+
+        return y;
+    },
+
     getLeft: function(local) {
-        return !local ? this.getX() : parseFloat(this.getStyle(LEFT)) || 0;
+        return local ? this.getLocalX() : this.getX();
     },
 
     getRight: function(local) {
-        var me = this;
-        return !local ? me.getX() + me.getWidth() : (me.getLeft(true) + me.getWidth()) || 0;
+        return (local ? this.getLocalX() : this.getX()) + this.getWidth();
     },
 
     getTop: function(local) {
-        return !local ? this.getY() : parseFloat(this.getStyle(TOP)) || 0;
+        return local ? this.getLocalY() : this.getY();
     },
 
     getBottom: function(local) {
-        var me = this;
-        return !local ? me.getY() + me.getHeight() : (me.getTop(true) + me.getHeight()) || 0;
+        return (local ? this.getLocalY() : this.getY()) + this.getHeight();
     },
 
     translatePoints: function(x, y) {
@@ -24457,7 +25267,7 @@ Element.override({
             height = me.getHeight(true);
         }
 
-        return new Ext.util.Region(top, left + width, top + height, left);
+        return new Ext.util.Region(top, left + width - 1, top + height - 1, left);
     },
 
     /**
@@ -24518,6 +25328,11 @@ Element.override({
 
 }());
 
+
+//@tag dom,core
+//@require Ext.dom.Element-position
+//@define Ext.dom.Element-scroll
+//@define Ext.dom.Element
 
 /**
  * @class Ext.dom.Element
@@ -24622,22 +25437,25 @@ Ext.dom.Element.override({
         var top = /top/i.test(side),
             me = this,
             dom = me.dom,
-            obj = {},
+            animCfg,
             prop;
 
         if (!animate || !me.anim) {
             // just setting the value, so grab the direction
             prop = 'scroll' + (top ? 'Top' : 'Left');
             dom[prop] = value;
+            // corrects IE, other browsers will ignore
+            dom[prop] = value;
         }
         else {
-            if (!Ext.isObject(animate)) {
-                animate = {};
+            animCfg = {
+                to: {}
+            };
+            animCfg.to['scroll' + (top ? 'Top' : 'Left')] = value;
+            if (Ext.isObject(animate)) {
+                Ext.applyIf(animCfg, animate);
             }
-            obj['scroll' + (top ? 'Top' : 'Left')] = value;
-            me.animate(Ext.applyIf({
-                to: obj
-            }, animate));
+            me.animate(animCfg);
         }
         return me;
     },
@@ -24647,9 +25465,11 @@ Ext.dom.Element.override({
      * @param {String/HTMLElement/Ext.Element} [container=document.body] The container element
      * to scroll.  Should be a string (id), dom node, or Ext.Element.
      * @param {Boolean} [hscroll=true] False to disable horizontal scroll.
+     * @param {Boolean/Object} [animate] true for the default animation or a standard Element
+     * animation config object
      * @return {Ext.dom.Element} this
      */
-    scrollIntoView: function(container, hscroll) {
+    scrollIntoView: function(container, hscroll, animate) {
         container = Ext.getDom(container) || Ext.getBody().dom;
         var el = this.dom,
             offsets = this.getOffsetsTo(container),
@@ -24663,24 +25483,28 @@ Ext.dom.Element.override({
             ctScrollTop = parseInt(container.scrollTop, 10),
             ctScrollLeft = parseInt(container.scrollLeft, 10),
             ctBottom = ctScrollTop + ctClientHeight,
-            ctRight = ctScrollLeft + container.clientWidth;
+            ctRight = ctScrollLeft + container.clientWidth,
+            newPos;
 
         if (el.offsetHeight > ctClientHeight || top < ctScrollTop) {
-            container.scrollTop = top;
+            newPos = top;
         } else if (bottom > ctBottom) {
-            container.scrollTop = bottom - ctClientHeight;
+            newPos = bottom - ctClientHeight;
         }
-        // corrects IE, other browsers will ignore
-        container.scrollTop = container.scrollTop;
+        if (newPos != null) {
+            Ext.get(container).scrollTo('top', newPos, animate);
+        }
 
         if (hscroll !== false) {
+            newPos = null;
             if (el.offsetWidth > container.clientWidth || left < ctScrollLeft) {
-                container.scrollLeft = left;
+                newPos = left;
+            } else if (right > ctRight) {
+                newPos = right - container.clientWidth;
             }
-            else if (right > ctRight) {
-                container.scrollLeft = right - container.clientWidth;
+            if (newPos != null) {
+                Ext.get(container).scrollTo('left', newPos, animate);
             }
-            container.scrollLeft = container.scrollLeft;
         }
         return this;
     },
@@ -24733,6 +25557,11 @@ Ext.dom.Element.override({
         return scrolled;
     }
 });
+
+//@tag dom,core
+//@require Ext.dom.Element-scroll
+//@define Ext.dom.Element-style
+//@define Ext.dom.Element
 
 /**
  * @class Ext.dom.Element
@@ -25077,7 +25906,7 @@ Element.override({
      * Set the opacity of the element
      * @param {Number} opacity The new opacity. 0 = transparent, .5 = 50% visibile, 1 = fully visible, etc
      * @param {Boolean/Object} [animate] a standard Element animation config object or `true` for
-     * the default animation (`{duration: .35, easing: 'easeIn'}`)
+     * the default animation (`{duration: 350, easing: 'easeIn'}`)
      * @return {Ext.dom.Element} this
      */
     setOpacity: function(opacity, animate) {
@@ -25444,9 +26273,19 @@ Element.override({
 
 Element.prototype.styleHooks = styleHooks = Ext.dom.AbstractElement.prototype.styleHooks;
 
-if (Ext.isIE6) {
+if (Ext.isIE6 || Ext.isIE7) {
     styleHooks.fontSize = styleHooks['font-size'] = {
         name: 'fontSize',
+        canThrow: true
+    };
+    
+    styleHooks.fontStyle = styleHooks['font-style'] = {
+        name: 'fontStyle',
+        canThrow: true
+    };
+    
+    styleHooks.fontFamily = styleHooks['font-family'] = {
+        name: 'fontFamily',
         canThrow: true
     };
 }
@@ -25527,6 +26366,11 @@ Ext.onReady(function () {
     // problem given that this has been supported for a long time now...
 });
 
+//@tag dom,core
+//@require Ext.dom.Element-style
+//@define Ext.dom.Element-traversal
+//@define Ext.dom.Element
+
 /**
  * @class Ext.dom.Element
  */
@@ -25535,6 +26379,9 @@ Ext.dom.Element.override({
         return Ext.dom.Element.select(selector, false,  this.dom);
     }
 });
+
+//@tag dom,core
+//@require Ext.dom.Element-traversal
 
 /**
  * This class encapsulates a *collection* of DOM elements, providing methods to filter members, or to perform collective
@@ -25558,7 +26405,7 @@ Ext.dom.Element.override({
 Ext.define('Ext.dom.CompositeElementLite', {
     alternateClassName: 'Ext.CompositeElementLite',
 
-    requires: ['Ext.dom.Element'],
+    requires: ['Ext.dom.Element', 'Ext.dom.Query'],
 
     statics: {
         /**
@@ -25944,6 +26791,7 @@ Ext.define('Ext.dom.CompositeElementLite', {
      * @member Ext.dom.Element
      * @method select
      * @static
+     * @ignore
      */
    Ext.dom.Element.select = function(selector, root) {
         var elements;
@@ -25965,12 +26813,14 @@ Ext.define('Ext.dom.CompositeElementLite', {
      * @member Ext
      * @method select
      * @inheritdoc Ext.dom.Element#select
+     * @ignore
      */
     Ext.select = function() {
         return Ext.dom.Element.select.apply(Ext.dom.Element, arguments);
     };
 });
 
+//@tag dom,core
 /**
  * @class Ext.dom.CompositeElement
  * <p>This class encapsulates a <i>collection</i> of DOM elements, providing methods to filter
@@ -26045,827 +26895,1505 @@ Ext.define('Ext.dom.CompositeElement', {
  */
 Ext.select = Ext.Element.select;
 
-
-this.ExtBootstrapData = {
-    "nameToAliasesMap":{
-        "Ext.AbstractComponent":[],
-        "Ext.AbstractManager":[],
-        "Ext.AbstractPlugin":[],
-        "Ext.Ajax":[],
-        "Ext.ComponentLoader":[],
-        "Ext.ComponentManager":[],
-        "Ext.ComponentQuery":[],
-        "Ext.ElementLoader":[],
-        "Ext.ModelManager":[],
-        "Ext.PluginManager":[],
-        "Ext.Template":[],
-        "Ext.XTemplate":[],
-        "Ext.XTemplateCompiler":[],
-        "Ext.XTemplateParser":[],
-        "Ext.app.Application":[],
-        "Ext.app.Controller":[],
-        "Ext.app.EventBus":[],
-        "Ext.chart.Callout":[],
-        "Ext.chart.Chart":["widget.chart"
-        ],
-        "Ext.chart.Highlight":[],
-        "Ext.chart.Label":[],
-        "Ext.chart.Legend":[],
-        "Ext.chart.LegendItem":[],
-        "Ext.chart.Mask":[],
-        "Ext.chart.MaskLayer":[],
-        "Ext.chart.Navigation":[],
-        "Ext.chart.Shape":[],
-        "Ext.chart.Tip":[],
-        "Ext.chart.TipSurface":[],
-        "Ext.chart.axis.Abstract":[],
-        "Ext.chart.axis.Axis":[],
-        "Ext.chart.axis.Category":["axis.category"
-        ],
-        "Ext.chart.axis.Gauge":["axis.gauge"
-        ],
-        "Ext.chart.axis.Numeric":["axis.numeric"
-        ],
-        "Ext.chart.axis.Radial":["axis.radial"
-        ],
-        "Ext.chart.axis.Time":["axis.time"
-        ],
-        "Ext.chart.series.Area":["series.area"
-        ],
-        "Ext.chart.series.Bar":["series.bar"
-        ],
-        "Ext.chart.series.Cartesian":[],
-        "Ext.chart.series.Column":["series.column"
-        ],
-        "Ext.chart.series.Gauge":["series.gauge"
-        ],
-        "Ext.chart.series.Line":["series.line"
-        ],
-        "Ext.chart.series.Pie":["series.pie"
-        ],
-        "Ext.chart.series.Radar":["series.radar"
-        ],
-        "Ext.chart.series.Scatter":["series.scatter"
-        ],
-        "Ext.chart.series.Series":[],
-        "Ext.chart.theme.Base":[],
-        "Ext.chart.theme.Theme":[],
-        "Ext.container.AbstractContainer":[],
-        "Ext.container.DockingContainer":[],
-        "Ext.data.AbstractStore":[],
-        "Ext.data.ArrayStore":["store.array"
-        ],
-        "Ext.data.Batch":[],
-        "Ext.data.BufferStore":["store.buffer"
-        ],
-        "Ext.data.Connection":[],
-        "Ext.data.DirectStore":["store.direct"
-        ],
-        "Ext.data.Errors":[],
-        "Ext.data.Field":["data.field"
-        ],
-        "Ext.data.IdGenerator":[],
-        "Ext.data.JsonP":[],
-        "Ext.data.JsonPStore":["store.jsonp"
-        ],
-        "Ext.data.JsonStore":["store.json"
-        ],
-        "Ext.data.Model":[],
-        "Ext.data.NodeInterface":[],
-        "Ext.data.NodeStore":["store.node"
-        ],
-        "Ext.data.Operation":[],
-        "Ext.data.Request":[],
-        "Ext.data.ResultSet":[],
-        "Ext.data.SequentialIdGenerator":["idgen.sequential"
-        ],
-        "Ext.data.SortTypes":[],
-        "Ext.data.Store":["store.store"
-        ],
-        "Ext.data.StoreManager":[],
-        "Ext.data.Tree":["data.tree"
-        ],
-        "Ext.data.TreeStore":["store.tree"
-        ],
-        "Ext.data.Types":[],
-        "Ext.data.UuidGenerator":[],
-        "Ext.data.validations":[],
-        "Ext.data.XmlStore":["store.xml"
-        ],
-        "Ext.data.association.Association":[],
-        "Ext.data.association.BelongsTo":["association.belongsto"
-        ],
-        "Ext.data.association.HasMany":["association.hasmany"
-        ],
-        "Ext.data.association.HasOne":["association.hasone"
-        ],
-        "Ext.data.proxy.Ajax":["proxy.ajax"
-        ],
-        "Ext.data.proxy.Client":[],
-        "Ext.data.proxy.Direct":["proxy.direct"
-        ],
-        "Ext.data.proxy.JsonP":["proxy.jsonp",
-            "proxy.scripttag"
-        ],
-        "Ext.data.proxy.LocalStorage":["proxy.localstorage"
-        ],
-        "Ext.data.proxy.Memory":["proxy.memory"
-        ],
-        "Ext.data.proxy.Proxy":["proxy.proxy"
-        ],
-        "Ext.data.proxy.Rest":["proxy.rest"
-        ],
-        "Ext.data.proxy.Server":["proxy.server"
-        ],
-        "Ext.data.proxy.SessionStorage":["proxy.sessionstorage"
-        ],
-        "Ext.data.proxy.WebStorage":[],
-        "Ext.data.reader.Array":["reader.array"
-        ],
-        "Ext.data.reader.Json":["reader.json"
-        ],
-        "Ext.data.reader.Reader":[],
-        "Ext.data.reader.Xml":["reader.xml"
-        ],
-        "Ext.data.writer.Json":["writer.json"
-        ],
-        "Ext.data.writer.Writer":["writer.base"
-        ],
-        "Ext.data.writer.Xml":["writer.xml"
-        ],
-        "Ext.direct.Event":["direct.event"
-        ],
-        "Ext.direct.ExceptionEvent":["direct.exception"
-        ],
-        "Ext.direct.JsonProvider":["direct.jsonprovider"
-        ],
-        "Ext.direct.Manager":[],
-        "Ext.direct.PollingProvider":["direct.pollingprovider"
-        ],
-        "Ext.direct.Provider":["direct.provider"
-        ],
-        "Ext.direct.RemotingEvent":["direct.rpc"
-        ],
-        "Ext.direct.RemotingMethod":[],
-        "Ext.direct.RemotingProvider":["direct.remotingprovider"
-        ],
-        "Ext.direct.Transaction":["direct.transaction"
-        ],
-        "Ext.draw.Color":[],
-        "Ext.draw.Component":["widget.draw"
-        ],
-        "Ext.draw.CompositeSprite":[],
-        "Ext.draw.Draw":[],
-        "Ext.draw.Matrix":[],
-        "Ext.draw.Sprite":[],
-        "Ext.draw.SpriteDD":[],
-        "Ext.draw.Surface":[],
-        "Ext.draw.Text":["widget.text"
-        ],
-        "Ext.draw.engine.ImageExporter":[],
-        "Ext.draw.engine.Svg":[],
-        "Ext.draw.engine.SvgExporter":[],
-        "Ext.draw.engine.Vml":[],
-        "Ext.fx.Anim":[],
-        "Ext.fx.Animator":[],
-        "Ext.fx.CubicBezier":[],
-        "Ext.fx.Manager":[],
-        "Ext.fx.PropertyHandler":[],
-        "Ext.fx.Queue":[],
-        "Ext.fx.target.Component":[],
-        "Ext.fx.target.CompositeElement":[],
-        "Ext.fx.target.CompositeElementCSS":[],
-        "Ext.fx.target.CompositeSprite":[],
-        "Ext.fx.target.Element":[],
-        "Ext.fx.target.ElementCSS":[],
-        "Ext.fx.target.Sprite":[],
-        "Ext.fx.target.Target":[],
-        "Ext.layout.ClassList":[],
-        "Ext.layout.Context":[],
-        "Ext.layout.ContextItem":[],
-        "Ext.layout.Layout":[],
-        "Ext.layout.component.Auto":["layout.autocomponent"
-        ],
-        "Ext.layout.component.Component":[],
-        "Ext.layout.component.Draw":["layout.draw"
-        ],
-        "Ext.layout.container.Auto":["layout.auto",
-            "layout.autocontainer"
-        ],
-        "Ext.panel.AbstractPanel":[],
-        "Ext.selection.DataViewModel":[],
-        "Ext.selection.Model":[],
-        "Ext.state.CookieProvider":[],
-        "Ext.state.LocalStorageProvider":["state.localstorage"
-        ],
-        "Ext.state.Manager":[],
-        "Ext.state.Provider":[],
-        "Ext.state.Stateful":[],
-        "Ext.util.AbstractMixedCollection":[],
-        "Ext.util.Bindable":[],
-        "Ext.util.ElementContainer":[],
-        "Ext.util.Filter":[],
-        "Ext.util.Grouper":[],
-        "Ext.util.HashMap":[],
-        "Ext.util.Inflector":[],
-        "Ext.util.LruCache":[],
-        "Ext.util.Memento":[],
-        "Ext.util.MixedCollection":[],
-        "Ext.util.Observable":[],
-        "Ext.util.Offset":[],
-        "Ext.util.Point":[],
-        "Ext.util.ProtoElement":[],
-        "Ext.util.Queue":[],
-        "Ext.util.Region":[],
-        "Ext.util.Renderable":[],
-        "Ext.util.Sortable":[],
-        "Ext.util.Sorter":[],
-        "Ext.view.AbstractView":[],
-        "Ext.Action":[],
-        "Ext.Component":["widget.component",
-            "widget.box"
-        ],
-        "Ext.Editor":["widget.editor"
-        ],
-        "Ext.FocusManager":[],
-        "Ext.Img":["widget.image",
-            "widget.imagecomponent"
-        ],
-        "Ext.Layer":[],
-        "Ext.LoadMask":["widget.loadmask"
-        ],
-        "Ext.ProgressBar":["widget.progressbar"
-        ],
-        "Ext.Shadow":[],
-        "Ext.ShadowPool":[],
-        "Ext.ZIndexManager":[],
-        "Ext.button.Button":["widget.button"
-        ],
-        "Ext.button.Cycle":["widget.cycle"
-        ],
-        "Ext.button.Split":["widget.splitbutton"
-        ],
-        "Ext.container.ButtonGroup":["widget.buttongroup"
-        ],
-        "Ext.container.Container":["widget.container"
-        ],
-        "Ext.container.Viewport":["widget.viewport"
-        ],
-        "Ext.dd.DD":[],
-        "Ext.dd.DDProxy":[],
-        "Ext.dd.DDTarget":[],
-        "Ext.dd.DragDrop":[],
-        "Ext.dd.DragDropManager":[],
-        "Ext.dd.DragSource":[],
-        "Ext.dd.DragTracker":[],
-        "Ext.dd.DragZone":[],
-        "Ext.dd.DropTarget":[],
-        "Ext.dd.DropZone":[],
-        "Ext.dd.Registry":[],
-        "Ext.dd.ScrollManager":[],
-        "Ext.dd.StatusProxy":[],
-        "Ext.dom.Element":[],
-        "Ext.dom.Helper":[],
-        "Ext.flash.Component":["widget.flash"
-        ],
-        "Ext.form.Basic":[],
-        "Ext.form.CheckboxGroup":["widget.checkboxgroup"
-        ],
-        "Ext.form.CheckboxManager":[],
-        "Ext.form.FieldAncestor":[],
-        "Ext.form.FieldContainer":["widget.fieldcontainer"
-        ],
-        "Ext.form.FieldSet":["widget.fieldset"
-        ],
-        "Ext.form.Label":["widget.label"
-        ],
-        "Ext.form.Labelable":[],
-        "Ext.form.Panel":["widget.form"
-        ],
-        "Ext.form.RadioGroup":["widget.radiogroup"
-        ],
-        "Ext.form.RadioManager":[],
-        "Ext.form.action.Action":[],
-        "Ext.form.action.DirectLoad":["formaction.directload"
-        ],
-        "Ext.form.action.DirectSubmit":["formaction.directsubmit"
-        ],
-        "Ext.form.action.Load":["formaction.load"
-        ],
-        "Ext.form.action.StandardSubmit":["formaction.standardsubmit"
-        ],
-        "Ext.form.action.Submit":["formaction.submit"
-        ],
-        "Ext.form.field.Base":["widget.field"
-        ],
-        "Ext.form.field.Checkbox":["widget.checkboxfield",
-            "widget.checkbox"
-        ],
-        "Ext.form.field.ComboBox":["widget.combobox",
-            "widget.combo"
-        ],
-        "Ext.form.field.Date":["widget.datefield"
-        ],
-        "Ext.form.field.Display":["widget.displayfield"
-        ],
-        "Ext.form.field.Field":[],
-        "Ext.form.field.File":["widget.filefield",
-            "widget.fileuploadfield"
-        ],
-        "Ext.form.field.Hidden":["widget.hiddenfield",
-            "widget.hidden"
-        ],
-        "Ext.form.field.HtmlEditor":["widget.htmleditor"
-        ],
-        "Ext.form.field.Number":["widget.numberfield"
-        ],
-        "Ext.form.field.Picker":["widget.pickerfield"
-        ],
-        "Ext.form.field.Radio":["widget.radiofield",
-            "widget.radio"
-        ],
-        "Ext.form.field.Spinner":["widget.spinnerfield"
-        ],
-        "Ext.form.field.Text":["widget.textfield"
-        ],
-        "Ext.form.field.TextArea":["widget.textareafield",
-            "widget.textarea"
-        ],
-        "Ext.form.field.Time":["widget.timefield"
-        ],
-        "Ext.form.field.Trigger":["widget.triggerfield",
-            "widget.trigger"
-        ],
-        "Ext.form.field.VTypes":[],
-        "Ext.grid.CellEditor":[],
-        "Ext.grid.ColumnComponentLayout":["layout.columncomponent"
-        ],
-        "Ext.grid.ColumnLayout":["layout.gridcolumn"
-        ],
-        "Ext.grid.Lockable":[],
-        "Ext.grid.LockingView":[],
-        "Ext.grid.PagingScroller":[],
-        "Ext.grid.Panel":["widget.gridpanel",
-            "widget.grid"
-        ],
-        "Ext.grid.RowEditor":[],
-        "Ext.grid.RowNumberer":["widget.rownumberer"
-        ],
-        "Ext.grid.Scroller":[],
-        "Ext.grid.View":["widget.gridview"
-        ],
-        "Ext.grid.ViewDropZone":[],
-        "Ext.grid.column.Action":["widget.actioncolumn"
-        ],
-        "Ext.grid.column.Boolean":["widget.booleancolumn"
-        ],
-        "Ext.grid.column.Column":["widget.gridcolumn"
-        ],
-        "Ext.grid.column.Date":["widget.datecolumn"
-        ],
-        "Ext.grid.column.Number":["widget.numbercolumn"
-        ],
-        "Ext.grid.column.Template":["widget.templatecolumn"
-        ],
-        "Ext.grid.feature.AbstractSummary":["feature.abstractsummary"
-        ],
-        "Ext.grid.feature.Chunking":["feature.chunking"
-        ],
-        "Ext.grid.feature.Feature":["feature.feature"
-        ],
-        "Ext.grid.feature.Grouping":["feature.grouping"
-        ],
-        "Ext.grid.feature.GroupingSummary":["feature.groupingsummary"
-        ],
-        "Ext.grid.feature.RowBody":["feature.rowbody"
-        ],
-        "Ext.grid.feature.RowWrap":["feature.rowwrap"
-        ],
-        "Ext.grid.feature.Summary":["feature.summary"
-        ],
-        "Ext.grid.header.Container":["widget.headercontainer"
-        ],
-        "Ext.grid.header.DragZone":[],
-        "Ext.grid.header.DropZone":[],
-        "Ext.grid.plugin.CellEditing":["plugin.cellediting"
-        ],
-        "Ext.grid.plugin.DragDrop":["plugin.gridviewdragdrop"
-        ],
-        "Ext.grid.plugin.Editing":["editing.editing"
-        ],
-        "Ext.grid.plugin.HeaderReorderer":["plugin.gridheaderreorderer"
-        ],
-        "Ext.grid.plugin.HeaderResizer":["plugin.gridheaderresizer"
-        ],
-        "Ext.grid.plugin.RowEditing":["plugin.rowediting"
-        ],
-        "Ext.grid.property.Grid":["widget.propertygrid"
-        ],
-        "Ext.grid.property.HeaderContainer":[],
-        "Ext.grid.property.Property":[],
-        "Ext.grid.property.Store":[],
-        "Ext.layout.component.Body":["layout.body"
-        ],
-        "Ext.layout.component.BoundList":["layout.boundlist"
-        ],
-        "Ext.layout.component.Button":["layout.button"
-        ],
-        "Ext.layout.component.Dock":["layout.dock"
-        ],
-        "Ext.layout.component.FieldSet":["layout.fieldset"
-        ],
-        "Ext.layout.component.ProgressBar":["layout.progressbar"
-        ],
-        "Ext.layout.component.Tab":["layout.tab"
-        ],
-        "Ext.layout.component.field.ComboBox":["layout.combobox"
-        ],
-        "Ext.layout.component.field.Field":["layout.field"
-        ],
-        "Ext.layout.component.field.FieldContainer":["layout.fieldcontainer"
-        ],
-        "Ext.layout.component.field.HtmlEditor":["layout.htmleditor"
-        ],
-        "Ext.layout.component.field.Slider":["layout.sliderfield"
-        ],
-        "Ext.layout.component.field.Text":["layout.textfield"
-        ],
-        "Ext.layout.component.field.TextArea":["layout.textareafield"
-        ],
-        "Ext.layout.component.field.Trigger":["layout.triggerfield"
-        ],
-        "Ext.layout.container.Absolute":["layout.absolute"
-        ],
-        "Ext.layout.container.Accordion":["layout.accordion"
-        ],
-        "Ext.layout.container.Anchor":["layout.anchor"
-        ],
-        "Ext.layout.container.Border":["layout.border"
-        ],
-        "Ext.layout.container.Box":["layout.box"
-        ],
-        "Ext.layout.container.Card":["layout.card"
-        ],
-        "Ext.layout.container.CheckboxGroup":["layout.checkboxgroup"
-        ],
-        "Ext.layout.container.Column":["layout.column"
-        ],
-        "Ext.layout.container.Container":[],
-        "Ext.layout.container.Editor":["layout.editor"
-        ],
-        "Ext.layout.container.Fit":["layout.fit"
-        ],
-        "Ext.layout.container.Form":["layout.form"
-        ],
-        "Ext.layout.container.HBox":["layout.hbox"
-        ],
-        "Ext.layout.container.Table":["layout.table"
-        ],
-        "Ext.layout.container.VBox":["layout.vbox"
-        ],
-        "Ext.layout.container.boxOverflow.Menu":[],
-        "Ext.layout.container.boxOverflow.None":[],
-        "Ext.layout.container.boxOverflow.Scroller":[],
-        "Ext.menu.CheckItem":["widget.menucheckitem"
-        ],
-        "Ext.menu.ColorPicker":["widget.colormenu"
-        ],
-        "Ext.menu.DatePicker":["widget.datemenu"
-        ],
-        "Ext.menu.Item":["widget.menuitem"
-        ],
-        "Ext.menu.KeyNav":[],
-        "Ext.menu.Manager":[],
-        "Ext.menu.Menu":["widget.menu"
-        ],
-        "Ext.menu.Separator":["widget.menuseparator"
-        ],
-        "Ext.panel.DD":[],
-        "Ext.panel.Header":["widget.header"
-        ],
-        "Ext.panel.Panel":["widget.panel"
-        ],
-        "Ext.panel.Proxy":[],
-        "Ext.panel.Table":["widget.tablepanel"
-        ],
-        "Ext.panel.Tool":["widget.tool"
-        ],
-        "Ext.picker.Color":["widget.colorpicker"
-        ],
-        "Ext.picker.Date":["widget.datepicker"
-        ],
-        "Ext.picker.Month":["widget.monthpicker"
-        ],
-        "Ext.picker.Time":["widget.timepicker"
-        ],
-        "Ext.resizer.BorderSplitter":["widget.bordersplitter"
-        ],
-        "Ext.resizer.BorderSplitterTracker":[],
-        "Ext.resizer.Handle":[],
-        "Ext.resizer.Resizer":[],
-        "Ext.resizer.ResizeTracker":[],
-        "Ext.resizer.Splitter":["widget.splitter"
-        ],
-        "Ext.resizer.SplitterTracker":[],
-        "Ext.selection.CellModel":["selection.cellmodel"
-        ],
-        "Ext.selection.CheckboxModel":["selection.checkboxmodel"
-        ],
-        "Ext.selection.RowModel":["selection.rowmodel"
-        ],
-        "Ext.selection.TreeModel":["selection.treemodel"
-        ],
-        "Ext.slider.Multi":["widget.multislider"
-        ],
-        "Ext.slider.Single":["widget.slider",
-            "widget.sliderfield"
-        ],
-        "Ext.slider.Thumb":[],
-        "Ext.slider.Tip":["widget.slidertip"
-        ],
-        "Ext.tab.Bar":["widget.tabbar"
-        ],
-        "Ext.tab.Panel":["widget.tabpanel"
-        ],
-        "Ext.tab.Tab":["widget.tab"
-        ],
-        "Ext.tip.QuickTip":["widget.quicktip"
-        ],
-        "Ext.tip.QuickTipManager":[],
-        "Ext.tip.Tip":[],
-        "Ext.tip.ToolTip":["widget.tooltip"
-        ],
-        "Ext.toolbar.Fill":["widget.tbfill"
-        ],
-        "Ext.toolbar.Item":["widget.tbitem"
-        ],
-        "Ext.toolbar.Paging":["widget.pagingtoolbar"
-        ],
-        "Ext.toolbar.Separator":["widget.tbseparator"
-        ],
-        "Ext.toolbar.Spacer":["widget.tbspacer"
-        ],
-        "Ext.toolbar.TextItem":["widget.tbtext"
-        ],
-        "Ext.toolbar.Toolbar":["widget.toolbar"
-        ],
-        "Ext.tree.Column":["widget.treecolumn"
-        ],
-        "Ext.tree.Panel":["widget.treepanel"
-        ],
-        "Ext.tree.View":["widget.treeview"
-        ],
-        "Ext.tree.ViewDragZone":[],
-        "Ext.tree.ViewDropZone":[],
-        "Ext.tree.plugin.TreeViewDragDrop":["plugin.treeviewdragdrop"
-        ],
-        "Ext.util.Animate":[],
-        "Ext.util.ClickRepeater":[],
-        "Ext.util.ComponentDragger":[],
-        "Ext.util.Cookies":[],
-        "Ext.util.CSS":[],
-        "Ext.util.Floating":[],
-        "Ext.util.History":[],
-        "Ext.util.KeyMap":[],
-        "Ext.util.KeyNav":[],
-        "Ext.util.TextMetrics":[],
-        "Ext.view.BoundList":["widget.boundlist"
-        ],
-        "Ext.view.BoundListKeyNav":[],
-        "Ext.view.DragZone":[],
-        "Ext.view.DropZone":[],
-        "Ext.view.Table":["widget.tableview"
-        ],
-        "Ext.view.TableChunker":[],
-        "Ext.view.View":["widget.dataview"
-        ],
-        "Ext.window.MessageBox":["widget.messagebox"
-        ],
-        "Ext.window.Window":["widget.window"
-        ]
-    },
-    "alternateToNameMap":{
-        "Ext.ComponentMgr":"Ext.ComponentManager",
-        "Ext.ModelMgr":"Ext.ModelManager",
-        "Ext.PluginMgr":"Ext.PluginManager",
-        "Ext.chart.Axis":"Ext.chart.axis.Axis",
-        "Ext.chart.CategoryAxis":"Ext.chart.axis.Category",
-        "Ext.chart.NumericAxis":"Ext.chart.axis.Numeric",
-        "Ext.chart.TimeAxis":"Ext.chart.axis.Time",
-        "Ext.chart.BarSeries":"Ext.chart.series.Bar",
-        "Ext.chart.BarChart":"Ext.chart.series.Bar",
-        "Ext.chart.StackedBarChart":"Ext.chart.series.Bar",
-        "Ext.chart.CartesianSeries":"Ext.chart.series.Cartesian",
-        "Ext.chart.CartesianChart":"Ext.chart.series.Cartesian",
-        "Ext.chart.ColumnSeries":"Ext.chart.series.Column",
-        "Ext.chart.ColumnChart":"Ext.chart.series.Column",
-        "Ext.chart.StackedColumnChart":"Ext.chart.series.Column",
-        "Ext.chart.LineSeries":"Ext.chart.series.Line",
-        "Ext.chart.LineChart":"Ext.chart.series.Line",
-        "Ext.chart.PieSeries":"Ext.chart.series.Pie",
-        "Ext.chart.PieChart":"Ext.chart.series.Pie",
-        "Ext.data.Record":"Ext.data.Model",
-        "Ext.StoreMgr":"Ext.data.StoreManager",
-        "Ext.data.StoreMgr":"Ext.data.StoreManager",
-        "Ext.StoreManager":"Ext.data.StoreManager",
-        "Ext.data.Association":"Ext.data.association.Association",
-        "Ext.data.BelongsToAssociation":"Ext.data.association.BelongsTo",
-        "Ext.data.HasManyAssociation":"Ext.data.association.HasMany",
-        "Ext.data.HasOneAssociation":"Ext.data.association.HasOne",
-        "Ext.data.HttpProxy":"Ext.data.proxy.Ajax",
-        "Ext.data.AjaxProxy":"Ext.data.proxy.Ajax",
-        "Ext.data.ClientProxy":"Ext.data.proxy.Client",
-        "Ext.data.DirectProxy":"Ext.data.proxy.Direct",
-        "Ext.data.ScriptTagProxy":"Ext.data.proxy.JsonP",
-        "Ext.data.LocalStorageProxy":"Ext.data.proxy.LocalStorage",
-        "Ext.data.MemoryProxy":"Ext.data.proxy.Memory",
-        "Ext.data.DataProxy":"Ext.data.proxy.Proxy",
-        "Ext.data.Proxy":"Ext.data.proxy.Proxy",
-        "Ext.data.RestProxy":"Ext.data.proxy.Rest",
-        "Ext.data.ServerProxy":"Ext.data.proxy.Server",
-        "Ext.data.SessionStorageProxy":"Ext.data.proxy.SessionStorage",
-        "Ext.data.WebStorageProxy":"Ext.data.proxy.WebStorage",
-        "Ext.data.ArrayReader":"Ext.data.reader.Array",
-        "Ext.data.JsonReader":"Ext.data.reader.Json",
-        "Ext.data.Reader":"Ext.data.reader.Reader",
-        "Ext.data.DataReader":"Ext.data.reader.Reader",
-        "Ext.data.XmlReader":"Ext.data.reader.Xml",
-        "Ext.data.JsonWriter":"Ext.data.writer.Json",
-        "Ext.data.DataWriter":"Ext.data.writer.Writer",
-        "Ext.data.Writer":"Ext.data.writer.Writer",
-        "Ext.data.XmlWriter":"Ext.data.writer.Xml",
-        "Ext.Direct.Transaction":"Ext.direct.Transaction",
-        "Ext.AbstractSelectionModel":"Ext.selection.Model",
-        "Ext.FocusMgr":"Ext.FocusManager",
-        "Ext.WindowGroup":"Ext.ZIndexManager",
-        "Ext.Button":"Ext.button.Button",
-        "Ext.CycleButton":"Ext.button.Cycle",
-        "Ext.SplitButton":"Ext.button.Split",
-        "Ext.ButtonGroup":"Ext.container.ButtonGroup",
-        "Ext.Container":"Ext.container.Container",
-        "Ext.Viewport":"Ext.container.Viewport",
-        "Ext.dd.DragDropMgr":"Ext.dd.DragDropManager",
-        "Ext.dd.DDM":"Ext.dd.DragDropManager",
-        "Ext.Element":"Ext.dom.Element",
-        "Ext.core.Element":"Ext.dom.Element",
-        "Ext.FlashComponent":"Ext.flash.Component",
-        "Ext.form.BasicForm":"Ext.form.Basic",
-        "Ext.FormPanel":"Ext.form.Panel",
-        "Ext.form.FormPanel":"Ext.form.Panel",
-        "Ext.form.Action":"Ext.form.action.Action",
-        "Ext.form.Action.DirectLoad":"Ext.form.action.DirectLoad",
-        "Ext.form.Action.DirectSubmit":"Ext.form.action.DirectSubmit",
-        "Ext.form.Action.Load":"Ext.form.action.Load",
-        "Ext.form.Action.Submit":"Ext.form.action.Submit",
-        "Ext.form.Field":"Ext.form.field.Base",
-        "Ext.form.BaseField":"Ext.form.field.Base",
-        "Ext.form.Checkbox":"Ext.form.field.Checkbox",
-        "Ext.form.ComboBox":"Ext.form.field.ComboBox",
-        "Ext.form.DateField":"Ext.form.field.Date",
-        "Ext.form.Date":"Ext.form.field.Date",
-        "Ext.form.DisplayField":"Ext.form.field.Display",
-        "Ext.form.Display":"Ext.form.field.Display",
-        "Ext.form.FileUploadField":"Ext.form.field.File",
-        "Ext.ux.form.FileUploadField":"Ext.form.field.File",
-        "Ext.form.File":"Ext.form.field.File",
-        "Ext.form.Hidden":"Ext.form.field.Hidden",
-        "Ext.form.HtmlEditor":"Ext.form.field.HtmlEditor",
-        "Ext.form.NumberField":"Ext.form.field.Number",
-        "Ext.form.Number":"Ext.form.field.Number",
-        "Ext.form.Picker":"Ext.form.field.Picker",
-        "Ext.form.Radio":"Ext.form.field.Radio",
-        "Ext.form.Spinner":"Ext.form.field.Spinner",
-        "Ext.form.TextField":"Ext.form.field.Text",
-        "Ext.form.Text":"Ext.form.field.Text",
-        "Ext.form.TextArea":"Ext.form.field.TextArea",
-        "Ext.form.TimeField":"Ext.form.field.Time",
-        "Ext.form.Time":"Ext.form.field.Time",
-        "Ext.form.TriggerField":"Ext.form.field.Trigger",
-        "Ext.form.TwinTriggerField":"Ext.form.field.Trigger",
-        "Ext.form.Trigger":"Ext.form.field.Trigger",
-        "Ext.list.ListView":"Ext.grid.Panel",
-        "Ext.ListView":"Ext.grid.Panel",
-        "Ext.grid.GridPanel":"Ext.grid.Panel",
-        "Ext.grid.ActionColumn":"Ext.grid.column.Action",
-        "Ext.grid.BooleanColumn":"Ext.grid.column.Boolean",
-        "Ext.grid.Column":"Ext.grid.column.Column",
-        "Ext.grid.DateColumn":"Ext.grid.column.Date",
-        "Ext.grid.NumberColumn":"Ext.grid.column.Number",
-        "Ext.grid.TemplateColumn":"Ext.grid.column.Template",
-        "Ext.grid.PropertyGrid":"Ext.grid.property.Grid",
-        "Ext.grid.PropertyColumnModel":"Ext.grid.property.HeaderContainer",
-        "Ext.PropGridProperty":"Ext.grid.property.Property",
-        "Ext.grid.PropertyStore":"Ext.grid.property.Store",
-        "Ext.layout.component.AbstractDock":"Ext.layout.component.Dock",
-        "Ext.layout.AbsoluteLayout":"Ext.layout.container.Absolute",
-        "Ext.layout.AccordionLayout":"Ext.layout.container.Accordion",
-        "Ext.layout.AnchorLayout":"Ext.layout.container.Anchor",
-        "Ext.layout.BorderLayout":"Ext.layout.container.Border",
-        "Ext.layout.BoxLayout":"Ext.layout.container.Box",
-        "Ext.layout.CardLayout":"Ext.layout.container.Card",
-        "Ext.layout.ColumnLayout":"Ext.layout.container.Column",
-        "Ext.layout.ContainerLayout":"Ext.layout.container.Container",
-        "Ext.layout.FitLayout":"Ext.layout.container.Fit",
-        "Ext.layout.FormLayout":"Ext.layout.container.Form",
-        "Ext.layout.HBoxLayout":"Ext.layout.container.HBox",
-        "Ext.layout.TableLayout":"Ext.layout.container.Table",
-        "Ext.layout.VBoxLayout":"Ext.layout.container.VBox",
-        "Ext.layout.boxOverflow.Menu":"Ext.layout.container.boxOverflow.Menu",
-        "Ext.layout.boxOverflow.None":"Ext.layout.container.boxOverflow.None",
-        "Ext.layout.boxOverflow.Scroller":"Ext.layout.container.boxOverflow.Scroller",
-        "Ext.menu.TextItem":"Ext.menu.Item",
-        "Ext.menu.MenuMgr":"Ext.menu.Manager",
-        "Ext.Panel":"Ext.panel.Panel",
-        "Ext.dd.PanelProxy":"Ext.panel.Proxy",
-        "Ext.ColorPalette":"Ext.picker.Color",
-        "Ext.DatePicker":"Ext.picker.Date",
-        "Ext.MonthPicker":"Ext.picker.Month",
-        "Ext.Resizable":"Ext.resizer.Resizer",
-        "Ext.slider.MultiSlider":"Ext.slider.Multi",
-        "Ext.Slider":"Ext.slider.Single",
-        "Ext.form.SliderField":"Ext.slider.Single",
-        "Ext.slider.SingleSlider":"Ext.slider.Single",
-        "Ext.slider.Slider":"Ext.slider.Single",
-        "Ext.TabPanel":"Ext.tab.Panel",
-        "Ext.QuickTip":"Ext.tip.QuickTip",
-        "Ext.Tip":"Ext.tip.Tip",
-        "Ext.ToolTip":"Ext.tip.ToolTip",
-        "Ext.Toolbar.Fill":"Ext.toolbar.Fill",
-        "Ext.Toolbar.Item":"Ext.toolbar.Item",
-        "Ext.PagingToolbar":"Ext.toolbar.Paging",
-        "Ext.Toolbar.Separator":"Ext.toolbar.Separator",
-        "Ext.Toolbar.Spacer":"Ext.toolbar.Spacer",
-        "Ext.Toolbar.TextItem":"Ext.toolbar.TextItem",
-        "Ext.Toolbar":"Ext.toolbar.Toolbar",
-        "Ext.tree.TreePanel":"Ext.tree.Panel",
-        "Ext.TreePanel":"Ext.tree.Panel",
-        "Ext.History":"Ext.util.History",
-        "Ext.KeyMap":"Ext.util.KeyMap",
-        "Ext.KeyNav":"Ext.util.KeyNav",
-        "Ext.BoundList":"Ext.view.BoundList",
-        "Ext.DataView":"Ext.view.View",
-        "Ext.Window":"Ext.window.Window"
-    }
-};
-
-(function() {
-    var scripts = document.getElementsByTagName('script'),
-        currentScript = scripts[scripts.length - 1],
-        src = currentScript.src,
-        path = src.substring(0, src.lastIndexOf('/') + 1),
-        Loader = Ext.Loader,
-        ClassManager = Ext.ClassManager,
-        data = this.ExtBootstrapData,
-        nameToAliasesMap = data.nameToAliasesMap,
-        alternateToNameMap = data.alternateToNameMap,
-        i, ln, name, aliases;
-
-    if (nameToAliasesMap) {
-        for (name in nameToAliasesMap) {
-            if (nameToAliasesMap.hasOwnProperty(name)) {
-                aliases = nameToAliasesMap[name];
-
-                if (aliases.length > 0) {
-                    for (i = 0,ln = aliases.length; i < ln; i++) {
-                        ClassManager.setAlias(name, aliases[i]);
-                    }
-                }
-                else {
-                    ClassManager.setAlias(name, null);
-                }
-            }
-        }
-    }
-
-    if (alternateToNameMap) {
-        Ext.merge(ClassManager.maps.alternateToName, alternateToNameMap);
-    }
-
-    Loader.setConfig({
-        enabled: true,
-        disableCaching: true,
-        paths: {
-            'Ext': path + 'src'
-        }
-    });
-
-    try {
-        delete this.ExtBootstrapData;
-    } catch (e) {
-        this.ExtBootstrapData = null;
-    }
-})();
-
-
-/*
- * This file represents the very last stage of the Ext definition process and is ensured
- * to be included at the end of the build via the 'tail' package of extjs.jsb3.
- *
- */
-
-Ext._endTime = new Date().getTime();
-if (Ext._beforereadyhandler){
-    Ext._beforereadyhandler();
-}
-
-
+Ext.ClassManager.addNameAlternateMappings({
+  "Ext.draw.engine.ImageExporter": [],
+  "Ext.layout.component.Auto": [],
+  "Ext.grid.property.Store": [
+    "Ext.grid.PropertyStore"
+  ],
+  "Ext.layout.container.Box": [
+    "Ext.layout.BoxLayout"
+  ],
+  "Ext.direct.JsonProvider": [],
+  "Ext.tree.Panel": [
+    "Ext.tree.TreePanel",
+    "Ext.TreePanel"
+  ],
+  "Ext.data.Model": [
+    "Ext.data.Record"
+  ],
+  "Ext.data.reader.Reader": [
+    "Ext.data.Reader",
+    "Ext.data.DataReader"
+  ],
+  "Ext.tab.Tab": [],
+  "Ext.button.Button": [
+    "Ext.Button"
+  ],
+  "Ext.util.Grouper": [],
+  "Ext.util.TaskRunner": [],
+  "Ext.direct.RemotingProvider": [],
+  "Ext.data.NodeInterface": [],
+  "Ext.grid.column.Date": [
+    "Ext.grid.DateColumn"
+  ],
+  "Ext.form.field.Trigger": [
+    "Ext.form.TriggerField",
+    "Ext.form.TwinTriggerField",
+    "Ext.form.Trigger"
+  ],
+  "Ext.grid.plugin.RowEditing": [],
+  "Ext.tip.QuickTip": [
+    "Ext.QuickTip"
+  ],
+  "Ext.form.action.Load": [
+    "Ext.form.Action.Load"
+  ],
+  "Ext.form.field.ComboBox": [
+    "Ext.form.ComboBox"
+  ],
+  "Ext.layout.container.Border": [
+    "Ext.layout.BorderLayout"
+  ],
+  "Ext.data.JsonPStore": [],
+  "Ext.layout.component.field.TextArea": [],
+  "Ext.dom.AbstractHelper": [],
+  "Ext.layout.container.Container": [
+    "Ext.layout.ContainerLayout"
+  ],
+  "Ext.util.Sortable": [],
+  "Ext.selection.Model": [
+    "Ext.AbstractSelectionModel"
+  ],
+  "Ext.draw.CompositeSprite": [],
+  "Ext.fx.Queue": [],
+  "Ext.dd.StatusProxy": [],
+  "Ext.form.field.Checkbox": [
+    "Ext.form.Checkbox"
+  ],
+  "Ext.XTemplateCompiler": [],
+  "Ext.direct.Transaction": [
+    "Ext.Direct.Transaction"
+  ],
+  "Ext.util.Offset": [],
+  "Ext.dom.Element": [
+    "Ext.Element",
+    "Ext.core.Element"
+  ],
+  "Ext.view.DragZone": [],
+  "Ext.util.KeyNav": [
+    "Ext.KeyNav"
+  ],
+  "Ext.form.field.File": [
+    "Ext.form.FileUploadField",
+    "Ext.ux.form.FileUploadField",
+    "Ext.form.File"
+  ],
+  "Ext.slider.Single": [
+    "Ext.Slider",
+    "Ext.form.SliderField",
+    "Ext.slider.SingleSlider",
+    "Ext.slider.Slider"
+  ],
+  "Ext.panel.Proxy": [
+    "Ext.dd.PanelProxy"
+  ],
+  "Ext.fx.target.Target": [],
+  "Ext.ComponentManager": [
+    "Ext.ComponentMgr"
+  ],
+  "Ext.grid.feature.GroupingSummary": [],
+  "Ext.grid.property.HeaderContainer": [
+    "Ext.grid.PropertyColumnModel"
+  ],
+  "Ext.layout.component.BoundList": [],
+  "Ext.tab.Bar": [],
+  "Ext.app.Application": [],
+  "Ext.ShadowPool": [],
+  "Ext.layout.container.Accordion": [
+    "Ext.layout.AccordionLayout"
+  ],
+  "Ext.resizer.ResizeTracker": [],
+  "Ext.layout.container.boxOverflow.None": [
+    "Ext.layout.boxOverflow.None"
+  ],
+  "Ext.panel.Tool": [],
+  "Ext.tree.View": [],
+  "Ext.ElementLoader": [],
+  "Ext.grid.ColumnComponentLayout": [],
+  "Ext.toolbar.Separator": [
+    "Ext.Toolbar.Separator"
+  ],
+  "Ext.dd.DragZone": [],
+  "Ext.util.Renderable": [],
+  "Ext.layout.component.FieldSet": [],
+  "Ext.util.Bindable": [],
+  "Ext.data.SortTypes": [],
+  "Ext.util.Animate": [],
+  "Ext.form.field.Date": [
+    "Ext.form.DateField",
+    "Ext.form.Date"
+  ],
+  "Ext.Component": [],
+  "Ext.chart.axis.Axis": [
+    "Ext.chart.Axis"
+  ],
+  "Ext.fx.target.CompositeSprite": [],
+  "Ext.menu.DatePicker": [],
+  "Ext.form.field.Picker": [
+    "Ext.form.Picker"
+  ],
+  "Ext.fx.Animator": [],
+  "Ext.Ajax": [],
+  "Ext.layout.component.Dock": [
+    "Ext.layout.component.AbstractDock"
+  ],
+  "Ext.util.Filter": [],
+  "Ext.dd.DragDrop": [],
+  "Ext.grid.Scroller": [],
+  "Ext.view.View": [
+    "Ext.DataView"
+  ],
+  "Ext.data.association.BelongsTo": [
+    "Ext.data.BelongsToAssociation"
+  ],
+  "Ext.fx.target.Element": [],
+  "Ext.draw.Surface": [],
+  "Ext.dd.DDProxy": [],
+  "Ext.data.AbstractStore": [],
+  "Ext.form.action.StandardSubmit": [],
+  "Ext.grid.Lockable": [],
+  "Ext.dd.Registry": [],
+  "Ext.picker.Month": [
+    "Ext.MonthPicker"
+  ],
+  "Ext.container.Container": [
+    "Ext.Container"
+  ],
+  "Ext.menu.Manager": [
+    "Ext.menu.MenuMgr"
+  ],
+  "Ext.util.KeyMap": [
+    "Ext.KeyMap"
+  ],
+  "Ext.data.Batch": [],
+  "Ext.resizer.Handle": [],
+  "Ext.util.ElementContainer": [],
+  "Ext.grid.feature.Grouping": [],
+  "Ext.tab.Panel": [
+    "Ext.TabPanel"
+  ],
+  "Ext.layout.component.Body": [],
+  "Ext.layout.Context": [],
+  "Ext.layout.component.field.ComboBox": [],
+  "Ext.dd.DDTarget": [],
+  "Ext.chart.Chart": [],
+  "Ext.data.Field": [],
+  "Ext.chart.series.Gauge": [],
+  "Ext.data.StoreManager": [
+    "Ext.StoreMgr",
+    "Ext.data.StoreMgr",
+    "Ext.StoreManager"
+  ],
+  "Ext.tip.QuickTipManager": [
+    "Ext.QuickTips"
+  ],
+  "Ext.data.IdGenerator": [],
+  "Ext.grid.plugin.Editing": [],
+  "Ext.grid.RowEditor": [],
+  "Ext.state.LocalStorageProvider": [],
+  "Ext.form.action.Action": [
+    "Ext.form.Action"
+  ],
+  "Ext.ProgressBar": [],
+  "Ext.tree.ViewDragZone": [],
+  "Ext.data.reader.Array": [
+    "Ext.data.ArrayReader"
+  ],
+  "Ext.picker.Date": [
+    "Ext.DatePicker"
+  ],
+  "Ext.data.proxy.JsonP": [
+    "Ext.data.ScriptTagProxy"
+  ],
+  "Ext.chart.series.Area": [],
+  "Ext.fx.Anim": [],
+  "Ext.menu.Item": [
+    "Ext.menu.TextItem"
+  ],
+  "Ext.chart.Legend": [],
+  "Ext.grid.plugin.HeaderReorderer": [],
+  "Ext.layout.container.VBox": [
+    "Ext.layout.VBoxLayout"
+  ],
+  "Ext.view.DropZone": [],
+  "Ext.layout.component.Button": [],
+  "Ext.form.field.Hidden": [
+    "Ext.form.Hidden"
+  ],
+  "Ext.form.FieldContainer": [],
+  "Ext.data.proxy.Server": [
+    "Ext.data.ServerProxy"
+  ],
+  "Ext.chart.series.Cartesian": [
+    "Ext.chart.CartesianSeries",
+    "Ext.chart.CartesianChart"
+  ],
+  "Ext.grid.column.Column": [
+    "Ext.grid.Column"
+  ],
+  "Ext.data.ResultSet": [],
+  "Ext.data.association.HasMany": [
+    "Ext.data.HasManyAssociation"
+  ],
+  "Ext.layout.container.Fit": [
+    "Ext.layout.FitLayout"
+  ],
+  "Ext.util.CSS": [],
+  "Ext.layout.component.field.Field": [],
+  "Ext.data.proxy.Ajax": [
+    "Ext.data.HttpProxy",
+    "Ext.data.AjaxProxy"
+  ],
+  "Ext.form.Label": [],
+  "Ext.data.writer.Writer": [
+    "Ext.data.DataWriter",
+    "Ext.data.Writer"
+  ],
+  "Ext.view.BoundListKeyNav": [],
+  "Ext.form.FieldSet": [],
+  "Ext.XTemplateParser": [],
+  "Ext.form.field.VTypes": [
+    "Ext.form.VTypes"
+  ],
+  "Ext.fx.PropertyHandler": [],
+  "Ext.form.CheckboxGroup": [],
+  "Ext.data.JsonP": [],
+  "Ext.draw.engine.Vml": [],
+  "Ext.layout.container.CheckboxGroup": [],
+  "Ext.panel.Header": [],
+  "Ext.app.Controller": [],
+  "Ext.grid.plugin.CellEditing": [],
+  "Ext.form.field.Time": [
+    "Ext.form.TimeField",
+    "Ext.form.Time"
+  ],
+  "Ext.fx.CubicBezier": [],
+  "Ext.button.Cycle": [
+    "Ext.CycleButton"
+  ],
+  "Ext.data.Tree": [],
+  "Ext.ModelManager": [
+    "Ext.ModelMgr"
+  ],
+  "Ext.data.XmlStore": [],
+  "Ext.grid.ViewDropZone": [],
+  "Ext.grid.header.DropZone": [],
+  "Ext.Layer": [],
+  "Ext.util.HashMap": [],
+  "Ext.grid.column.Template": [
+    "Ext.grid.TemplateColumn"
+  ],
+  "Ext.ComponentLoader": [],
+  "Ext.EventObjectImpl": [],
+  "Ext.form.FieldAncestor": [],
+  "Ext.chart.axis.Gauge": [],
+  "Ext.data.validations": [],
+  "Ext.data.Connection": [],
+  "Ext.dd.DropZone": [],
+  "Ext.direct.ExceptionEvent": [],
+  "Ext.resizer.Splitter": [],
+  "Ext.form.RadioManager": [],
+  "Ext.data.association.HasOne": [
+    "Ext.data.HasOneAssociation"
+  ],
+  "Ext.draw.Text": [],
+  "Ext.window.MessageBox": [],
+  "Ext.fx.target.CompositeElementCSS": [],
+  "Ext.chart.series.Line": [
+    "Ext.chart.LineSeries",
+    "Ext.chart.LineChart"
+  ],
+  "Ext.view.Table": [],
+  "Ext.data.writer.Json": [
+    "Ext.data.JsonWriter"
+  ],
+  "Ext.fx.Manager": [],
+  "Ext.fx.target.CompositeElement": [],
+  "Ext.chart.Label": [],
+  "Ext.grid.View": [],
+  "Ext.Action": [],
+  "Ext.form.Basic": [
+    "Ext.form.BasicForm"
+  ],
+  "Ext.container.Viewport": [
+    "Ext.Viewport"
+  ],
+  "Ext.state.Stateful": [],
+  "Ext.grid.feature.RowBody": [],
+  "Ext.form.field.Text": [
+    "Ext.form.TextField",
+    "Ext.form.Text"
+  ],
+  "Ext.data.reader.Xml": [
+    "Ext.data.XmlReader"
+  ],
+  "Ext.grid.feature.AbstractSummary": [],
+  "Ext.chart.axis.Category": [
+    "Ext.chart.CategoryAxis"
+  ],
+  "Ext.layout.container.Absolute": [
+    "Ext.layout.AbsoluteLayout"
+  ],
+  "Ext.data.reader.Json": [
+    "Ext.data.JsonReader"
+  ],
+  "Ext.util.TextMetrics": [],
+  "Ext.data.TreeStore": [],
+  "Ext.view.BoundList": [
+    "Ext.BoundList"
+  ],
+  "Ext.form.field.HtmlEditor": [
+    "Ext.form.HtmlEditor"
+  ],
+  "Ext.layout.container.Form": [
+    "Ext.layout.FormLayout"
+  ],
+  "Ext.chart.MaskLayer": [],
+  "Ext.util.Observable": [],
+  "Ext.resizer.BorderSplitterTracker": [],
+  "Ext.util.LruCache": [],
+  "Ext.tip.Tip": [
+    "Ext.Tip"
+  ],
+  "Ext.dom.CompositeElement": [
+    "Ext.CompositeElement"
+  ],
+  "Ext.grid.feature.RowWrap": [],
+  "Ext.data.proxy.Client": [
+    "Ext.data.ClientProxy"
+  ],
+  "Ext.data.Types": [],
+  "Ext.draw.SpriteDD": [],
+  "Ext.layout.container.boxOverflow.Menu": [
+    "Ext.layout.boxOverflow.Menu"
+  ],
+  "Ext.LoadMask": [],
+  "Ext.toolbar.Paging": [
+    "Ext.PagingToolbar"
+  ],
+  "Ext.data.association.Association": [
+    "Ext.data.Association"
+  ],
+  "Ext.tree.ViewDropZone": [],
+  "Ext.grid.LockingView": [],
+  "Ext.toolbar.Toolbar": [
+    "Ext.Toolbar"
+  ],
+  "Ext.tip.ToolTip": [
+    "Ext.ToolTip"
+  ],
+  "Ext.chart.Highlight": [],
+  "Ext.state.Manager": [],
+  "Ext.util.Inflector": [],
+  "Ext.grid.Panel": [
+    "Ext.list.ListView",
+    "Ext.ListView",
+    "Ext.grid.GridPanel"
+  ],
+  "Ext.XTemplate": [],
+  "Ext.data.NodeStore": [],
+  "Ext.Shadow": [],
+  "Ext.form.action.Submit": [
+    "Ext.form.Action.Submit"
+  ],
+  "Ext.form.Panel": [
+    "Ext.FormPanel",
+    "Ext.form.FormPanel"
+  ],
+  "Ext.chart.series.Series": [],
+  "Ext.perf.Accumulator": [],
+  "Ext.data.Request": [],
+  "Ext.dd.DD": [],
+  "Ext.dom.CompositeElementLite": [
+    "Ext.CompositeElementLite"
+  ],
+  "Ext.toolbar.Fill": [
+    "Ext.Toolbar.Fill"
+  ],
+  "Ext.grid.RowNumberer": [],
+  "Ext.data.proxy.WebStorage": [
+    "Ext.data.WebStorageProxy"
+  ],
+  "Ext.util.Floating": [],
+  "Ext.form.action.DirectSubmit": [
+    "Ext.form.Action.DirectSubmit"
+  ],
+  "Ext.util.Cookies": [],
+  "Ext.data.UuidGenerator": [],
+  "Ext.util.Point": [],
+  "Ext.fx.target.Component": [],
+  "Ext.form.CheckboxManager": [],
+  "Ext.form.field.Field": [],
+  "Ext.form.field.Display": [
+    "Ext.form.DisplayField",
+    "Ext.form.Display"
+  ],
+  "Ext.layout.container.Anchor": [
+    "Ext.layout.AnchorLayout"
+  ],
+  "Ext.layout.component.field.Text": [],
+  "Ext.data.DirectStore": [],
+  "Ext.data.BufferStore": [],
+  "Ext.grid.ColumnLayout": [],
+  "Ext.chart.series.Column": [
+    "Ext.chart.ColumnSeries",
+    "Ext.chart.ColumnChart",
+    "Ext.chart.StackedColumnChart"
+  ],
+  "Ext.Template": [],
+  "Ext.AbstractComponent": [],
+  "Ext.flash.Component": [
+    "Ext.FlashComponent"
+  ],
+  "Ext.form.field.Base": [
+    "Ext.form.Field",
+    "Ext.form.BaseField"
+  ],
+  "Ext.data.SequentialIdGenerator": [],
+  "Ext.grid.header.Container": [],
+  "Ext.container.ButtonGroup": [
+    "Ext.ButtonGroup"
+  ],
+  "Ext.grid.column.Action": [
+    "Ext.grid.ActionColumn"
+  ],
+  "Ext.layout.component.field.Trigger": [],
+  "Ext.layout.component.field.FieldContainer": [],
+  "Ext.chart.Shape": [],
+  "Ext.panel.DD": [],
+  "Ext.container.AbstractContainer": [],
+  "Ext.data.ArrayStore": [],
+  "Ext.window.Window": [
+    "Ext.Window"
+  ],
+  "Ext.picker.Color": [
+    "Ext.ColorPalette"
+  ],
+  "Ext.grid.feature.Feature": [],
+  "Ext.chart.theme.Theme": [],
+  "Ext.util.ClickRepeater": [],
+  "Ext.form.field.Spinner": [
+    "Ext.form.Spinner"
+  ],
+  "Ext.container.DockingContainer": [],
+  "Ext.selection.DataViewModel": [],
+  "Ext.dd.DragTracker": [],
+  "Ext.dd.DragDropManager": [
+    "Ext.dd.DragDropMgr",
+    "Ext.dd.DDM"
+  ],
+  "Ext.selection.CheckboxModel": [],
+  "Ext.layout.container.Column": [
+    "Ext.layout.ColumnLayout"
+  ],
+  "Ext.menu.KeyNav": [],
+  "Ext.draw.Matrix": [],
+  "Ext.form.field.Number": [
+    "Ext.form.NumberField",
+    "Ext.form.Number"
+  ],
+  "Ext.data.proxy.Direct": [
+    "Ext.data.DirectProxy"
+  ],
+  "Ext.chart.Navigation": [],
+  "Ext.slider.Tip": [],
+  "Ext.chart.theme.Base": [],
+  "Ext.form.field.TextArea": [
+    "Ext.form.TextArea"
+  ],
+  "Ext.form.field.Radio": [
+    "Ext.form.Radio"
+  ],
+  "Ext.layout.component.ProgressBar": [],
+  "Ext.chart.series.Pie": [
+    "Ext.chart.PieSeries",
+    "Ext.chart.PieChart"
+  ],
+  "Ext.view.TableChunker": [],
+  "Ext.tree.plugin.TreeViewDragDrop": [],
+  "Ext.direct.Provider": [],
+  "Ext.layout.Layout": [],
+  "Ext.toolbar.TextItem": [
+    "Ext.Toolbar.TextItem"
+  ],
+  "Ext.dom.Helper": [],
+  "Ext.util.AbstractMixedCollection": [],
+  "Ext.data.JsonStore": [],
+  "Ext.button.Split": [
+    "Ext.SplitButton"
+  ],
+  "Ext.dd.DropTarget": [],
+  "Ext.direct.RemotingEvent": [],
+  "Ext.draw.Sprite": [],
+  "Ext.fx.target.Sprite": [],
+  "Ext.data.proxy.LocalStorage": [
+    "Ext.data.LocalStorageProxy"
+  ],
+  "Ext.layout.component.Draw": [],
+  "Ext.AbstractPlugin": [],
+  "Ext.Editor": [],
+  "Ext.chart.axis.Radial": [],
+  "Ext.chart.Tip": [],
+  "Ext.layout.container.Table": [
+    "Ext.layout.TableLayout"
+  ],
+  "Ext.chart.axis.Abstract": [],
+  "Ext.data.proxy.Rest": [
+    "Ext.data.RestProxy"
+  ],
+  "Ext.util.Queue": [],
+  "Ext.state.CookieProvider": [],
+  "Ext.Img": [],
+  "Ext.dd.DragSource": [],
+  "Ext.grid.CellEditor": [],
+  "Ext.layout.ClassList": [],
+  "Ext.util.Sorter": [],
+  "Ext.resizer.SplitterTracker": [],
+  "Ext.panel.Table": [],
+  "Ext.draw.Color": [],
+  "Ext.chart.series.Bar": [
+    "Ext.chart.BarSeries",
+    "Ext.chart.BarChart",
+    "Ext.chart.StackedBarChart"
+  ],
+  "Ext.PluginManager": [
+    "Ext.PluginMgr"
+  ],
+  "Ext.util.ComponentDragger": [],
+  "Ext.chart.series.Scatter": [],
+  "Ext.chart.Callout": [],
+  "Ext.data.Store": [],
+  "Ext.grid.feature.Summary": [],
+  "Ext.layout.component.Component": [],
+  "Ext.util.ProtoElement": [],
+  "Ext.direct.Manager": [],
+  "Ext.data.proxy.Proxy": [
+    "Ext.data.DataProxy",
+    "Ext.data.Proxy"
+  ],
+  "Ext.menu.CheckItem": [],
+  "Ext.dom.AbstractElement": [],
+  "Ext.layout.container.Card": [
+    "Ext.layout.CardLayout"
+  ],
+  "Ext.draw.Component": [],
+  "Ext.toolbar.Item": [
+    "Ext.Toolbar.Item"
+  ],
+  "Ext.form.RadioGroup": [],
+  "Ext.slider.Thumb": [],
+  "Ext.grid.header.DragZone": [],
+  "Ext.form.action.DirectLoad": [
+    "Ext.form.Action.DirectLoad"
+  ],
+  "Ext.picker.Time": [],
+  "Ext.resizer.BorderSplitter": [],
+  "Ext.ZIndexManager": [
+    "Ext.WindowGroup"
+  ],
+  "Ext.menu.ColorPicker": [],
+  "Ext.menu.Menu": [],
+  "Ext.chart.LegendItem": [],
+  "Ext.toolbar.Spacer": [
+    "Ext.Toolbar.Spacer"
+  ],
+  "Ext.panel.Panel": [
+    "Ext.Panel"
+  ],
+  "Ext.util.Memento": [],
+  "Ext.data.proxy.Memory": [
+    "Ext.data.MemoryProxy"
+  ],
+  "Ext.chart.axis.Time": [
+    "Ext.chart.TimeAxis"
+  ],
+  "Ext.grid.plugin.DragDrop": [],
+  "Ext.layout.component.Tab": [],
+  "Ext.ComponentQuery": [],
+  "Ext.draw.engine.SvgExporter": [],
+  "Ext.grid.feature.Chunking": [],
+  "Ext.layout.container.Auto": [],
+  "Ext.view.AbstractView": [],
+  "Ext.util.Region": [],
+  "Ext.draw.Draw": [],
+  "Ext.fx.target.ElementCSS": [],
+  "Ext.grid.PagingScroller": [],
+  "Ext.layout.component.field.HtmlEditor": [],
+  "Ext.data.proxy.SessionStorage": [
+    "Ext.data.SessionStorageProxy"
+  ],
+  "Ext.app.EventBus": [],
+  "Ext.menu.Separator": [],
+  "Ext.util.History": [
+    "Ext.History"
+  ],
+  "Ext.direct.Event": [],
+  "Ext.direct.RemotingMethod": [],
+  "Ext.dd.ScrollManager": [],
+  "Ext.chart.Mask": [],
+  "Ext.selection.CellModel": [],
+  "Ext.view.TableLayout": [],
+  "Ext.state.Provider": [],
+  "Ext.layout.container.Editor": [],
+  "Ext.data.Errors": [],
+  "Ext.dom.AbstractQuery": [],
+  "Ext.selection.TreeModel": [],
+  "Ext.form.Labelable": [],
+  "Ext.grid.column.Number": [
+    "Ext.grid.NumberColumn"
+  ],
+  "Ext.draw.engine.Svg": [],
+  "Ext.grid.property.Grid": [
+    "Ext.grid.PropertyGrid"
+  ],
+  "Ext.FocusManager": [
+    "Ext.FocusMgr"
+  ],
+  "Ext.AbstractManager": [],
+  "Ext.chart.series.Radar": [],
+  "Ext.grid.property.Property": [
+    "Ext.PropGridProperty"
+  ],
+  "Ext.chart.TipSurface": [],
+  "Ext.grid.column.Boolean": [
+    "Ext.grid.BooleanColumn"
+  ],
+  "Ext.direct.PollingProvider": [],
+  "Ext.grid.plugin.HeaderResizer": [],
+  "Ext.data.writer.Xml": [
+    "Ext.data.XmlWriter"
+  ],
+  "Ext.tree.Column": [],
+  "Ext.slider.Multi": [
+    "Ext.slider.MultiSlider"
+  ],
+  "Ext.panel.AbstractPanel": [],
+  "Ext.layout.component.field.Slider": [],
+  "Ext.chart.axis.Numeric": [
+    "Ext.chart.NumericAxis"
+  ],
+  "Ext.layout.container.boxOverflow.Scroller": [
+    "Ext.layout.boxOverflow.Scroller"
+  ],
+  "Ext.data.Operation": [],
+  "Ext.layout.container.HBox": [
+    "Ext.layout.HBoxLayout"
+  ],
+  "Ext.resizer.Resizer": [
+    "Ext.Resizable"
+  ],
+  "Ext.selection.RowModel": [],
+  "Ext.layout.ContextItem": [],
+  "Ext.util.MixedCollection": [],
+  "Ext.perf.Monitor": [
+    "Ext.Perf"
+  ]
+});Ext.ClassManager.addNameAliasMappings({
+  "Ext.draw.engine.ImageExporter": [],
+  "Ext.layout.component.Auto": [
+    "layout.autocomponent"
+  ],
+  "Ext.grid.property.Store": [],
+  "Ext.layout.container.Box": [
+    "layout.box"
+  ],
+  "Ext.direct.JsonProvider": [
+    "direct.jsonprovider"
+  ],
+  "Ext.tree.Panel": [
+    "widget.treepanel"
+  ],
+  "Ext.data.Model": [],
+  "Ext.data.reader.Reader": [],
+  "Ext.tab.Tab": [
+    "widget.tab"
+  ],
+  "Ext.button.Button": [
+    "widget.button"
+  ],
+  "Ext.util.Grouper": [],
+  "Ext.util.TaskRunner": [],
+  "Ext.direct.RemotingProvider": [
+    "direct.remotingprovider"
+  ],
+  "Ext.data.NodeInterface": [],
+  "Ext.grid.column.Date": [
+    "widget.datecolumn"
+  ],
+  "Ext.form.field.Trigger": [
+    "widget.triggerfield",
+    "widget.trigger"
+  ],
+  "Ext.grid.plugin.RowEditing": [
+    "plugin.rowediting"
+  ],
+  "Ext.tip.QuickTip": [
+    "widget.quicktip"
+  ],
+  "Ext.form.action.Load": [
+    "formaction.load"
+  ],
+  "Ext.form.field.ComboBox": [
+    "widget.combobox",
+    "widget.combo"
+  ],
+  "Ext.layout.container.Border": [
+    "layout.border"
+  ],
+  "Ext.data.JsonPStore": [
+    "store.jsonp"
+  ],
+  "Ext.layout.component.field.TextArea": [
+    "layout.textareafield"
+  ],
+  "Ext.dom.AbstractHelper": [],
+  "Ext.layout.container.Container": [],
+  "Ext.util.Sortable": [],
+  "Ext.selection.Model": [],
+  "Ext.draw.CompositeSprite": [],
+  "Ext.fx.Queue": [],
+  "Ext.dd.StatusProxy": [],
+  "Ext.form.field.Checkbox": [
+    "widget.checkboxfield",
+    "widget.checkbox"
+  ],
+  "Ext.XTemplateCompiler": [],
+  "Ext.direct.Transaction": [
+    "direct.transaction"
+  ],
+  "Ext.util.Offset": [],
+  "Ext.dom.Element": [],
+  "Ext.view.DragZone": [],
+  "Ext.util.KeyNav": [],
+  "Ext.form.field.File": [
+    "widget.filefield",
+    "widget.fileuploadfield"
+  ],
+  "Ext.slider.Single": [
+    "widget.slider",
+    "widget.sliderfield"
+  ],
+  "Ext.panel.Proxy": [],
+  "Ext.fx.target.Target": [],
+  "Ext.ComponentManager": [],
+  "Ext.grid.feature.GroupingSummary": [
+    "feature.groupingsummary"
+  ],
+  "Ext.grid.property.HeaderContainer": [],
+  "Ext.layout.component.BoundList": [
+    "layout.boundlist"
+  ],
+  "Ext.tab.Bar": [
+    "widget.tabbar"
+  ],
+  "Ext.app.Application": [],
+  "Ext.ShadowPool": [],
+  "Ext.layout.container.Accordion": [
+    "layout.accordion"
+  ],
+  "Ext.resizer.ResizeTracker": [],
+  "Ext.layout.container.boxOverflow.None": [],
+  "Ext.panel.Tool": [
+    "widget.tool"
+  ],
+  "Ext.tree.View": [
+    "widget.treeview"
+  ],
+  "Ext.ElementLoader": [],
+  "Ext.grid.ColumnComponentLayout": [
+    "layout.columncomponent"
+  ],
+  "Ext.toolbar.Separator": [
+    "widget.tbseparator"
+  ],
+  "Ext.dd.DragZone": [],
+  "Ext.util.Renderable": [],
+  "Ext.layout.component.FieldSet": [
+    "layout.fieldset"
+  ],
+  "Ext.util.Bindable": [],
+  "Ext.data.SortTypes": [],
+  "Ext.util.Animate": [],
+  "Ext.form.field.Date": [
+    "widget.datefield"
+  ],
+  "Ext.Component": [
+    "widget.component",
+    "widget.box"
+  ],
+  "Ext.chart.axis.Axis": [],
+  "Ext.fx.target.CompositeSprite": [],
+  "Ext.menu.DatePicker": [
+    "widget.datemenu"
+  ],
+  "Ext.form.field.Picker": [
+    "widget.pickerfield"
+  ],
+  "Ext.fx.Animator": [],
+  "Ext.Ajax": [],
+  "Ext.layout.component.Dock": [
+    "layout.dock"
+  ],
+  "Ext.util.Filter": [],
+  "Ext.dd.DragDrop": [],
+  "Ext.grid.Scroller": [],
+  "Ext.view.View": [
+    "widget.dataview"
+  ],
+  "Ext.data.association.BelongsTo": [
+    "association.belongsto"
+  ],
+  "Ext.fx.target.Element": [],
+  "Ext.draw.Surface": [],
+  "Ext.dd.DDProxy": [],
+  "Ext.data.AbstractStore": [],
+  "Ext.form.action.StandardSubmit": [
+    "formaction.standardsubmit"
+  ],
+  "Ext.grid.Lockable": [],
+  "Ext.dd.Registry": [],
+  "Ext.picker.Month": [
+    "widget.monthpicker"
+  ],
+  "Ext.container.Container": [
+    "widget.container"
+  ],
+  "Ext.menu.Manager": [],
+  "Ext.util.KeyMap": [],
+  "Ext.data.Batch": [],
+  "Ext.resizer.Handle": [],
+  "Ext.util.ElementContainer": [],
+  "Ext.grid.feature.Grouping": [
+    "feature.grouping"
+  ],
+  "Ext.tab.Panel": [
+    "widget.tabpanel"
+  ],
+  "Ext.layout.component.Body": [
+    "layout.body"
+  ],
+  "Ext.layout.Context": [],
+  "Ext.layout.component.field.ComboBox": [
+    "layout.combobox"
+  ],
+  "Ext.dd.DDTarget": [],
+  "Ext.chart.Chart": [
+    "widget.chart"
+  ],
+  "Ext.data.Field": [
+    "data.field"
+  ],
+  "Ext.chart.series.Gauge": [
+    "series.gauge"
+  ],
+  "Ext.data.StoreManager": [],
+  "Ext.tip.QuickTipManager": [],
+  "Ext.data.IdGenerator": [],
+  "Ext.grid.plugin.Editing": [
+    "editing.editing"
+  ],
+  "Ext.grid.RowEditor": [],
+  "Ext.state.LocalStorageProvider": [
+    "state.localstorage"
+  ],
+  "Ext.form.action.Action": [],
+  "Ext.ProgressBar": [
+    "widget.progressbar"
+  ],
+  "Ext.tree.ViewDragZone": [],
+  "Ext.data.reader.Array": [
+    "reader.array"
+  ],
+  "Ext.picker.Date": [
+    "widget.datepicker"
+  ],
+  "Ext.data.proxy.JsonP": [
+    "proxy.jsonp",
+    "proxy.scripttag"
+  ],
+  "Ext.chart.series.Area": [
+    "series.area"
+  ],
+  "Ext.fx.Anim": [],
+  "Ext.menu.Item": [
+    "widget.menuitem"
+  ],
+  "Ext.chart.Legend": [],
+  "Ext.grid.plugin.HeaderReorderer": [
+    "plugin.gridheaderreorderer"
+  ],
+  "Ext.layout.container.VBox": [
+    "layout.vbox"
+  ],
+  "Ext.view.DropZone": [],
+  "Ext.layout.component.Button": [
+    "layout.button"
+  ],
+  "Ext.form.field.Hidden": [
+    "widget.hiddenfield",
+    "widget.hidden"
+  ],
+  "Ext.form.FieldContainer": [
+    "widget.fieldcontainer"
+  ],
+  "Ext.data.proxy.Server": [
+    "proxy.server"
+  ],
+  "Ext.chart.series.Cartesian": [],
+  "Ext.grid.column.Column": [
+    "widget.gridcolumn"
+  ],
+  "Ext.data.ResultSet": [],
+  "Ext.data.association.HasMany": [
+    "association.hasmany"
+  ],
+  "Ext.layout.container.Fit": [
+    "layout.fit"
+  ],
+  "Ext.util.CSS": [],
+  "Ext.layout.component.field.Field": [
+    "layout.field"
+  ],
+  "Ext.data.proxy.Ajax": [
+    "proxy.ajax"
+  ],
+  "Ext.form.Label": [
+    "widget.label"
+  ],
+  "Ext.data.writer.Writer": [
+    "writer.base"
+  ],
+  "Ext.view.BoundListKeyNav": [],
+  "Ext.form.FieldSet": [
+    "widget.fieldset"
+  ],
+  "Ext.XTemplateParser": [],
+  "Ext.form.field.VTypes": [],
+  "Ext.fx.PropertyHandler": [],
+  "Ext.form.CheckboxGroup": [
+    "widget.checkboxgroup"
+  ],
+  "Ext.data.JsonP": [],
+  "Ext.draw.engine.Vml": [],
+  "Ext.layout.container.CheckboxGroup": [
+    "layout.checkboxgroup"
+  ],
+  "Ext.panel.Header": [
+    "widget.header"
+  ],
+  "Ext.app.Controller": [],
+  "Ext.grid.plugin.CellEditing": [
+    "plugin.cellediting"
+  ],
+  "Ext.form.field.Time": [
+    "widget.timefield"
+  ],
+  "Ext.fx.CubicBezier": [],
+  "Ext.button.Cycle": [
+    "widget.cycle"
+  ],
+  "Ext.data.Tree": [
+    "data.tree"
+  ],
+  "Ext.ModelManager": [],
+  "Ext.data.XmlStore": [
+    "store.xml"
+  ],
+  "Ext.grid.ViewDropZone": [],
+  "Ext.grid.header.DropZone": [],
+  "Ext.Layer": [],
+  "Ext.util.HashMap": [],
+  "Ext.grid.column.Template": [
+    "widget.templatecolumn"
+  ],
+  "Ext.ComponentLoader": [],
+  "Ext.EventObjectImpl": [],
+  "Ext.form.FieldAncestor": [],
+  "Ext.chart.axis.Gauge": [
+    "axis.gauge"
+  ],
+  "Ext.data.validations": [],
+  "Ext.data.Connection": [],
+  "Ext.dd.DropZone": [],
+  "Ext.direct.ExceptionEvent": [
+    "direct.exception"
+  ],
+  "Ext.resizer.Splitter": [
+    "widget.splitter"
+  ],
+  "Ext.form.RadioManager": [],
+  "Ext.data.association.HasOne": [
+    "association.hasone"
+  ],
+  "Ext.draw.Text": [
+    "widget.text"
+  ],
+  "Ext.window.MessageBox": [
+    "widget.messagebox"
+  ],
+  "Ext.fx.target.CompositeElementCSS": [],
+  "Ext.chart.series.Line": [
+    "series.line"
+  ],
+  "Ext.view.Table": [
+    "widget.tableview"
+  ],
+  "Ext.data.writer.Json": [
+    "writer.json"
+  ],
+  "Ext.fx.Manager": [],
+  "Ext.fx.target.CompositeElement": [],
+  "Ext.chart.Label": [],
+  "Ext.grid.View": [
+    "widget.gridview"
+  ],
+  "Ext.Action": [],
+  "Ext.form.Basic": [],
+  "Ext.container.Viewport": [
+    "widget.viewport"
+  ],
+  "Ext.state.Stateful": [],
+  "Ext.grid.feature.RowBody": [
+    "feature.rowbody"
+  ],
+  "Ext.form.field.Text": [
+    "widget.textfield"
+  ],
+  "Ext.data.reader.Xml": [
+    "reader.xml"
+  ],
+  "Ext.grid.feature.AbstractSummary": [
+    "feature.abstractsummary"
+  ],
+  "Ext.chart.axis.Category": [
+    "axis.category"
+  ],
+  "Ext.layout.container.Absolute": [
+    "layout.absolute"
+  ],
+  "Ext.data.reader.Json": [
+    "reader.json"
+  ],
+  "Ext.util.TextMetrics": [],
+  "Ext.data.TreeStore": [
+    "store.tree"
+  ],
+  "Ext.view.BoundList": [
+    "widget.boundlist"
+  ],
+  "Ext.form.field.HtmlEditor": [
+    "widget.htmleditor"
+  ],
+  "Ext.layout.container.Form": [
+    "layout.form"
+  ],
+  "Ext.chart.MaskLayer": [],
+  "Ext.util.Observable": [],
+  "Ext.resizer.BorderSplitterTracker": [],
+  "Ext.util.LruCache": [],
+  "Ext.tip.Tip": [],
+  "Ext.dom.CompositeElement": [],
+  "Ext.grid.feature.RowWrap": [
+    "feature.rowwrap"
+  ],
+  "Ext.data.proxy.Client": [],
+  "Ext.data.Types": [],
+  "Ext.draw.SpriteDD": [],
+  "Ext.layout.container.boxOverflow.Menu": [],
+  "Ext.LoadMask": [
+    "widget.loadmask"
+  ],
+  "Ext.toolbar.Paging": [
+    "widget.pagingtoolbar"
+  ],
+  "Ext.data.association.Association": [],
+  "Ext.tree.ViewDropZone": [],
+  "Ext.grid.LockingView": [],
+  "Ext.toolbar.Toolbar": [
+    "widget.toolbar"
+  ],
+  "Ext.tip.ToolTip": [
+    "widget.tooltip"
+  ],
+  "Ext.chart.Highlight": [],
+  "Ext.state.Manager": [],
+  "Ext.util.Inflector": [],
+  "Ext.grid.Panel": [
+    "widget.gridpanel",
+    "widget.grid"
+  ],
+  "Ext.XTemplate": [],
+  "Ext.data.NodeStore": [
+    "store.node"
+  ],
+  "Ext.Shadow": [],
+  "Ext.form.action.Submit": [
+    "formaction.submit"
+  ],
+  "Ext.form.Panel": [
+    "widget.form"
+  ],
+  "Ext.chart.series.Series": [],
+  "Ext.perf.Accumulator": [],
+  "Ext.data.Request": [],
+  "Ext.dd.DD": [],
+  "Ext.dom.CompositeElementLite": [],
+  "Ext.toolbar.Fill": [
+    "widget.tbfill"
+  ],
+  "Ext.grid.RowNumberer": [
+    "widget.rownumberer"
+  ],
+  "Ext.data.proxy.WebStorage": [],
+  "Ext.util.Floating": [],
+  "Ext.form.action.DirectSubmit": [
+    "formaction.directsubmit"
+  ],
+  "Ext.util.Cookies": [],
+  "Ext.data.UuidGenerator": [
+    "idgen.uuid"
+  ],
+  "Ext.util.Point": [],
+  "Ext.fx.target.Component": [],
+  "Ext.form.CheckboxManager": [],
+  "Ext.form.field.Field": [],
+  "Ext.form.field.Display": [
+    "widget.displayfield"
+  ],
+  "Ext.layout.container.Anchor": [
+    "layout.anchor"
+  ],
+  "Ext.layout.component.field.Text": [
+    "layout.textfield"
+  ],
+  "Ext.data.DirectStore": [
+    "store.direct"
+  ],
+  "Ext.data.BufferStore": [
+    "store.buffer"
+  ],
+  "Ext.grid.ColumnLayout": [
+    "layout.gridcolumn"
+  ],
+  "Ext.chart.series.Column": [
+    "series.column"
+  ],
+  "Ext.Template": [],
+  "Ext.AbstractComponent": [],
+  "Ext.flash.Component": [
+    "widget.flash"
+  ],
+  "Ext.form.field.Base": [
+    "widget.field"
+  ],
+  "Ext.data.SequentialIdGenerator": [
+    "idgen.sequential"
+  ],
+  "Ext.grid.header.Container": [
+    "widget.headercontainer"
+  ],
+  "Ext.container.ButtonGroup": [
+    "widget.buttongroup"
+  ],
+  "Ext.grid.column.Action": [
+    "widget.actioncolumn"
+  ],
+  "Ext.layout.component.field.Trigger": [
+    "layout.triggerfield"
+  ],
+  "Ext.layout.component.field.FieldContainer": [
+    "layout.fieldcontainer"
+  ],
+  "Ext.chart.Shape": [],
+  "Ext.panel.DD": [],
+  "Ext.container.AbstractContainer": [],
+  "Ext.data.ArrayStore": [
+    "store.array"
+  ],
+  "Ext.window.Window": [
+    "widget.window"
+  ],
+  "Ext.picker.Color": [
+    "widget.colorpicker"
+  ],
+  "Ext.grid.feature.Feature": [
+    "feature.feature"
+  ],
+  "Ext.chart.theme.Theme": [],
+  "Ext.util.ClickRepeater": [],
+  "Ext.form.field.Spinner": [
+    "widget.spinnerfield"
+  ],
+  "Ext.container.DockingContainer": [],
+  "Ext.selection.DataViewModel": [],
+  "Ext.dd.DragTracker": [],
+  "Ext.dd.DragDropManager": [],
+  "Ext.selection.CheckboxModel": [
+    "selection.checkboxmodel"
+  ],
+  "Ext.layout.container.Column": [
+    "layout.column"
+  ],
+  "Ext.menu.KeyNav": [],
+  "Ext.draw.Matrix": [],
+  "Ext.form.field.Number": [
+    "widget.numberfield"
+  ],
+  "Ext.data.proxy.Direct": [
+    "proxy.direct"
+  ],
+  "Ext.chart.Navigation": [],
+  "Ext.slider.Tip": [
+    "widget.slidertip"
+  ],
+  "Ext.chart.theme.Base": [],
+  "Ext.form.field.TextArea": [
+    "widget.textareafield",
+    "widget.textarea"
+  ],
+  "Ext.form.field.Radio": [
+    "widget.radiofield",
+    "widget.radio"
+  ],
+  "Ext.layout.component.ProgressBar": [
+    "layout.progressbar"
+  ],
+  "Ext.chart.series.Pie": [
+    "series.pie"
+  ],
+  "Ext.view.TableChunker": [],
+  "Ext.tree.plugin.TreeViewDragDrop": [
+    "plugin.treeviewdragdrop"
+  ],
+  "Ext.direct.Provider": [
+    "direct.provider"
+  ],
+  "Ext.layout.Layout": [],
+  "Ext.toolbar.TextItem": [
+    "widget.tbtext"
+  ],
+  "Ext.dom.Helper": [],
+  "Ext.util.AbstractMixedCollection": [],
+  "Ext.data.JsonStore": [
+    "store.json"
+  ],
+  "Ext.button.Split": [
+    "widget.splitbutton"
+  ],
+  "Ext.dd.DropTarget": [],
+  "Ext.direct.RemotingEvent": [
+    "direct.rpc"
+  ],
+  "Ext.draw.Sprite": [],
+  "Ext.fx.target.Sprite": [],
+  "Ext.data.proxy.LocalStorage": [
+    "proxy.localstorage"
+  ],
+  "Ext.layout.component.Draw": [
+    "layout.draw"
+  ],
+  "Ext.AbstractPlugin": [],
+  "Ext.Editor": [
+    "widget.editor"
+  ],
+  "Ext.chart.axis.Radial": [
+    "axis.radial"
+  ],
+  "Ext.chart.Tip": [],
+  "Ext.layout.container.Table": [
+    "layout.table"
+  ],
+  "Ext.chart.axis.Abstract": [],
+  "Ext.data.proxy.Rest": [
+    "proxy.rest"
+  ],
+  "Ext.util.Queue": [],
+  "Ext.state.CookieProvider": [],
+  "Ext.Img": [
+    "widget.image",
+    "widget.imagecomponent"
+  ],
+  "Ext.dd.DragSource": [],
+  "Ext.grid.CellEditor": [],
+  "Ext.layout.ClassList": [],
+  "Ext.util.Sorter": [],
+  "Ext.resizer.SplitterTracker": [],
+  "Ext.panel.Table": [
+    "widget.tablepanel"
+  ],
+  "Ext.draw.Color": [],
+  "Ext.chart.series.Bar": [
+    "series.bar"
+  ],
+  "Ext.PluginManager": [],
+  "Ext.util.ComponentDragger": [],
+  "Ext.chart.series.Scatter": [
+    "series.scatter"
+  ],
+  "Ext.chart.Callout": [],
+  "Ext.data.Store": [
+    "store.store"
+  ],
+  "Ext.grid.feature.Summary": [
+    "feature.summary"
+  ],
+  "Ext.layout.component.Component": [],
+  "Ext.util.ProtoElement": [],
+  "Ext.direct.Manager": [],
+  "Ext.data.proxy.Proxy": [
+    "proxy.proxy"
+  ],
+  "Ext.menu.CheckItem": [
+    "widget.menucheckitem"
+  ],
+  "Ext.dom.AbstractElement": [],
+  "Ext.layout.container.Card": [
+    "layout.card"
+  ],
+  "Ext.draw.Component": [
+    "widget.draw"
+  ],
+  "Ext.toolbar.Item": [
+    "widget.tbitem"
+  ],
+  "Ext.form.RadioGroup": [
+    "widget.radiogroup"
+  ],
+  "Ext.slider.Thumb": [],
+  "Ext.grid.header.DragZone": [],
+  "Ext.form.action.DirectLoad": [
+    "formaction.directload"
+  ],
+  "Ext.picker.Time": [
+    "widget.timepicker"
+  ],
+  "Ext.resizer.BorderSplitter": [
+    "widget.bordersplitter"
+  ],
+  "Ext.ZIndexManager": [],
+  "Ext.menu.ColorPicker": [
+    "widget.colormenu"
+  ],
+  "Ext.menu.Menu": [
+    "widget.menu"
+  ],
+  "Ext.chart.LegendItem": [],
+  "Ext.toolbar.Spacer": [
+    "widget.tbspacer"
+  ],
+  "Ext.panel.Panel": [
+    "widget.panel"
+  ],
+  "Ext.util.Memento": [],
+  "Ext.data.proxy.Memory": [
+    "proxy.memory"
+  ],
+  "Ext.chart.axis.Time": [
+    "axis.time"
+  ],
+  "Ext.grid.plugin.DragDrop": [
+    "plugin.gridviewdragdrop"
+  ],
+  "Ext.layout.component.Tab": [
+    "layout.tab"
+  ],
+  "Ext.ComponentQuery": [],
+  "Ext.draw.engine.SvgExporter": [],
+  "Ext.grid.feature.Chunking": [
+    "feature.chunking"
+  ],
+  "Ext.layout.container.Auto": [
+    "layout.auto",
+    "layout.autocontainer"
+  ],
+  "Ext.view.AbstractView": [],
+  "Ext.util.Region": [],
+  "Ext.draw.Draw": [],
+  "Ext.fx.target.ElementCSS": [],
+  "Ext.grid.PagingScroller": [],
+  "Ext.layout.component.field.HtmlEditor": [
+    "layout.htmleditor"
+  ],
+  "Ext.data.proxy.SessionStorage": [
+    "proxy.sessionstorage"
+  ],
+  "Ext.app.EventBus": [],
+  "Ext.menu.Separator": [
+    "widget.menuseparator"
+  ],
+  "Ext.util.History": [],
+  "Ext.direct.Event": [
+    "direct.event"
+  ],
+  "Ext.direct.RemotingMethod": [],
+  "Ext.dd.ScrollManager": [],
+  "Ext.chart.Mask": [],
+  "Ext.selection.CellModel": [
+    "selection.cellmodel"
+  ],
+  "Ext.view.TableLayout": [
+    "layout.tableview"
+  ],
+  "Ext.state.Provider": [],
+  "Ext.layout.container.Editor": [
+    "layout.editor"
+  ],
+  "Ext.data.Errors": [],
+  "Ext.dom.AbstractQuery": [],
+  "Ext.selection.TreeModel": [
+    "selection.treemodel"
+  ],
+  "Ext.form.Labelable": [],
+  "Ext.grid.column.Number": [
+    "widget.numbercolumn"
+  ],
+  "Ext.draw.engine.Svg": [],
+  "Ext.grid.property.Grid": [
+    "widget.propertygrid"
+  ],
+  "Ext.FocusManager": [],
+  "Ext.AbstractManager": [],
+  "Ext.chart.series.Radar": [
+    "series.radar"
+  ],
+  "Ext.grid.property.Property": [],
+  "Ext.chart.TipSurface": [],
+  "Ext.grid.column.Boolean": [
+    "widget.booleancolumn"
+  ],
+  "Ext.direct.PollingProvider": [
+    "direct.pollingprovider"
+  ],
+  "Ext.grid.plugin.HeaderResizer": [
+    "plugin.gridheaderresizer"
+  ],
+  "Ext.data.writer.Xml": [
+    "writer.xml"
+  ],
+  "Ext.tree.Column": [
+    "widget.treecolumn"
+  ],
+  "Ext.slider.Multi": [
+    "widget.multislider"
+  ],
+  "Ext.panel.AbstractPanel": [],
+  "Ext.layout.component.field.Slider": [
+    "layout.sliderfield"
+  ],
+  "Ext.chart.axis.Numeric": [
+    "axis.numeric"
+  ],
+  "Ext.layout.container.boxOverflow.Scroller": [],
+  "Ext.data.Operation": [],
+  "Ext.layout.container.HBox": [
+    "layout.hbox"
+  ],
+  "Ext.resizer.Resizer": [],
+  "Ext.selection.RowModel": [
+    "selection.rowmodel"
+  ],
+  "Ext.layout.ContextItem": [],
+  "Ext.util.MixedCollection": [],
+  "Ext.perf.Monitor": []
+});

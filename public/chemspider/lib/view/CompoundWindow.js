@@ -11,12 +11,13 @@
         frame: true, 
         margin: '5 5 5 5'
     },
+    autoScroll: true,
     modal: false,
-    resizable: false,
+    resizable: true,
     autoShow: false,
     closeAction: 'hide',
-    height: 650,
-    width: 800,
+    height: 550,
+    width: 700,
     initComponent: function () {
         //  create component for displaying general compound information
         this.compoundInfo = Ext.create('CS.view.Compound', {
@@ -67,7 +68,7 @@
         var oThis = this;
 
         this.compoundStore.load({
-            params: { 'csids[0]': csid },
+            params: { 'csids[0]': csid, serfilter: 'Compound[CSID|Name|MF|Mol|MM|Synonyms|References|Blobs|Identifiers]' },
             callback: function (records, operation, success) {
                 if(success) {
                     var compound = oThis.compoundStore.first();
@@ -92,5 +93,5 @@
         this.show();
 
         this.loadingMask.show();
-    },
+    }
 });

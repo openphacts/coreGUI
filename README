@@ -8,41 +8,42 @@ $ git clone git@github.com:openphacts/coreGUI/whatever_branch_you_are_interested
 
 == Git Flow
 
-We would like you to use the tool Git Flow to develop feature branches etc. Please
-take a look at the Git Flow tutorial.
+It may help to use the Git Flow tool (https://github.com/nvie/gitflow) or concepts to develop feature branches etc.
 
 == Setting it up
 
 To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
 wiki.openphacts.org and follow the instructions there.
-In case of problems contact Sune Askjaer on suap@lundbeck.com.
+In case of problems send feedback at http://www.openphacts.org/explorer/160 or contact pmu@openphacts.org
 
-== Adding a new tab to the Navigation three
+== Adding a new tab and form to the Navigation tree
 
-To add a new tab to the Navigation tree on the left follow these steps:
+To add a new tab to the Navigation tree you need to change LSP.store.NavigationTree store in the 
+main public/app folder. A node has leaf set to "true" if it has no children. Set 
+leaf to "false" and add an array of children if the node has any leaf nodes. Refer to the embedded
+JSON in the Navigation Tree store to see the the default tree that is rendered. 
+The xtype defines what form will be loaded when the node is clicked on.
 
-  1.  Add a row to the PostgreSQL database modelling the ancestry information for 
-      existing nodes. In the 'xtype' column add the name ExtJS widget alias defined
-      in the the javascript view file. NB. skip this part if you do not have the
-      js code scaffold for your widget done yet.
-  
-  2.  Create your javascript ExtJS view and controller (and optional model and store)
-      in folders under /public/javascrip/lsp(soon ops)/app/. Make sure to stick to the ExtJS MVC
-      concept as much as possible keeping the view layout apart from the logic and
-      controls that all should go into the javascript controller.
-  
-  3.  List your javascript controller in \public\javascripts\lsp\app.js file controller
-      array and your javascript view definition in the \public\javascripts\lsp\app\view\Viewer.js
-      file. If you have defined and cross referenced the javascript model, store,
-      view, and controller, you should be good to go with the exception of
-      the hidden athentication field that need to be included in the form. For these
-      it is best to look at one of the existing pages and simply copy paste these. 
+When the tree is clicked on the GuiComponents store is asked to return data about that form. Add some
+details about the new form to the json data in store/GuiComponent.js 
       
 In case you are only building a stand alone widget that goes on an existing page
 you can skip the above steps and just create the javascript view, controller,
 model and store as needed and make sure that the they reference each other and that
 the view defines the widget alias. Then all you need to put it in a page is to add
 it to an items: tag usings xtype: my_widget_name or Ext.Widget('my_widget_name').
+
+== Set the mailer constants, database file and tsv download url
+
+Copy the file config/app_settings.yml_example to config/app_settings.yml and change
+the default values to whatever is appropriate for your application. Change 
+config.action_mailer.perform_deliveries = false to true in config/environments/development.rb
+if you want it to send feedback emails in development mode. Copy config/database.example.yml to
+config/database.yml and enter your database details as appropriate.
+
+== Adding images
+The OPS Explorer uses the rails asset pipeline to load images. Any new ones should be added
+to app/assets/images and referred to as /assets/image.png etc in any css
       
 == Adding a controller method that accepts Ajax post or get
 
@@ -61,33 +62,30 @@ needed outside the scope of a single function.
       routes file \config\routes.rb so that ExtJS accepts gets or posts on these
       methods. 
       
-Use Firebug to track how this goes and for debugging any erros that might remain.             
+Use Firebug to track how this goes and for debugging any errors that might remain.             
 
 == Debugging the OPS GUI
 
 When developing the Javascript code for the GUI an essential tool to use is the 
 FireBug extension to Firefox. This tool (and others like it for Chrome) lets you
-see all comminicaiton between the web front end and the server. In addition,
-during development mode it allows for inspection of DOM obbjects and debugging of
+see all communication between the web front end and the server. In addition,
+during development mode it allows for inspection of DOM objects and debugging of
 the Javascript code. 
 
 For debugging the Ruby on Rails server part the best way is simply to look at the
 /log/development.log file and the console (see further down under Rails for details).
-For Ruby syntax use interactive ruby 'irb' on the command line. Start it by typing 'irb'. 
+For Ruby/Rails syntax use interactive rails console, start with 'rails c' from inside the project
+directory, this uses ruby IRB but includes all the rails specific code. 
 
 == About ExtJS
 
 ExtJS is a Javascript library the OPS project uses for building front ends and widgets.
 The ExtJS API documentation can be found here: coreGUI\public\ext\index.html
-Please read the ExtJS Guide on MVC design and try to stick too it as much as possible.
+Please read the ExtJS Guide on MVC design and try to stick to it as much as possible.
 Having the javascript code divided into model, store, controller and view makes the
 much easier to understand and reuse.
 
-For help with the ExtJS view part consider using the ExtJS Builder tool. A 30 day trial
-is available for the current version which is 1.2. Please be aware that this version do
-not support the ExtJS MVC concept as introduced with ExtJS 4.
-Version 2 of the ExtJS Builder is expected to support MVC and it will likely be out
-sometime durin Q1 2012. 
+For help with the ExtJS view part consider using the ExtJS Builder tool, a free trial is available.
 
 == About Rails
 
@@ -123,11 +121,8 @@ link:files/vendor/rails/actionpack/README.html.
 1. Change directory to <tt>coreAPI</tt> and start the web server:
        <tt>cd myapp; rails server</tt> (run with --help for options)
 
-2. Go to http://localhost:3000/ and you'll see:
-       "Welcome aboard: You're riding Ruby on Rails!"
-
-3. Follow the guidelines to start developing your application. You can find
-the following resources handy:
+2. Follow the guidelines to start developing the rails side of the application. 
+You may find the following resources handy:
 
 * The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
 * Ruby on Rails Tutorial Book: http://www.railstutorial.org/

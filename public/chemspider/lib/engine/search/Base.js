@@ -18,6 +18,9 @@
 
         this.callParent(arguments)
     },
+    setLimit: function(limit) {
+	    this.limit = limit;
+    },
     searchProgress: function () {
         return this.searchStatus.Progress;
     },
@@ -40,9 +43,9 @@
             callback: function (records, options, success) {
                 this.searchStatus = records[0].data;
 
-                if (this.searchProgress() == 1) {
-                    this.stopProgress();
-                }
+//                if (this.searchProgress() == 1) {
+//                    this.stopProgress();
+//                }
             }
         });
     },
@@ -50,11 +53,12 @@
         searchingMask.hide();
     },
     runSearch: function (params) {
-        this.startProgress();
+	// no need for 2 loading masks
+        //this.startProgress();
 
         params.limit = this.limit;
 
-        //  clear previous rearch results
+        //  clear previous search results
         this.csids = null;
 
         this.store.load({
@@ -63,18 +67,12 @@
             callback: function (records, operation, success) {
                 if (success) {
                     this.rid = operation.response;
-                    this.updateProgress();
+                    //this.updateProgress();
                     this.fireEvent('finished', this, this.rid);
                 }
                 else {
-                    this.stopProgress();
-
-                    Ext.MessageBox.show({
-                        title: 'Error',
-                        msg: 'Search structure engine: ' + operation.error,
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.ERROR
-                    });
+                    this.err = operation.error;
+                    this.fireEvent('failed', this, this.err);
                 }
             }
         });
@@ -90,12 +88,8 @@
                         callback(oThis.csids);
                 }
                 else {
-                    Ext.MessageBox.show({
-                        title: 'Error',
-                        msg: 'Cannot get list of found CSIDs: ' + operation.error,
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.ERROR
-                    });
+                    this.err = operation.error;
+                    oThis.fireEvent('failed', this, this.err);
                 }
             }
         });

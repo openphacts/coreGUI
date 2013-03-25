@@ -7,6 +7,6 @@
  */
 Ext.define('LSP.model.Feedback', {
     extend:'Ext.data.Model',
-    fields:['feedbackText', 'userEmail', 'technicalInfo']
+    fields:['feedbackText', 'userEmail', 'technicalInfo', 'versionNumber']
 });
 

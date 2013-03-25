@@ -3,6 +3,7 @@ Ext.define('LSP.view.Viewer', {
     alias:'widget.viewer',
 
     requires:[
+		'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.usergrid.UserGrid',
         'LSP.view.sparqlform.Queryform',
         'LSP.view.larkc_sim_search.SimSearchForm',
@@ -12,10 +13,12 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pharm_by_target_name2.PharmByTargetNameForm',
         'LSP.view.concept.SummeryForm',
         'LSP.view.placeholder.temp',
-        'LSP.view.larkc_pharm_by_target.PharmEnzymeForm',
+        'LSP.view.pharm_by_enzyme_family.PharmEnzymeForm',
         'LSP.view.textmining.pmidTextMiningHitsForm',
         'LSP.view.pathways.pathwayByCompoundForm',
-        'LSP.view.pathways.pathwayByProteinForm'
+        'LSP.view.pathways.pathwayByProteinForm',
+        'LSP.view.api_status.Status',
+        'LSP.view.background_tasks.BackgroundTasksForm'
     ],
 
     activeItem:0,
@@ -23,7 +26,7 @@ Ext.define('LSP.view.Viewer', {
     //cls: 'preview',
 
     initComponent:function () {
-
+		console.log('Viewer: initComponent()');
         this.callParent(arguments);
         this.on('tabchange', function (tabPanel, newCard, oldCard) {
             //this handles the user selecting a tab and updates the history token appropriately

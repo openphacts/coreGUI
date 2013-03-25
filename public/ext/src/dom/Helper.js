@@ -1,7 +1,11 @@
+//@tag dom,core
+//@define Ext.DomHelper
+//@define Ext.core.DomHelper
+//@require Ext.dom.AbstractElement-traversal
+
 /**
- * @class Ext.dom.Helper
- * @extends Ext.dom.AbstractHelper
- * @alternateClassName Ext.DomHelper
+ * @class Ext.DomHelper
+ * @extends Ext.dom.Helper
  * @alternateClassName Ext.core.DomHelper
  * @singleton
  *
@@ -160,8 +164,16 @@ var afterbegin = 'afterbegin',
         beforeend: ['BeforeEnd', 'lastChild']
     };
 
+/**
+ * The actual class of which {@link Ext.DomHelper} is instance of.
+ * 
+ * Use singleton {@link Ext.DomHelper} instead.
+ * 
+ * @private
+ */
 Ext.define('Ext.dom.Helper', {
     extend: 'Ext.dom.AbstractHelper',
+    requires:['Ext.dom.AbstractElement'],
 
     tableRe: /^table|tbody|tr|td$/i,
 

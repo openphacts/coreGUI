@@ -1,3 +1,8 @@
+//@tag dom,core
+//@require Ext.dom.Element-scroll
+//@define Ext.dom.Element-style
+//@define Ext.dom.Element
+
 /**
  * @class Ext.dom.Element
  */
@@ -341,7 +346,7 @@ Element.override({
      * Set the opacity of the element
      * @param {Number} opacity The new opacity. 0 = transparent, .5 = 50% visibile, 1 = fully visible, etc
      * @param {Boolean/Object} [animate] a standard Element animation config object or `true` for
-     * the default animation (`{duration: .35, easing: 'easeIn'}`)
+     * the default animation (`{duration: 350, easing: 'easeIn'}`)
      * @return {Ext.dom.Element} this
      */
     setOpacity: function(opacity, animate) {
@@ -708,9 +713,19 @@ Element.override({
 
 Element.prototype.styleHooks = styleHooks = Ext.dom.AbstractElement.prototype.styleHooks;
 
-if (Ext.isIE6) {
+if (Ext.isIE6 || Ext.isIE7) {
     styleHooks.fontSize = styleHooks['font-size'] = {
         name: 'fontSize',
+        canThrow: true
+    };
+    
+    styleHooks.fontStyle = styleHooks['font-style'] = {
+        name: 'fontStyle',
+        canThrow: true
+    };
+    
+    styleHooks.fontFamily = styleHooks['font-family'] = {
+        name: 'fontFamily',
         canThrow: true
     };
 }

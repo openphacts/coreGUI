@@ -10,3 +10,5 @@ Gemfile.lock
 /nbproject/*
 /public/chemspider/lib/third/ketcher/nbproject/private/
 /.idea/*
+/config/database.yml
+*~

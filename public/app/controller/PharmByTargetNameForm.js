@@ -1,116 +1,146 @@
 Ext.define('LSP.controller.PharmByTargetNameForm', {
-    extend:'Ext.app.Controller',
+    extend: 'LSP.controller.grids.DynamicGrid',
 
-    views:['pharm_by_target_name2.PharmByTargetNameForm'],
+    views: ['pharm_by_target_name2.PharmByTargetNameForm', 'pharm_by_target_name2.PharmByTargetNameScrollingGrid'],
+    // views:['pharm_by_target_name2.PharmByTargetNameForm', 'pharm_by_target_name2.PharmByTargetNameGrid'],
+    // stores: ['LDA.store.TargetPharmacologyPaginatedStore'],
+    refs: [{
+        ref: 'gridView', // reference to the view
+        selector: '#pharmByTargetNameGrid'
+    }, {
+        ref: 'formView',
+        selector: 'PharmByTargetNameForm'
+    }, {
+        ref: 'lookup',
+        selector: 'conceptWikiProteinLookup'
+    }, {
+        ref: 'submitButton',
+        selector: '#pharmByTargetSubmit_id'
 
-    refs:[
-        {
-            ref:'gridView', // reference to the view
-            selector:'#pharmByTargetGrid_id'
-        },
-        {
-            ref:'formView',
-            selector:'PharmByTargetNameForm'
-        },
-        {
-            ref:'lookup',
-            selector:'conceptWikiProteinLookup'
-        },
-        {
-            ref:'submitButton',
-            selector:'#pharmByTargetSubmit_id'
+    }, {
+        ref: 'filterContainer',
+        selector: 'PharmByTargetNameForm #filterSelectorContainer_id'
+    }, {
+		ref: 'unitsCombo',
+		selector: 'PharmByTargetNameForm #unit_combobox_id'
+    }, {
+          ref: 'tsvDownloadButton',
+          selector: 'PharmByTargetNameForm #tsvDownloadProxy_id'
+        }],
+    filters: undefined,
+    current_uri: undefined,
 
-        }
-    ],
-
-    init:function () {
+    init: function() {
+        console.log('PharmByTargetNameForm: init()');
         this.control({
-            'PharmByTargetNameForm button[action=query_pharm_by_target_name]':{
-                click:this.submitQuery
+            'PharmByTargetNameForm button[action=query_pharm_by_target_name]': {
+                click: this.submitQuery
             },
-            'PharmByTargetNameForm conceptWikiProteinLookup':{
-                select:this.enableSubmit
+            'PharmByTargetNameForm conceptWikiLookup': {
+                select: this.enableSubmit,
+                matchingconcept: this.enableSubmit
             },
-            'PharmByTargetNameForm':{
-                afterrender:this.prepGrid,
-                historyToken:this.handleHistoryToken
+            'PharmByTargetNameForm': {
+                afterrender: this.prepGrid,
+                historyToken: this.handleHistoryToken
+            },
+            'PharmByTargetNameForm button[action=add_filter_form]': {
+                click: this.addFilterForm
+            },
+            'PharmByTargetNameForm button[action=add_completed_organism_filter]': {
+                click: this.addCompletedOrganismFilter
+            },
+            'PharmByTargetNameForm button[action=add_completed_activity_filter]': {
+                click: this.addCompletedActivityFilter
+            },
+            'PharmByTargetNameForm #provId': {
+                change: this.onProvChange
+            },
+            'PharmByTargetNameForm #activity_combobox_id': {
+                select: this.comboSelect,
+                scope: this
+            },
+'PharmByTargetNameForm #tsvDownloadProxy_id': {
+                click: this.prepareTSVDownload
             }
         });
     },
 
+   comboSelect: function(combo, records, eOpts) {
+	var activity = records[0].get('about');
+	var me = this;
+	// only fetch new units if the selected activity is different than before
+	if (this.current_activity_combo_select != activity) {
+		var units_store = this.getUnitsCombo().getStore();
+		this.getUnitsCombo().clearValue();
+		units_store.removeAll();
+		this.current_activity_combo_select = activity;
+		this.getUnitsCombo().setLoading('Fetching units...');
+		var filter_units_store = Ext.create('LDA.store.FilterUnitsStore',{activity_type: activity});
+        	filter_units_store.load(function(records, operation, success) {
+				store_records = records;
+				store_operation = operation;
+				store_success = operation.success;
+				if (store_success) {
+				    Ext.each(records, function (record, index) {
+						unit_abbr = LDA.helper.LDAConstants.LDAUnits[record.data.unit];
+						unit_abbr == null ? unit_abbr = 'unknown abbreviation' : ''
+                        unit = Ext.create('LSP.model.Unit', {unit: record.data.unit+ ' (' + unit_abbr + ')', name: record.data.unit});
+                        units_store.add(unit);	
+				    });
+				}
+				me.getUnitsCombo().setLoading(false);
+        	});
+	}
+   },
 
-    handleHistoryToken:function (historyTokenObject) {
+    handleHistoryToken: function(historyTokenObject) {
         if (historyTokenObject.u) {
-            //gets ref to
             var dg = this.getGridView();
             var store = dg.store;
-            if (historyTokenObject.u != store.proxy.extraParams.protein_uri) {
-                this.getFormView().getForm().setValues({
-                    protein_uri:historyTokenObject.u
-                });
-//                console.log(this.getFormView().getValues());
-                store.proxy.extraParams.protein_uri = historyTokenObject.u;
-                this.getFormView().setLoading(true);
-                store.load({params:{offset:0, limit:100}});
+            if (historyTokenObject.u != store.proxy.extraParams.uri) {
+                // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
+                var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
+                var cw_dropdown = this.getFormView().down('conceptWikiLookup');
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                // Setting the uri for the LDA search
+                this.current_uri = historyTokenObject.u;
+                store.proxy.extraParams.uri = historyTokenObject.u;
+                store.proxy.reader.uri = historyTokenObject.u;
+                //store.setURI(historyTokenObject.u);
+                dg.setLoading(true);
+                this.fetchTotalResults();
+                // store.load();
             }
         } else if (historyTokenObject.s) {
-            var lookup = this.down('conceptWikiProteinLookup');
+            var lookup = this.getLookup();
             lookup.setRawValue(historyTokenObject.s);
             lookup.doQuery(historyTokenObject.s);
         }
-
-
     },
 
-    prepGrid:function () {
-//        console.log('PharmByTargetNameForm: prepGrid()');
-        var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        var grid_view = this.getGridView();
-        var add_next_button = Ext.ComponentQuery.query('PharmByTargetNameForm dynamicgrid3 #nextRecords')[0];
-        add_next_button.on('click', function () {
-            var form_values = add_next_button.up('form').getValues();
-            grid_controller.addNextRecords(grid_view, form_values);
-        });
-
-        grid_view.store.proxy.actionMethods = {read:'POST'};
-        grid_view.store.proxy.api.read = grid_view.readUrl;
-        grid_view.store.proxy.params = {offset:0, limit:100};
-
-        grid_view.store.on('load', this.storeLoadComplete, this);
+    getCountStore: function() {
+        return Ext.create('LDA.store.TargetPharmacologyCountStore');
     },
 
-    storeLoadComplete:function (store, records, success) {
-//        console.log('PharmByTargetNameForm: storeLoadComplete()');
-        var controller = this.getController('LSP.controller.grids.DynamicGrid');
-        var grid_view = this.getGridView();
-        var form = this.getFormView();
-        var button = this.getSubmitButton();
-
-        controller.storeLoad(grid_view, success);
-        form.doLayout();
-        button.enable();
-        grid_view.doLayout();
-        grid_view.doComponentLayout();
-        form.setLoading(false);
-    },
-
-    createGridColumns:function () {
-        var grid_controller = this.getController('LSP.controller.grids.DynamicGrid');
-        var this_gridview = this.getGridView();
-        grid_controller.storeLoad(this_gridview);
-    },
-
-
-    enableSubmit:function (proteinLookup) {
-        var button = this.getSubmitButton();
-        button.enable();
-    },
-
-    submitQuery:function (button) {
+    submitQuery: function(button) {
+		var dg = this.getGridView();
+		var store = dg.store;
+		// remove the sort column if there was any
+        store.sort_column = undefined;
         var form = button.up('form');
         button.disable();
         var values = form.getValues();
-        Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
+        if (this.current_uri == values.protein_uri) {
+            store.proxy.extraParams.uri = this.current_uri;
+            store.proxy.reader.uri = this.current_uri;
+            //store.setURI(this.current_uri);
+            dg.setLoading(true);
+            //loading the store is done after the total results are fetched
+            this.fetchTotalResults();
+        } else {
+            Ext.History.add('!p=PharmByTargetNameForm&u=' + values.protein_uri);
+        }
     }
-})
-;
+
+});

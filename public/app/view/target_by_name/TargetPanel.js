@@ -40,7 +40,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'target_image',
                                 width:150,
                                 height:150,
-                                src:'/images/target_placeholder.png'
+                                src:'./assets/target_placeholder.png'
                             },
                             {
                                 xtype:'panel',
@@ -51,16 +51,18 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                 itemId:'textDataPanel',
                                 layout:'anchor',
                                 items:[
-                                    {xtype:'displayfield', anchor:'100%', itemId:'target_name', fieldCls:'target-title'},
-                                    {xtype:'button', text:'Pharmacology Data', itemId:'pharmTargetButton', cls:'target-pharm-button'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'organism', fieldLabel:'Organism', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'description', fieldLabel:'Description', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'synonyms', fieldLabel:'Synonyms', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'specificFunction', fieldLabel:'Specific Function', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'cellularLocations', fieldLabel:'Cellular Locations', cls:'target-field-label'},
-                                    {xtype:'displayfield', anchor:'100%', itemId:'keywords', fieldLabel:'Keywords', cls:'target-field-label'}            ,
-                                    {xtype:'displayfield', anchor:'100%', itemId:'pdbIdPage', fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'prefLabel',renderer: provenanceTargetSummaryRenderer, fieldCls:'target-title'},
+                                    {xtype:'button', text:'Pharmacology Data', margin: '15 0 20 0', itemId:'pharmTargetButton', cls:'target-pharm-button'},
+                                    {xtype:'displayfield', anchor:'100%', itemId:'target_type', fieldLabel:'Target Type',renderer: provenanceTargetSummaryRenderer, cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'organism', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Organism', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'description', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Description', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'synonyms', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Synonyms', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'specific_function',fieldLabel:'Specific Function', renderer: provenanceTargetSummaryRenderer, cls:'target-descriptions'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', itemId:'cellular_function', renderer: provenanceTargetSummaryRenderer,fieldLabel:'Cellular Function', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'keywords', fieldLabel:'Keywords', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'}            ,
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'pdb_id_page', renderer: provenanceTargetSummaryRenderer,fieldLabel:'PDB Entry', cls:'target-field-label'},
+                                    {xtype:'displayfield', anchor:'100%', padding:'10px 0 0 0', maxWidth:600, itemId:'cellular_location', fieldLabel:'Cellular Location', renderer: provenanceTargetSummaryRenderer,cls:'target-field-label'},
+
                                     {
                                         xtype:'panel',
                                         border:0,
@@ -69,9 +71,10 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
                                         layout:'column',
                                         bodyPadding:30,
                                         items:[
-                                            {xtype:'displayfield', itemId:'molecularWeight', columnWidth:0.33, fieldLabel:'Molecular Weight', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'numberOfResidues', columnWidth:0.33, fieldLabel:'Number of Residues', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
-                                            {xtype:'displayfield', itemId:'theoreticalPi', columnWidth:0.33, fieldLabel:'Theoretical Pi', cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' }
+                                            {xtype:'displayfield', itemId:'molecular_weight', columnWidth:0.33, fieldLabel:'Molecular Weight', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'number_of_residues', columnWidth:0.33, fieldLabel:'Number of Residues', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+                                            {xtype:'displayfield', itemId:'theoretical_pi', columnWidth:0.33, fieldLabel:'Theoretical Pi', renderer: provenanceTargetSummaryRenderer,cls:'target-field-bottom', fieldCls:'target-field-bottom-field', labelAlign:'top' },
+
                                         ]
                                     }
                                 ]
@@ -94,8 +97,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             }
         ];
 
-        var store = Ext.data.StoreManager.lookup('Targets');
-        store.addListener('load', this.showData, this);
+        // var store = Ext.create('LDA.store.TargetStore');
+        // store.addListener('load', this.showData, this);
         this.callParent(arguments);
     },
 
@@ -105,7 +108,7 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
             field.hide();
         }, this);
         var img = this.down('#target_image');
-        img.setSrc('/images/target_placeholder.png');
+        img.setSrc('./assets/target_placeholder.png');
         this.doLayout();
     },
 
@@ -118,13 +121,19 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
     },
 
     showData:function (store, records, successful) {
+		console.log('LSP.view.target_by_name.TargetPanel: showData()');
         if (successful) {
-            if (records.length > 0) {
+
+            var td = store.first().data;
+
+            if (records.length > 0 && td.hasOwnProperty('prefLabel')) { // TEMP FIX -- new coreAPI's returning an empty object
+
                 var dp = this.down('#dp');
                 var msg = this.down('#msg');
                 msg.setVisible(false);
                 this.setValues(store.first());
                 dp.setVisible(true);
+
             } else {
                 this.showMessage('No records found within OPS for this search');
             }
@@ -143,15 +152,30 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         }
     },
 
+    // addKeywords not used, just rendered normally
     addKeywords:function (keywords) {
-        var bits = keywords.split(' , ');
+        var bits = keywords.split(',');
         var keywordDisplayField = this.down('#keywords');
         var bodyEl = keywordDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:'{kw}'});
+
+        var output;
+        if (target_name_provenance) {
+            var source = recordData.data['keywords_src'];
+            var sourceItem = recordData.data['keywords_item']
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{kw} <a href="' + sourceItem + '">' + '<img src="' + cls + '" title=' +  source +  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{kw}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'keyword', html:output});
         Ext.each(bits, function (keyword) {
-            tpl.append(bodyEl, {kw:keyword});
+            tpl.append(bodyEl, {kw:keyword.trim()});
         }, this);
         keywordDisplayField.show();
     },
@@ -161,7 +185,21 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = organismDisplayField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'{org}'});
+
+        var output;
+        if (target_name_provenance) {
+            var sourceItem = recordData.data['organism_item'];
+            var source = recordData.data['organism_src'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{org} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{org}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'organism', html:'output'});
         tpl.append(bodyEl, {org:organism});
         organismDisplayField.show();
     },
@@ -172,7 +210,21 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         var bodyEl = synonymsField.bodyEl;
         var domElem = bodyEl.dom;
         this.clearDomBelow(domElem);
-        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:'{syn}'});
+
+        var output;
+        if (target_name_provenance) {
+            var source = recordData.data['synonyms_src'];
+            var sourceItem = recordData.data['synonyms_item'];
+            var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+            cls += 'Icon';
+            cls = '/assets/' + cls + '.png';
+
+            output = '{syn} <a href="' + sourceItem + '" target="_blank">' + '<img src="' + cls + '" title=' +  source+  ' height="15" width="15"/>' + '</a>';
+        } else {
+            output = '{syn}'
+        }
+
+        var tpl = Ext.DomHelper.createTemplate({tag:'div', cls:'synonym', html:output});
         Ext.each(bits, function (synonym) {
             tpl.append(bodyEl, {syn:synonym});
         }, this);
@@ -181,62 +233,153 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
 
     addPDBImage:function (pdbIdPage) {
         //example http://www.pdb.org/pdb/explore/explore.do?structureId=1HOF
-//        http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
-        var stringURL = new String(pdbIdPage);
+        //http://www.rcsb.org/pdb/images/1HOF_asr_r_250.jpg
+        //console.log(" pdbIdPage " + pdbIdPage);
+
+        var bits = new String(pdbIdPage);
+        var finalPDBValue = new String();
+        var pdbID, firstPDB;
+        bits = bits.split(",");
+
+        Ext.each(bits, function (item, index) {
+            //console.log(" item " + item);
+            pdbID = item.split('/').pop();
+            if (index == 0) {
+                firstPDB = pdbID;
+            }
+            finalPDBValue +=  '<a target=\'_blank\' href=\'' + item + '\'>' + pdbID + '</a>   '
+
+        }, this);
+
+        //console.log(" pdb " + finalPDBValue);
         var img = this.down('#target_image');
-        var pdbID = stringURL.substr(stringURL.lastIndexOf('=') + 1);
-        var pdbField = this.down('#pdbIdPage');
-        pdbField.setRawValue('<a target=\'_blank\' href=\'' + pdbIdPage + '\'>' + pdbID + '</a>');
+        var pdbField = this.down('#pdb_id_page');
+        pdbField.setRawValue(finalPDBValue);
         pdbField.show();
-        img.setSrc('http://www.rcsb.org/pdb/images/' + pdbID + '_asr_r_250.jpg');
+        img.setSrc('http://www.rcsb.org/pdb/images/' + firstPDB + '_asr_r_250.jpg');
         img.show();
     },
 
     setFieldValue:function (fieldId, value) {
         if (fieldId == 'synonyms') {
-//            console.log('synonyms');
-            this.addSynonyms(value);
+        //console.log('synonyms');
+            if (value != null) {
+                var synonymsfield = this.down('#' + fieldId);
+                var syn = new String(value);
+                var synonymsValue = syn.replace(new RegExp(" ,", 'g'),",");
+                synonymsfield.setValue(synonymsValue);
+                synonymsfield.show();
+            }
         }
         else if (fieldId == 'keywords') {
-//            console.log('keywords');
-            this.addKeywords(value);
+            if (value != null) {
+                var keywordfield = this.down('#' + fieldId);
+                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                keywordfield.setValue(keywordValue);
+                keywordfield.show();
+            }
         }
         else if (fieldId == 'organism') {
-//            console.log('organism');
-            this.addOrganism(value);
+            if (value != null) {
+                this.addOrganism(value);
+            }
         }
-        else if (fieldId == 'pdbIdPage') {
-//            console.log('synonyms');
-            this.addPDBImage(value);
+        else if (fieldId == 'pdb_id_page') {
+			if (value != "" && value != null) {
+				this.addPDBImage(value);
+			}
+        }
+        else if (fieldId == 'cellular_location') {
+            if (value != null) {
+                var cellfield = this.down('#' + fieldId);
+                var cellValue = value.replace(new RegExp(" ,", 'g'),",");
+                cellfield.setValue(cellValue);
+                cellfield.show();
+            }
         }
         else {
 //            console.log('standard field: ' + fieldId + ' : ' + value);
             var field = this.down('#' + fieldId);
-            field.setValue(value);
-            field.show();
+			if (field != null) {
+				field.setValue(value);
+	            field.show();
+			}
         }
     },
-
 
     setValues:function (target) {
         this.resetAllFields();
         var td = target.data;
+        recordData = target;
 
         var pharmButton = this.down('#pharmTargetButton');
         pharmButton.hide();
         pharmButton.setHandler(function () {
-                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.protein_uri);
+                Ext.History.add('!p=PharmByTargetNameForm&u=' + target.store.proxy.extraParams.uri);
             }
         );
         pharmButton.show();
 
         for (var prop in td) {
             if (td.hasOwnProperty(prop)) {
-//                console.log(prop);
-                this.setFieldValue(prop, td[prop]);
+               if (td[prop]){
+                   //console.log(prop);
+                   this.setFieldValue(prop, td[prop]);
+               }
+
             }
         }
         this.doLayout();
+    },
+
+    toggleProv:function (val) {
+        target_name_provenance = val;
+        console.log(" Show provenance : " + target_name_provenance);
     }
 
 });
+
+var target_name_provenance = false;
+var recordData;
+
+function provenanceTargetSummaryRenderer(value, field) {
+	//console.log("Target by name provenance renderer");
+
+    var sources = new Array();
+    sources['http://www.chemspider.com'] = "ChemSpider";
+    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
+    sources['http://www.conceptwiki.org'] = "ConceptWiki";
+    sources['http://purl.uniprot.org'] = "UniProt";
+
+    if (target_name_provenance) {
+
+        var recdata = field.itemId;
+        var itemdata = recdata + '_item';
+        recdata += '_src';
+
+        var source = recordData.data[recdata];
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
+
+        cls += LDAProvenanceMode;
+        cls += 'Summary';
+
+        var output;
+        //console.log(iconCls);
+        // output =  '<div class="' + cls + '">' + value  + '   <a href="' + source + '">' + '<img class="' + iconCls + '" height="15" width="15"/>' + '</a>'+ '</div>';
+        output =  '<div>' + value  + '   <a href="' + recordData.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" title=' + sources[source] +  ' height="15" width="15"/>' + '</a>'+ '</div>';
+
+        return output;
+
+    } else {
+
+        return value;
+
+    }
+
+};

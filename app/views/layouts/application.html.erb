@@ -3,17 +3,52 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>Open PHACTS</title>
-  <link rel="icon" type="image/png" href="/images/ops_favicon.png">
-  <%= stylesheet_link_tag :all %>
-  <%= stylesheet_link_tag '/ext/resources/css/ext-all.css' %>
+  <link rel="icon" type="image/png" href="favicon.ico">
 
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag '/ext/resources/css/ext-all.css' %>
+<!-- TODO Until the sim search talks directly to the api from the js side create the url here -->
+  <script type="text/javascript">
+    var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
+    var tsv_download_url = '<%= tab_separated_file_core_api_calls_url -%>';
+    var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
+    var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
+    var cwBaseUrl = '<%= AppSettings.config["cw"]["url"] -%>';
+    var explorer_version = '<%= app_version %>';
+    var ims_status_url = '<%= ims_status_core_api_calls_url -%>?';
+    var tsv_create_url = '<%= tab_separated_file_core_api_calls_url -%>?';
+    var tsv_status_url = '<%= tsv_status_core_api_calls_url -%>?';
+    var tsv_download_url = '<%= tsv_download_core_api_calls_url -%>?';
+  </script>
+<!--[if lt IE 7]>
+<p div class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
+<![endif]-->
+  <!-- console logging will not crash browsers that don't support it -->
+  <!-- see https://github.com/andyet/ConsoleDummy.js/ -->
+  <%= javascript_include_tag '/ConsoleDummy.min.js' %>
   <% if ENV['RAILS_ENV'] == 'development' %>
       <%= javascript_include_tag '/ext/ext-all-debug.js' %>
-      <%= javascript_include_tag 'prototype.js' %>
+	<script type="text/javascript">
+	    Ext.Loader.setConfig({
+	      enabled: true,
+	      paths: {
+	          'CS':'chemspider/lib','CW':'conceptwiki/lib','LDA':'LinkedDataAPIParser/lib'
+	      }
+	    });
+	</script>
+      <%= javascript_include_tag "application" %>
       <%= javascript_include_tag '/app.js' %>
   <% else %>
       <%= javascript_include_tag '/ext/ext-all.js' %>
-      <%= javascript_include_tag 'prototype.js' %>
+	<script type="text/javascript">
+	    Ext.Loader.setConfig({
+	      enabled: true,
+	      paths: {
+	          'CS':'chemspider/lib','CW':'conceptwiki/lib','LDA':'LinkedDataAPIParser/lib'
+	      }
+	    });
+	</script>
+      <%= javascript_include_tag "application" %>
       <%= javascript_include_tag '/all-classes.js' %>
       <%= javascript_include_tag '/app-all.js' %>
   <% end %>
@@ -21,6 +56,45 @@
   <%= javascript_include_tag '/app/view/ux/exporter/Exporter.js' %>
   <%= javascript_include_tag '/downloadify/downloadify.min.js' %>
   <%= javascript_include_tag '/downloadify/swfobject.js' %>
+
+  <!-- Add string trim function for any browsers that don't support it -->
+
+  <script type="text/javascript">
+//TODO remove this when the firefox bug is sorted
+// Firefox 18 bug - https://bugzilla.mozilla.org/show_bug.cgi?id=828319
+// fix by http://www.sencha.com/forum/member.php?5833-Holger & http://www.sencha.com/forum/member.php?60876-Tyler___Durden
+// from http://www.sencha.com/forum/showthread.php?253345-FF-18-problem
+
+Ext.onReady(function(){
+
+   if (Ext.firefoxVersion >= 18) {
+      var noArgs = [];
+      Ext.override(Ext.Base, {
+      callParent : function(args) {
+         var method, superMethod = (method = this.callParent.caller) && (method.$previous || ((method = method.$owner ?
+method :
+method.caller) && method.$owner.superclass[method.$name]));
+
+         // Workarround for Firefox 18. I don't know why this works, but it does. Perhaps functions wich have
+         // a try-catch block are handled differently - additional comment by IAN - functions with try catch are not compiled by Ion Monkey
+         try {
+         } catch (e) {
+         }
+
+         return superMethod.apply(this, args || noArgs);
+      }
+     });
+  }
+});
+  </script>
+
+  <script type="text/javascript">
+    if (!String.prototype.trim) {
+      String.prototype.trim = function() {
+        return this.replace(/^\s+|\s+$/g,'');
+      }
+    }
+  </script>
 
   <%= csrf_meta_tag %>
 </head>

@@ -1,3 +1,8 @@
+//@tag extras,core
+//@require Format.js
+//@define Ext.util.TaskManager
+//@define Ext.TaskManager
+
 /**
  * Provides the ability to execute one or more arbitrary tasks in a asynchronous manner.
  * Generally, you can use the singleton {@link Ext.TaskManager} instead, but if needed,
@@ -26,7 +31,7 @@
  *
  * To end a running task:
  * 
- *      task.destroy();
+ *      Ext.TaskManager.stop(task);
  *
  * If a task needs to be started and stopped repeated over time, you can create a
  * {@link Ext.util.TaskRunner.Task Task} instance.

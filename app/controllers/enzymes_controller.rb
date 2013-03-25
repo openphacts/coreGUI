@@ -44,19 +44,48 @@ class EnzymesController < ApplicationController
         nodes = Array.new
       
         if params[:node] == "root"
-          root = Enzyme.find(1)
-          truncks = root.children
-          unless truncks.nil?
-            truncks.each { |d|
-              nodes.push( { :name => d.name, :id => d.id, :ec_number => d.ec_number, :leaf => d.has_children? ? false : true, :cls => d.has_children? ? 'folder' : 'file'} )
+
+          domain = AppSettings.config["tsv"]["tsv_url"]
+          path = AppSettings.config["enzyme"]["root_url"]
+          url_params = "_format=json"
+          url_path = "#{path}?".concat(url_params)
+          begin
+            response = Net::HTTP.get(domain, url_path)
+          rescue Exception => e
+            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+          end
+          unless response.nil?
+            json = JSON.parse(response)
+            json["result"]["primaryTopic"]["rootNode"].each { |d|
+              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
           end
         else
-          node = Enzyme.find(params[:node])
-          node.children.each { |d|
-            nodes.push( { :name => d.name, :id => d.id, :ec_number => d.ec_number, :leaf => d.has_children? ? false : true, :cls => d.has_children? ? 'folder' : 'file'} )
-          }
+          domain = AppSettings.config["tsv"]["tsv_url"]
+          path = AppSettings.config["enzyme"]["class_url"]
+          url_params = "uri=" + CGI::escape("http://purl.uniprot.org/enzyme/" + params["node"]) + "&_format=json"
+          url_path = "#{path}?".concat(url_params)
+          begin
+            response = Net::HTTP.get(domain, url_path)
+          rescue Exception => e
+            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+          end 
+          unless response.nil?
+            json = JSON.parse(response)
+            #check whether there is one or multiple sub enzymes, the response format changes
+            #depending on this ie is it 'has_member' => [{....}] or just 'has_member' => {....}
+            if json["result"]["primaryTopic"]["has_member"].class.eql?(Hash)             
+              about = json["result"]["primaryTopic"]["has_member"]["_about"]
+              name = json["result"]["primaryTopic"]["has_member"]["name"]
+              nodes.push( { :name => name, :ec_number => about.split("/").last, :id => about.split("/").last, :leaf => about[-1,1].eql?("-") ? false : true, :cls => about[-1,1].eql?("-") ? 'folder' : 'file' } )
+            else
+            json["result"]["primaryTopic"]["has_member"].each { |d|
+              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+            }
+          end
+          end
         end
+
         render :json => construct_column_objects(nodes).to_json       
       }
     end

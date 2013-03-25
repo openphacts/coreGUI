@@ -1,3 +1,6 @@
+//@tag foundation,core
+//@require Function.js
+
 /**
  * @author Jacky Nguyen <jacky@sencha.com>
  * @docauthor Jacky Nguyen <jacky@sencha.com>
@@ -568,6 +571,7 @@ Ext.merge = Ext.Object.merge;
 
 /**
  * @private
+ * @member Ext
  */
 Ext.mergeIf = Ext.Object.mergeIf;
 

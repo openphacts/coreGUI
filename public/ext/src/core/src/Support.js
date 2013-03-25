@@ -1,3 +1,7 @@
+//@tag extras,core
+//@require perf/Monitor.js
+//@define Ext.Supports
+
 /**
  * @class Ext.is
  * 
@@ -378,7 +382,7 @@ Ext.supports = {
         },
 
         /**
-         * @property SVG True if the device supports SVG
+         * @property Svg True if the device supports SVG
          * @type {Boolean}
          */
         {
@@ -400,7 +404,7 @@ Ext.supports = {
         },
 
         /**
-         * @property VML True if the device supports VML
+         * @property Vml True if the device supports VML
          * @type {Boolean}
          */
         {

@@ -1,3 +1,8 @@
+//@tag dom,core
+//@require Element.js
+//@define Ext.dom.Element-alignment
+//@define Ext.dom.Element
+
 /**
  * @class Ext.dom.Element
  */
@@ -323,7 +328,7 @@ Ext.dom.Element.override((function() {
             }
             var thisRegion = this.getRegion(),
                     vector = [0, 0],
-                    shadowSize = this.shadow && this.shadow.offset,
+                    shadowSize = (this.shadow && !this.shadowDisabled) ? this.shadow.getShadowSize() : undefined,
                     overflowed = false;
 
             // Shift this region to occupy the proposed position
@@ -332,9 +337,8 @@ Ext.dom.Element.override((function() {
             }
 
             // Reduce the constrain region to allow for shadow
-            // TODO: Rewrite the Shadow class. When that's done, get the extra for each side from the Shadow.
             if (shadowSize) {
-                constrainTo.adjust(0, -shadowSize, -shadowSize, shadowSize);
+                constrainTo.adjust(shadowSize[0], -shadowSize[1], -shadowSize[2], shadowSize[3]);
             }
 
             // Constrain the X coordinate by however much this Element overflows

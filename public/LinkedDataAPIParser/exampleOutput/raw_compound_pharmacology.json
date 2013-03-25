@@ -1,0 +1,157 @@
+{
+  "format": "linked-data-api",
+  "version": "0.2",
+  "result": {
+    "_about": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+    "definition": "http://ops.few.vu.nl/api-config",
+    "extendedMetadataVersion": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5&_metadata=all%2Cviews%2Cformats%2Cexecution%2Cbindings%2Csite",
+    "primaryTopic": {
+      "_about": "http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+      "inDataset": "http://www.conceptwiki.org",
+      "exactMatch": [
+        "http://www.conceptwiki.org/concept/38932552-111f-4a4e-a46a-4ed1d7bdf9d5",
+        {
+          "_about": "http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/DB00398",
+          "inDataset": "http://linkedlifedata.com/resource/drugbank",
+          "drugType": "approved",
+          "genericName": "Sorafenib"
+        },
+        {
+          "_about": "http://rdf.chemspider.com/187440",
+          "inchi": "InChI=1S/C21H16ClF3N4O3/c1-26-19(30)18-11-15(8-9-27-18)32-14-5-2-12(3-6-14)28-20(31)29-13-4-7-17(22)16(10-13)21(23,24)25/h2-11H,1H3,(H,26,30)(H2,28,29,31)",
+          "inchikey": "MLDQJTXFUGDVEO-UHFFFAOYSA-N",
+          "smiles": "CNC(=O)c1cc(ccn1)Oc2ccc(cc2)NC(=O)Nc3ccc(c(c3)C(F)(F)F)Cl",
+          "inDataset": "http://www.chemspider.com"
+        },
+        {
+          "_about": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+          "full_mwt": 464.825,
+          "inDataset": "http://data.kasabi.com/dataset/chembl-rdf",
+          "activity": [
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650177",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650168",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325048",
+                "target": {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t30003",
+                  "title": "Serine/threonine-protein kinase PLK4",
+                  "assay_organism": "Homo sapiens"
+                },
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "nM",
+              "standardValue": 3400,
+              "activity_type": "Kd",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650015",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325057",
+                "target": {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t12947",
+                  "title": "Cyclin-dependent kinase 5",
+                  "assay_organism": "Homo sapiens"
+                },
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "nM",
+              "standardValue": 6200,
+              "activity_type": "Kd",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650114",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325017",
+                "target": {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t30037",
+                  "title": "MAP kinase signal-integrating kinase 2",
+                  "assay_organism": "Homo sapiens"
+                },
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "nM",
+              "standardValue": 250,
+              "activity_type": "Kd",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1650150",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a325031",
+                "target": {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t30020",
+                  "title": "Ephrin type-B receptor 1",
+                  "assay_organism": "Homo sapiens"
+                },
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "nM",
+              "standardValue": 1700,
+              "activity_type": "Kd",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1442151",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a311891",
+                "target": [
+                  {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t11409",
+                    "title": "Dual specificity mitogen-activated protein kinase kinase 1",
+                    "assay_organism": "Homo sapiens"
+                  },
+                  {
+                    "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t10904",
+                    "title": "Serine/threonine-protein kinase RAF",
+                    "assay_organism": "Homo sapiens"
+                  }
+                ],
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "nM",
+              "standardValue": 3300,
+              "activity_type": "IC50",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            },
+            {
+              "_about": "http://data.kasabi.com/dataset/chembl-rdf/activity/a1442152",
+              "forMolecule": "http://data.kasabi.com/dataset/chembl-rdf/molecule/m276734",
+              "onAssay": {
+                "_about": "http://data.kasabi.com/dataset/chembl-rdf/assay/a311323",
+                "target": {
+                  "_about": "http://data.kasabi.com/dataset/chembl-rdf/target/t80928",
+                  "title": "HCT-116 (Colon carcinoma cells)",
+                  "assay_organism": "Homo sapiens"
+                },
+                "assay_organism": "Homo sapiens"
+              },
+              "relation": "=",
+              "standardUnits": "uM",
+              "standardValue": 5.4,
+              "activity_type": "GI50",
+              "inDataset": "http://data.kasabi.com/dataset/chembl-rdf"
+            }
+          ]
+        }
+      ],
+      "prefLabel": "Sorafenib",
+      "isPrimaryTopicOf": "http://ops.few.vu.nl/compound/pharmacology?uri=http%3A%2F%2Fwww.conceptwiki.org%2Fconcept%2F38932552-111f-4a4e-a46a-4ed1d7bdf9d5"
+    }
+  }
+}

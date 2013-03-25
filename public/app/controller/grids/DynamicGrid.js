@@ -31,269 +31,373 @@
  #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  #
  ########################################################################################*/
-
+//TODO move this to a constants file
+CSV_EXPORT_LIMIT = 10000;
 Ext.define('LSP.controller.grids.DynamicGrid', {
-    extend:'Ext.app.Controller',
+    extend: 'Ext.app.Controller',
 
-    views:[
-        'dynamicgrid.DynamicGrid3'
-    ],
+    views: ['dynamicgrid.DynamicGrid'],
 
-    models:['DynamicGrid'],
+    models: ['DynamicGrid', 'Unit'],
 
-    refs:[
-        {
-            ref:'gridView',
-            selector:'dynamicgrid3'
-        }
-    ],
+    refs: [{
+        ref: 'gridView',
+        selector: 'dynamicgrid'
+    }],
+    
+    current_jobs: new Array(),
 
-    init:function () {
+    init: function() {
+        console.log('DynamicGrid: init()');
         this.control({
-            'dynamicgrid3':{
-                itemdblclick:function (view, record, item, index, e, opts) {
-                    if (record.data.csid_uri !== undefined) {
-                        var csid = record.data.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-                        if (parseInt(csid) >= 1) {
-                            Ext.create('CS.view.CompoundWindow').showCompound(csid);
-                        }
-                    }
-                },
-                itemcontextmenu:function (view, record, itemHTMLElement, index, eventObject, eOpts) {
+            'dynamicgrid': {
+                itemcontextmenu: function(view, record, itemHTMLElement, index, eventObject, eOpts) {
                     eventObject.preventDefault();
-//                    console.log('itemcontextmenu');
+                    //                    console.log('itemcontextmenu');
                     this.getGridView().showMenu(eventObject.getX(), eventObject.getY(), record);
                 }
             },
-            'dynamicgrid3 toolbar #sdfDownloadProxy_id':{
-                click:this.prepSDFile
+            'dynamicgrid toolbar #sdfDownloadProxy_id': {
+                click: this.prepSDFile
             }
         })
     },
-    onLaunch:function () {
-    },
+    onLaunch: function() {},
 
 
-    testThis:function (args) {
-    },
+    testThis: function(args) {},
 
-    addNextRecords:function (this_gridview, extraParams) {
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-        this_gridview.down('#sdfDownload_id').disable();
-        var this_store = this_gridview.store;
-        var this_controller = this;
-        var temp_store = Ext.create('LSP.store.DynamicGrid');
-        // configure copy store:
-        temp_store.proxy.extraParams = extraParams;
-        temp_store.proxy.api.read = this_gridview.readUrl;
-        temp_store.proxy.actionMethods = this_store.proxy.actionMethods;
-        var offset = this_store.data.length + 1;
-        // We load the copy store to get the new records
-        this_gridview.setLoading(true);
-        temp_store.load({params:{ offset:offset, limit:100}});
-        temp_store.on('load', function (temp_store, new_records, success) {
-            if (success === false) {
-                Ext.MessageBox.show({
-                    title:'Error',
-                    msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.ERROR
-                });
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-                this_gridview.setLoading(false);
-                return false;
-            }
-            var idx_start = offset - 1;
-            var row_count = 0;
-            Ext.each(new_records, function (new_record) {
-                new_record.index = idx_start + row_count;
-                row_count++;
-            });
-            this_store.loadRecords(new_records, {addRecords:true});
-            this_gridview.setLoading(false);
-            this_gridview.recordsLoaded = this_store.data.length;
-            if (temp_store.data.length < 100) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                this_gridview.down('#nextRecords').disable();
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_store.data.length);
+    prepareTSVDownload: function() {
+       var me = this;
+       var gridview = this.getGridView();
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
+       Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
+       Ext.each(this.getFilters(), function(filter, index) {
+            if (filter.filterType == "activity") {
+                activity_value_type = gridview.store.getActivityConditionParam();
+                activity_type = gridview.store.activity_type;
+                activity_value = gridview.store.activity_value;
+                activity_unit = gridview.store.activity_unit;
+            } else if (filter.filterType == "organism") {
+                assay_organism = gridview.store.assay_organism;
             }
         });
-
+        uri = gridview.store.proxy.extraParams.uri;
+        total_count = gridview.store.getTotalCount();
+        request_type = gridview.store.REQUEST_TYPE;
+        
+       tsv_request_store.load(
+           {params: {
+               activity_value_type : activity_value_type,
+               activity_type : activity_type,
+               activity_value : activity_value,
+               activity_unit : activity_unit,
+               assay_organism : assay_organism,
+               uri : uri,
+               total_count : total_count,
+               request_type : request_type
+           },
+       callback: function(records, operation, success) {
+           if (success) {
+               console.log('success tsv create');
+               uuid = records[0].data.uuid;
+               me.current_jobs.push(uuid);
+               background_tasks_form = Ext.ComponentQuery.query('#background_tasks_form')[0];
+               background_tasks_form.fireEvent('taskadded', uuid, me.getGridView().getStore().getTypeName());
+           } else {
+               console.log('fail tsv create');
+           }
+       }});
     },
 
-    storeLoad:function (this_gridview, success) {
-        if (success === false) {
+    setTSVDownloadParams: function() {
+        var tsv_download_button = this.getTsvDownloadButton();
+        var gridview = this.getGridView();
+        var tsv_download_params = new Array();
+        Ext.each(this.getFilters(), function(filter, index) {
+            if (filter.filterType == "activity") {
+                tsv_download_params.push("activity_value_type=" + gridview.store.getActivityConditionParam() + "&activity_type=" + gridview.store.activity_type + "&activity_value=" + gridview.store.activity_value + "&activity_unit=" + gridview.store.activity_unit)
+            } else if (filter.filterType == "organism") {
+                tsv_download_params.push("assay_organism=" + gridview.store.assay_organism);
+            }
+        });
+        tsv_download_params.push("uri=" + gridview.store.proxy.extraParams.uri + "&total_count=" + gridview.store.getTotalCount() + "&request_type=" + gridview.store.REQUEST_TYPE);
+        total_params = tsv_download_params.join("&");
+        tsv_download_button.href = tsv_download_url + "?" + total_params
+        tsv_download_button.setParams();
+    },
+
+    addCompletedActivityFilter: function(button) {
+        console.log('DynamicGrid: addCompletedActivityFilter()');
+        activity_value = this.getFilterContainer().down('#activity_combobox_id').getValue();
+        conditions_value = this.getFilterContainer().down('#conditions_combobox_id').getValue();
+        value_value = this.getFilterContainer().down('#value_textfield_id').getValue();
+		unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+		unit_text = this.getFilterContainer().down('#unit_combobox_id').getRawValue();
+        //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+        // TODO unit value check && unit_value != null
+        if (activity_value != null && conditions_value != null && value_value != "" & unit_value != null) {
+            filter = Ext.create('LSP.model.Filter', {
+                activity: activity_value,
+                condition: conditions_value,
+                value: value_value,
+                unit: unit_value,
+                unit_text: unit_text
+            });
+            filter.filterType = "activity";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
+
+            filter_view = Ext.create('LSP.view.filter.CompletedActivityFilter', {});
+            filter_view.down('#activityLabel_id').setText(activity_value);
+            filter_view.down('#conditionsLabel_id').setText(conditions_value);
+            filter_view.down('#valueLabel_id').setText(value_value);
+			filter_view.down('#unitLabel_id').setText(unit_text);	
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setActivityType(activity_value);
+            store.setActivityValue(value_value);
+            store.setActivityCondition(conditions_value);
+			store.setActivityUnit(unit_value);
+            // currently only 1 activity filter can be added at a time
+            this.getFormView().down('#addCompletedActivityFilter_id').disable();
+            //this.getFormView().down('#activityFilterContainer_id').disable();
+            //this.getFormView().down('#activityFilterContainer_id').setVisible(false);
+        } else {
             Ext.MessageBox.show({
-                title:'Error',
-                msg:'Call to OpenPhacts API timed out.<br/>We are sorry, please try again later.',
-                buttons:Ext.MessageBox.OK,
-                icon:Ext.MessageBox.ERROR
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
             });
-            this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Error on search!');
-            return false;
-        }
-
-
-        this_gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-
-        var this_controller = this;
-        var dynamicgridStore = this_gridview.store;
-        if (typeof(dynamicgridStore.proxy.reader.jsonData.columns) === 'object') {
-            var columns = [];
-            if (this_gridview.rowNumberer) {
-                columns.push(Ext.create('Ext.grid.RowNumberer', {width:40}));
-            }
-            Ext.each(dynamicgridStore.proxy.reader.jsonData.columns, function (column) {
-                columns.push(column);
-                if (column.text == 'csid_uri') {
-                    this_gridview.csid_column = true;
-                    this_gridview.down('#sdfDownloadProxy_id').enable();
-                }
-            });
-            this_gridview.reconfigure(dynamicgridStore, columns);
-            this_gridview.recordsLoaded = dynamicgridStore.data.length;
-            if (this_gridview.recordsLoaded == 0) {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - No records found within OPS for this search!');
-                Ext.MessageBox.show({
-                    title:'Info',
-                    msg:'The OPS system does not contain any data that match this search.',
-                    buttons:Ext.MessageBox.OK,
-                    icon:Ext.MessageBox.INFO
-                });
-            }
-            else {
-                this_gridview.setTitle(this_gridview.gridBaseTitle + ' - Records loaded: ' + this_gridview.recordsLoaded);
-                if (this_gridview.recordsLoaded == this_gridview.limit) {
-                    this_gridview.down('#nextRecords').enable();
-                    //                     this_gridview.down('#csvDownloadProxy_id').enable();
-
-                }
-                else {
-                    this_gridview.setTitle(this_gridview.gridBaseTitle + ' - All ' + this_gridview.recordsLoaded + ' records loaded');
-                }
-            }
-
         }
     },
 
-    prepSDFile2:function (sdf_prep_button) {
-        var gridview = sdf_prep_button.up('dynamicgrid3');
-        var grid_store = gridview.store;
-        var items = grid_store.data.items;
+    addCompletedOrganismFilter: function(button) {
+        console.log('DynamicGrid: addCompletedOrganismFilter()');
+        organism_value = this.getFilterContainer().down('#organism_combobox_id').getValue();
+        //unit_value = this.getFilterContainer().down('#unit_combobox_id').getValue();
+        // TODO unit value check && unit_value != null
+        if (organism_value != null) {
+            filter = Ext.create('LSP.model.Filter', {
+                value: organism_value
+            });
+            filter.filterType = "organism";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
 
-        var compoundStore = Ext.create('CS.store.Compound');
-        var item_count = items.length;
-        var success_count = 0;
-        var fail_count = 0;
-        sdf_prep_button.setText('SD-file preparing...');
-        Ext.each(items, function (item) {
-            var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-            if (!isNaN(parseInt(csid))) {
-                if (item.molfile === undefined || item.molfile.length < 30) {
-                    compoundStore.load({
-                        params:{ 'csids[0]':csid },
-                        callback:function (records, operation, success) {
-                            if (success) {
-                                success_count++;
-                                compound = compoundStore.first().raw.Mol;
-                                item.molfile = compound;
-                                sdf_prep_button.setText('SD-File ' + (100 * success_count / item_count).toFixed(0) + '% ready');
-                                if (success_count === item_count) {
-                                    sdf_prep_button.setText('SD-File ready! Click ->');
-                                    gridview.down('#sdfDownload_id').enable();
-                                }
-                            }
-                            else {
-                                fail_count++;
-                            }
-                        }
-                    }, this);
-                }
-                else {
-                    success_count++;
-                    sdf_prep_button.setText('SD-File ' + (100 * success_count / item_count).toFixed(0) + '% ready');
-                }
-            }
-            else {
-                fail_count++
-            }
+            filter_view = Ext.create('LSP.view.filter.CompletedOrganismFilter', {});
+            filter_view.down('#valueLabel_id').setText("Assay Organism");
+            filter_view.down('#conditionsLabel_id').setText("=");
+            filter_view.down('#organismType_id').setText(organism_value);
+            //filter_view.down('#unitLabel_id').setText(unit_value);
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setAssayOrganism(organism_value);
+            // currently only 1 organism filter can be added at a time
+            this.getFormView().down('#addCompletedOrganismFilter_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').setVisible(false);
+        } else {
+            Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+    },
 
-        })
+    removeFilter: function(filter) {
+        console.log('DynamicGrid: filterClosed()');
+        controller = filter.filterModel.controller;
+        var dg = controller.getGridView();
+        var store = dg.store;
+        //var exportStore = dg.exportStore;
+        if (filter.filterModel.filterType == "activity") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setActivityType("");
+            store.setActivityValue("");
+            store.setActivityCondition("");
+			store.setActivityUnit("");
+            controller.getFormView().down('#addCompletedActivityFilter_id').enable();
+            //controller.getFormView().down('#activityFilterContainer_id').enable();
+            //controller.getFormView().down('#activityFilterContainer_id').setVisible(true);
+        } else if (filter.filterModel.filterType == "organism") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setAssayOrganism(null);
+            controller.getFormView().down('#addCompletedOrganismFilter_id').enable();
+            //controller.getFormView().down('#organismFilterContainer_id').enable();
+            //controller.getFormView().down('#organismFilterContainer_id').setVisible(true);
+        }
 
     },
 
-    prepSDFile:function (sdf_prep_button) {
-        var gridview = sdf_prep_button.up('dynamicgrid3');
-        var grid_store = gridview.store;
-        var items = grid_store.data.items;
+    addFilterForm: function(button) {
+        console.log('DynamicGrid: addFilterForm()');
+        // view = Ext.widget('FilterPanel');
+        hide = this.getFilterContainer().hidden;
+        if (hide) {
+            this.getFilterContainer().setVisible(true);
+        } else {
+            this.getFilterContainer().setVisible(false);
+        }
+    },
 
-        //    var compoundStore = Ext.create('CS.store.Compound');
-        var item_count = items.length;
-        var success_count = 0;
-        var fail_count = 0;
-        sdf_prep_button.setText('SD-file preparing...');
-        csid_hash = {};
-        csid_molfile_hash = {};
-        Ext.each(items, function (item) {
-            var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-            if (!isNaN(parseInt(csid))) {
-                if (item.molfile !== undefined && item.molfile.length > 30) {
-                    csid_molfile_hash[csid] = item.molfile;
-                }
-                if (csid_hash[csid] === undefined) {
-                    csid_hash[csid] = [item.index];
-                }
-                else {
-                    csid_hash[csid].push(item.index);
-                }
-            }
+    prepSDFile: function(sdf_prep_button) {
+        Ext.MessageBox.show({
+            title: 'Info',
+            msg: 'SD file export is not available in this release. The functionality will be available in the next release.',
+            buttons: Ext.MessageBox.OK,
+            icon: Ext.MessageBox.INFO
         });
-        for (var csid in csid_hash) {
-            var csid_records = csid_hash[csid]; // record indices with this csid
-            var has_molfile = (csid_molfile_hash[csid] !== undefined);   // true or false if molfile exists in store allready
-            if (has_molfile) {
-                var idx_len = csid_records.length;
-                for (i = 0; i < idx_len; i++) {
-                    var row = grid_store.getAt(csid_records[i]);
-                    if (row.molfile == undefined) {
-                        row.molfile = csid_molfile_hash[csid];
-                    }
-                }
-                this.updateSDFStatus(sdf_prep_button, grid_store);
-            }
-            else {
-                this.getMolfile(csid, csid_records, grid_store, sdf_prep_button);
-            }
-        }
+        // var this_controller = this;
+        // var update_count = 0;
+        // var gridview = sdf_prep_button.up('dynamicgrid');
+        // var store_count = gridview.store.totalCount;
+        // 
+        // if (gridview.exportCSVReady) {
+        // 	gridview.up('form').setLoading("Preparing download of " + store_count + " molfiles. Please wait...");
+        // 	var exportStore = gridview.getExportStore();
+        // 	var items = exportStore.data.items;
+        // 	var item_count = items.length;
+        // 	var success_count = 0;
+        // 	var fail_count = 0;
+        // 	sdf_prep_button.setText('SD-file preparing...');
+        // 	csid_hash = {};
+        // 	csid_molfile_hash = {};
+        // 	var total_csid_count = 0;
+        // 	Ext.each(items, function(item) {
+        // 		var csid = item.data.csid;
+        // 		if (!isNaN(parseInt(csid))) {
+        // 			total_csid_count++;
+        // 			if (item.molfile !== undefined && item.molfile.length > 30) {
+        // 				csid_molfile_hash[csid] = item.molfile;
+        // 			}
+        // 			if (csid_hash[csid] === undefined) {
+        // 				csid_hash[csid] = [item.index];
+        // 			} else {
+        // 				csid_hash[csid].push(item.index);
+        // 			}
+        // 		}
+        // 
+        // 	});
+        // 	var batch_count = 0;
+        // 	var csid_batches = [];
+        // 	var local_batch = [];
+        // 	var uniq_csid_count = 0;
+        // 	for (var csid in csid_hash) {
+        // 		local_batch.push(csid);
+        // 		batch_count++;
+        // 		uniq_csid_count++;
+        // 		if (batch_count >= 100) {
+        // 			batch_count = 0;
+        // 			csid_batches.push(local_batch);
+        // 			local_batch = [];
+        // 		}
+        // 	}
+        // 	csid_batches.push(local_batch);
+        // 	for (var idx in csid_batches) {
+        // 		param_array = ["serfilter:'Compound[CSID|Mol]'"];
+        // 		for (var iidx in csid_batches[idx]) {
+        // 			param_array.push("'csids[" + iidx + "]':" + csid_batches[idx][iidx]);
+        // 		}
+        // 		param_json = "{" + param_array.join(',') + "}";
+        // 		var compoundStore = Ext.create('CS.store.Compound');
+        // 		compoundStore.proxy.timeout = '180000';
+        // 		compoundStore.proxy.startParam = undefined;
+        // 		compoundStore.proxy.limitParam = undefined;
+        // 		compoundStore.proxy.pageParam = undefined;
+        // 		compoundStore.load({
+        // 			params: Ext.JSON.decode(param_json),
+        // 			callback: function(records, operation, success) {
+        // 				if (success) {
+        // 					Ext.Array.each(records, function(rec, index) {
+        // 						// Here we add the molfiles to the exportStore for later export
+        // 						var record_csid = rec.data.CSID;
+        // 						var record_molfile = rec.data.Mol;
+        // 						var csid_records = csid_hash[record_csid]; // record indices with this csid
+        // 						var idx_len = csid_records.length;
+        // 						for (i = 0; i < idx_len; i++) {
+        // 							var row = exportStore.getAt(csid_records[i]);
+        // 							if (row.molfile == undefined) {
+        // 								row.molfile = record_molfile;
+        // 								update_count++;
+        // 							}
+        // 						}
+        // 					});
+        // 					this_controller.updateSDFStatus(sdf_prep_button, exportStore, total_csid_count);
+        // 				} else {
+        // 					gridview.up('form').setLoading(false);
+        // 					alert("Error, sorry the structure retrievel failed. Please try again later.");
+        // 					// CHEMSIDER JSONP TIMES OUT!!! HANDLER..?
+        // 				}
+        // 			}
+        // 		}, this);
+        // 	}
+        // } else { // else what..?
+        // 	alert("Error!");
+        // }
+
+
     },
 
-    updateSDFStatus:function (button, store) {
+
+    updateSDFStatus: function(button, store, total_csid_count) {
         var items = store.data.items;
         var item_count = items.length;
         var missing_count = 0;
         var success_count = 0;
-        Ext.each(items, function (item) {
-            if (item.molfile === undefined) {
-                missing_count++;
+        Ext.each(items, function(item) {
+            if (item.molfile !== undefined) {
+                success_count++;
             }
         });
-        success_count = item_count - missing_count;
-        button.setText('SD-File ' + (100 * success_count / item_count).toFixed(0) + '% ready');
-        if (success_count === item_count) {
+        button.setText('SD-File ' + (100 * success_count / total_csid_count).toFixed(0) + '% ready');
+        if (success_count >= 0.98 * total_csid_count) {
             button.setText('SD-File ready! Click ->');
             button.up('grid').down('#sdfDownload_id').enable();
+            button.up('grid').exportSDFReady = true;
+            button.up('form').setLoading(false);
         }
     },
 
-    getMolfile:function (csid, row_idxs, grid_store, sdf_prep_button) {
+    getMolfile: function(csid, row_idxs, grid_store, sdf_prep_button) {
         var me = this;
         var compoundStore = Ext.create('CS.store.Compound');
         var idx_len = row_idxs.length;
         compoundStore.load({
-            params:{ 'csids[0]':csid },
-            callback:function (obsrecords, operation, success) {
+            params: {
+                'csids[0]': csid
+            },
+            callback: function(obsrecords, operation, success) {
                 if (success) {
                     var compound = compoundStore.first().raw.Mol;
                     for (i = 0; i < idx_len; i++) {
@@ -301,45 +405,201 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                         item.molfile = compound;
                     }
                     me.updateSDFStatus(sdf_prep_button, grid_store);
-                }
-                else {
+                } else {
                     // CHEMSIDER JSONP TIMES OUT!!! HANDLER..?
                 }
             }
         }, this);
 
-    }
-//         Ext.each(items, function(item) {
-//           var csid = item.raw.csid_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-//           if (!isNaN(parseInt(csid))){
-//             if (item.molfile === undefined || item.molfile.length < 30) {
-//               compoundStore.load({
-//                     params: { 'csids[0]': csid },
-//                     callback: function (records, operation, success) {
-//                         if(success){
-//                             success_count++;
-//                             compound = compoundStore.first().raw.Mol;
-//                             item.molfile = compound;
-//                             sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
-//                             if (success_count === item_count) {
-//                               sdf_prep_button.setText('SD-File ready! Click ->');
-//                               gridview.down('#sdfDownload_id').enable();
-//                               }
-//                         }
-//                         else {
-//                           fail_count++;
-//                         }
-//                     }
-//                 },this);   
-//             }
-//           else {
-//              success_count++;
-//              sdf_prep_button.setText('SD-File ' + (100*success_count/item_count).toFixed(0) + '% ready');
-//           }
-//          }   
-//         else {fail_count++}  
-//         
-//        })
+    },
 
-})
-;
+
+    prepGrid: function() {
+        console.log(this.$className + ': prepGrid()');
+		// reset the filters to empty
+		this.filters = new Array();
+        var grid_view = this.getGridView();
+        var store = grid_view.getStore();
+        store.on('prefetch', this.storeLoadComplete, this);
+    },
+
+    storeLoadComplete: function(store, records, success) {
+        console.log(this.$className + ': storeLoadComplete()');
+        grid_view = this.getGridView();
+        grid_store = grid_view.getStore();
+        if (success) {
+            // If some records are coming back then set the tsv download params
+            this.setTSVDownloadParams();
+            //grid_view.down('#sdfDownload_id').disable();
+            //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+            grid_view.down('#sdfDownloadProxy_id').enable();
+            grid_view.down('#tsvDownloadProxy_id').enable();
+            this.getSubmitButton().enable();
+            grid_view.setLoading(false);
+            grid_view.setTitle(grid_view.gridBaseTitle + ' - Total Records: ' + grid_store.getTotalCount());
+        } else {
+            console.log(this.$className + ': possible timeout for with uri ' + grid_store.proxy.url);
+            this.getSubmitButton().enable();
+            grid_view.setLoading(false);
+            grid_view.setTitle(grid_view.gridBaseTitle + ' ---- There was an error retrieving some of the records ----');
+            //Ext.MessageBox.show({
+            //    title: 'Info',
+            //    msg: 'We are sorry but the OPS system returned an error.',
+            //    buttons: Ext.MessageBox.OK,
+            //    icon: Ext.MessageBox.INFO
+            //});
+        }
+    },
+
+    fetchTotalResults: function() {
+        console.log('DynamicGrid: fetchTotalResults() for ' + this.$className);
+        try {
+            var grid_view = this.getGridView();
+            var grid_store = grid_view.getStore();
+	    //grid_store.gridController = this;
+            var form = this.getFormView();
+            var button = this.getSubmitButton();
+            this.resetDownload();
+            countStore = this.getCountStore();
+            countStore.uri = grid_store.proxy.reader.uri;
+            // TODO only one filter can be used at the moment, need to change code for multiple
+            // at some point
+            // Count with filters was slow, easier to grab all the results and count them here
+            // code kept in case needed in future
+            Ext.each(this.getFilters(), function(filter, index) {
+                if (filter.filterType == "activity") {
+                    countStore.setActivityType(filter.data.activity);
+                    countStore.setActivityValue(filter.data.value);
+                    countStore.setActivityCondition(filter.data.condition);
+                    countStore.setActivityUnit(filter.data.unit);
+                } else if (filter.filterType == "organism") {
+                    countStore.setAssayOrganism(filter.data.value);
+                }
+            });
+            //if (this.getFilters().length > 0) {
+            //	countStore.filters = this.getFilters();
+            //	countStore.setActivityType(this.getFilters()[0].data.activity);
+            //	countStore.setActivityValue(this.getFilters()[0].data.value);
+            //	countStore.setActivityCondition(this.getFilters()[0].data.condition);
+            //}
+            //	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
+            //	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
+            //	allResultsStore.setActivityType(this.filters[0].data.activity);
+            //	allResultsStore.setActivityValue(this.filters[0].data.value);
+            //	allResultsStore.setActivityCondition(this.filters[0].data.condition);	
+            //	allResultsStore.load(function(records, operation, success) {
+            //		total = records.length;
+            //		grid_store.proxy.reader.total_count = total;
+            //	// we have the total number of results now and the proxy reader knows what it is so
+            //	// fetch the first page of results
+            //	if (total == 0) {
+            //		grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+            //		grid_view.down('#sdfDownload_id').disable();
+            //		grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+            //		grid_view.down('#sdfDownloadProxy_id').disable();
+            //		button.enable();
+            //		grid_view.setLoading(false);
+            //		Ext.MessageBox.show({
+            //			title: 'Info',
+            //			msg: 'The OPS system does not contain any data that match this search.',
+            //			buttons: Ext.MessageBox.OK,
+            //			icon: Ext.MessageBox.INFO
+            //		});
+            //	} else {
+            //		// for pagianted grid use this
+            //		// grid_store.load();
+            //		grid_store.guaranteeRange(0, 49);
+            //	}
+            //	});	
+            //} else {
+            countStore.load(function(records, operation, success) {
+                if (success) {
+                    total = operation.response.result.primaryTopic[this.countNode];
+                    grid_store.proxy.reader.total_count = total;
+                    // we have the total number of results now and the proxy reader knows what it is so
+                    // fetch the first page of results
+                    if (total == 0) {
+                        grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
+                        //grid_view.down('#sdfDownload_id').disable();
+                        //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+                        grid_view.down('#sdfDownloadProxy_id').disable();
+                        grid_view.down('#tsvDownloadProxy_id').disable();
+                        button.enable();
+                        grid_view.setLoading(false);
+                        Ext.MessageBox.show({
+                            title: 'Info',
+                            msg: 'The OPS system does not contain any data that match this search.',
+                            buttons: Ext.MessageBox.OK,
+                            icon: Ext.MessageBox.INFO
+                        });
+                    } else {
+                        // for paginated grid use this
+                        // grid_store.load();
+                        grid_view.setLoading(false);
+                        grid_store.guaranteeRange(0, 49);
+                    }
+                } else {
+                    grid_view.setTitle(grid_view.gridBaseTitle + ' - We are sorry but the OPS system returned an error!');
+                    //grid_view.down('#sdfDownload_id').disable();
+                    //grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+                    grid_view.down('#sdfDownloadProxy_id').disable();
+                    grid_view.down('#tsvDownloadProxy_id').disable();
+                    button.enable();
+                    grid_view.setLoading(false);
+                    Ext.MessageBox.show({
+                        title: 'Info',
+                        msg: 'We are sorry but the OPS system returned an error.',
+                        buttons: Ext.MessageBox.OK,
+                        icon: Ext.MessageBox.INFO
+                    });
+                }
+            });
+            //}
+        } catch (exception) {
+            console.log('DynamicGrid: exception fetching results for ' + this.$className + 'with uri ' + grid_store.proxy.uri);
+            Ext.MessageBox.show({
+                title: 'Info',
+                msg: 'We are sorry but the OPS system returned an error.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.INFO
+            });
+        }
+
+    },
+
+    enableSubmit: function(lookup) {
+        //use lookup.rawValue to get compound etc name
+        this.getGridView().getStore().setTypeName(lookup.rawValue);
+        this.getSubmitButton().enable();
+    },
+    // 
+    resetDownload: function() {
+        var gridview = this.getGridView();
+        gridview.exportCSVReady = false;
+        gridview.exportSDFReady = false;
+
+        gridview.getExportStore().removeAll(true);
+        //gridview.down('#csvDownloadProxy_id').setText('Prepare full result set download');
+        //gridview.down('#csvDownload_id').disable();
+        //gridview.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
+        //gridview.down('#sdfDownload_id').disable();
+    },
+
+    onProvChange: function(field, newVal, oldVal) {
+        var dg = this.getGridView();
+        dg.toggleProv(newVal['prov']);
+        dg.getView().refresh();
+    },
+
+    getFilters: function() {
+        if (this.filters == null) {
+            this.filters = new Array();
+        }
+        return this.filters;
+    },
+
+    getRequestType: function() {
+        return this.request_type;
+    }
+
+});

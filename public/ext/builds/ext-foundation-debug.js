@@ -1,23 +1,41 @@
 /*
-This file is part of Ext JS 4.1
+Ext JS 4.1 - JavaScript Library
+Copyright (c) 2006-2012, Sencha Inc.
+All rights reserved.
+licensing@sencha.com
 
-Copyright (c) 2011-2012 Sencha Inc
+http://www.sencha.com/license
 
-Contact:  http://www.sencha.com/contact
+Open Source License
+------------------------------------------------------------------------------------------
+This version of Ext JS is licensed under the terms of the Open Source GPL 3.0 license. 
 
-GNU General Public License Usage
-This file may be used under the terms of the GNU General Public License version 3.0 as
-published by the Free Software Foundation and appearing in the file LICENSE included in the
-packaging of this file.
+http://www.gnu.org/licenses/gpl.html
 
-Please review the following information to ensure the GNU General Public License version 3.0
-requirements will be met: http://www.gnu.org/copyleft/gpl.html.
+There are several FLOSS exceptions available for use with this release for
+open source applications that are distributed under a license other than GPL.
 
-If you are unsure which license is appropriate for your use, please contact the sales department
-at http://www.sencha.com/contact.
+* Open Source License Exception for Applications
 
-Build date: 2012-04-20 14:10:47 (19f55ab932145a3443b228045fa80950dfeaf9cc)
+  http://www.sencha.com/products/floss-exception.php
+
+* Open Source License Exception for Development
+
+  http://www.sencha.com/products/ux-exception.php
+
+
+Alternate Licensing
+------------------------------------------------------------------------------------------
+Commercial and OEM Licenses are available for an alternate download of Ext JS.
+This is the appropriate option if you are creating proprietary applications and you are 
+not prepared to distribute and share the source code of your application under the 
+GPL v3 license. Please visit http://www.sencha.com/license for more details.
+
+--
+
+This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT OF THIRD-PARTY INTELLECTUAL PROPERTY RIGHTS.  See the GNU General Public License for more details.
 */
+//@tag foundation,core
 
 
 var Ext = Ext || {};
@@ -529,11 +547,16 @@ Ext.globalEval = Ext.global.execScript
         }());
     };
 
+//@tag foundation,core
+
+//@require ../Ext.js
+
+
 
 (function() {
 
 
-var version = '4.1.0', Version;
+var version = '4.1.1.1', Version;
     Ext.Version = Version = Ext.extend(Object, {
 
         
@@ -703,6 +726,7 @@ var version = '4.1.0', Version;
         }
     });
 
+    
     Ext.apply(Ext, {
         
         versions: {},
@@ -738,6 +762,11 @@ var version = '4.1.0', Version;
     Ext.setVersion('core', version);
 
 }());
+
+//@tag foundation,core
+
+//@require ../version/Version.js
+
 
 
 
@@ -910,6 +939,14 @@ Ext.htmlDecode = Ext.String.htmlDecode;
 
 Ext.urlAppend = Ext.String.urlAppend;
 
+//@tag foundation,core
+
+//@require String.js
+
+//@define Ext.Number
+
+
+
 
 Ext.Number = new function() {
 
@@ -1017,6 +1054,12 @@ Ext.Number = new function() {
         return me.from.apply(this, arguments);
     };
 };
+
+//@tag foundation,core
+
+//@require Number.js
+
+
 
 (function() {
 
@@ -1754,6 +1797,11 @@ Ext.Number = new function() {
     };
 }());
 
+//@tag foundation,core
+
+//@require Array.js
+
+
 
 Ext.Function = {
 
@@ -1976,6 +2024,11 @@ Ext.pass = Ext.Function.alias(Ext.Function, 'pass');
 
 
 Ext.bind = Ext.Function.alias(Ext.Function, 'bind');
+
+//@tag foundation,core
+
+//@require Function.js
+
 
 
 
@@ -2334,6 +2387,13 @@ Ext.urlDecode = function() {
 };
 
 }());
+
+//@tag foundation,core
+
+//@require Object.js
+
+//@define Ext.Date
+
 
 
 
@@ -3293,6 +3353,11 @@ var utilDate = Ext.Date;
 
 }());
 
+//@tag foundation,core
+
+//@require ../lang/Date.js
+
+
 
 (function(flexSetter) {
 
@@ -3424,6 +3489,10 @@ var noArgs = [],
             for (name in members) {
                 if (members.hasOwnProperty(name)) {
                     member = members[name];
+                    if (typeof member == 'function' && !member.$isClass && member !== Ext.emptyFn && member !== Ext.identityFn) {
+                        member.$owner = this;
+                        member.$name = name;
+                    }
                     this[name] = member;
                 }
             }
@@ -3612,8 +3681,18 @@ var noArgs = [],
 
             
             return (method = this.callParent.caller) && (method.$previous ||
-                  ((method = method.$owner ? method : method.caller) &&
-                        method.$owner.superclass.$class[method.$name])).apply(this, args || noArgs);
+                ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass.self[method.$name])).apply(this, args || noArgs);
+        },
+
+        
+        callSuper: function(args) {
+            var method;
+
+            
+            return (method = this.callSuper.caller) &&
+                ((method = method.$owner ? method : method.caller) &&
+                    method.$owner.superclass.self[method.$name]).apply(this, args || noArgs);
         },
 
         
@@ -3689,16 +3768,22 @@ var noArgs = [],
     });
 
     Base.implement({
+        
         isInstance: true,
 
+        
         $className: 'Ext.Base',
 
+        
         configClass: Ext.emptyFn,
 
+        
         initConfigList: [],
 
+        
         configMap: {},
 
+        
         initConfigMap: {},
 
         
@@ -3723,6 +3808,21 @@ var noArgs = [],
                 superMethod = (method = this.callParent.caller) && (method.$previous ||
                         ((method = method.$owner ? method : method.caller) &&
                                 method.$owner.superclass[method.$name]));
+
+
+            return superMethod.apply(this, args || noArgs);
+        },
+
+        
+        callSuper: function(args) {
+            
+            
+            
+            
+            var method,
+                superMethod = (method = this.callSuper.caller) &&
+                    ((method = method.$owner ? method : method.caller) &&
+                        method.$owner.superclass[method.$name]);
 
 
             return superMethod.apply(this, args || noArgs);
@@ -3857,6 +3957,7 @@ var noArgs = [],
             }
         },
 
+        
         destroy: function() {
             this.destroy = Ext.emptyFn;
         }
@@ -3868,6 +3969,11 @@ var noArgs = [],
     Ext.Base = Base;
 
 }(Ext.Function.flexSetter));
+
+//@tag foundation,core
+
+//@require Base.js
+
 
 
 (function() {
@@ -3926,20 +4032,8 @@ var noArgs = [],
             var name, i;
 
             if (!Class) {
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 Class = makeCtor(
                 );
-                
             }
 
             for (i = 0; i < baseStaticMemberLength; i++) {
@@ -4308,8 +4402,9 @@ var noArgs = [],
 
         if (Class) {
             cls = new ExtClass(Class, members);
-        }
-        else {
+            
+            cls.prototype.constructor = Class;
+        } else {
             cls = new ExtClass(members);
         }
 
@@ -4326,8 +4421,23 @@ var noArgs = [],
 
 }());
 
+//@tag foundation,core
+
+//@require Class.js
+
+
 
 (function(Class, alias, arraySlice, arrayFrom, global) {
+
+    
+    function makeCtor () {
+        function constructor () {
+            
+            
+            return this.constructor.apply(this, arguments) || null;
+        }
+        return constructor;
+    }
 
     var Manager = Ext.ClassManager = {
 
@@ -4639,6 +4749,50 @@ var noArgs = [],
         },
 
         
+        addNameAliasMappings: function(aliases){
+            var aliasToNameMap = this.maps.aliasToName,
+                nameToAliasesMap = this.maps.nameToAliases,
+                className, aliasList, alias, i;
+
+            for (className in aliases) {
+                aliasList = nameToAliasesMap[className] ||
+                    (nameToAliasesMap[className] = []);
+
+                for (i = 0; i < aliases[className].length; i++) {
+                    alias = aliases[className][i];
+                    if (!aliasToNameMap[alias]) {
+                        aliasToNameMap[alias] = className;
+                        aliasList.push(alias);
+                    }
+                }
+
+            }
+            return this;
+        },
+
+        
+        addNameAlternateMappings: function(alternates) {
+            var alternateToName = this.maps.alternateToName,
+                nameToAlternates = this.maps.nameToAlternates,
+                className, aliasList, alternate, i;
+
+            for (className in alternates) {
+                aliasList = nameToAlternates[className] ||
+                    (nameToAlternates[className] = []);
+
+                for (i  = 0; i < alternates[className].length; i++) {
+                    alternate = alternates[className];
+                    if (!alternateToName[alternate]) {
+                        alternateToName[alternate] = className;
+                        aliasList.push(alternate);
+                    }
+                }
+
+            }
+            return this;
+        },
+
+        
         getByAlias: function(alias) {
             return this.get(this.getNameByAlias(alias));
         },
@@ -4671,9 +4825,15 @@ var noArgs = [],
         
         create: function(className, data, createdFn) {
 
+            var ctor = makeCtor();
+            if (typeof data == 'function') {
+                data = data(ctor);
+            }
+
+
             data.$className = className;
 
-            return new Class(data, function() {
+            return new Class(ctor, data, function() {
                 var postprocessorStack = data.postprocessors || Manager.defaultPostprocessors,
                     registeredPostprocessors = Manager.postprocessors,
                     postprocessors = [],
@@ -4719,13 +4879,17 @@ var noArgs = [],
                 createdFn = clsData.createdFn;
 
             if (!postprocessor) {
-                me.set(className, cls);
-
-                if (createdFn) {
-                     createdFn.call(cls, cls);
+                if (className) {
+                    me.set(className, cls);
                 }
 
-                me.triggerCreated(className);
+                if (createdFn) {
+                    createdFn.call(cls, cls);
+                }
+
+                if (className) {
+                    me.triggerCreated(className);
+                }
                 return;
             }
 
@@ -5208,6 +5372,13 @@ var noArgs = [],
 
 }(Ext.Class, Ext.Function.alias, Array.prototype.slice, Ext.Array.from, Ext.global));
 
+//@tag foundation,core
+
+//@require ClassManager.js
+
+//@define Ext.Loader
+
+
 
 
 Ext.Loader = new function() {
@@ -5289,6 +5460,16 @@ Ext.Loader = new function() {
 
             return Loader;
         }),
+
+        
+        addClassPathMappings: function(paths) {
+            var name;
+
+            for(name in paths){
+                Loader.config.paths[name] = paths[name];
+            }
+            return Loader;
+        },
 
         
         getPath: function(className) {
@@ -5615,7 +5796,8 @@ Ext.Loader = new function() {
             var config = Loader.getConfig(),
                 noCacheUrl = url + (config.disableCaching ? ('?' + config.disableCachingParam + '=' + Ext.Date.now()) : ''),
                 isCrossOriginRestricted = false,
-                xhr, status, onScriptError;
+                xhr, status, onScriptError,
+                debugSourceURL = "";
 
             scope = scope || Loader;
 
@@ -5652,7 +5834,11 @@ Ext.Loader = new function() {
                 ) {
                     
                     
-                    Ext.globalEval(xhr.responseText + "\n//@ sourceURL=" + url);
+                    if (!Ext.isIE) {
+                        debugSourceURL = "\n//@ sourceURL=" + url;
+                    }
+
+                    Ext.globalEval(xhr.responseText + debugSourceURL);
 
                     onLoad.call(scope);
                 }
@@ -6050,6 +6236,43 @@ Ext.Loader = new function() {
 
     Manager.onCreated(Loader.historyPush);
 };
+
+
+
+if (Ext._classPathMetadata) {
+    Ext.Loader.addClassPathMappings(Ext._classPathMetadata);
+    Ext._classPathMetadata = null;
+}
+
+
+(function() {
+    var scripts = document.getElementsByTagName('script'),
+        currentScript = scripts[scripts.length - 1],
+        src = currentScript.src,
+        path = src.substring(0, src.lastIndexOf('/') + 1),
+        Loader = Ext.Loader;
+
+
+    Loader.setConfig({
+        enabled: true,
+        disableCaching: true,
+        paths: {
+            'Ext': path + 'src'
+        }
+    });
+})();
+
+
+
+Ext._endTime = new Date().getTime();
+if (Ext._beforereadyhandler){
+    Ext._beforereadyhandler();
+}
+
+//@tag foundation,core
+
+//@require ../class/Loader.js
+
 
 
 Ext.Error = Ext.extend(Error, {

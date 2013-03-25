@@ -2,7 +2,7 @@ class FeedbackController < ApplicationController
 
   def index
     respond_to do |format|
-      email = FeedbackMailer.feedback_email(params[:feedbackText], params[:userEmail], params[:technicalInfo])
+      email = FeedbackMailer.feedback_email(params[:feedbackText], params[:userEmail], params[:technicalInfo], params[:versionNumber])
       #puts "========================================="
       #puts email.to_s
       #puts "========================================="

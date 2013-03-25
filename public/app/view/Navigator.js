@@ -5,7 +5,8 @@ Ext.define('LSP.view.Navigator', {
     requires:[
         'LSP.view.Appmoduletree',
         'Ext.layout.container.Accordion',
-        'LSP.view.feedback.FeedbackPanel'
+        'LSP.view.feedback.FeedbackPanel',
+        'LSP.view.api_status.Status'
     ],
 
     collapsible:true,
@@ -44,7 +45,7 @@ Ext.define('LSP.view.Navigator', {
 //                ]
 //            },
             {
-                title:'Feedback',
+                title:'Help and Feedback',
                 border:false,
                 autoScroll:true,
                 iconCls:'fb-accordion',
@@ -52,6 +53,29 @@ Ext.define('LSP.view.Navigator', {
                 items:[
                     {
                         xtype:'FeedbackPanel'
+                    }
+                ]
+            }, {
+                title:'API Status',
+                border:false,
+                autoScroll:true,
+                iconCls:'fb-accordion',
+                bodyBorder:false,
+                items:[
+                    {
+                        xtype:'Status'
+                    }
+                ]
+            }, {
+                title:'TSV Downloads',
+                border:false,
+                itemId: 'background_tasks_form',
+                autoScroll:true,
+                iconCls:'fb-accordion',
+                bodyBorder:false,
+                items:[
+                    {
+                        xtype:'BackgroundTasksForm'
                     }
                 ]
             }

@@ -50,22 +50,26 @@ Ext.define('LSP.view.Viewport', {
         'Ext.toolbar.Spacer',
         'LSP.store.GuiComponents'
     ],
+	listeners: {
+		afterrender: {
+			//check for an initial history token
+			fn: function() {
+				console.log("Viewport: afterrender()");
+				var currentToken = Ext.History.getToken();
+				if (currentToken) {
+					if (currentToken.length > 0) {
+						this.handleHistoryToken(currentToken);
+					}
+				}
+			}
+		}
+		},
 
     layout:'border',
 
     //gets a record from GuiComponents store by its xtype
     getFormByXtype:function (token) {
-        var appModStore = Ext.data.StoreManager.lookup('GuiComponents');
-        var records = appModStore.queryBy(
-            function (record, id) {
-                return record.raw.xtype == token;
-            }
-        );
-        if (records) {
-            if (records.getCount() > 0) {
-                return records.first();
-            }
-        }
+        return Ext.data.StoreManager.lookup('GuiComponents').findRecord("xtype", token);
     },
 
 //    getObjectFromString:function (queryString) {
@@ -88,8 +92,9 @@ Ext.define('LSP.view.Viewport', {
 //        return obj;
 //    },
 
-    //all UI changes should come through this function
+//all UI changes should come through this function
     handleHistoryToken:function (token) {
+		console.log("Viewport: handleHistoryToken()");
         //not null
         if (token) {
             //must start with ! (shebang/hashbang can help with googlebot indexing, some people hate this kind of thing, personally i don't care)
@@ -97,7 +102,7 @@ Ext.define('LSP.view.Viewport', {
 //            console.log('Viewport History change: ' + token);
                 //cut off shebang
 //                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
-                var historyTokenObject = this.parseHistoryToken(token.substring(1));
+                var historyTokenObject = this.parseHistoryToken(unescape(token).substring(1));
 //                console.dir(historyTokenObject);
                 if (historyTokenObject.p) {
                     var form = this.getFormByXtype(historyTokenObject.p);
@@ -110,6 +115,7 @@ Ext.define('LSP.view.Viewport', {
     },
 
     parseHistoryToken:function (stringToParse) {
+		console.log("Viewport: parseHistoryToken()");
         var obj = {};
         var andBits = stringToParse.split('&');
         Ext.each(andBits, function (bit) {
@@ -123,20 +129,21 @@ Ext.define('LSP.view.Viewport', {
         return obj;
     },
 
-    //this handles the changing of central ui panel
+//this handles the changing of central ui panel
     changeView:function (record, formData) {
+		console.log("Viewport: changeView()");
         var view;
         Ext.getCmp('centerView').items.each(function (curItem) {
-            if (curItem.gridId == record.raw.id) {
+            if (curItem.gridId == record.data.id) {
                 view = curItem;
                 return;
             }
         });
         if (!view) {
-            view = Ext.widget(record.raw.xtype);
-            view.setTitle(record.raw.home);
-            view.url = record.raw.url;
-            view.gridId = record.raw.id;
+            view = Ext.widget(record.data.xtype);
+            view.setTitle(record.data.home);
+            view.url = record.data.url;
+            view.gridId = record.data.id;
             Ext.getCmp('centerView').add(view);
         }
         var centreView = Ext.getCmp('centerView');
@@ -159,6 +166,9 @@ Ext.define('LSP.view.Viewport', {
 
 
     initComponent:function () {
+		console.log("Viewport: initComponent()");
+        //set provenance to default of icon mode
+        LDAProvenanceMode = LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR;
         //init history, needs to be done first
         Ext.History.init();
         //add event listener for History 'change' event
@@ -169,7 +179,7 @@ Ext.define('LSP.view.Viewport', {
             }
         }, this);
 
-        var ops_logo = Ext.create('Ext.Img', {src:'images/ops_logo.png', bodyStyle:{background:'transparent'}});
+        var ops_logo = Ext.create('Ext.Img', {src:'./assets/ops_logo.png', bodyStyle:{background:'transparent'}, width:77, height:50});
         this.items = [
             {
                 region:'north',
@@ -200,7 +210,8 @@ Ext.define('LSP.view.Viewport', {
                         value:'Testing connection to OPS API...',
                         width:400,
                         name:'ops_api_staus',
-                        id:'ops_api_staus_id'
+                        id:'ops_api_staus_id',
+						hidden: true
                     },
                     {
                         xtype:'tbspacer',
@@ -237,4 +248,5 @@ Ext.define('LSP.view.Viewport', {
         ];
         this.callParent(arguments);
     }
-});
+})
+;
