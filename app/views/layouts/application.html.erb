@@ -12,13 +12,15 @@
     var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
     var tsv_download_url = '<%= tab_separated_file_core_api_calls_url -%>';
     var simSearchUrl = '<%= get_chem_info4known_csids_core_api_calls_url -%>?';
-    var ldaBaseUrl = '<%= "http://" + AppSettings.config["tsv"]["tsv_url"] -%>';
+    var ldaBaseUrl = '<%= AppSettings.config["tsv"]["protocol"] + "://" + AppSettings.config["tsv"]["tsv_url"] -%>';
     var cwBaseUrl = '<%= AppSettings.config["cw"]["url"] -%>';
     var explorer_version = '<%= app_version %>';
     var ims_status_url = '<%= ims_status_core_api_calls_url -%>?';
     var tsv_create_url = '<%= tab_separated_file_core_api_calls_url -%>?';
     var tsv_status_url = '<%= tsv_status_core_api_calls_url -%>?';
     var tsv_download_url = '<%= tsv_download_core_api_calls_url -%>?';
+    var app_id = '<%= AppSettings.config["keys"]["app_id"] -%>';
+    var app_key = '<%= AppSettings.config["keys"]["app_key"] -%>';
   </script>
 <!--[if lt IE 7]>
 <p div class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>

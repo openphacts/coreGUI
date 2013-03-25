@@ -5,6 +5,8 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	uri: '',
 	BASE_URL: '',
 	remoteSort: true,
+	app_key: app_key,
+	app_id: app_id,
 	//gridController: undefined,
         typeName: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
