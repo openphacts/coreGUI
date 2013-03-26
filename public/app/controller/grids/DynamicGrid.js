@@ -70,7 +70,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     prepareTSVDownload: function() {
        var me = this;
        var gridview = this.getGridView();
-       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, target_organism, uri, total_count, request_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
        Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
        Ext.each(this.getFilters(), function(filter, index) {
@@ -81,6 +81,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 activity_unit = gridview.store.activity_unit;
             } else if (filter.filterType == "organism") {
                 assay_organism = gridview.store.assay_organism;
+            } else if (filter.filterType == "target") {
+                target_organism = gridview.store.target_organism;
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -94,6 +96,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                activity_value : activity_value,
                activity_unit : activity_unit,
                assay_organism : assay_organism,
+               target_organism: target_organism,
                uri : uri,
                total_count : total_count,
                request_type : request_type
@@ -231,6 +234,48 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }
     },
 
+    addCompletedTargetOrganismFilter: function(button) {
+        console.log('DynamicGrid: addCompletedTargetOrganismFilter()');
+        organism_value = this.getFilterContainer().down('#target_organism_combobox_id').getValue();
+        if (organism_value != null) {
+            filter = Ext.create('LSP.model.Filter', {
+                value: organism_value
+            });
+            filter.filterType = "target";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
+
+            filter_view = Ext.create('LSP.view.filter.CompletedTargetOrganismFilter', {});
+            filter_view.down('#valueLabel_id').setText("Target Organism");
+            filter_view.down('#conditionsLabel_id').setText("=");
+            filter_view.down('#organismType_id').setText(organism_value);
+            //filter_view.down('#unitLabel_id').setText(unit_value);
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setTargetOrganism(organism_value);
+            // currently only 1 target organism filter can be added at a time
+            this.getFormView().down('#addCompletedTargetOrganismFilter_id').disable();
+        } else {
+            Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+    },
+
     removeFilter: function(filter) {
         console.log('DynamicGrid: filterClosed()');
         controller = filter.filterModel.controller;
@@ -256,6 +301,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             controller.getFormView().down('#addCompletedOrganismFilter_id').enable();
             //controller.getFormView().down('#organismFilterContainer_id').enable();
             //controller.getFormView().down('#organismFilterContainer_id').setVisible(true);
+        } else if (filter.filterModel.filterType == "target") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setTargetOrganism(null);
+            controller.getFormView().down('#addCompletedTargetOrganismFilter_id').enable();
         }
 
     },
