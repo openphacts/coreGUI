@@ -1,9 +1,16 @@
+Ext.define('LSP.model.TargetOrganism', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'abbr',      type: 'string'}
+    ]
+});
 var target_organism = Ext.create('Ext.data.Store', {
-     model: 'LSP.model.Organism',
+     model: 'LSP.model.TargetOrganism',
      proxy: {
          type: 'ajax',
          url: '/core_api_calls/organisms.json',
-         model: 'LSP.model.Organism',
+         model: 'LSP.model.TargetOrganism',
          reader: {
              type: 'json'
          }
@@ -38,7 +45,7 @@ Ext.define('LSP.view.filter.TargetOrganismFilterForm', {
 		width: 400,
 		labelPad: 2,
 		padding: '0 2 0 0',
-		emptyText: 'Enter the name of an organism...',
+		emptyText: 'Enter the name of a target organism...',
     		minChars:3,
     		hideTrigger:true,
     		listConfig:{

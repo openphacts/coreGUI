@@ -16,28 +16,6 @@ var assay_organism = Ext.create('Ext.data.Store', {
          }
      }
  });
-//var assay_organism = Ext.create('Ext.data.Store', {
-//	fields: ['abbr', 'name'],
-//	data: [{
-//		"abbr": "Homo sapiens",
-//		"name": "Homo sapiens"
-//	}, {
-//		"abbr": "Mus musculus",
-//		"name": "Mus musculus"
-//	}, {
-//		"abbr": "Rattus norvegicus",
-//		"name": "Rattus norvegicus"
-//	}, {
-//		"abbr": "Cavia porcellus",
-//		"name": "Cavia porcellus"
-//	}, {
-//		"abbr": "Equus caballus",
-//		"name": "Equus caballus"
-//	}, {
-//		"abbr": "Ovis aries",
-//		"name": "Ovis aries"
-//	}]
-//});
 Ext.define('LSP.view.filter.OrganismFilterForm', {
 	extend: 'Ext.container.Container',
 	alias: 'widget.OrganismFilterForm',
@@ -67,7 +45,7 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		width: 400,
 		labelPad: 2,
 		padding: '0 2 0 0',
-		emptyText: 'Enter the name of an organism...',
+		emptyText: 'Enter the name of an assay organism...',
     		minChars:3,
     		hideTrigger:true,
     		listConfig:{

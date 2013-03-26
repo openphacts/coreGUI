@@ -525,6 +525,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setActivityUnit(filter.data.unit);
                 } else if (filter.filterType == "organism") {
                     countStore.setAssayOrganism(filter.data.value);
+                } else if (filter.filterType == "target") {
+                    countStore.setTargetOrganism(filter.data.value);
                 }
             });
             //if (this.getFilters().length > 0) {
