@@ -53,6 +53,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm button[action=add_completed_activity_filter]': {
                 click: this.addCompletedActivityFilter
             },
+            'PharmByTargetNameForm button[action=add_completed_target_organism_filter]': {
+		click: this.addCompletedTargetOrganismFilter
+            },
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
             },

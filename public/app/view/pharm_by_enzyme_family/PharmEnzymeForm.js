@@ -198,7 +198,13 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 margin: '0 5 5 5',
                 name: 'organism_filter_fields',
                 hidden: false
-            }]
+            }, {
+            xtype: 'TargetOrganismFilterForm',
+            itemId: 'targetOrganismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'target_organism_filter_fields',
+            hidden: false
+        }]
         }, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',

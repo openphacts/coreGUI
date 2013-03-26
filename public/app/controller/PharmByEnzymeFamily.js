@@ -57,6 +57,9 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             'PharmEnzymeForm button[action=add_completed_organism_filter]': {
                 click: this.addCompletedOrganismFilter
             },
+            'PharmEnzymeForm button[action=add_completed_target_organism_filter]': {
+	        click: this.addCompletedTargetOrganismFilter
+            },
             'PharmEnzymeForm button[action=add_completed_activity_filter]': {
                 click: this.addCompletedActivityFilter
             },
