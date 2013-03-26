@@ -107,7 +107,7 @@ var task = Ext.TaskManager.start({
 	cw_lookup.proxy.setExtraParam('limit', 1);
         var me = this;
         cw_lookup.load({
-          params: {'q': 'aspi', 'branch' :'4' },
+          params: {'q': 'aspi', 'branch' :'4', 'app_key': app_key, 'app_id': app_id },
           callback:function (records, operation, success) {
               if (success) {
                 console.log("Success",records[0]);

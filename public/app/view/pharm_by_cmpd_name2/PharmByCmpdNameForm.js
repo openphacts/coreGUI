@@ -72,7 +72,9 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                                    url: CW.config.Settings.searchByTagUrl,
                                    reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
                                    extraParams: {
-                                       'branch': 4 // Only show species results from swissprot
+                                       'branch': 4, // Only show species results from swissprot
+                                       'app_id': app_id,
+                                       'app_key': app_key
                                    }
                                }
                            }),
