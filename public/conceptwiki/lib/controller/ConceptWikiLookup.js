@@ -29,7 +29,17 @@ Ext.define('CW.controller.ConceptWikiLookup', {
         proxy: {
           type: 'jsonp',
           url: CW.config.Settings.getConceptUrl,
-          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader')
+          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader'),
+          noCache: false,
+          limitParam: undefined,
+          startParam: undefined,
+          pageParam: undefined,
+          callbackKey: '_callback',
+          extraParams: {
+              '_format': 'json', 
+              'app_id': app_id,
+              'app_key': app_key
+          }
       }
       });
       store.load({
