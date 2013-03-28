@@ -8,8 +8,9 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
         var uuid, textMatch, prefLabel, altLabel, altLabels, matches, prefUrl;
         altLabels = [];
         Ext.each(results, function(result, index) {
-            uuid = result['_about'];
+            uuid = result['_about'].split('/').pop();
             textMatch = result.match;
+            // The preferred altLabel & prefLabel have been extracted already as first class objects
             prefLabel = result.prefLabel;
             altLabels.push(result.altLabel);
             prefUrl="";
@@ -19,6 +20,9 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
                       return false; // breaks loop
                 }
             });
+        Ext.each(result, function(item, jindex) {
+		// get all the altLabel_en items
+		});
 
         // constructing the data record
         var record = Ext.create('CW.model.ConceptWikiLookup', {
@@ -26,7 +30,7 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
           uuid: uuid,
           ops_uri: CW.config.Settings.base_ops_uri + uuid,
           pref_label: prefLabel,
-          alt_labels: alt_labels.join("; "),
+          alt_labels: altLabels.join("; "),
           pref_url: prefUrl
         });
         

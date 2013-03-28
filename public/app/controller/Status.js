@@ -103,11 +103,19 @@ var task = Ext.TaskManager.start({
     testCompoundWiki: function() {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
-	cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
-	cw_lookup.proxy.setExtraParam('limit', 1);
+        // remove params that dev api cannot handle
+        cw_lookup.proxy.noCache = false;
+        cw_lookup.proxy.pageParam = '';
+        cw_lookup.proxy.startParam = '';
+	    cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
+	    cw_lookup.proxy.setExtraParam('limit', 1);
+	    cw_lookup.proxy.callbackKey = '_callback';
         var me = this;
         cw_lookup.load({
-          params: {'q': 'aspi', 'branch' :'4', 'app_key': app_key, 'app_id': app_id },
+          params: {'q': 'aspi', 
+//remove branch until the dev api can handle it
+//'branch' :'4', 
+'app_key': app_key, 'app_id': app_id, '_format' : 'json' },
           callback:function (records, operation, success) {
               if (success) {
                 console.log("Success",records[0]);
