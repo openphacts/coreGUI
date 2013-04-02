@@ -1300,7 +1300,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.current_uri = historyTokenObject.u;
@@ -1632,7 +1632,7 @@ Ext.define('LSP.controller.Status', {
     init: function() {
 var me=this;
  var updateAPIStatus = function () {
-             me.testCompoundWiki();
+             me.testConceptWiki();
         me.testLDA();
         me.testChemspider();
         me.testIMS();
@@ -1714,7 +1714,7 @@ var task = Ext.TaskManager.start({
       },this );
     },
 
-    testCompoundWiki: function() {
+    testConceptWiki: function() {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
 	cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
@@ -3877,7 +3877,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
@@ -7292,7 +7292,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 this.current_uri = historyTokenObject.u;
                 store.proxy.extraParams.uri = historyTokenObject.u;
