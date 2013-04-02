@@ -15,9 +15,19 @@ Ext.define('CS.store.Search', {
         this.setProxy({
             type: 'jsonp',
             timeout: 90000,
-            url: CS.config.Settings.baseUrl + '/JSON.ashx?op=' + this.operation,
+            url: CS.config.Settings.baseUrl + this.operation,
             reader: {
                 type: 'xml'
+            },
+            noCache: false,
+            limitParam: undefined,
+            startParam: undefined,
+            pageParam: undefined,
+            callbackKey: '_callback',
+            extraParams: {
+	        '_format': 'json', 
+                'app_id': app_id,
+                'app_key': app_key
             }
         });
     }

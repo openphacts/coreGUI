@@ -285,10 +285,12 @@ if (this.current_mode == 'exact') {
         } else {
             //  Unsupported search type...
         }
-	// there can also be 'ChEBI' and 'MeSH'
-	params['scopeOptions.DataSources[0]'] = 'DrugBank';
-	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-	params['scopeOptions.DataSources[2]'] = 'PDB';
+	
+        // there can also be 'ChEBI' and 'MeSH'
+	//TODO add these data source options back in when the ops dev api can support it
+        //params['scopeOptions.DataSources[0]'] = 'DrugBank';
+	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
 		searchEngine.setLimit(this.getMaxRecordsSpinner().value);

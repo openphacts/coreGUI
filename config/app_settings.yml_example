@@ -16,7 +16,10 @@ defaults: &defaults
     protocol: "http" #or https
 
   cw:
-    url : "http://where.the.api.is.located" #including http:// but no trailing slash
+    url : "where.the.concept.wiki.api.is.located" #no protocol and no trailing slash
+
+  cs:
+    url : "where.the.chemspider.api.is.located" #no protocol and no trailing slash
 
   enzyme:
     root_url : "/target/enzyme/root"

@@ -71,9 +71,10 @@ var task = Ext.TaskManager.start({
         var params = {};
         params['searchOptions.Molecule'] = 'CC(=O)Oc1ccccc1C(=O)O';
 	// there can also be 'ChEBI' and 'MeSH'
-	params['scopeOptions.DataSources[0]'] = 'DrugBank';
-	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-	params['scopeOptions.DataSources[2]'] = 'PDB';
+	//TODO add data sources back in when ops dev api can handle it
+        //params['scopeOptions.DataSources[0]'] = 'DrugBank';
+	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+	//params['scopeOptions.DataSources[2]'] = 'PDB';
         searchEngine.doSearch('exact', params);
 
     },
