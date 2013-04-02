@@ -221,8 +221,8 @@ if (this.current_mode == 'exact') {
     handleHistoryToken: function(historyTokenObject) {
         console.log('SimSearchForm: handleHistoryToken() ' + historyTokenObject);
         var me = this;
-		me.current_smiles = historyTokenObject.sm;
-		me.current_mode = historyTokenObject.st;
+	me.current_smiles = historyTokenObject.sm;
+	me.current_mode = historyTokenObject.st;
         var this_gridview = me.getStrucGrid();
         var current_records = this_gridview.store.getRange();
         //this_gridview.store.remove(current_records);
@@ -293,7 +293,7 @@ if (this.current_mode == 'exact') {
 	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-		searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
         searchEngine.doSearch(search_type, params);
     },
 

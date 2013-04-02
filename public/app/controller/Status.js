@@ -50,16 +50,16 @@ var task = Ext.TaskManager.start({
        var me = this;
        var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
-                finished: function(sender, rid) {
-                    searchEngine.loadCSIDs(function(csids) {
-						if (csids.length == 0) {
-						    console.log('CS fetch boom');
-                                                    me.getCSImage().setSrc('./assets/cancel.png');
-                                                    me.getCSImage().setVisible(true);
-						} else {
-							me.csFetch(csids);
-						}
-                    });
+                finished: function(sender, csids) {
+                if (csids.length == 0) {
+		    console.log('CS fetch boom');
+                    me.getCSImage().setSrc('./assets/cancel.png');
+                    me.getCSImage().setVisible(true);
+		} else {
+		    console.log('CS fetch success ' + csids[0]);
+                    me.getCSImage().setSrc('./assets/tick.png');
+                    me.getCSImage().setVisible(true);
+		}
                 },
 		failed: function(sender, error) {
                     console.log('CS fetch boom');

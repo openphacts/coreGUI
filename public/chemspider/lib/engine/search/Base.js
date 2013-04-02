@@ -55,7 +55,7 @@
     runSearch: function (params) {
 	// no need for 2 loading masks
         //this.startProgress();
-        params['resultOptions.limit'] = this.limit;
+        params['resultOptions.Limit'] = this.limit;
 
         //  clear previous search results
         this.csids = null;
@@ -65,7 +65,7 @@
             scope: this,
             callback: function (records, operation, success) {
                 if (success) {
-                    this.rid = operation.response;
+                    this.rid = operation.response.result.primaryTopic;
                     //this.updateProgress();
                     this.fireEvent('finished', this, this.rid);
                 }
