@@ -59,8 +59,17 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 				        timeout: 5000,
 				        url: CW.config.Settings.searchByTagUrl,
 				        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                                        noCache: false,
+                                        limitParam: undefined,
+                                        startParam: undefined,
+                                        pageParam: undefined,
+		                        callbackKey: '_callback',
 						extraParams: {
-							'branch': 3 // Only show species results from swissprot
+                                                        // TODO add branch back in when ops dev api can handle it
+							// 'branch': 3 // Only show species results from swissprot
+                                                        _format: 'json',
+                                                       'app_id': app_id,
+                                                       'app_key': app_key
 						}
 					}
 				}),

@@ -274,7 +274,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         else if (fieldId == 'keywords') {
             if (value != null) {
                 var keywordfield = this.down('#' + fieldId);
-                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                var keywordValue = value.join();
+                //var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
                 keywordfield.setValue(keywordValue);
                 keywordfield.show();
             }
