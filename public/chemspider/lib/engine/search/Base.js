@@ -65,9 +65,12 @@
             scope: this,
             callback: function (records, operation, success) {
                 if (success) {
-                    this.rid = operation.response.result.primaryTopic;
+                    var csids = [];
+                    Ext.each(operation.response.result.primaryTopic.result, function(csid, index) {
+                        csids.push(csid);
+                    });
                     //this.updateProgress();
-                    this.fireEvent('finished', this, this.rid);
+                    this.fireEvent('finished', this, csids);
                 }
                 else {
                     this.err = operation.error;

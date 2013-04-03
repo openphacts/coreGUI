@@ -152,7 +152,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log("SimSearchForm: hitCoreAPI()");
         var me = this;
 	this.failed_to_load = 0;
-		me.getStrucGrid().getStore().sorters.clear();
+	me.getStrucGrid().getStore().sorters.clear();
         var grid = this.getStrucGrid();
         this.all_records = new Array();
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
@@ -162,10 +162,10 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
+            csid_store.proxy.extraParams.uri = csid_list[i];
             csid_store.load(function(records, operation, success) {
                 if (success) {
-					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
+		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
                     records[0].index = me.success_count;
@@ -231,8 +231,7 @@ if (this.current_mode == 'exact') {
         this_gridview.getStore().setTypeName(me.current_smiles + " : " + me.current_mode);
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
-                finished: function(sender, rid) {
-                    searchEngine.loadCSIDs(function(csids) {
+                finished: function(sender, csids) {
 						if (csids.length == 0) {
 							Ext.MessageBox.show({
 		                        title: 'Error',
@@ -245,7 +244,6 @@ if (this.current_mode == 'exact') {
 						} else {
 							me.hitCoreAPI(csids);
 						}
-                    });
                 },
 		failed: function(sender, error){
                     Ext.MessageBox.show({
@@ -358,21 +356,19 @@ if (this.current_mode == 'exact') {
 			this_gridview.store.removeAll();
 		    var searchEngine = Ext.create('CS.engine.search.Structure', {
 		    	listeners: {
-		        	finished: function(sender, rid) {
-		            	searchEngine.loadCSIDs(function(csids) {
-							if (csids.length == 0) {
-								Ext.MessageBox.show({
-				                	title: 'Error',
-				                    msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
-				                    buttons: Ext.MessageBox.OK,
-				                    icon: Ext.MessageBox.ERROR
-				                });
-				                me.getSubmitButton().enable();
-			                    me.getSsform().setLoading(false);
-							} else {
-								me.hitCoreAPI(csids);
-							}
-		                });
+		        	finished: function(sender, csids) {
+						if (csids.length == 0) {
+							Ext.MessageBox.show({
+		                        title: 'Error',
+		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        buttons: Ext.MessageBox.OK,
+		                        icon: Ext.MessageBox.ERROR
+		                    });
+		                    me.getSubmitButton().enable();
+	                        me.getSsform().setLoading(false);
+						} else {
+							me.hitCoreAPI(csids);
+						}
 		        	},
 					failed: function(sender, error){
 		            	Ext.MessageBox.show({
@@ -411,9 +407,9 @@ if (this.current_mode == 'exact') {
 	            //  Unsupported search type...
 	        }
 			// there can also be 'ChEBI' and 'MeSH'
-			params['scopeOptions.DataSources[0]'] = 'DrugBank';
-			params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-			params['scopeOptions.DataSources[2]'] = 'PDB';
+			//params['scopeOptions.DataSources[0]'] = 'DrugBank';
+			//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+			//params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
 			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
