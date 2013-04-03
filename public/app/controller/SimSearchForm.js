@@ -273,13 +273,14 @@ if (this.current_mode == 'exact') {
         } else if (values.search_type == '3') { //  Similarity search
             grid_title = 'Similarity search';
             search_type = 'similarity';
-            //  In the future this parameters should be taken from the UI.
-            //  But right now in order to make Similarity search more realistic they are entered manually.
-			var threshold = this.getTanimotoThresholdSpinner().value;
-			params['searchOptions.Threshold'] = threshold/100;
-            // params['searchOptions.Threshold'] = 0.99;
-            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+	    var threshold = this.getTanimotoThresholdSpinner().value;
+	    //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+            params['resultOptions.Threshold'] = threshold/100;
+	    //params['searchOptions.Threshold'] = threshold/100;
+            var search_type_value = this.getSimSearchType().value;
+            search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+            search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+            search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
         } else {
             //  Unsupported search type...
         }
@@ -398,11 +399,14 @@ if (this.current_mode == 'exact') {
 	            search_type = 'similarity';
 	            //  In the future this parameters should be taken from the UI.
 	            //  But right now in order to make Similarity search more realistic they are entered manually.
-				var threshold = this.getTanimotoThresholdSpinner().value;
-				params['searchOptions.Threshold'] = threshold/100;
-	            // params['searchOptions.Threshold'] = 0.99;
-	            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-	            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+		    var threshold = this.getTanimotoThresholdSpinner().value;
+	            //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+                    params['resultOptions.Threshold'] = threshold/100;
+	            //params['searchOptions.Threshold'] = threshold/100;
+                    var search_type_value = this.getSimSearchType().value;
+                    search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+                    search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+                    search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
 	        } else {
 	            //  Unsupported search type...
 	        }
