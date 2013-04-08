@@ -78,8 +78,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		                   callbackKey: '_callback',
                                    extraParams: {
 	                                   '_format': 'json', 
-                                   // TODO add branch back in when ops dev api can handle the parameter 
-                                   //    'branch': 4, // Only show species results from swissprot
+                                       'branch': 4, // Only show species results from swissprot
                                        'app_id': app_id,
                                        'app_key': app_key
                                    }

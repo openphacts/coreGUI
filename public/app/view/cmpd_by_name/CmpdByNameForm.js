@@ -42,8 +42,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                             pageParam: undefined,
                             callbackKey: '_callback',
                             extraParams: {
-                                //TODO add branch back in when ops dev api can handle it
-                                //'branch': 4, // Only show species results from swissprot
+                                'branch': 4, // Only show species results from swissprot
                                 _format: 'json',
                                 'app_id': app_id,
                                 'app_key': app_key

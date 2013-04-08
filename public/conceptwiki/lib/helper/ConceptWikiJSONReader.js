@@ -10,9 +10,7 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
         Ext.each(results, function(result, index) {
             uuid = result['_about'].split('/').pop();
             textMatch = result.match;
-            // The preferred altLabel & prefLabel have been extracted already as first class objects
             prefLabel = result.prefLabel;
-            altLabels.push(result.altLabel);
             prefUrl="";
             Ext.each(result['exactMatch'], function(match, jindex) {
                 if (match.matchType == "PREFERRED") {
@@ -20,8 +18,8 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
                       return false; // breaks loop
                 }
             });
-        Ext.each(result, function(item, jindex) {
-		// get all the altLabel_en items
+        Ext.each(result["altLabel_en"], function(item, jindex) {
+		altLabels.push(item);
 		});
 
         // constructing the data record

@@ -114,8 +114,7 @@ var task = Ext.TaskManager.start({
         var me = this;
         cw_lookup.load({
           params: {'q': 'aspi', 
-//remove branch until the dev api can handle it
-//'branch' :'4', 
+'branch' :'4', 
 'app_key': app_key, 'app_id': app_id, '_format' : 'json' },
           callback:function (records, operation, success) {
               if (success) {
