@@ -53,6 +53,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm button[action=add_completed_activity_filter]': {
                 click: this.addCompletedActivityFilter
             },
+            'PharmByTargetNameForm button[action=add_completed_target_organism_filter]': {
+		click: this.addCompletedTargetOrganismFilter
+            },
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
             },
@@ -102,7 +105,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 this.current_uri = historyTokenObject.u;
                 store.proxy.extraParams.uri = historyTokenObject.u;

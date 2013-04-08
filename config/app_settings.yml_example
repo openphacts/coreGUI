@@ -13,9 +13,13 @@ defaults: &defaults
     target_path : "/target/pharmacology/pages"
     compound_path: "/compound/pharmacology/pages"
     enzyme_path: "/target/enzyme/pharmacology/pages"
+    protocol: "http"
 
   cw:
     url : "http://where.the.api.is.located" #including http:// but no trailing slash
+
+  cs:
+    url : "where.the.api.is.located" #without the protocol
 
   enzyme:
     root_url : "/target/enzyme/root"

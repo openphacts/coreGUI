@@ -83,7 +83,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             		var target_pref_label = target['prefLabel'];
             		var target_title = target['title'];
                     target_title_item = chembl_target_uri;
-            		var target_organism = target['target_organism'];
+            		var target_organism = target['organism'];
                     target_organism_item = chembl_target_uri;
             		var target_concatenated_uris = target['concatenetedURIs'];  // API sp mistake... to change
 				}

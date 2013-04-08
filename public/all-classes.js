@@ -82,360 +82,14 @@ Ext.define('CW.config.Settings', {
 });
 
 
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.view.Appmoduletree', {
-    extend:'Ext.tree.Panel',
-    alias:'widget.appmoduletree',
-
-    requires:[
-        'Ext.data.TreeStore'
-    ],
-
-    //singleExpand: true,    
-    rootVisible:false,
-    useArrows:true,
-    frame:false,
-    autoScroll:true,
-    height:'100%',
-
-    store:'NavigationTree',
-
-    listeners:{
-        itemclick:function (tree, record, item, index, e, options) {
-			console.log("AppmoduleTree: itemclick()");
-            if (record.raw.application_type == 'grid') {
-                // Check if panel with that ID exists, then switch
-                Ext.History.add('!p=' + record.raw.xtype);
-            }
-        }
-    },
-
-    initComponent:function () {
-        this.callParent(arguments);
-    }
-});
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-Ext.define('LSP.store.NavigationTree', {
-    extend:'Ext.data.TreeStore',
-    // proxy:{
-    //         type:'ajax',
-    //         url:'application_modules.json'
-    //     }
-    root:{
-        expanded:true,
-        children:[
-            {
-                xtype:"",
-                home:"",
-                leaf:false,
-                text:"Compound",
-                cls:"folder",
-                children:[
-                    {
-                        xtype:"CmpdByNameForm",
-                        home:"Compound by name",
-                        leaf:true,
-                        text:"Compound by name",
-                        cls:"file",
-                        application_type:'grid'
-                    },
-                    {
-                        xtype:"SimSearchForm",
-                        home:"Compound Structure Search",
-                        leaf:true,
-                        text:"Compound by structure",
-                        cls:"file",
-                        application_type:'grid'
-                    }
-
-                ]
-            },
-            {
-                xtype:"",
-                home:"",
-                leaf:false,
-                text:"Target",
-                cls:"folder",
-                children:[
-                    {
-                        xtype:"TargetByNameForm",
-                        home:"Target by name",
-                        leaf:true,
-                        text:"Target by name",
-                        cls:"file",
-                        application_type:'grid'
-                    }
-                    //{
-                    //    xtype:"temp",
-                    //    home:"",
-                    //    leaf:true,
-                    //    text:"X-Target by sequence",
-                    //    cls:"file",
-                    //    application_type:'grid'
-                    //}
-                ]
-            },
-            {
-                xtype:"",
-                leaf:false,
-                text:"Pharmacology",
-                cls:"folder",
-                children:[
-                    {
-                        xtype:"PharmEnzymeForm",
-                        home:"Compounds active against enzyme family",
-                        leaf:true,
-                        text:"Pharmacology by Enzyme family",
-                        cls:"file",
-                        application_type:'grid'
-                    },
-                    {
-                        xtype:"PharmByCmpdNameForm",
-                        home:"Pharmacology by Compound name",
-                        leaf:true,
-                        text:"Pharmacology by Compound",
-                        cls:"file",
-                        application_type:'grid'
-                    },
-                    {
-                        xtype:"PharmByTargetNameForm",
-                        home:"Pharmacology by Target Name",
-                        leaf:true,
-                        text:"Pharmacology by Target",
-                        cls:"file",
-                        application_type:'grid'
-                    }
-                ]
-            }
-
-
-        ]
-
-
-    }
-});
-
-
-//			,{
-//				xtype: "",
-//		        home: "",
-//		        leaf: false,
-//		        text: "Searching",
-//		        cls: "folder",
-//				children: [{
-//					xtype: "queryform",
-//			        home: "SPARQL form",
-//			        leaf: true,
-//			        text: "SPARQL",
-//			        cls: "file",
-//			        url: "rdf.json"
-//				}]
-//			}
-// Summmary form is hidden for the moment
-// {
-// 					xtype: "",
-// 			        leaf: false,
-// 			        text: "Concept",
-// 			        cls: "folder",
-// 					children: [{
-// 						xtype: "SummeryForm",
-// 						home: "Concept properties and relations",
-// 				        leaf: true,
-// 				        text: "Summary",
-// 				        cls: "file",
-// 						application_type : 'grid'
-// 					}]
-// 				},
-//,
-
-//{
-//    xtype:"",
-//        cls:"folder",
-//    text:"Exemplars",
-//    leaf:false,
-//    children:[
-//    {
-//        xtype:"temp",
-//        leaf:true,
-//        text:"X-Chem-Bio Navigator",
-//        cls:"file",
-//        application_type:'grid'
-//    },
-//    {
-//        xtype:"temp",
-//        leaf:true,
-//        text:"X-Target Dossier",
-//        cls:"file",
-//        application_type:'grid'
-//    },
-//    {
-//        xtype:"temp",
-//        leaf:true,
-//        text:"X-Polypharmacology Browser",
-//        cls:"file",
-//        application_type:'grid'
-//    }
-//]
-//}
-
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
-    extend:'Ext.window.Window',
-    alias:'widget.KetcherForm',
-
-    requires:['Ext.form.Panel'],
-
-    title:'Draw structure',
-    layout:'fit',
-    modal:true,
-    autoShow:true,
-    height:570,
-    width:810,
-
-    initComponent:function () {
-        this.items = [
-            {
-                xtype:'form',
-                padding:'0 0 0 0',
-                border:false,
-                style:'background-color: #fff;',
-
-                items:[
-                    {
-                        xtype:'box',
-                        width:800,
-                        height:520,
-                        id:'ketcher_box_id',
-                        autoEl:{
-                            tag:'iframe',
-                            src:'ketcher/ketcher.html'
-                        }}
-                ]
-            }
-        ];
-
-        this.buttons = [
-            {
-                text:'Use structure',
-                action:'commit_structure'
-            },
-            {
-                text:'Cancel',
-                scope:this,
-                handler:this.close
-            }
-        ];
-
-        this.callParent(arguments);
-    }
+Ext.define('LSP.model.Unit', {
+    extend:'Ext.data.Model',
+    fields:['unit', 'name']
 });
 
 Ext.define('LSP.model.DynamicGrid', {
     extend:'Ext.data.Model',
     fields:[]
-});
-
-Ext.define('LSP.model.Unit', {
-    extend:'Ext.data.Model',
-    fields:['unit', 'name']
 });
 
 Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
@@ -741,7 +395,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChl',
+                                        fieldLabel:'Standard InChI',
                                         renderer: provenanceSummaryRenderer
                                     },
                                     {
@@ -754,7 +408,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                         maxWidth:570,
                                         anchor:'80%',
                                         labelAlign:'left',
-                                        fieldLabel:'Standard InChiKey',
+                                        fieldLabel:'Standard InChIKey',
                                         renderer: provenanceSummaryRenderer
                                     },
                                     {
@@ -1113,6 +767,352 @@ function provenanceSummaryRenderer(value, field) {
 };
 
 
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
+
+Ext.define('LSP.view.Appmoduletree', {
+    extend:'Ext.tree.Panel',
+    alias:'widget.appmoduletree',
+
+    requires:[
+        'Ext.data.TreeStore'
+    ],
+
+    //singleExpand: true,    
+    rootVisible:false,
+    useArrows:true,
+    frame:false,
+    autoScroll:true,
+    height:'100%',
+
+    store:'NavigationTree',
+
+    listeners:{
+        itemclick:function (tree, record, item, index, e, options) {
+			console.log("AppmoduleTree: itemclick()");
+            if (record.raw.application_type == 'grid') {
+                // Check if panel with that ID exists, then switch
+                Ext.History.add('!p=' + record.raw.xtype);
+            }
+        }
+    },
+
+    initComponent:function () {
+        this.callParent(arguments);
+    }
+});
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
+
+Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
+    extend:'Ext.window.Window',
+    alias:'widget.KetcherForm',
+
+    requires:['Ext.form.Panel'],
+
+    title:'Draw structure',
+    layout:'fit',
+    modal:true,
+    autoShow:true,
+    height:570,
+    width:810,
+
+    initComponent:function () {
+        this.items = [
+            {
+                xtype:'form',
+                padding:'0 0 0 0',
+                border:false,
+                style:'background-color: #fff;',
+
+                items:[
+                    {
+                        xtype:'box',
+                        width:800,
+                        height:520,
+                        id:'ketcher_box_id',
+                        autoEl:{
+                            tag:'iframe',
+                            src:'ketcher/ketcher.html'
+                        }}
+                ]
+            }
+        ];
+
+        this.buttons = [
+            {
+                text:'Use structure',
+                action:'commit_structure'
+            },
+            {
+                text:'Cancel',
+                scope:this,
+                handler:this.close
+            }
+        ];
+
+        this.callParent(arguments);
+    }
+});
+
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
+Ext.define('LSP.store.NavigationTree', {
+    extend:'Ext.data.TreeStore',
+    // proxy:{
+    //         type:'ajax',
+    //         url:'application_modules.json'
+    //     }
+    root:{
+        expanded:true,
+        children:[
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Compound",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"CmpdByNameForm",
+                        home:"Compound by name",
+                        leaf:true,
+                        text:"Compound by name",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"SimSearchForm",
+                        home:"Compound Structure Search",
+                        leaf:true,
+                        text:"Compound by structure",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+
+                ]
+            },
+            {
+                xtype:"",
+                home:"",
+                leaf:false,
+                text:"Target",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"TargetByNameForm",
+                        home:"Target by name",
+                        leaf:true,
+                        text:"Target by name",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                    //{
+                    //    xtype:"temp",
+                    //    home:"",
+                    //    leaf:true,
+                    //    text:"X-Target by sequence",
+                    //    cls:"file",
+                    //    application_type:'grid'
+                    //}
+                ]
+            },
+            {
+                xtype:"",
+                leaf:false,
+                text:"Pharmacology",
+                cls:"folder",
+                children:[
+                    {
+                        xtype:"PharmEnzymeForm",
+                        home:"Compounds active against enzyme family",
+                        leaf:true,
+                        text:"Pharmacology by Enzyme family",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByCmpdNameForm",
+                        home:"Pharmacology by Compound name",
+                        leaf:true,
+                        text:"Pharmacology by Compound",
+                        cls:"file",
+                        application_type:'grid'
+                    },
+                    {
+                        xtype:"PharmByTargetNameForm",
+                        home:"Pharmacology by Target Name",
+                        leaf:true,
+                        text:"Pharmacology by Target",
+                        cls:"file",
+                        application_type:'grid'
+                    }
+                ]
+            }
+
+
+        ]
+
+
+    }
+});
+
+
+//			,{
+//				xtype: "",
+//		        home: "",
+//		        leaf: false,
+//		        text: "Searching",
+//		        cls: "folder",
+//				children: [{
+//					xtype: "queryform",
+//			        home: "SPARQL form",
+//			        leaf: true,
+//			        text: "SPARQL",
+//			        cls: "file",
+//			        url: "rdf.json"
+//				}]
+//			}
+// Summmary form is hidden for the moment
+// {
+// 					xtype: "",
+// 			        leaf: false,
+// 			        text: "Concept",
+// 			        cls: "folder",
+// 					children: [{
+// 						xtype: "SummeryForm",
+// 						home: "Concept properties and relations",
+// 				        leaf: true,
+// 				        text: "Summary",
+// 				        cls: "file",
+// 						application_type : 'grid'
+// 					}]
+// 				},
+//,
+
+//{
+//    xtype:"",
+//        cls:"folder",
+//    text:"Exemplars",
+//    leaf:false,
+//    children:[
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Chem-Bio Navigator",
+//        cls:"file",
+//        application_type:'grid'
+//    },
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Target Dossier",
+//        cls:"file",
+//        application_type:'grid'
+//    },
+//    {
+//        xtype:"temp",
+//        leaf:true,
+//        text:"X-Polypharmacology Browser",
+//        cls:"file",
+//        application_type:'grid'
+//    }
+//]
+//}
+
 Ext.define('LSP.view.Settings', {
     extend:'Ext.form.Panel',
     alias:'widget.settingsform',
@@ -1300,7 +1300,7 @@ Ext.define('LSP.controller.CmpdByNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.current_uri = historyTokenObject.u;
@@ -1447,33 +1447,6 @@ Ext.define('LSP.controller.Settings', {
     }
 );
 
-Ext.define('CW.model.ConceptWikiLookup', {
-    extend: 'Ext.data.Model',
-    fields: [
-        { name: 'match', mapping: 'match', type: 'string' },
-        { name: 'uuid', mapping: 'uuid', type: 'string' },
-        { name: 'ops_uri', mapping: 'ops_uri', type: 'string' },
-        { name: 'pref_label', mapping: 'pref_labels', type:'string'},
-        { name: 'alt_labels', mapping: 'alt_labels', type: 'string' },
-        { name: 'uuid', mapping: 'uuid', type: 'string' },
-        { name: 'concept_type_tags', mapping: 'uuid_tags', type:'string'},
-        { name: 'pref_url', mapping: 'pref_url', type: 'string' }
-    ],
-    getSomething: function () {
-        if (this.something == null) this.parseSomething();
-
-        return this.something;
-    },
-    parseSomething: function () {
-        this.something = new Array();
-        for (var i = 0; i < this.data.something.length; i++) {
-            var syn = this.data.tags[i];
-            if (syn.length == 1)
-                this.something.push(syn);
-        }
-    }
-});
-
 Ext.define('LSP.view.api_status.Status', {
     extend: 'Ext.form.Panel',
     alias: 'widget.Status',
@@ -1568,67 +1541,30 @@ Ext.define('LSP.view.api_status.Status', {
     }]}]
 });
 
-Ext.define('LSP.view.background_tasks.BackgroundTasksForm', {
-    extend: 'Ext.form.Panel',
-    alias: 'widget.BackgroundTasksForm',
-    itemId: 'tasks_container',
-    closable: true,
-    header: false,
-    layout:'fit',
-    border:false,
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
+Ext.define('CW.model.ConceptWikiLookup', {
+    extend: 'Ext.data.Model',
+    fields: [
+        { name: 'match', mapping: 'match', type: 'string' },
+        { name: 'uuid', mapping: 'uuid', type: 'string' },
+        { name: 'ops_uri', mapping: 'ops_uri', type: 'string' },
+        { name: 'pref_label', mapping: 'pref_labels', type:'string'},
+        { name: 'alt_labels', mapping: 'alt_labels', type: 'string' },
+        { name: 'uuid', mapping: 'uuid', type: 'string' },
+        { name: 'concept_type_tags', mapping: 'uuid_tags', type:'string'},
+        { name: 'pref_url', mapping: 'pref_url', type: 'string' }
+    ],
+    getSomething: function () {
+        if (this.something == null) this.parseSomething();
+
+        return this.something;
     },
-
-    initComponent: function() {
-        this.addEvents('taskadded');
-        this.callParent(arguments);
-    },
-
-    items: []
-});
-
-/**
- * Created by JetBrains RubyMine.
- * User: jameseales
- * Date: 04/04/2012
- * Time: 11:52
- * To change this template use File | Settings | File Templates.
- */
-Ext.define('LSP.model.GuiComponent', {
-    extend:'Ext.data.Model',
-    fields:['xtype', 'url', 'id', 'text', 'home']
-});
-
-Ext.define('LDA.helper.FilterUnitsReader', {
-    extend: 'Ext.data.reader.Json',
-    requires: ['LDA.helper.LDAConstants'],
-
-    readRecords: function(data) {
-        var pt = data['result']['primaryTopic'];
-        var activity_type = pt[LDA.helper.LDAConstants.LDA_LABEL]
-        var units = pt.unit;
-        var records = new Array();
-
-        Ext.each(units, function(unit, index) {
-            var about = unit[LDA.helper.LDAConstants.LDA_ABOUT];
-            var label = unit[LDA.helper.LDAConstants.LDA_LABEL];
-            var record = Ext.create('LDA.model.FilterUnitsModel', {
-                activity_type: activity_type,
-                unit: label,
-                about: about
-            });
-            records.push(record);
-        });
-
-        return new Ext.data.ResultSet({
-            total: records.length,
-            count: records.length,
-            records: records,
-            success: true,
-            message: 'loaded'
-        });
+    parseSomething: function () {
+        this.something = new Array();
+        for (var i = 0; i < this.data.something.length; i++) {
+            var syn = this.data.tags[i];
+            if (syn.length == 1)
+                this.something.push(syn);
+        }
     }
 });
 
@@ -1676,100 +1612,6 @@ Ext.define('LDA.store.SimSearchLocalStore', {
 	}
 });
 
-Ext.define('LSP.controller.BackgroundTasks', {
-    extend: 'Ext.app.Controller',
-    views: ['background_tasks.BackgroundTasksForm'],
-    	refs: [{
-		ref: 'tasksContainer',
-		selector: '#tasks_container'
-	}],
-    task_list: new Array(),
-
-    init: function() {
-        this.control({
-            '#background_tasks_form': {
-                taskadded: this.addNewTask
-                }
-        });
-    },
-
-   removeTask: function() {
-       runner = this.getTaskRunner();
-       if (runner) {
-           runner.destroy();
-       }
-       this.close();
-   },
-
-   addNewTask: function(uuid, type) {
-       console.log('adding task with uuid : ' + uuid);
-       var me= this;
-       this.task_list.push(uuid);
-       var resource_type = type;
-       var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
-       task.down('#type').setText(type + "....creating");
-       task.down('#type').setHeight('auto');
-       task.down('#cancel_button').on({
-          click: {fn: me.removeTask, scope: task}
-       });
-       this.getTasksContainer().add(task);
-       var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
-       tsv_status_store.setUUID(uuid);
-       tsv_status_store.setTask(task);
-       tsv_status_store.setTasksContainer(this.getTasksContainer());
-       var checkTSVStatus = function() {
-       this.load(
-           {params: {
-               uuid : this.getUUID()
-           },
-       callback: function(records, operation, success) {
-           if (success) {
-               console.log('success tsv status');
-               status = records[0].data.status;
-               percentage = records[0].data.percentage;
-               if (percentage != '0') {
-                   this.getTask().down('#progress').updateProgress(percentage/100, '', true);
-                   this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
-               }
-               if (status == 'finished') {
-                   this.getTask().down('#progress').hide();
-                   this.getTask().down('#type').setText(type + "...ready for download");
-                   this.getTaskRunner().destroy();
-                   tsv_download_button = Ext.create('Ext.Button', {
-                       text:'Download tsv file',
-                       tooltip:'Download results as a tab separated file',
-                       itemId:'tsvDownloadProxy_' + this.getUUID(),
-                       iconCls:'icon-csv',
-                       hidden:false,
-                       disabled: false,
-                       margin: '2',
-                       href: tsv_download_url,
-                       renderTo: Ext.getBody()
-                   });
-                   tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
-                   tsv_download_button.setParams();
-                   this.getTask().add(tsv_download_button);
-               } else if (status == 'failed') {
-	               this.getTask().down('#progress').hide();
-                   this.getTask().down('#type').setText(type + "...FAILED");
-                   this.getTaskRunner().destroy(); 
-               }              
-           } else {
-               console.log('fail tsv status');
-           }
-       }})
-   };
-   var runner = new Ext.util.TaskRunner();
-   tsv_status_store.setTaskRunner(runner);
-   var taskrunner = runner.start({
-      run: checkTSVStatus,
-       interval: 5000,
-       scope: tsv_status_store
-    });
-   task.setTaskRunner(runner);       
-   }
-});
-
 Ext.define('LSP.controller.Status', {
     extend: 'Ext.app.Controller',
     views: ['api_status.Status'],
@@ -1790,7 +1632,7 @@ Ext.define('LSP.controller.Status', {
     init: function() {
 var me=this;
  var updateAPIStatus = function () {
-             me.testCompoundWiki();
+             me.testConceptWiki();
         me.testLDA();
         me.testChemspider();
         me.testIMS();
@@ -1872,7 +1714,7 @@ var task = Ext.TaskManager.start({
       },this );
     },
 
-    testCompoundWiki: function() {
+    testConceptWiki: function() {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
 	cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
@@ -1916,135 +1758,6 @@ var task = Ext.TaskManager.start({
     }
 });
 
-Ext.define('LSP.store.GuiComponents', {
-	extend: 'Ext.data.Store',
-	id: 'GuiComponents',
-	model: 'LSP.model.GuiComponent',
-	autoLoad: true,
-	data: [{
-		"url": "users.json",
-		"text": "Users",
-		"id": 3,
-		"xtype": "dynamicgrid",
-		"home": "Users grid"
-	},
-		{
-			"url": "rdf.json",
-			"text": "SPARQL",
-			"id": 5,
-			"xtype": "queryform",
-			"home": "SPARQL form"
-		}, {
-			"url": "",
-			"text": "Compound by name",
-			"id": 18,
-			"xtype": "CmpdByNameForm",
-			"home": "Compound by name"
-		}, {
-			"url": "",
-			"text": "Compound by structure",
-			"id": 23,
-			"xtype": "SimSearchForm",
-			"home": "Compound Structure Search"
-		}, {
-			"url": "",
-			"text": "Target by name",
-			"id": 24,
-			"xtype": "TargetByNameForm",
-			"home": "Target by name"
-		}, {
-			"url": "",
-			"text": "X-Target by sequence",
-			"id": 25,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "Pharmacology by Target",
-			"id": 26,
-			"xtype": "PharmByTargetNameForm",
-			"home": "Pharmacology by Target Name"
-		}, {
-			"url": "",
-			"text": "Pharmacology by Compound",
-			"id": 27,
-			"xtype": "PharmByCmpdNameForm",
-			"home": "Pharmacology by Compound name"
-		}, {
-			"url": "",
-			"text": "Pharmacology by Enzyme family",
-			"id": 28,
-			"xtype": "PharmEnzymeForm",
-			"home": "Compounds active against enzyme family"
-		}, {
-			"url": "",
-			"text": "X-Polypharmacology Browser",
-			"id": 34,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "X-Target Dossier",
-			"id": 35,
-			"xtype": "temp",
-			"home": ""
-		}, {
-			"url": "",
-			"text": "X-Chem-Bio Navigator",
-			"id": 36,
-			"xtype": "temp",
-			"home": ""
-		}]
-});
-
-/*########################################################################################
- #
- #  Copyright H. Lundbeck A/S
- #  This file is part of LSP4All.
- #
- #  LSP4All is free software; you can redistribute it and/or modify
- #  it under the terms of the GNU General Public License as published by
- #  the Free Software Foundation; either version 2 of the License, or (at
- #  your option) any later version.
- #
- #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
- #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
- #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
- #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
- #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
- #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
- #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
- #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
- #
- #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
- #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
- #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
- #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
- #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
- #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
- #  POSSIBILITY OF SUCH DAMAGES.
- #
- #  You should have received a copy of the GNU General Public License
- #  along with this program; if not, write to the Free Software
- #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- #
- ########################################################################################*/
-
-Ext.define('LSP.controller.NavigationTree', {
-    extend:'Ext.app.Controller',
-
-    stores:['NavigationTree', 'GuiComponents'],
-
-    views:[
-        'Appmoduletree'
-    ],
-
-    init:function () {
-
-    }
-
-});
 Ext.define('CW.store.ConceptWikiLookup', {
     extend: 'Ext.data.Store',
     requires: ['CW.model.ConceptWikiLookup', 'CW.config.Settings'],
@@ -2193,340 +1906,55 @@ Ext.define('CW.controller.ConceptWikiLookup', {
 
                 
 
-/**
- * @author Ed Spencer (http://sencha.com)
- * Transition plugin for DataViews
- */
-Ext.define('Ext.ux.DataView.Animated', {
-
-    /**
-     * @property defaults
-     * @type Object
-     * Default configuration options for all DataViewTransition instances
-     */
-    defaults: {
-        duration  : 750,
-        idProperty: 'id'
-    },
-    
-    /**
-     * Creates the plugin instance, applies defaults
-     * @constructor
-     * @param {Object} config Optional config object
-     */
-    constructor: function(config) {
-        Ext.apply(this, config || {}, this.defaults);
+Ext.define('LSP.view.background_tasks.BackgroundTasksForm', {
+    extend: 'Ext.form.Panel',
+    alias: 'widget.BackgroundTasksForm',
+    itemId: 'tasks_container',
+    closable: true,
+    header: false,
+    layout:'fit',
+    border:false,
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
     },
 
-    /**
-     * Initializes the transition plugin. Overrides the dataview's default refresh function
-     * @param {Ext.view.View} dataview The dataview
-     */
-    init: function(dataview) {
-        /**
-         * @property dataview
-         * @type Ext.view.View
-         * Reference to the DataView this instance is bound to
-         */
-        this.dataview = dataview;
-        
-        var idProperty = this.idProperty,
-            store = dataview.store;
-        
-        dataview.blockRefresh = true;
-        dataview.updateIndexes = Ext.Function.createSequence(dataview.updateIndexes, function() {
-            this.getTargetEl().select(this.itemSelector).each(function(element, composite, index) {
-                element.id = element.dom.id = Ext.util.Format.format("{0}-{1}", dataview.id, store.getAt(index).internalId);
-            }, this);
-        }, dataview);
-        
-        /**
-         * @property dataviewID
-         * @type String
-         * The string ID of the DataView component. This is used internally when animating child objects
-         */
-        this.dataviewID = dataview.id;
-        
-        /**
-         * @property cachedStoreData
-         * @type Object
-         * A cache of existing store data, keyed by id. This is used to determine
-         * whether any items were added or removed from the store on data change
-         */
-        this.cachedStoreData = {};
-        
-        //catch the store data with the snapshot immediately
-        this.cacheStoreData(store.data || store.snapshot);
+    initComponent: function() {
+        this.addEvents('taskadded');
+        this.callParent(arguments);
+    },
 
-        dataview.on('resize', function() {
-            var store = dataview.store;
-            if (store.getCount() > 0) {
-                // reDraw.call(this, store);
-            }
-        }, this);
-        
-        dataview.store.on('datachanged', reDraw, this);
-        
-        function reDraw(store) {
-            var parentEl = dataview.getTargetEl(),
-                calcItem = store.getAt(0),
-                added    = this.getAdded(store),
-                removed  = this.getRemoved(store),
-                previous = this.getRemaining(store),
-                existing = Ext.apply({}, previous, added);
-            
-            //hide old items
-            Ext.each(removed, function(item) {
-                var id = this.dataviewID + '-' + item.internalId;
-                Ext.fly(id).animate({
-                    remove  : false,
-                    duration: duration,
-                    opacity : 0,
-                    useDisplay: true,
-                    callback: function() {
-                        Ext.fly(id).setDisplayed(false);
-                    }
-                });
-            }, this);
-            
-            //store is empty
-            if (calcItem == undefined) {
-                this.cacheStoreData(store);
-                return;
-            }
-            
-            this.cacheStoreData(store);
-            
-            var el = Ext.get(this.dataviewID + "-" + calcItem.internalId);
-            
-            //if there is nothing rendered, force a refresh and return. This happens when loading asynchronously (was not
-            //covered correctly in previous versions, which only accepted local data)
-            if (!el) {
-                dataview.refresh();
-                return true;
-            }
-            
-            //calculate the number of rows and columns we have
-            var itemCount   = store.getCount(),
-                itemWidth   = el.getMargin('lr') + el.getWidth(),
-                itemHeight  = el.getMargin('bt') + el.getHeight(),
-                dvWidth     = parentEl.getWidth(),
-                columns     = Math.floor(dvWidth / itemWidth),
-                rows        = Math.ceil(itemCount / columns),
-                currentRows = Math.ceil(this.getExistingCount() / columns);
-            
-            //stores the current top and left values for each element (discovered below)
-            var oldPositions = {},
-                newPositions = {},
-                elCache      = {};
-            
-            //find current positions of each element and save a reference in the elCache
-            Ext.iterate(previous, function(id, item) {
-                var id = item.internalId,
-                    el = elCache[id] = Ext.get(this.dataviewID + '-' + id);
-                
-                oldPositions[id] = {
-                    top : el.getTop()  - parentEl.getTop()  - el.getMargin('t') - parentEl.getPadding('t'),
-                    left: el.getLeft() - parentEl.getLeft() - el.getMargin('l') - parentEl.getPadding('l')
-                };
-            }, this);
-            
-            //make sure the correct styles are applied to the parent element
-            parentEl.applyStyles({
-                display : 'block',
-                position: 'relative'
+    items: []
+});
+
+Ext.define('LDA.helper.FilterUnitsReader', {
+    extend: 'Ext.data.reader.Json',
+    requires: ['LDA.helper.LDAConstants'],
+
+    readRecords: function(data) {
+        var pt = data['result']['primaryTopic'];
+        var activity_type = pt[LDA.helper.LDAConstants.LDA_LABEL]
+        var units = pt.unit;
+        var records = new Array();
+
+        Ext.each(units, function(unit, index) {
+            var about = unit[LDA.helper.LDAConstants.LDA_ABOUT];
+            var label = unit[LDA.helper.LDAConstants.LDA_LABEL];
+            var record = Ext.create('LDA.model.FilterUnitsModel', {
+                activity_type: activity_type,
+                unit: label,
+                about: about
             });
-            
-            //set absolute positioning on all DataView items. We need to set position, left and 
-            //top at the same time to avoid any flickering
-            Ext.iterate(previous, function(id, item) {
-                var oldPos = oldPositions[id],
-                    el     = elCache[id];
+            records.push(record);
+        });
 
-                if (el.getStyle('position') != 'absolute') {
-                    elCache[id].applyStyles({
-                        position: 'absolute',
-                        left    : oldPos.left + "px",
-                        top     : oldPos.top + "px"
-                    });
-                }
-            });
-            
-            //get new positions
-            var index = 0;
-            Ext.iterate(store.data.items, function(item) {
-                var id = item.internalId,
-                    el = elCache[id];
-                
-                var column = index % columns,
-                    row    = Math.floor(index / columns),
-                    top    = row    * itemHeight,
-                    left   = column * itemWidth;
-                
-                newPositions[id] = {
-                    top : top,
-                    left: left
-                };
-                
-                index ++;
-            }, this);
-            
-            //do the movements
-            var startTime  = new Date(),
-                duration   = this.duration,
-                dataviewID = this.dataviewID;
-            
-            var doAnimate = function() {
-                var elapsed  = new Date() - startTime,
-                    fraction = elapsed / duration,
-                    id;
-
-                if (fraction >= 1) {
-                    for (id in newPositions) {
-                        Ext.fly(dataviewID + '-' + id).applyStyles({
-                            top : newPositions[id].top + "px",
-                            left: newPositions[id].left + "px"
-                        });
-                    }
-
-                    Ext.TaskManager.stop(task);
-                } else {
-                    //move each item
-                    for (id in newPositions) {
-                        if (!previous[id]) {
-                            continue;
-                        }
-                        
-                        var oldPos  = oldPositions[id],
-                            newPos  = newPositions[id],
-                            oldTop  = oldPos.top,
-                            newTop  = newPos.top,
-                            oldLeft = oldPos.left,
-                            newLeft = newPos.left,
-                            diffTop = fraction * Math.abs(oldTop  - newTop),
-                            diffLeft= fraction * Math.abs(oldLeft - newLeft),
-                            midTop  = oldTop  > newTop  ? oldTop  - diffTop  : oldTop  + diffTop,
-                            midLeft = oldLeft > newLeft ? oldLeft - diffLeft : oldLeft + diffLeft;
-
-                        Ext.fly(dataviewID + '-' + id).applyStyles({
-                            top : midTop + "px",
-                            left: midLeft + "px"
-                        }).setDisplayed(true);
-                    }
-                }
-            };
-            
-            var task = {
-                run     : doAnimate,
-                interval: 20,
-                scope   : this
-            };
-            
-            Ext.TaskManager.start(task);
-            
-            //show new items
-            Ext.iterate(added, function(id, item) {
-                Ext.fly(this.dataviewID + '-' + item.internalId).applyStyles({
-                    top    : newPositions[item.internalId].top + "px",
-                    left   : newPositions[item.internalId].left + "px"
-                }).setDisplayed(true);
-                
-                Ext.fly(this.dataviewID + '-' + item.internalId).animate({
-                    remove  : false,
-                    duration: duration,
-                    opacity : 1
-                });
-            }, this);
-            
-            this.cacheStoreData(store);
-        }
-    },
-    
-    /**
-     * Caches the records from a store locally for comparison later
-     * @param {Ext.data.Store} store The store to cache data from
-     */
-    cacheStoreData: function(store) {
-        this.cachedStoreData = {};
-        
-        store.each(function(record) {
-             this.cachedStoreData[record.internalId] = record;
-        }, this);
-    },
-    
-    /**
-     * Returns all records that were already in the DataView
-     * @return {Object} All existing records
-     */
-    getExisting: function() {
-        return this.cachedStoreData;
-    },
-    
-    /**
-     * Returns the total number of items that are currently visible in the DataView
-     * @return {Number} The number of existing items
-     */
-    getExistingCount: function() {
-        var count = 0,
-            items = this.getExisting();
-        
-        for (var k in items) {
-            count++;
-        }
-        
-        return count;
-    },
-    
-    /**
-     * Returns all records in the given store that were not already present
-     * @param {Ext.data.Store} store The updated store instance
-     * @return {Object} Object of records not already present in the dataview in format {id: record}
-     */
-    getAdded: function(store) {
-        var added = {};
-        
-        store.each(function(record) {
-            if (this.cachedStoreData[record.internalId] == undefined) {
-                added[record.internalId] = record;
-            }
-        }, this);
-        
-        return added;
-    },
-    
-    /**
-     * Returns all records that are present in the DataView but not the new store
-     * @param {Ext.data.Store} store The updated store instance
-     * @return {Array} Array of records that used to be present
-     */
-    getRemoved: function(store) {
-        var removed = [],
-            id;
-        
-        for (id in this.cachedStoreData) {
-            if (store.findBy(function(record) {return record.internalId == id;}) == -1) {
-                removed.push(this.cachedStoreData[id]);
-            }
-        }
-        
-        return removed;
-    },
-    
-    /**
-     * Returns all records that are already present and are still present in the new store
-     * @param {Ext.data.Store} store The updated store instance
-     * @return {Object} Object of records that are still present from last time in format {id: record}
-     */
-    getRemaining: function(store) {
-        var remaining = {};
-
-        store.each(function(record) {
-            if (this.cachedStoreData[record.internalId] != undefined) {
-                remaining[record.internalId] = record;
-            }
-        }, this);
-        
-        return remaining;
+        return new Ext.data.ResultSet({
+            total: records.length,
+            count: records.length,
+            records: records,
+            success: true,
+            message: 'loaded'
+        });
     }
 });
 
@@ -2535,70 +1963,6 @@ Ext.define('LDA.model.FilterUnitsModel', {
     fields:['activity_type', 'unit', 'about']
 });
 
-/* 
- * Purpose: to make text selectable in a Ext JS 4 grid
- *
- * Usage for MVC app:
- * 
- * 1. copy this file to feature/selectable.js
- * 2. add this to your grid config:
-
- features: [
- {ftype: 'selectable', id: 'selectable'}
- ],
-
- * Tested with Ext.grid.Panel in Ext JS 4.0.2a MVC app
- */
-
-// append our CSS class to <head>
-Ext.getHead().insertHtml("beforeEnd",
-    '<style type="text/css">' +
-        '.x-selectable, .x-selectable * {' +
-        '    -khtml-user-select: text !important;' +
-        '    -moz-user-select: text !important;' +
-        '}' +
-        '</style>'
-);
-
-Ext.require('Ext.view.Table', function () {
-    Ext.override(Ext.view.Table, {
-        afterrender:function () {
-            var me = this;
-
-            me.callParent();
-            me.mon(me.el, {
-                scroll:me.fireBodyScroll,
-                scope:me
-            });
-
-            // in case the selectable feature is present, don't do me.el.unselectable() 
-            if (me.getFeature('selectable') === undefined) {
-                me.el.unselectable();
-            }
-            me.attachEventsForFeatures();
-        }
-    });
-});
-
-Ext.require('Ext.grid.feature.Feature', function () {
-    Ext.define('LSP.view.dynamicgrid.feature.selectable', {
-        extend:'Ext.grid.feature.Feature',
-        alias:'feature.selectable',
-
-        mutateMetaRowTpl:function (metaRowTpl) {
-            var i,
-                ln = metaRowTpl.length;
-
-            for (i = 0; i < ln; i++) {
-                tpl = metaRowTpl[i];
-                tpl = tpl.replace(/x-grid-row/, 'x-grid-row x-selectable');
-                tpl = tpl.replace(/x-grid-cell-inner x-unselectable/g, 'x-grid-cell-inner');
-                tpl = tpl.replace(/unselectable="on"/g, '');
-                metaRowTpl[i] = tpl;
-            }
-        }
-    });
-});  
 /**
  * FiltersFeature is a grid {@link Ext.grid.feature.Feature feature} that allows for a slightly more
  * robust representation of filtering than what is provided by the default store.
@@ -3374,6 +2738,70 @@ Ext.define('Ext.ux.grid.FiltersFeature', {
     }
 });
 
+/* 
+ * Purpose: to make text selectable in a Ext JS 4 grid
+ *
+ * Usage for MVC app:
+ * 
+ * 1. copy this file to feature/selectable.js
+ * 2. add this to your grid config:
+
+ features: [
+ {ftype: 'selectable', id: 'selectable'}
+ ],
+
+ * Tested with Ext.grid.Panel in Ext JS 4.0.2a MVC app
+ */
+
+// append our CSS class to <head>
+Ext.getHead().insertHtml("beforeEnd",
+    '<style type="text/css">' +
+        '.x-selectable, .x-selectable * {' +
+        '    -khtml-user-select: text !important;' +
+        '    -moz-user-select: text !important;' +
+        '}' +
+        '</style>'
+);
+
+Ext.require('Ext.view.Table', function () {
+    Ext.override(Ext.view.Table, {
+        afterrender:function () {
+            var me = this;
+
+            me.callParent();
+            me.mon(me.el, {
+                scroll:me.fireBodyScroll,
+                scope:me
+            });
+
+            // in case the selectable feature is present, don't do me.el.unselectable() 
+            if (me.getFeature('selectable') === undefined) {
+                me.el.unselectable();
+            }
+            me.attachEventsForFeatures();
+        }
+    });
+});
+
+Ext.require('Ext.grid.feature.Feature', function () {
+    Ext.define('LSP.view.dynamicgrid.feature.selectable', {
+        extend:'Ext.grid.feature.Feature',
+        alias:'feature.selectable',
+
+        mutateMetaRowTpl:function (metaRowTpl) {
+            var i,
+                ln = metaRowTpl.length;
+
+            for (i = 0; i < ln; i++) {
+                tpl = metaRowTpl[i];
+                tpl = tpl.replace(/x-grid-row/, 'x-grid-row x-selectable');
+                tpl = tpl.replace(/x-grid-cell-inner x-unselectable/g, 'x-grid-cell-inner');
+                tpl = tpl.replace(/unselectable="on"/g, '');
+                metaRowTpl[i] = tpl;
+            }
+        }
+    });
+});  
 Ext.define('LSP.view.ux.download.FileDownload', {
     extend: 'Ext.Component',
     alias: 'widget.FileDownload',
@@ -3451,6 +2879,343 @@ Ext.define('LSP.view.dropdowns.conceptWikiProteinLookup', {
 });
          
            
+/**
+ * @author Ed Spencer (http://sencha.com)
+ * Transition plugin for DataViews
+ */
+Ext.define('Ext.ux.DataView.Animated', {
+
+    /**
+     * @property defaults
+     * @type Object
+     * Default configuration options for all DataViewTransition instances
+     */
+    defaults: {
+        duration  : 750,
+        idProperty: 'id'
+    },
+    
+    /**
+     * Creates the plugin instance, applies defaults
+     * @constructor
+     * @param {Object} config Optional config object
+     */
+    constructor: function(config) {
+        Ext.apply(this, config || {}, this.defaults);
+    },
+
+    /**
+     * Initializes the transition plugin. Overrides the dataview's default refresh function
+     * @param {Ext.view.View} dataview The dataview
+     */
+    init: function(dataview) {
+        /**
+         * @property dataview
+         * @type Ext.view.View
+         * Reference to the DataView this instance is bound to
+         */
+        this.dataview = dataview;
+        
+        var idProperty = this.idProperty,
+            store = dataview.store;
+        
+        dataview.blockRefresh = true;
+        dataview.updateIndexes = Ext.Function.createSequence(dataview.updateIndexes, function() {
+            this.getTargetEl().select(this.itemSelector).each(function(element, composite, index) {
+                element.id = element.dom.id = Ext.util.Format.format("{0}-{1}", dataview.id, store.getAt(index).internalId);
+            }, this);
+        }, dataview);
+        
+        /**
+         * @property dataviewID
+         * @type String
+         * The string ID of the DataView component. This is used internally when animating child objects
+         */
+        this.dataviewID = dataview.id;
+        
+        /**
+         * @property cachedStoreData
+         * @type Object
+         * A cache of existing store data, keyed by id. This is used to determine
+         * whether any items were added or removed from the store on data change
+         */
+        this.cachedStoreData = {};
+        
+        //catch the store data with the snapshot immediately
+        this.cacheStoreData(store.data || store.snapshot);
+
+        dataview.on('resize', function() {
+            var store = dataview.store;
+            if (store.getCount() > 0) {
+                // reDraw.call(this, store);
+            }
+        }, this);
+        
+        dataview.store.on('datachanged', reDraw, this);
+        
+        function reDraw(store) {
+            var parentEl = dataview.getTargetEl(),
+                calcItem = store.getAt(0),
+                added    = this.getAdded(store),
+                removed  = this.getRemoved(store),
+                previous = this.getRemaining(store),
+                existing = Ext.apply({}, previous, added);
+            
+            //hide old items
+            Ext.each(removed, function(item) {
+                var id = this.dataviewID + '-' + item.internalId;
+                Ext.fly(id).animate({
+                    remove  : false,
+                    duration: duration,
+                    opacity : 0,
+                    useDisplay: true,
+                    callback: function() {
+                        Ext.fly(id).setDisplayed(false);
+                    }
+                });
+            }, this);
+            
+            //store is empty
+            if (calcItem == undefined) {
+                this.cacheStoreData(store);
+                return;
+            }
+            
+            this.cacheStoreData(store);
+            
+            var el = Ext.get(this.dataviewID + "-" + calcItem.internalId);
+            
+            //if there is nothing rendered, force a refresh and return. This happens when loading asynchronously (was not
+            //covered correctly in previous versions, which only accepted local data)
+            if (!el) {
+                dataview.refresh();
+                return true;
+            }
+            
+            //calculate the number of rows and columns we have
+            var itemCount   = store.getCount(),
+                itemWidth   = el.getMargin('lr') + el.getWidth(),
+                itemHeight  = el.getMargin('bt') + el.getHeight(),
+                dvWidth     = parentEl.getWidth(),
+                columns     = Math.floor(dvWidth / itemWidth),
+                rows        = Math.ceil(itemCount / columns),
+                currentRows = Math.ceil(this.getExistingCount() / columns);
+            
+            //stores the current top and left values for each element (discovered below)
+            var oldPositions = {},
+                newPositions = {},
+                elCache      = {};
+            
+            //find current positions of each element and save a reference in the elCache
+            Ext.iterate(previous, function(id, item) {
+                var id = item.internalId,
+                    el = elCache[id] = Ext.get(this.dataviewID + '-' + id);
+                
+                oldPositions[id] = {
+                    top : el.getTop()  - parentEl.getTop()  - el.getMargin('t') - parentEl.getPadding('t'),
+                    left: el.getLeft() - parentEl.getLeft() - el.getMargin('l') - parentEl.getPadding('l')
+                };
+            }, this);
+            
+            //make sure the correct styles are applied to the parent element
+            parentEl.applyStyles({
+                display : 'block',
+                position: 'relative'
+            });
+            
+            //set absolute positioning on all DataView items. We need to set position, left and 
+            //top at the same time to avoid any flickering
+            Ext.iterate(previous, function(id, item) {
+                var oldPos = oldPositions[id],
+                    el     = elCache[id];
+
+                if (el.getStyle('position') != 'absolute') {
+                    elCache[id].applyStyles({
+                        position: 'absolute',
+                        left    : oldPos.left + "px",
+                        top     : oldPos.top + "px"
+                    });
+                }
+            });
+            
+            //get new positions
+            var index = 0;
+            Ext.iterate(store.data.items, function(item) {
+                var id = item.internalId,
+                    el = elCache[id];
+                
+                var column = index % columns,
+                    row    = Math.floor(index / columns),
+                    top    = row    * itemHeight,
+                    left   = column * itemWidth;
+                
+                newPositions[id] = {
+                    top : top,
+                    left: left
+                };
+                
+                index ++;
+            }, this);
+            
+            //do the movements
+            var startTime  = new Date(),
+                duration   = this.duration,
+                dataviewID = this.dataviewID;
+            
+            var doAnimate = function() {
+                var elapsed  = new Date() - startTime,
+                    fraction = elapsed / duration,
+                    id;
+
+                if (fraction >= 1) {
+                    for (id in newPositions) {
+                        Ext.fly(dataviewID + '-' + id).applyStyles({
+                            top : newPositions[id].top + "px",
+                            left: newPositions[id].left + "px"
+                        });
+                    }
+
+                    Ext.TaskManager.stop(task);
+                } else {
+                    //move each item
+                    for (id in newPositions) {
+                        if (!previous[id]) {
+                            continue;
+                        }
+                        
+                        var oldPos  = oldPositions[id],
+                            newPos  = newPositions[id],
+                            oldTop  = oldPos.top,
+                            newTop  = newPos.top,
+                            oldLeft = oldPos.left,
+                            newLeft = newPos.left,
+                            diffTop = fraction * Math.abs(oldTop  - newTop),
+                            diffLeft= fraction * Math.abs(oldLeft - newLeft),
+                            midTop  = oldTop  > newTop  ? oldTop  - diffTop  : oldTop  + diffTop,
+                            midLeft = oldLeft > newLeft ? oldLeft - diffLeft : oldLeft + diffLeft;
+
+                        Ext.fly(dataviewID + '-' + id).applyStyles({
+                            top : midTop + "px",
+                            left: midLeft + "px"
+                        }).setDisplayed(true);
+                    }
+                }
+            };
+            
+            var task = {
+                run     : doAnimate,
+                interval: 20,
+                scope   : this
+            };
+            
+            Ext.TaskManager.start(task);
+            
+            //show new items
+            Ext.iterate(added, function(id, item) {
+                Ext.fly(this.dataviewID + '-' + item.internalId).applyStyles({
+                    top    : newPositions[item.internalId].top + "px",
+                    left   : newPositions[item.internalId].left + "px"
+                }).setDisplayed(true);
+                
+                Ext.fly(this.dataviewID + '-' + item.internalId).animate({
+                    remove  : false,
+                    duration: duration,
+                    opacity : 1
+                });
+            }, this);
+            
+            this.cacheStoreData(store);
+        }
+    },
+    
+    /**
+     * Caches the records from a store locally for comparison later
+     * @param {Ext.data.Store} store The store to cache data from
+     */
+    cacheStoreData: function(store) {
+        this.cachedStoreData = {};
+        
+        store.each(function(record) {
+             this.cachedStoreData[record.internalId] = record;
+        }, this);
+    },
+    
+    /**
+     * Returns all records that were already in the DataView
+     * @return {Object} All existing records
+     */
+    getExisting: function() {
+        return this.cachedStoreData;
+    },
+    
+    /**
+     * Returns the total number of items that are currently visible in the DataView
+     * @return {Number} The number of existing items
+     */
+    getExistingCount: function() {
+        var count = 0,
+            items = this.getExisting();
+        
+        for (var k in items) {
+            count++;
+        }
+        
+        return count;
+    },
+    
+    /**
+     * Returns all records in the given store that were not already present
+     * @param {Ext.data.Store} store The updated store instance
+     * @return {Object} Object of records not already present in the dataview in format {id: record}
+     */
+    getAdded: function(store) {
+        var added = {};
+        
+        store.each(function(record) {
+            if (this.cachedStoreData[record.internalId] == undefined) {
+                added[record.internalId] = record;
+            }
+        }, this);
+        
+        return added;
+    },
+    
+    /**
+     * Returns all records that are present in the DataView but not the new store
+     * @param {Ext.data.Store} store The updated store instance
+     * @return {Array} Array of records that used to be present
+     */
+    getRemoved: function(store) {
+        var removed = [],
+            id;
+        
+        for (id in this.cachedStoreData) {
+            if (store.findBy(function(record) {return record.internalId == id;}) == -1) {
+                removed.push(this.cachedStoreData[id]);
+            }
+        }
+        
+        return removed;
+    },
+    
+    /**
+     * Returns all records that are already present and are still present in the new store
+     * @param {Ext.data.Store} store The updated store instance
+     * @return {Object} Object of records that are still present from last time in format {id: record}
+     */
+    getRemaining: function(store) {
+        var remaining = {};
+
+        store.each(function(record) {
+            if (this.cachedStoreData[record.internalId] != undefined) {
+                remaining[record.internalId] = record;
+            }
+        }, this);
+        
+        return remaining;
+    }
+});
+
 /**
  * Created by JetBrains RubyMine.
  * User: jameseales
@@ -3838,6 +3603,18 @@ function provenanceTargetSummaryRenderer(value, field) {
 };
 
 /**
+ * Created by JetBrains RubyMine.
+ * User: jameseales
+ * Date: 04/04/2012
+ * Time: 11:52
+ * To change this template use File | Settings | File Templates.
+ */
+Ext.define('LSP.model.GuiComponent', {
+    extend:'Ext.data.Model',
+    fields:['xtype', 'url', 'id', 'text', 'home']
+});
+
+/**
  * Created with JetBrains RubyMine.
  * User: jameseales
  * Date: 02/07/2012
@@ -3876,76 +3653,100 @@ Ext.define('LDA.helper.JamesQueryStringEncoder', {
     }
 });
 
-Ext.Loader.setConfig({enabled:true});
-Ext.Loader.setPath('Ext.ux.DataView', '/ext/examples/ux/DataView/');
+Ext.define('LSP.controller.BackgroundTasks', {
+    extend: 'Ext.app.Controller',
+    views: ['background_tasks.BackgroundTasksForm'],
+    	refs: [{
+		ref: 'tasksContainer',
+		selector: '#tasks_container'
+	}],
+    task_list: new Array(),
 
-Ext.define('LSP.view.dataview.StructureViewer', {
-    extend:'Ext.window.Window',
-    alias:'widget.StructureViewer',
-
-    requires:['Ext.form.Panel', 'Ext.util.*', 'Ext.ux.DataView.Animated'],
-
-    title:'Structures',
-    layout:'fit',
-    modal:true,
-    autoShow:true,
-    height:570,
-    width:810,
-
-    initComponent:function () {
-        var store = structureViewStore;
-        var dataview = Ext.create('Ext.view.View', {
-            deferInitialRefresh:false,
-            store:store,
-            tpl:Ext.create('Ext.XTemplate',
-                '<tpl for=".">',
-                '<div class="structure_data_view-wrap">',
-                '<p height="180">',
-                '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
-                '<br /><strong>Chemspider id : <a href ="http://inchi.chemspider.com/Chemical-Structure.{csid}.html" target="_blank">{csid}</a></strong>',
-                '</p>',
-                '</div>',
-                '</tpl>'
-            ),
-
-            plugins:[
-                Ext.create('Ext.ux.DataView.Animated', {
-                    duration:550,
-                    idProperty:'csid'
-                })
-            ],
-            itemSelector:'div.structure_data_view-wrap',
-            overItemCls:'x-view-over_structure_dv',
-            singleSelect:true,
-            autoScroll:true
+    init: function() {
+        this.control({
+            '#background_tasks_form': {
+                taskadded: this.addNewTask
+                }
         });
+    },
 
-        this.items = [
-            {
-                xtype:'form',
-                padding:'0 0 0 0',
-                border:false,
-                autoScroll:true,
-                style:'background-color: #fff;',
-                items:dataview
-            }
-        ];
+   removeTask: function() {
+       runner = this.getTaskRunner();
+       if (runner) {
+           runner.destroy();
+       }
+       this.close();
+   },
 
-        this.buttons = [
-            {
-                text:'Use structure',
-                action:'commit_structure'
-            },
-            {
-                text:'Cancel',
-                scope:this,
-                handler:this.close
-            }
-        ];
-
-        this.callParent(arguments);
-    }
+   addNewTask: function(uuid, type) {
+       console.log('adding task with uuid : ' + uuid);
+       var me= this;
+       this.task_list.push(uuid);
+       var resource_type = type;
+       var task = Ext.create('LSP.view.background_tasks.BackgroundTask', {});
+       task.down('#type').setText(type + "....creating");
+       task.down('#type').setHeight('auto');
+       task.down('#cancel_button').on({
+          click: {fn: me.removeTask, scope: task}
+       });
+       this.getTasksContainer().add(task);
+       var tsv_status_store = Ext.create('LDA.store.TSVStatusStore', {});
+       tsv_status_store.setUUID(uuid);
+       tsv_status_store.setTask(task);
+       tsv_status_store.setTasksContainer(this.getTasksContainer());
+       var checkTSVStatus = function() {
+       this.load(
+           {params: {
+               uuid : this.getUUID()
+           },
+       callback: function(records, operation, success) {
+           if (success) {
+               console.log('success tsv status');
+               status = records[0].data.status;
+               percentage = records[0].data.percentage;
+               if (percentage != '0') {
+                   this.getTask().down('#progress').updateProgress(percentage/100, '', true);
+                   this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
+               }
+               if (status == 'finished') {
+                   this.getTask().down('#progress').hide();
+                   this.getTask().down('#type').setText(type + "...ready for download");
+                   this.getTaskRunner().destroy();
+                   tsv_download_button = Ext.create('Ext.Button', {
+                       text:'Download tsv file',
+                       tooltip:'Download results as a tab separated file',
+                       itemId:'tsvDownloadProxy_' + this.getUUID(),
+                       iconCls:'icon-csv',
+                       hidden:false,
+                       disabled: false,
+                       margin: '2',
+                       href: tsv_download_url,
+                       renderTo: Ext.getBody()
+                   });
+                   tsv_download_button.href = tsv_download_url + "uuid=" + this.getUUID();
+                   tsv_download_button.setParams();
+                   this.getTask().add(tsv_download_button);
+               } else if (status == 'failed') {
+	               this.getTask().down('#progress').hide();
+                   this.getTask().down('#type').setText(type + "...FAILED");
+                   this.getTaskRunner().destroy(); 
+               }              
+           } else {
+               console.log('fail tsv status');
+           }
+       }})
+   };
+   var runner = new Ext.util.TaskRunner();
+   tsv_status_store.setTaskRunner(runner);
+   var taskrunner = runner.start({
+      run: checkTSVStatus,
+       interval: 5000,
+       scope: tsv_status_store
+    });
+   task.setTaskRunner(runner);       
+   }
 });
+
 Ext.define('LSP.view.target_by_name.TargetByNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.TargetByNameForm',
@@ -4076,7 +3877,7 @@ Ext.define('LSP.controller.TargetByNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 store.proxy.extraParams.uri = historyTokenObject.u;
                 me.getFormView().setLoading(true);
@@ -4159,6 +3960,205 @@ Ext.define('LSP.controller.TargetByNameForm', {
     }
 });
 
+Ext.define('LSP.store.GuiComponents', {
+	extend: 'Ext.data.Store',
+	id: 'GuiComponents',
+	model: 'LSP.model.GuiComponent',
+	autoLoad: true,
+	data: [{
+		"url": "users.json",
+		"text": "Users",
+		"id": 3,
+		"xtype": "dynamicgrid",
+		"home": "Users grid"
+	},
+		{
+			"url": "rdf.json",
+			"text": "SPARQL",
+			"id": 5,
+			"xtype": "queryform",
+			"home": "SPARQL form"
+		}, {
+			"url": "",
+			"text": "Compound by name",
+			"id": 18,
+			"xtype": "CmpdByNameForm",
+			"home": "Compound by name"
+		}, {
+			"url": "",
+			"text": "Compound by structure",
+			"id": 23,
+			"xtype": "SimSearchForm",
+			"home": "Compound Structure Search"
+		}, {
+			"url": "",
+			"text": "Target by name",
+			"id": 24,
+			"xtype": "TargetByNameForm",
+			"home": "Target by name"
+		}, {
+			"url": "",
+			"text": "X-Target by sequence",
+			"id": 25,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "Pharmacology by Target",
+			"id": 26,
+			"xtype": "PharmByTargetNameForm",
+			"home": "Pharmacology by Target Name"
+		}, {
+			"url": "",
+			"text": "Pharmacology by Compound",
+			"id": 27,
+			"xtype": "PharmByCmpdNameForm",
+			"home": "Pharmacology by Compound name"
+		}, {
+			"url": "",
+			"text": "Pharmacology by Enzyme family",
+			"id": 28,
+			"xtype": "PharmEnzymeForm",
+			"home": "Compounds active against enzyme family"
+		}, {
+			"url": "",
+			"text": "X-Polypharmacology Browser",
+			"id": 34,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "X-Target Dossier",
+			"id": 35,
+			"xtype": "temp",
+			"home": ""
+		}, {
+			"url": "",
+			"text": "X-Chem-Bio Navigator",
+			"id": 36,
+			"xtype": "temp",
+			"home": ""
+		}]
+});
+
+/*########################################################################################
+ #
+ #  Copyright H. Lundbeck A/S
+ #  This file is part of LSP4All.
+ #
+ #  LSP4All is free software; you can redistribute it and/or modify
+ #  it under the terms of the GNU General Public License as published by
+ #  the Free Software Foundation; either version 2 of the License, or (at
+ #  your option) any later version.
+ #
+ #  LSP4All IS MADE AVAILABLE FOR DISTRIBUTION WITHOUT ANY FORM OF WARRANTY TO THE
+ #  EXTENT PERMITTED BY APPLICABLE LAW.  THE COPYRIGHT HOLDER PROVIDES THE PROGRAM \"AS IS\"
+ #  WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT
+ #  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ #  PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM LIES
+ #  WITH THE USER.  SHOULD THE PROGRAM PROVE DEFECTIVE IN ANY WAY, THE USER ASSUMES THE
+ #  COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION. THE COPYRIGHT HOLDER IS NOT
+ #  RESPONSIBLE FOR ANY AMENDMENT, MODIFICATION OR OTHER ENHANCEMENT MADE TO THE PROGRAM
+ #  BY ANY USER WHO REDISTRIBUTES THE PROGRAM SO AMENDED, MODIFIED OR ENHANCED.
+ #
+ #  IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING WILL THE
+ #  COPYRIGHT HOLDER BE LIABLE TO ANY USER FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL,
+ #  INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE
+ #  PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING RENDERED INACCURATE
+ #  OR LOSSES SUSTAINED BY THE USER OR THIRD PARTIES OR A FAILURE OF THE PROGRAM TO
+ #  OPERATE WITH ANY OTHER PROGRAMS), EVEN IF SUCH HOLDER HAS BEEN ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGES.
+ #
+ #  You should have received a copy of the GNU General Public License
+ #  along with this program; if not, write to the Free Software
+ #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ ########################################################################################*/
+
+Ext.define('LSP.controller.NavigationTree', {
+    extend:'Ext.app.Controller',
+
+    stores:['NavigationTree', 'GuiComponents'],
+
+    views:[
+        'Appmoduletree'
+    ],
+
+    init:function () {
+
+    }
+
+});
+Ext.Loader.setConfig({enabled:true});
+Ext.Loader.setPath('Ext.ux.DataView', '/ext/examples/ux/DataView/');
+
+Ext.define('LSP.view.dataview.StructureViewer', {
+    extend:'Ext.window.Window',
+    alias:'widget.StructureViewer',
+
+    requires:['Ext.form.Panel', 'Ext.util.*', 'Ext.ux.DataView.Animated'],
+
+    title:'Structures',
+    layout:'fit',
+    modal:true,
+    autoShow:true,
+    height:570,
+    width:810,
+
+    initComponent:function () {
+        var store = structureViewStore;
+        var dataview = Ext.create('Ext.view.View', {
+            deferInitialRefresh:false,
+            store:store,
+            tpl:Ext.create('Ext.XTemplate',
+                '<tpl for=".">',
+                '<div class="structure_data_view-wrap">',
+                '<p height="180">',
+                '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                '<br /><strong>Chemspider id : <a href ="http://inchi.chemspider.com/Chemical-Structure.{csid}.html" target="_blank">{csid}</a></strong>',
+                '</p>',
+                '</div>',
+                '</tpl>'
+            ),
+
+            plugins:[
+                Ext.create('Ext.ux.DataView.Animated', {
+                    duration:550,
+                    idProperty:'csid'
+                })
+            ],
+            itemSelector:'div.structure_data_view-wrap',
+            overItemCls:'x-view-over_structure_dv',
+            singleSelect:true,
+            autoScroll:true
+        });
+
+        this.items = [
+            {
+                xtype:'form',
+                padding:'0 0 0 0',
+                border:false,
+                autoScroll:true,
+                style:'background-color: #fff;',
+                items:dataview
+            }
+        ];
+
+        this.buttons = [
+            {
+                text:'Use structure',
+                action:'commit_structure'
+            },
+            {
+                text:'Cancel',
+                scope:this,
+                handler:this.close
+            }
+        ];
+
+        this.callParent(arguments);
+    }
+});
 Ext.define('LDA.store.basestores.BaseStore', {
 	extend: 'Ext.data.Store',
 	requires: ['LDA.helper.LDAConstants'],
@@ -4604,7 +4604,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     prepareTSVDownload: function() {
        var me = this;
        var gridview = this.getGridView();
-       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, uri, total_count, request_type;
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, target_organism, uri, total_count, request_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
        Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
        Ext.each(this.getFilters(), function(filter, index) {
@@ -4615,6 +4615,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 activity_unit = gridview.store.activity_unit;
             } else if (filter.filterType == "organism") {
                 assay_organism = gridview.store.assay_organism;
+            } else if (filter.filterType == "target") {
+                target_organism = gridview.store.target_organism;
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -4628,6 +4630,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                activity_value : activity_value,
                activity_unit : activity_unit,
                assay_organism : assay_organism,
+               target_organism: target_organism,
                uri : uri,
                total_count : total_count,
                request_type : request_type
@@ -4765,6 +4768,48 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }
     },
 
+    addCompletedTargetOrganismFilter: function(button) {
+        console.log('DynamicGrid: addCompletedTargetOrganismFilter()');
+        organism_value = this.getFilterContainer().down('#target_organism_combobox_id').getValue();
+        if (organism_value != null) {
+            filter = Ext.create('LSP.model.Filter', {
+                value: organism_value
+            });
+            filter.filterType = "target";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
+
+            filter_view = Ext.create('LSP.view.filter.CompletedTargetOrganismFilter', {});
+            filter_view.down('#valueLabel_id').setText("Target Organism");
+            filter_view.down('#conditionsLabel_id').setText("=");
+            filter_view.down('#organismType_id').setText(organism_value);
+            //filter_view.down('#unitLabel_id').setText(unit_value);
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setTargetOrganism(organism_value);
+            // currently only 1 target organism filter can be added at a time
+            this.getFormView().down('#addCompletedTargetOrganismFilter_id').disable();
+        } else {
+            Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+    },
+
     removeFilter: function(filter) {
         console.log('DynamicGrid: filterClosed()');
         controller = filter.filterModel.controller;
@@ -4790,6 +4835,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             controller.getFormView().down('#addCompletedOrganismFilter_id').enable();
             //controller.getFormView().down('#organismFilterContainer_id').enable();
             //controller.getFormView().down('#organismFilterContainer_id').setVisible(true);
+        } else if (filter.filterModel.filterType == "target") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setTargetOrganism(null);
+            controller.getFormView().down('#addCompletedTargetOrganismFilter_id').enable();
         }
 
     },
@@ -5008,6 +5059,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setActivityUnit(filter.data.unit);
                 } else if (filter.filterType == "organism") {
                     countStore.setAssayOrganism(filter.data.value);
+                } else if (filter.filterType == "target") {
+                    countStore.setTargetOrganism(filter.data.value);
                 }
             });
             //if (this.getFilters().length > 0) {
@@ -5259,14 +5312,14 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
-        header: 'InChi',
+        header: 'InChI',
         dataIndex: 'inchi',
         renderer:structureProvenanceRenderer,
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
     }, {
-        header: 'InChi Key',
+        header: 'InChIKey',
         dataIndex: 'inchi_key',
         renderer:structureProvenanceRenderer,
         width: 135,
@@ -6093,6 +6146,236 @@ if (this.current_mode == 'exact') {
     }
 });
 
+Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
+    extend:'LSP.view.dynamicgrid.DynamicGrid',
+        alias:'widget.PharmByEnzymeFamilyScrollingGrid',
+        layout:'fit',
+ 	//verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+        disableSelection: true,
+        invalidateScrollerOnRefresh: false,
+        requires:[
+
+        ],
+		listeners: {
+		    'sortchange': function(ct, column, direction, eOpts ) {
+				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
+				this.setLoading(true);
+		    }
+		},
+        store:'EnzymeFamilyPaginatedStore',
+	exportStore: null,
+	getExportStore: function() {
+		if (this.exportStore == null) {
+			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
+		}
+		return this.exportStore;		
+	},
+        columns:{
+            defaults:{
+            },
+
+            items:[
+				{
+					xtype: 'rownumberer',
+					width: 40
+				},
+                {
+                    header:'Structure',
+                    dataIndex:'cs_compound_uri',
+					xtype: 'templatecolumn',
+					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                    width:135,
+                    sortable:false
+                },
+                {
+                    header:'Compound Name',
+                    dataIndex:'compound_pref_label',
+                    width: 180,
+                    renderer: enzymeProvenanceRenderer,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Target Name',
+                    dataIndex:'target_title',
+                    width: 180,
+                    renderer: enzymeProvenanceRenderer,
+                    tdCls: 'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Target Organism',
+                    dataIndex:'target_organism',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Assay Organism',
+                    dataIndex:'assay_organism',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Assay Description',
+                    dataIndex:'assay_description',
+                    width:200,
+                    renderer:enzymeProvenanceRenderer,
+                    tdCls:'wrap gridDescriptiveRowPadding'
+                },
+                {
+                    header:'Activity Type',
+                    dataIndex:'activity_activity_type',
+                    renderer: enzymeProvenanceRenderer,
+                    width: 72,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Relation',
+                    dataIndex:'activity_relation',
+                    renderer: enzymeProvenanceRenderer,
+                    width: 52,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Value',
+                    dataIndex:'activity_standard_value',
+                    renderer: enzymeProvenanceRenderer,
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Units',
+                    dataIndex:'activity_standard_units',
+                    renderer: enzymeProvenanceRenderer,
+                    width: 60,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'Mol Weight',
+                    dataIndex:'compound_full_mwt',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    width: 80,
+                    tdCls: 'gridRowPadding'
+                },{
+                    header:'SMILES',
+                    dataIndex:'compound_smiles',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChI',
+                    dataIndex:'compound_inchi',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
+                    header:'InChIKey',
+                    dataIndex:'compound_inchikey',
+                    renderer: enzymeProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                }
+            ]
+
+        },
+
+        enzyme_prov: false,
+
+        toggleProv:function (val) {
+            this.enzyme_prov = val;
+            console.log(" Show provenance : " + this.enzyme_prov );
+            this.doLayout();
+        }
+    }
+);
+
+function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
+	//console.log("Enzyme Pharmacology provenance renderer");
+
+    //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
+    if (this.enzyme_prov) {
+
+        var recdata = this.columns[columnIndex].dataIndex;
+        var itemdata = recdata + '_item';
+        recdata += '_src';
+        var source = record.data[recdata];
+        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
+        if (!cls) {
+            cls = 'defaultValue';
+        }
+        var iconCls = cls + 'Icon';
+        iconCls = '/assets/' + iconCls + '.png';
+        //console.log(iconCls);
+        cls += LDAProvenanceMode;
+        if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
+
+            if (record.data[recdata] && data){
+
+                if (this.columns[columnIndex].dataIndex == 'target_title') {
+
+                    var output = new String();
+                    var targetNames = data.split(',');
+                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
+                    var targetURIs = record.data['target_concatenated_uris'].split(',');
+                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
+                    Ext.each(targetNames, function (target, index) {
+
+                        var url = targetURIs[index];
+                        if (url) {
+                            //console.log( ' url ' + url);
+                            //var targetId = url.split('/').pop();
+                            var linkOut = targetBaseURL + url.split('/').pop();
+                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+                        } else {
+
+                            var onlyTarget = targetURIs[0].split('/').pop();
+                            var linkOutfirst = targetBaseURL + onlyTarget;
+                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                        }
+
+                    });
+                    return output;
+
+                }
+
+                // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
+                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+
+            } else {
+
+                return '<div class="' + cls + '">' + data + '</div>'
+
+            }
+
+        }
+        //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
+        //this needs an img adding in
+        //    return '<div class="' + cls + '">' + data + '</div>';
+        //} else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_TEXT) {
+        //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
+        //}
+    } else {
+        return data;
+    }
+    return data;
+};
+
+
+//{
+//    header:'Chemspider ID',
+//    dataIndex:'cs_compound_uri',
+//	sortable:false
+//},
+
 var target_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -6240,6 +6523,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		fieldLabel: 'Activity Type',
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
+		queryParam: false,
 		displayField: 'activity_type',
 		valueField: 'about',
 		labelWidth: 100,
@@ -6300,7 +6584,13 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
             margin: '0 5 5 5',
             name: 'organism_filter_fields',
             hidden: false
-}]}, {
+        }, {
+            xtype: 'TargetOrganismFilterForm',
+            itemId: 'targetOrganismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'target_organism_filter_fields',
+            hidden: false
+        }]}, {
 			xtype: 'container',
 			itemId: 'completedFilterContainer_id',
 			margin: '0 5 5 5',
@@ -6316,236 +6606,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 		this.callParent(arguments);
 	}
 });
-
-Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
-    extend:'LSP.view.dynamicgrid.DynamicGrid',
-        alias:'widget.PharmByEnzymeFamilyScrollingGrid',
-        layout:'fit',
- 	//verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
-        disableSelection: true,
-        invalidateScrollerOnRefresh: false,
-        requires:[
-
-        ],
-		listeners: {
-		    'sortchange': function(ct, column, direction, eOpts ) {
-				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
-				this.setLoading(true);
-		    }
-		},
-        store:'EnzymeFamilyPaginatedStore',
-	exportStore: null,
-	getExportStore: function() {
-		if (this.exportStore == null) {
-			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
-		}
-		return this.exportStore;		
-	},
-        columns:{
-            defaults:{
-            },
-
-            items:[
-				{
-					xtype: 'rownumberer',
-					width: 40
-				},
-                {
-                    header:'Structure',
-                    dataIndex:'cs_compound_uri',
-					xtype: 'templatecolumn',
-					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
-                    width:135,
-                    sortable:false
-                },
-                {
-                    header:'Compound Name',
-                    dataIndex:'compound_pref_label',
-                    width: 180,
-                    renderer: enzymeProvenanceRenderer,
-                    tdCls: 'wrap gridDescriptiveRowPadding'
-                },
-                {
-                    header:'Target Name',
-                    dataIndex:'target_title',
-                    width: 180,
-                    renderer: enzymeProvenanceRenderer,
-                    tdCls: 'wrap gridDescriptiveRowPadding'
-                },
-                {
-                    header:'Target Organism',
-                    dataIndex:'target_organism',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Assay Organism',
-                    dataIndex:'assay_organism',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Assay Description',
-                    dataIndex:'assay_description',
-                    width:200,
-                    renderer:enzymeProvenanceRenderer,
-                    tdCls:'wrap gridDescriptiveRowPadding'
-                },
-                {
-                    header:'Activity Type',
-                    dataIndex:'activity_activity_type',
-                    renderer: enzymeProvenanceRenderer,
-                    width: 72,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Relation',
-                    dataIndex:'activity_relation',
-                    renderer: enzymeProvenanceRenderer,
-                    width: 52,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Value',
-                    dataIndex:'activity_standard_value',
-                    renderer: enzymeProvenanceRenderer,
-                    width: 60,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Units',
-                    dataIndex:'activity_standard_units',
-                    renderer: enzymeProvenanceRenderer,
-                    width: 60,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'Mol Weight',
-                    dataIndex:'compound_full_mwt',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    width: 80,
-                    tdCls: 'gridRowPadding'
-                },{
-                    header:'SMILES',
-                    dataIndex:'compound_smiles',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'InChi',
-                    dataIndex:'compound_inchi',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                },
-                {
-                    header:'InChi Key',
-                    dataIndex:'compound_inchikey',
-                    renderer: enzymeProvenanceRenderer,
-                    align:'center',
-                    tdCls: 'gridRowPadding'
-                }
-            ]
-
-        },
-
-        enzyme_prov: false,
-
-        toggleProv:function (val) {
-            this.enzyme_prov = val;
-            console.log(" Show provenance : " + this.enzyme_prov );
-            this.doLayout();
-        }
-    }
-);
-
-function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
-	//console.log("Enzyme Pharmacology provenance renderer");
-
-    //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
-    if (this.enzyme_prov) {
-
-        var recdata = this.columns[columnIndex].dataIndex;
-        var itemdata = recdata + '_item';
-        recdata += '_src';
-        var source = record.data[recdata];
-        var cls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[source];
-        if (!cls) {
-            cls = 'defaultValue';
-        }
-        var iconCls = cls + 'Icon';
-        iconCls = '/assets/' + iconCls + '.png';
-        //console.log(iconCls);
-        cls += LDAProvenanceMode;
-        if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
-
-            if (record.data[recdata] && data){
-
-                if (this.columns[columnIndex].dataIndex == 'target_title') {
-
-                    var output = new String();
-                    var targetNames = data.split(',');
-                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
-                    var targetURIs = record.data['target_concatenated_uris'].split(',');
-                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
-                        var url = targetURIs[index];
-                        if (url) {
-                            //console.log( ' url ' + url);
-                            //var targetId = url.split('/').pop();
-                            var linkOut = targetBaseURL + url.split('/').pop();
-                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-                        } else {
-
-                            var onlyTarget = targetURIs[0].split('/').pop();
-                            var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-                        }
-
-                    });
-                    return output;
-
-                }
-
-                // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-            } else {
-
-                return '<div class="' + cls + '">' + data + '</div>'
-
-            }
-
-        }
-        //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
-        //this needs an img adding in
-        //    return '<div class="' + cls + '">' + data + '</div>';
-        //} else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_TEXT) {
-        //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
-        //}
-    } else {
-        return data;
-    }
-    return data;
-};
-
-
-//{
-//    header:'Chemspider ID',
-//    dataIndex:'cs_compound_uri',
-//	sortable:false
-//},
 
 /**
  * Created with JetBrains RubyMine.
@@ -6698,6 +6758,15 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
+                    header:'PubMed ID',
+                    dataIndex:'activity_pubmed_id',
+                    xtype:'templatecolumn',
+                    tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                    //renderer:compoundProvenanceRenderer,
+                    align:'center',
+                    tdCls: 'gridRowPadding'
+                },
+                {
                     header:'Mol Weight',
                     dataIndex:'compound_full_mwt',
                     width: 80,
@@ -6715,7 +6784,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'InChi',
+                    header:'InChI',
                     dataIndex:'compound_inchi',
                     renderer:targetProvenanceRenderer,
                     align:'center',
@@ -6723,7 +6792,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
 
                 },
                 {
-                    header:'InChi Key',
+                    header:'InChIKey',
                     dataIndex:'compound_inchikey',
                     renderer:targetProvenanceRenderer,
                     align:'center',
@@ -6929,6 +6998,15 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
+                header:'PubMed ID',
+                dataIndex:'activity_pubmed_id',
+                xtype:'templatecolumn',
+                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                //renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
+            },
+            {
                 header:'SMILES',
                 dataIndex:'compound_smiles',
                 renderer:compoundProvenanceRenderer,
@@ -6937,7 +7015,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
-                header:'InChi',
+                header:'InChI',
                 dataIndex:'compound_inchi',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
@@ -6946,22 +7024,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             },
 
             {
-                header:'InChi Key',
+                header:'InChIKey',
                 dataIndex:'compound_inchikey',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
 
-            },
-
-            {
-                header:'Pubmed ID',
-                dataIndex:'activity_pubmed_id',
-                xtype:'templatecolumn',
-                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
-                //renderer:compoundProvenanceRenderer,
-                align:'center',
-                tdCls: 'gridRowPadding'
             }
         ],
 
@@ -7172,6 +7240,9 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             'PharmByTargetNameForm button[action=add_completed_activity_filter]': {
                 click: this.addCompletedActivityFilter
             },
+            'PharmByTargetNameForm button[action=add_completed_target_organism_filter]': {
+		click: this.addCompletedTargetOrganismFilter
+            },
             'PharmByTargetNameForm #provId': {
                 change: this.onProvChange
             },
@@ -7221,7 +7292,7 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 // Setting the value in the Concept Wiki dropdown to the one defined by the uuid
                 var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
                 var cw_dropdown = this.getFormView().down('conceptWikiLookup');
-                cw_controller.setConcept(historyTokenObject.u,cw_dropdown);
+                cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
                 // Setting the uri for the LDA search
                 this.current_uri = historyTokenObject.u;
                 store.proxy.extraParams.uri = historyTokenObject.u;
@@ -7429,28 +7500,6 @@ var assay_organism = Ext.create('Ext.data.Store', {
          }
      }
  });
-//var assay_organism = Ext.create('Ext.data.Store', {
-//	fields: ['abbr', 'name'],
-//	data: [{
-//		"abbr": "Homo sapiens",
-//		"name": "Homo sapiens"
-//	}, {
-//		"abbr": "Mus musculus",
-//		"name": "Mus musculus"
-//	}, {
-//		"abbr": "Rattus norvegicus",
-//		"name": "Rattus norvegicus"
-//	}, {
-//		"abbr": "Cavia porcellus",
-//		"name": "Cavia porcellus"
-//	}, {
-//		"abbr": "Equus caballus",
-//		"name": "Equus caballus"
-//	}, {
-//		"abbr": "Ovis aries",
-//		"name": "Ovis aries"
-//	}]
-//});
 Ext.define('LSP.view.filter.OrganismFilterForm', {
 	extend: 'Ext.container.Container',
 	alias: 'widget.OrganismFilterForm',
@@ -7480,7 +7529,7 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		width: 400,
 		labelPad: 2,
 		padding: '0 2 0 0',
-		emptyText: 'Enter the name of an organism...',
+		emptyText: 'Enter the name of an assay organism...',
     		minChars:3,
     		hideTrigger:true,
     		listConfig:{
@@ -7633,7 +7682,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
-    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm'],
+    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm', 'LSP.view.filter.TargetOrganismFilterForm'],
     header: false,
     layout: {
         type: 'vbox',
@@ -7762,6 +7811,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		fieldLabel: 'Activity Type',
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
+		queryParam: false,
 		displayField: 'activity_type',
 		valueField: 'about',
 		labelWidth: 100,
@@ -7822,7 +7872,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             margin: '0 5 5 5',
             name: 'organism_filter_fields',
             hidden: false
-}]}, {
+        }, {
+            xtype: 'TargetOrganismFilterForm',
+            itemId: 'targetOrganismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'target_organism_filter_fields',
+            hidden: false
+        }]}, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',
             margin: '0 5 5 5',
@@ -7897,6 +7953,9 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 			},
 			'PharmByCmpdNameForm button[action=add_completed_activity_filter]': {
 				click: this.addCompletedActivityFilter
+			},
+                        'PharmByCmpdNameForm button[action=add_completed_target_organism_filter]': {
+				click: this.addCompletedTargetOrganismFilter
 			},
             'PharmByCmpdNameForm #provId' : {
                 change: this.onProvChange
@@ -8286,7 +8345,13 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 margin: '0 5 5 5',
                 name: 'organism_filter_fields',
                 hidden: false
-            }]
+            }, {
+            xtype: 'TargetOrganismFilterForm',
+            itemId: 'targetOrganismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'target_organism_filter_fields',
+            hidden: false
+        }]
         }, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',
@@ -8363,6 +8428,9 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm button[action=add_completed_organism_filter]': {
                 click: this.addCompletedOrganismFilter
+            },
+            'PharmEnzymeForm button[action=add_completed_target_organism_filter]': {
+	        click: this.addCompletedTargetOrganismFilter
             },
             'PharmEnzymeForm button[action=add_completed_activity_filter]': {
                 click: this.addCompletedActivityFilter
@@ -8507,6 +8575,70 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
 ;
 
 /**
+ *
+ *  Base64 encode / decode
+ *  http://www.webtoolkit.info/
+ *
+ **/
+
+(function () {
+
+    // private property
+    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+
+    // private method for UTF-8 encoding
+    function utf8Encode(string) {
+        string = string.replace(/\r\n/g, "\n");
+        var utftext = "";
+        for (var n = 0; n < string.length; n++) {
+            var c = string.charCodeAt(n);
+            if (c < 128) {
+                utftext += String.fromCharCode(c);
+            }
+            else if ((c > 127) && (c < 2048)) {
+                utftext += String.fromCharCode((c >> 6) | 192);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+            else {
+                utftext += String.fromCharCode((c >> 12) | 224);
+                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                utftext += String.fromCharCode((c & 63) | 128);
+            }
+        }
+        return utftext;
+    }
+
+    Ext.define("Ext.ux.exporter.Base64", {
+        statics:{
+            //This was the original line, which tries to use Firefox's built in Base64 encoder, but this kept throwing exceptions....
+            // encode : (typeof btoa == 'function') ? function(input) { return btoa(input); } : function (input) {
+            encode:function (input) {
+                var output = "";
+                var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+                var i = 0;
+                input = utf8Encode(input);
+                while (i < input.length) {
+                    chr1 = input.charCodeAt(i++);
+                    chr2 = input.charCodeAt(i++);
+                    chr3 = input.charCodeAt(i++);
+                    enc1 = chr1 >> 2;
+                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                    enc4 = chr3 & 63;
+                    if (isNaN(chr2)) {
+                        enc3 = enc4 = 64;
+                    } else if (isNaN(chr3)) {
+                        enc4 = 64;
+                    }
+                    output = output +
+                        keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
+                }
+                return output;
+            }}
+    });
+})();
+/**
  * @class Ext.ux.Exporter.Button
  * @extends Ext.Component
  * @author Nige White, with modifications from Ed Spencer, with modifications from iwiznia.
@@ -8579,252 +8711,6 @@ Ext.define("Ext.ux.exporter.Button", {
         });
     }
 });
-/**
- *
- *  Base64 encode / decode
- *  http://www.webtoolkit.info/
- *
- **/
-
-(function () {
-
-    // private property
-    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-    // private method for UTF-8 encoding
-    function utf8Encode(string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-        for (var n = 0; n < string.length; n++) {
-            var c = string.charCodeAt(n);
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-        }
-        return utftext;
-    }
-
-    Ext.define("Ext.ux.exporter.Base64", {
-        statics:{
-            //This was the original line, which tries to use Firefox's built in Base64 encoder, but this kept throwing exceptions....
-            // encode : (typeof btoa == 'function') ? function(input) { return btoa(input); } : function (input) {
-            encode:function (input) {
-                var output = "";
-                var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-                var i = 0;
-                input = utf8Encode(input);
-                while (i < input.length) {
-                    chr1 = input.charCodeAt(i++);
-                    chr2 = input.charCodeAt(i++);
-                    chr3 = input.charCodeAt(i++);
-                    enc1 = chr1 >> 2;
-                    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                    enc4 = chr3 & 63;
-                    if (isNaN(chr2)) {
-                        enc3 = enc4 = 64;
-                    } else if (isNaN(chr3)) {
-                        enc4 = 64;
-                    }
-                    output = output +
-                        keyStr.charAt(enc1) + keyStr.charAt(enc2) +
-                        keyStr.charAt(enc3) + keyStr.charAt(enc4);
-                }
-                return output;
-            }}
-    });
-})();
-/**
- * @class Ext.ux.grid.menu.ListMenu
- * @extends Ext.menu.Menu
- * This is a supporting class for {@link Ext.ux.grid.filter.ListFilter}.
- * Although not listed as configuration options for this class, this class
- * also accepts all configuration options from {@link Ext.ux.grid.filter.ListFilter}.
- */
-Ext.define('Ext.ux.grid.menu.ListMenu', {
-    extend: 'Ext.menu.Menu',
-
-    /**
-     * @cfg {String} labelField
-     * Defaults to 'text'.
-     */
-    labelField :  'text',
-    /**
-     * @cfg {String} paramPrefix
-     * Defaults to 'Loading...'.
-     */
-    loadingText : 'Loading...',
-    /**
-     * @cfg {Boolean} loadOnShow
-     * Defaults to true.
-     */
-    loadOnShow : true,
-    /**
-     * @cfg {Boolean} single
-     * Specify true to group all items in this list into a single-select
-     * radio button group. Defaults to false.
-     */
-    single : false,
-
-    constructor : function (cfg) {
-        var me = this,
-            options,
-            i,
-            len,
-            value;
-            
-        me.selected = [];
-        me.addEvents(
-            /**
-             * @event checkchange
-             * Fires when there is a change in checked items from this list
-             * @param {Object} item Ext.menu.CheckItem
-             * @param {Object} checked The checked value that was set
-             */
-            'checkchange'
-        );
-
-        me.callParent([cfg = cfg || {}]);
-
-        if(!cfg.store && cfg.options) {
-            options = [];
-            for(i = 0, len = cfg.options.length; i < len; i++){
-                value = cfg.options[i];
-                switch(Ext.type(value)){
-                    case 'array':  options.push(value); break;
-                    case 'object': options.push([value.id, value[me.labelField]]); break;
-                    case 'string': options.push([value, value]); break;
-                }
-            }
-
-            me.store = Ext.create('Ext.data.ArrayStore', {
-                fields: ['id', me.labelField],
-                data:   options,
-                listeners: {
-                    load: me.onLoad,
-                    scope:  me
-                }
-            });
-            me.loaded = true;
-            me.autoStore = true;
-        } else {
-            me.add({
-                text: me.loadingText,
-                iconCls: 'loading-indicator'
-            });
-            me.store.on('load', me.onLoad, me);
-        }
-    },
-
-    destroy : function () {
-        var me = this,
-            store = me.store;
-            
-        if (store) {
-            if (me.autoStore) {
-                store.destroyStore();
-            } else {
-                store.un('unload', me.onLoad, me);
-            }
-        }
-        me.callParent();
-    },
-
-    /**
-     * Lists will initially show a 'loading' item while the data is retrieved from the store.
-     * In some cases the loaded data will result in a list that goes off the screen to the
-     * right (as placement calculations were done with the loading item). This adapter will
-     * allow show to be called with no arguments to show with the previous arguments and
-     * thus recalculate the width and potentially hang the menu from the left.
-     */
-    show : function () {
-        if (this.loadOnShow && !this.loaded && !this.store.loading) {
-            this.store.load();
-        }
-        this.callParent();
-    },
-
-    /** @private */
-    onLoad : function (store, records) {
-        var me = this,
-            gid, itemValue, i, len,
-            listeners = {
-                checkchange: me.checkChange,
-                scope: me
-            };
-
-        Ext.suspendLayouts();
-        me.removeAll(true);
-
-        gid = me.single ? Ext.id() : null;
-        for (i = 0, len = records.length; i < len; i++) {
-            itemValue = records[i].get('id');
-            me.add(Ext.create('Ext.menu.CheckItem', {
-                text: records[i].get(me.labelField),
-                group: gid,
-                checked: Ext.Array.contains(me.selected, itemValue),
-                hideOnClick: false,
-                value: itemValue,
-                listeners: listeners
-            }));
-        }
-
-        me.loaded = true;
-        Ext.resumeLayouts(true);
-        me.fireEvent('load', me, records);
-    },
-
-    /**
-     * Get the selected items.
-     * @return {Array} selected
-     */
-    getSelected : function () {
-        return this.selected;
-    },
-
-    /** @private */
-    setSelected : function (value) {
-        value = this.selected = [].concat(value);
-
-        if (this.loaded) {
-            this.items.each(function(item){
-                item.setChecked(false, true);
-                for (var i = 0, len = value.length; i < len; i++) {
-                    if (item.value == value[i]) {
-                        item.setChecked(true, true);
-                    }
-                }
-            }, this);
-        }
-    },
-
-    /**
-     * Handler for the 'checkchange' event from an check item in this menu
-     * @param {Object} item Ext.menu.CheckItem
-     * @param {Object} checked The checked value that was set
-     */
-    checkChange : function (item, checked) {
-        var value = [];
-        this.items.each(function(item){
-            if (item.checked) {
-                value.push(item.value);
-            }
-        },this);
-        this.selected = value;
-
-        this.fireEvent('checkchange', item, checked);
-    }
-});
-
 /**
  * @class Ext.ux.grid.menu.RangeMenu
  * @extends Ext.menu.Menu
@@ -9094,6 +8980,188 @@ menuItemCfgs : {
 });
 
 /**
+ * @class Ext.ux.grid.menu.ListMenu
+ * @extends Ext.menu.Menu
+ * This is a supporting class for {@link Ext.ux.grid.filter.ListFilter}.
+ * Although not listed as configuration options for this class, this class
+ * also accepts all configuration options from {@link Ext.ux.grid.filter.ListFilter}.
+ */
+Ext.define('Ext.ux.grid.menu.ListMenu', {
+    extend: 'Ext.menu.Menu',
+
+    /**
+     * @cfg {String} labelField
+     * Defaults to 'text'.
+     */
+    labelField :  'text',
+    /**
+     * @cfg {String} paramPrefix
+     * Defaults to 'Loading...'.
+     */
+    loadingText : 'Loading...',
+    /**
+     * @cfg {Boolean} loadOnShow
+     * Defaults to true.
+     */
+    loadOnShow : true,
+    /**
+     * @cfg {Boolean} single
+     * Specify true to group all items in this list into a single-select
+     * radio button group. Defaults to false.
+     */
+    single : false,
+
+    constructor : function (cfg) {
+        var me = this,
+            options,
+            i,
+            len,
+            value;
+            
+        me.selected = [];
+        me.addEvents(
+            /**
+             * @event checkchange
+             * Fires when there is a change in checked items from this list
+             * @param {Object} item Ext.menu.CheckItem
+             * @param {Object} checked The checked value that was set
+             */
+            'checkchange'
+        );
+
+        me.callParent([cfg = cfg || {}]);
+
+        if(!cfg.store && cfg.options) {
+            options = [];
+            for(i = 0, len = cfg.options.length; i < len; i++){
+                value = cfg.options[i];
+                switch(Ext.type(value)){
+                    case 'array':  options.push(value); break;
+                    case 'object': options.push([value.id, value[me.labelField]]); break;
+                    case 'string': options.push([value, value]); break;
+                }
+            }
+
+            me.store = Ext.create('Ext.data.ArrayStore', {
+                fields: ['id', me.labelField],
+                data:   options,
+                listeners: {
+                    load: me.onLoad,
+                    scope:  me
+                }
+            });
+            me.loaded = true;
+            me.autoStore = true;
+        } else {
+            me.add({
+                text: me.loadingText,
+                iconCls: 'loading-indicator'
+            });
+            me.store.on('load', me.onLoad, me);
+        }
+    },
+
+    destroy : function () {
+        var me = this,
+            store = me.store;
+            
+        if (store) {
+            if (me.autoStore) {
+                store.destroyStore();
+            } else {
+                store.un('unload', me.onLoad, me);
+            }
+        }
+        me.callParent();
+    },
+
+    /**
+     * Lists will initially show a 'loading' item while the data is retrieved from the store.
+     * In some cases the loaded data will result in a list that goes off the screen to the
+     * right (as placement calculations were done with the loading item). This adapter will
+     * allow show to be called with no arguments to show with the previous arguments and
+     * thus recalculate the width and potentially hang the menu from the left.
+     */
+    show : function () {
+        if (this.loadOnShow && !this.loaded && !this.store.loading) {
+            this.store.load();
+        }
+        this.callParent();
+    },
+
+    /** @private */
+    onLoad : function (store, records) {
+        var me = this,
+            gid, itemValue, i, len,
+            listeners = {
+                checkchange: me.checkChange,
+                scope: me
+            };
+
+        Ext.suspendLayouts();
+        me.removeAll(true);
+
+        gid = me.single ? Ext.id() : null;
+        for (i = 0, len = records.length; i < len; i++) {
+            itemValue = records[i].get('id');
+            me.add(Ext.create('Ext.menu.CheckItem', {
+                text: records[i].get(me.labelField),
+                group: gid,
+                checked: Ext.Array.contains(me.selected, itemValue),
+                hideOnClick: false,
+                value: itemValue,
+                listeners: listeners
+            }));
+        }
+
+        me.loaded = true;
+        Ext.resumeLayouts(true);
+        me.fireEvent('load', me, records);
+    },
+
+    /**
+     * Get the selected items.
+     * @return {Array} selected
+     */
+    getSelected : function () {
+        return this.selected;
+    },
+
+    /** @private */
+    setSelected : function (value) {
+        value = this.selected = [].concat(value);
+
+        if (this.loaded) {
+            this.items.each(function(item){
+                item.setChecked(false, true);
+                for (var i = 0, len = value.length; i < len; i++) {
+                    if (item.value == value[i]) {
+                        item.setChecked(true, true);
+                    }
+                }
+            }, this);
+        }
+    },
+
+    /**
+     * Handler for the 'checkchange' event from an check item in this menu
+     * @param {Object} item Ext.menu.CheckItem
+     * @param {Object} checked The checked value that was set
+     */
+    checkChange : function (item, checked) {
+        var value = [];
+        this.items.each(function(item){
+            if (item.checked) {
+                value.push(item.value);
+            }
+        },this);
+        this.selected = value;
+
+        this.fireEvent('checkchange', item, checked);
+    }
+});
+
+/**
  * @class Ext.ux.Exporter.Formatter
  * @author Ed Spencer (http://edspencer.net)
  * @cfg {Ext.data.Store} store The store to export
@@ -9302,87 +9370,6 @@ Ext.define('Ext.ux.grid.filter.Filter', {
 });
 
 /**
- * @class Ext.ux.Exporter.CSVFormatter
- * @extends Ext.ux.Exporter.Formatter
- * Specialised Format class for outputting .csv files
- */
-Ext.define("Ext.ux.exporter.csvFormatter.CsvFormatter", {
-    extend:"Ext.ux.exporter.Formatter",
-    contentType:'data:text/csv;base64,',
-    separator:"\t",
-    extension:"csv",
-
-    format:function (store, config) {
-        this.columns = config.columns || (store.fields ? store.fields.items : store.model.prototype.fields.items);
-        return this.getHeaders() + "\n" + this.getRows(store);
-    },
-    getHeaders:function (store) {
-        var columns = [], title;
-        Ext.each(this.columns, function (col) {
-            var title;
-            if (col.text != undefined) {
-                title = col.text;
-            } else if (col.name) {
-                title = col.name.replace(/_/g, " ");
-                title = Ext.String.capitalize(title);
-            }
-
-            if (col.text != '&#160') {
-                columns.push(title);
-            }
-        }, this);
-        return columns.join(this.separator);
-    },
-    getRows:function (store) {
-        var rows = [];
-        store.each(function (record, index) {
-            rows.push(this.geCell(record, index));
-        }, this);
-
-        return rows.join("\n");
-    },
-    geCell:function (record, index) {
-        var cells = [];
-        Ext.each(this.columns, function (col) {
-            var name = col.name || col.dataIndex;
-            if (name) {
-                if (Ext.isFunction(col.renderer)) {
-                    var value = col.renderer(record.get(name), null, record);
-                } else {
-                    var value = record.get(name);
-                }
-                cells.push(value);
-            }
-        });
-
-        return cells.join(this.separator);
-    }
-});
-
-/**
- * @class Ext.ux.Exporter.ExcelFormatter
- * @extends Ext.ux.Exporter.Formatter
- * Specialised Format class for outputting .xls files
- */
-Ext.define("Ext.ux.exporter.excelFormatter.ExcelFormatter", {
-    extend:"Ext.ux.exporter.Formatter",
-    uses:[
-        "Ext.ux.exporter.excelFormatter.Cell",
-        "Ext.ux.exporter.excelFormatter.Style",
-        "Ext.ux.exporter.excelFormatter.Worksheet",
-        "Ext.ux.exporter.excelFormatter.Workbook"
-    ],
-    contentType:'data:application/vnd.ms-excel;base64,',
-    extension:"xls",
-
-    format:function (store, config) {
-        var workbook = new Ext.ux.exporter.excelFormatter.Workbook(config);
-        workbook.addWorksheet(store, config || {});
-
-        return workbook.render();
-    }
-});
-/**
  * @class Ext.ux.Exporter.SDFFormatter
  * @extends Ext.ux.Exporter.Formatter
  * Specialised Format class for outputting .sdf files
@@ -9457,6 +9444,87 @@ Ext.define("Ext.ux.exporter.sdfFormatter.SdfFormatter", {
         return tarea.value;
     }
 });
+/**
+ * @class Ext.ux.Exporter.ExcelFormatter
+ * @extends Ext.ux.Exporter.Formatter
+ * Specialised Format class for outputting .xls files
+ */
+Ext.define("Ext.ux.exporter.excelFormatter.ExcelFormatter", {
+    extend:"Ext.ux.exporter.Formatter",
+    uses:[
+        "Ext.ux.exporter.excelFormatter.Cell",
+        "Ext.ux.exporter.excelFormatter.Style",
+        "Ext.ux.exporter.excelFormatter.Worksheet",
+        "Ext.ux.exporter.excelFormatter.Workbook"
+    ],
+    contentType:'data:application/vnd.ms-excel;base64,',
+    extension:"xls",
+
+    format:function (store, config) {
+        var workbook = new Ext.ux.exporter.excelFormatter.Workbook(config);
+        workbook.addWorksheet(store, config || {});
+
+        return workbook.render();
+    }
+});
+/**
+ * @class Ext.ux.Exporter.CSVFormatter
+ * @extends Ext.ux.Exporter.Formatter
+ * Specialised Format class for outputting .csv files
+ */
+Ext.define("Ext.ux.exporter.csvFormatter.CsvFormatter", {
+    extend:"Ext.ux.exporter.Formatter",
+    contentType:'data:text/csv;base64,',
+    separator:"\t",
+    extension:"csv",
+
+    format:function (store, config) {
+        this.columns = config.columns || (store.fields ? store.fields.items : store.model.prototype.fields.items);
+        return this.getHeaders() + "\n" + this.getRows(store);
+    },
+    getHeaders:function (store) {
+        var columns = [], title;
+        Ext.each(this.columns, function (col) {
+            var title;
+            if (col.text != undefined) {
+                title = col.text;
+            } else if (col.name) {
+                title = col.name.replace(/_/g, " ");
+                title = Ext.String.capitalize(title);
+            }
+
+            if (col.text != '&#160') {
+                columns.push(title);
+            }
+        }, this);
+        return columns.join(this.separator);
+    },
+    getRows:function (store) {
+        var rows = [];
+        store.each(function (record, index) {
+            rows.push(this.geCell(record, index));
+        }, this);
+
+        return rows.join("\n");
+    },
+    geCell:function (record, index) {
+        var cells = [];
+        Ext.each(this.columns, function (col) {
+            var name = col.name || col.dataIndex;
+            if (name) {
+                if (Ext.isFunction(col.renderer)) {
+                    var value = col.renderer(record.get(name), null, record);
+                } else {
+                    var value = record.get(name);
+                }
+                cells.push(value);
+            }
+        });
+
+        return cells.join(this.separator);
+    }
+});
+
 /**
  * @class Ext.ux.grid.filter.BooleanFilter
  * @extends Ext.ux.grid.filter.Filter
@@ -9897,122 +9965,6 @@ Ext.define('Ext.ux.grid.filter.DateFilter', {
 });
 
 /**
- * @class Ext.ux.grid.filter.NumericFilter
- * @extends Ext.ux.grid.filter.Filter
- * Filters using an Ext.ux.grid.menu.RangeMenu.
- * <p><b><u>Example Usage:</u></b></p>
- * <pre><code>
-var filters = Ext.create('Ext.ux.grid.GridFilters', {
-    ...
-    filters: [{
-        type: 'numeric',
-        dataIndex: 'price'
-    }]
-});
- * </code></pre>
- * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
- * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
- */
-Ext.define('Ext.ux.grid.filter.NumericFilter', {
-    extend: 'Ext.ux.grid.filter.Filter',
-    alias: 'gridfilter.numeric',
-    uses: ['Ext.form.field.Number'],
-
-    /**
-     * @private @override
-     * Creates the Menu for this filter.
-     * @param {Object} config Filter configuration
-     * @return {Ext.menu.Menu}
-     */
-    createMenu: function(config) {
-        var me = this,
-            menu;
-        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
-        menu.on('update', me.fireUpdate, me);
-        return menu;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return the value of the filter.
-     * @return {String} The value of this filter
-     */
-    getValue : function () {
-        return this.menu.getValue();
-    },
-
-    /**
-     * @private
-     * Template method that is to set the value of the filter.
-     * @param {Object} value The value to set the filter
-     */
-    setValue : function (value) {
-        this.menu.setValue(value);
-    },
-
-    /**
-     * @private
-     * Template method that is to return <tt>true</tt> if the filter
-     * has enough configuration information to be activated.
-     * @return {Boolean}
-     */
-    isActivatable : function () {
-        var values = this.getValue(),
-            key;
-        for (key in values) {
-            if (values[key] !== undefined) {
-                return true;
-            }
-        }
-        return false;
-    },
-
-    /**
-     * @private
-     * Template method that is to get and return serialized filter data for
-     * transmission to the server.
-     * @return {Object/Array} An object or collection of objects containing
-     * key value pairs representing the current configuration of the filter.
-     */
-    getSerialArgs : function () {
-        var key,
-            args = [],
-            values = this.menu.getValue();
-        for (key in values) {
-            args.push({
-                type: 'numeric',
-                comparison: key,
-                value: values[key]
-            });
-        }
-        return args;
-    },
-
-    /**
-     * Template method that is to validate the provided Ext.data.Record
-     * against the filters configuration.
-     * @param {Ext.data.Record} record The record to validate
-     * @return {Boolean} true if the record is valid within the bounds
-     * of the filter, false otherwise.
-     */
-    validateRecord : function (record) {
-        var val = record.get(this.dataIndex),
-            values = this.getValue(),
-            isNumber = Ext.isNumber;
-        if (isNumber(values.eq) && val != values.eq) {
-            return false;
-        }
-        if (isNumber(values.lt) && val >= values.lt) {
-            return false;
-        }
-        if (isNumber(values.gt) && val <= values.gt) {
-            return false;
-        }
-        return true;
-    }
-});
-
-/**
  * @class Ext.ux.grid.filter.ListFilter
  * @extends Ext.ux.grid.filter.Filter
  * <p>List filters are able to be preloaded/backed by an Ext.data.Store to load
@@ -10191,6 +10143,122 @@ filter : [{"type":"list","value":"small,medium","field":"size"}]
 });
 
 /**
+ * @class Ext.ux.grid.filter.NumericFilter
+ * @extends Ext.ux.grid.filter.Filter
+ * Filters using an Ext.ux.grid.menu.RangeMenu.
+ * <p><b><u>Example Usage:</u></b></p>
+ * <pre><code>
+var filters = Ext.create('Ext.ux.grid.GridFilters', {
+    ...
+    filters: [{
+        type: 'numeric',
+        dataIndex: 'price'
+    }]
+});
+ * </code></pre>
+ * <p>Any of the configuration options for {@link Ext.ux.grid.menu.RangeMenu} can also be specified as
+ * configurations to NumericFilter, and will be copied over to the internal menu instance automatically.</p>
+ */
+Ext.define('Ext.ux.grid.filter.NumericFilter', {
+    extend: 'Ext.ux.grid.filter.Filter',
+    alias: 'gridfilter.numeric',
+    uses: ['Ext.form.field.Number'],
+
+    /**
+     * @private @override
+     * Creates the Menu for this filter.
+     * @param {Object} config Filter configuration
+     * @return {Ext.menu.Menu}
+     */
+    createMenu: function(config) {
+        var me = this,
+            menu;
+        menu = Ext.create('Ext.ux.grid.menu.RangeMenu', config);
+        menu.on('update', me.fireUpdate, me);
+        return menu;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return the value of the filter.
+     * @return {String} The value of this filter
+     */
+    getValue : function () {
+        return this.menu.getValue();
+    },
+
+    /**
+     * @private
+     * Template method that is to set the value of the filter.
+     * @param {Object} value The value to set the filter
+     */
+    setValue : function (value) {
+        this.menu.setValue(value);
+    },
+
+    /**
+     * @private
+     * Template method that is to return <tt>true</tt> if the filter
+     * has enough configuration information to be activated.
+     * @return {Boolean}
+     */
+    isActivatable : function () {
+        var values = this.getValue(),
+            key;
+        for (key in values) {
+            if (values[key] !== undefined) {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    /**
+     * @private
+     * Template method that is to get and return serialized filter data for
+     * transmission to the server.
+     * @return {Object/Array} An object or collection of objects containing
+     * key value pairs representing the current configuration of the filter.
+     */
+    getSerialArgs : function () {
+        var key,
+            args = [],
+            values = this.menu.getValue();
+        for (key in values) {
+            args.push({
+                type: 'numeric',
+                comparison: key,
+                value: values[key]
+            });
+        }
+        return args;
+    },
+
+    /**
+     * Template method that is to validate the provided Ext.data.Record
+     * against the filters configuration.
+     * @param {Ext.data.Record} record The record to validate
+     * @return {Boolean} true if the record is valid within the bounds
+     * of the filter, false otherwise.
+     */
+    validateRecord : function (record) {
+        var val = record.get(this.dataIndex),
+            values = this.getValue(),
+            isNumber = Ext.isNumber;
+        if (isNumber(values.eq) && val != values.eq) {
+            return false;
+        }
+        if (isNumber(values.lt) && val >= values.lt) {
+            return false;
+        }
+        if (isNumber(values.gt) && val <= values.gt) {
+            return false;
+        }
+        return true;
+    }
+});
+
+/**
  * @class Ext.ux.grid.filter.StringFilter
  * @extends Ext.ux.grid.filter.Filter
  * Filter by a configurable Ext.form.field.Text
@@ -10350,6 +10418,290 @@ Ext.define("Ext.ux.exporter.excelFormatter.Cell", {
         '<ss:Cell ss:StyleID="{style}">',
         '<ss:Data ss:Type="{type}"><![CDATA[{value}]]></ss:Data>',
         '</ss:Cell>'
+    )
+});
+/**
+ * @class Ext.ux.Exporter.ExcelFormatter.Worksheet
+ * @extends Object
+ * Represents an Excel worksheet
+ * @cfg {Ext.data.Store} store The store to use (required)
+ */
+Ext.define("Ext.ux.exporter.excelFormatter.Worksheet", {
+
+    constructor:function (store, config) {
+        config = config || {};
+
+        this.store = store;
+
+        Ext.applyIf(config, {
+            hasTitle:true,
+            hasHeadings:true,
+            stripeRows:true,
+
+            title:"Workbook",
+            columns:store.fields == undefined ? {} : store.fields.items
+        });
+
+        Ext.apply(this, config);
+
+        Ext.ux.exporter.excelFormatter.Worksheet.superclass.constructor.apply(this, arguments);
+    },
+
+    /**
+     * @property dateFormatString
+     * @type String
+     * String used to format dates (defaults to "Y-m-d"). All other data types are left unmolested
+     */
+    dateFormatString:"Y-m-d",
+
+    worksheetTpl:new Ext.XTemplate(
+        '<ss:Worksheet ss:Name="{title}">',
+        '<ss:Names>',
+        '<ss:NamedRange ss:Name="Print_Titles" ss:RefersTo="=\'{title}\'!R1:R2" />',
+        '</ss:Names>',
+        '<ss:Table x:FullRows="1" x:FullColumns="1" ss:ExpandedColumnCount="{colCount}" ss:ExpandedRowCount="{rowCount}">',
+        '{columns}',
+        '<ss:Row ss:Height="38">',
+        '<ss:Cell ss:StyleID="title" ss:MergeAcross="{colCount - 1}">',
+        '<ss:Data xmlns:html="http://www.w3.org/TR/REC-html40" ss:Type="String">',
+        '<html:B><html:U><html:Font html:Size="15">{title}',
+        '</html:Font></html:U></html:B></ss:Data><ss:NamedCell ss:Name="Print_Titles" />',
+        '</ss:Cell>',
+        '</ss:Row>',
+        '<ss:Row ss:AutoFitHeight="1">',
+        '{header}',
+        '</ss:Row>',
+        '{rows}',
+        '</ss:Table>',
+        '<x:WorksheetOptions>',
+        '<x:PageSetup>',
+        '<x:Layout x:CenterHorizontal="1" x:Orientation="Landscape" />',
+        '<x:Footer x:Data="Page &amp;P of &amp;N" x:Margin="0.5" />',
+        '<x:PageMargins x:Top="0.5" x:Right="0.5" x:Left="0.5" x:Bottom="0.8" />',
+        '</x:PageSetup>',
+        '<x:FitToPage />',
+        '<x:Print>',
+        '<x:PrintErrors>Blank</x:PrintErrors>',
+        '<x:FitWidth>1</x:FitWidth>',
+        '<x:FitHeight>32767</x:FitHeight>',
+        '<x:ValidPrinterInfo />',
+        '<x:VerticalResolution>600</x:VerticalResolution>',
+        '</x:Print>',
+        '<x:Selected />',
+        '<x:DoNotDisplayGridlines />',
+        '<x:ProtectObjects>False</x:ProtectObjects>',
+        '<x:ProtectScenarios>False</x:ProtectScenarios>',
+        '</x:WorksheetOptions>',
+        '</ss:Worksheet>'
+    ),
+
+    /**
+     * Builds the Worksheet XML
+     * @param {Ext.data.Store} store The store to build from
+     */
+    render:function (store) {
+        return this.worksheetTpl.apply({
+            header:this.buildHeader(),
+            columns:this.buildColumns().join(""),
+            rows:this.buildRows().join(""),
+            colCount:this.columns.length,
+            rowCount:this.store.getCount() + 2,
+            title:this.title
+        });
+    },
+
+    buildColumns:function () {
+        var cols = [];
+
+        Ext.each(this.columns, function (column) {
+            cols.push(this.buildColumn());
+        }, this);
+
+        return cols;
+    },
+
+    buildColumn:function (width) {
+        return Ext.String.format('<ss:Column ss:AutoFitWidth="1" ss:Width="{0}" />', width || 164);
+    },
+
+    buildRows:function () {
+        var rows = [];
+
+        this.store.each(function (record, index) {
+            rows.push(this.buildRow(record, index));
+        }, this);
+
+        return rows;
+    },
+
+    buildHeader:function () {
+        var cells = [];
+
+        Ext.each(this.columns, function (col) {
+            var title;
+
+            //if(col.dataIndex) {
+            if (col.text != undefined) {
+                title = col.text;
+            } else if (col.name) {
+                //make columns taken from Record fields (e.g. with a col.name) human-readable
+                title = col.name.replace(/_/g, " ");
+                title = Ext.String.capitalize(title);
+            }
+
+            cells.push(Ext.String.format('<ss:Cell ss:StyleID="headercell"><ss:Data ss:Type="String">{0}</ss:Data><ss:NamedCell ss:Name="Print_Titles" /></ss:Cell>', title));
+            //}
+        }, this);
+
+        return cells.join("");
+    },
+
+    buildRow:function (record, index) {
+        var style,
+            cells = [];
+        if (this.stripeRows === true) style = index % 2 == 0 ? 'even' : 'odd';
+
+        Ext.each(this.columns, function (col) {
+            var name = col.name || col.dataIndex;
+
+            if (name) {
+                //if given a renderer via a ColumnModel, use it and ensure data type is set to String
+                if (Ext.isFunction(col.renderer)) {
+                    var value = col.renderer(record.get(name), null, record),
+                        type = "String";
+                } else {
+                    var value = record.get(name),
+                        type = this.typeMappings[col.type || record.fields.get(name).type.type];
+                }
+
+                cells.push(this.buildCell(value, type, style).render());
+            }
+        }, this);
+
+        return Ext.String.format("<ss:Row>{0}</ss:Row>", cells.join(""));
+    },
+
+    buildCell:function (value, type, style) {
+        if (type == "DateTime" && Ext.isFunction(value.format)) value = value.format(this.dateFormatString);
+
+        return new Ext.ux.exporter.excelFormatter.Cell({
+            value:value,
+            type:type,
+            style:style
+        });
+    },
+
+    /**
+     * @property typeMappings
+     * @type Object
+     * Mappings from Ext.data.Record types to Excel types
+     */
+    typeMappings:{
+        'int':"Number",
+        'string':"String",
+        'float':"Number",
+        'date':"DateTime"
+    }
+});
+/**
+ * @class Ext.ux.Exporter.ExcelFormatter.Style
+ * @extends Object
+ * Represents a style declaration for a Workbook (this is like defining CSS rules). Example:
+ *
+ * new Ext.ux.Exporter.ExcelFormatter.Style({
+ *   attributes: [
+ *     {
+ *       name: "Alignment",
+ *       properties: [
+ *         {name: "Vertical", value: "Top"},
+ *         {name: "WrapText", value: "1"}
+ *       ]
+ *     },
+ *     {
+ *       name: "Borders",
+ *       children: [
+ *         name: "Border",
+ *         properties: [
+ *           {name: "Color", value: "#e4e4e4"},
+ *           {name: "Weight", value: "1"}
+ *         ]
+ *       ]
+ *     }
+ *   ]
+ * })
+ *
+ * @cfg {String} id The ID of this style (required)
+ * @cfg {Array} attributes The attributes for this style
+ * @cfg {String} parentStyle The (optional parentStyle ID)
+ */
+Ext.define("Ext.ux.exporter.excelFormatter.Style", {
+    constructor:function (config) {
+        config = config || {};
+
+        Ext.apply(this, config, {
+            parentStyle:'',
+            attributes:[]
+        });
+
+        Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
+
+        if (this.id == undefined) throw new Error("An ID must be provided to Style");
+
+        this.preparePropertyStrings();
+    },
+
+    /**
+     * Iterates over the attributes in this style, and any children they may have, creating property
+     * strings on each suitable for use in the XTemplate
+     */
+    preparePropertyStrings:function () {
+        Ext.each(this.attributes, function (attr, index) {
+            this.attributes[index].propertiesString = this.buildPropertyString(attr);
+            this.attributes[index].children = attr.children || [];
+
+            Ext.each(attr.children, function (child, childIndex) {
+                this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
+            }, this);
+        }, this);
+    },
+
+    /**
+     * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
+     */
+    buildPropertyString:function (attribute) {
+        var propertiesString = "";
+
+        Ext.each(attribute.properties || [], function (property) {
+            propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
+        }, this);
+
+        return propertiesString;
+    },
+
+    render:function () {
+        return this.tpl.apply(this);
+    },
+
+    tpl:new Ext.XTemplate(
+        '<tpl if="parentStyle.length == 0">',
+        '<ss:Style ss:ID="{id}">',
+        '</tpl>',
+        '<tpl if="parentStyle.length != 0">',
+        '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
+        '</tpl>',
+        '<tpl for="attributes">',
+        '<tpl if="children.length == 0">',
+        '<ss:{name} {propertiesString} />',
+        '</tpl>',
+        '<tpl if="children.length > 0">',
+        '<ss:{name} {propertiesString}>',
+        '<tpl for="children">',
+        '<ss:{name} {propertiesString} />',
+        '</tpl>',
+        '</ss:{name}>',
+        '</tpl>',
+        '</tpl>',
+        '</ss:Style>'
     )
 });
 /**
@@ -10688,290 +11040,6 @@ Ext.define("Ext.ux.exporter.excelFormatter.Workbook", {
             ]
         });
     }
-});
-/**
- * @class Ext.ux.Exporter.ExcelFormatter.Worksheet
- * @extends Object
- * Represents an Excel worksheet
- * @cfg {Ext.data.Store} store The store to use (required)
- */
-Ext.define("Ext.ux.exporter.excelFormatter.Worksheet", {
-
-    constructor:function (store, config) {
-        config = config || {};
-
-        this.store = store;
-
-        Ext.applyIf(config, {
-            hasTitle:true,
-            hasHeadings:true,
-            stripeRows:true,
-
-            title:"Workbook",
-            columns:store.fields == undefined ? {} : store.fields.items
-        });
-
-        Ext.apply(this, config);
-
-        Ext.ux.exporter.excelFormatter.Worksheet.superclass.constructor.apply(this, arguments);
-    },
-
-    /**
-     * @property dateFormatString
-     * @type String
-     * String used to format dates (defaults to "Y-m-d"). All other data types are left unmolested
-     */
-    dateFormatString:"Y-m-d",
-
-    worksheetTpl:new Ext.XTemplate(
-        '<ss:Worksheet ss:Name="{title}">',
-        '<ss:Names>',
-        '<ss:NamedRange ss:Name="Print_Titles" ss:RefersTo="=\'{title}\'!R1:R2" />',
-        '</ss:Names>',
-        '<ss:Table x:FullRows="1" x:FullColumns="1" ss:ExpandedColumnCount="{colCount}" ss:ExpandedRowCount="{rowCount}">',
-        '{columns}',
-        '<ss:Row ss:Height="38">',
-        '<ss:Cell ss:StyleID="title" ss:MergeAcross="{colCount - 1}">',
-        '<ss:Data xmlns:html="http://www.w3.org/TR/REC-html40" ss:Type="String">',
-        '<html:B><html:U><html:Font html:Size="15">{title}',
-        '</html:Font></html:U></html:B></ss:Data><ss:NamedCell ss:Name="Print_Titles" />',
-        '</ss:Cell>',
-        '</ss:Row>',
-        '<ss:Row ss:AutoFitHeight="1">',
-        '{header}',
-        '</ss:Row>',
-        '{rows}',
-        '</ss:Table>',
-        '<x:WorksheetOptions>',
-        '<x:PageSetup>',
-        '<x:Layout x:CenterHorizontal="1" x:Orientation="Landscape" />',
-        '<x:Footer x:Data="Page &amp;P of &amp;N" x:Margin="0.5" />',
-        '<x:PageMargins x:Top="0.5" x:Right="0.5" x:Left="0.5" x:Bottom="0.8" />',
-        '</x:PageSetup>',
-        '<x:FitToPage />',
-        '<x:Print>',
-        '<x:PrintErrors>Blank</x:PrintErrors>',
-        '<x:FitWidth>1</x:FitWidth>',
-        '<x:FitHeight>32767</x:FitHeight>',
-        '<x:ValidPrinterInfo />',
-        '<x:VerticalResolution>600</x:VerticalResolution>',
-        '</x:Print>',
-        '<x:Selected />',
-        '<x:DoNotDisplayGridlines />',
-        '<x:ProtectObjects>False</x:ProtectObjects>',
-        '<x:ProtectScenarios>False</x:ProtectScenarios>',
-        '</x:WorksheetOptions>',
-        '</ss:Worksheet>'
-    ),
-
-    /**
-     * Builds the Worksheet XML
-     * @param {Ext.data.Store} store The store to build from
-     */
-    render:function (store) {
-        return this.worksheetTpl.apply({
-            header:this.buildHeader(),
-            columns:this.buildColumns().join(""),
-            rows:this.buildRows().join(""),
-            colCount:this.columns.length,
-            rowCount:this.store.getCount() + 2,
-            title:this.title
-        });
-    },
-
-    buildColumns:function () {
-        var cols = [];
-
-        Ext.each(this.columns, function (column) {
-            cols.push(this.buildColumn());
-        }, this);
-
-        return cols;
-    },
-
-    buildColumn:function (width) {
-        return Ext.String.format('<ss:Column ss:AutoFitWidth="1" ss:Width="{0}" />', width || 164);
-    },
-
-    buildRows:function () {
-        var rows = [];
-
-        this.store.each(function (record, index) {
-            rows.push(this.buildRow(record, index));
-        }, this);
-
-        return rows;
-    },
-
-    buildHeader:function () {
-        var cells = [];
-
-        Ext.each(this.columns, function (col) {
-            var title;
-
-            //if(col.dataIndex) {
-            if (col.text != undefined) {
-                title = col.text;
-            } else if (col.name) {
-                //make columns taken from Record fields (e.g. with a col.name) human-readable
-                title = col.name.replace(/_/g, " ");
-                title = Ext.String.capitalize(title);
-            }
-
-            cells.push(Ext.String.format('<ss:Cell ss:StyleID="headercell"><ss:Data ss:Type="String">{0}</ss:Data><ss:NamedCell ss:Name="Print_Titles" /></ss:Cell>', title));
-            //}
-        }, this);
-
-        return cells.join("");
-    },
-
-    buildRow:function (record, index) {
-        var style,
-            cells = [];
-        if (this.stripeRows === true) style = index % 2 == 0 ? 'even' : 'odd';
-
-        Ext.each(this.columns, function (col) {
-            var name = col.name || col.dataIndex;
-
-            if (name) {
-                //if given a renderer via a ColumnModel, use it and ensure data type is set to String
-                if (Ext.isFunction(col.renderer)) {
-                    var value = col.renderer(record.get(name), null, record),
-                        type = "String";
-                } else {
-                    var value = record.get(name),
-                        type = this.typeMappings[col.type || record.fields.get(name).type.type];
-                }
-
-                cells.push(this.buildCell(value, type, style).render());
-            }
-        }, this);
-
-        return Ext.String.format("<ss:Row>{0}</ss:Row>", cells.join(""));
-    },
-
-    buildCell:function (value, type, style) {
-        if (type == "DateTime" && Ext.isFunction(value.format)) value = value.format(this.dateFormatString);
-
-        return new Ext.ux.exporter.excelFormatter.Cell({
-            value:value,
-            type:type,
-            style:style
-        });
-    },
-
-    /**
-     * @property typeMappings
-     * @type Object
-     * Mappings from Ext.data.Record types to Excel types
-     */
-    typeMappings:{
-        'int':"Number",
-        'string':"String",
-        'float':"Number",
-        'date':"DateTime"
-    }
-});
-/**
- * @class Ext.ux.Exporter.ExcelFormatter.Style
- * @extends Object
- * Represents a style declaration for a Workbook (this is like defining CSS rules). Example:
- *
- * new Ext.ux.Exporter.ExcelFormatter.Style({
- *   attributes: [
- *     {
- *       name: "Alignment",
- *       properties: [
- *         {name: "Vertical", value: "Top"},
- *         {name: "WrapText", value: "1"}
- *       ]
- *     },
- *     {
- *       name: "Borders",
- *       children: [
- *         name: "Border",
- *         properties: [
- *           {name: "Color", value: "#e4e4e4"},
- *           {name: "Weight", value: "1"}
- *         ]
- *       ]
- *     }
- *   ]
- * })
- *
- * @cfg {String} id The ID of this style (required)
- * @cfg {Array} attributes The attributes for this style
- * @cfg {String} parentStyle The (optional parentStyle ID)
- */
-Ext.define("Ext.ux.exporter.excelFormatter.Style", {
-    constructor:function (config) {
-        config = config || {};
-
-        Ext.apply(this, config, {
-            parentStyle:'',
-            attributes:[]
-        });
-
-        Ext.ux.exporter.excelFormatter.Style.superclass.constructor.apply(this, arguments);
-
-        if (this.id == undefined) throw new Error("An ID must be provided to Style");
-
-        this.preparePropertyStrings();
-    },
-
-    /**
-     * Iterates over the attributes in this style, and any children they may have, creating property
-     * strings on each suitable for use in the XTemplate
-     */
-    preparePropertyStrings:function () {
-        Ext.each(this.attributes, function (attr, index) {
-            this.attributes[index].propertiesString = this.buildPropertyString(attr);
-            this.attributes[index].children = attr.children || [];
-
-            Ext.each(attr.children, function (child, childIndex) {
-                this.attributes[index].children[childIndex].propertiesString = this.buildPropertyString(child);
-            }, this);
-        }, this);
-    },
-
-    /**
-     * Builds a concatenated property string for a given attribute, suitable for use in the XTemplate
-     */
-    buildPropertyString:function (attribute) {
-        var propertiesString = "";
-
-        Ext.each(attribute.properties || [], function (property) {
-            propertiesString += Ext.String.format('ss:{0}="{1}" ', property.name, property.value);
-        }, this);
-
-        return propertiesString;
-    },
-
-    render:function () {
-        return this.tpl.apply(this);
-    },
-
-    tpl:new Ext.XTemplate(
-        '<tpl if="parentStyle.length == 0">',
-        '<ss:Style ss:ID="{id}">',
-        '</tpl>',
-        '<tpl if="parentStyle.length != 0">',
-        '<ss:Style ss:ID="{id}" ss:Parent="{parentStyle}">',
-        '</tpl>',
-        '<tpl for="attributes">',
-        '<tpl if="children.length == 0">',
-        '<ss:{name} {propertiesString} />',
-        '</tpl>',
-        '<tpl if="children.length > 0">',
-        '<ss:{name} {propertiesString}>',
-        '<tpl for="children">',
-        '<ss:{name} {propertiesString} />',
-        '</tpl>',
-        '</ss:{name}>',
-        '</tpl>',
-        '</tpl>',
-        '</ss:Style>'
-    )
 });
 Ext.define('CS.view.CompoundWindow', {
     extend: 'Ext.window.Window',
