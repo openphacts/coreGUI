@@ -6,6 +6,10 @@
     text-shadow: 0 1px 0 #fff;
 }
 
+.icon-success-status {
+    background-image: url(/assets/success_status.png) !important;
+}
+
 .icon-new {
     background-image: url(/assets/icon-new.gif) !important;
 }
@@ -330,4 +334,26 @@ sub {
 .browser-warning {
     background: red;
     font-size: large;
+}
+
+.welcome-text {
+    max-width: 640px;
+    text-align: justify;
+    line-height:150%;
+    font-size: 14px;
+}
+
+.welcome-text-linkout {
+    max-width: 640px;
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.welcome-text-heading {
+    max-width: 640px;
+    text-align: justify;
+    line-height:150%;
+    font-size: 16px;
+    font-weight: bold;
 }
