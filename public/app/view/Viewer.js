@@ -8,7 +8,7 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.sparqlform.Queryform',
         'LSP.view.larkc_sim_search.SimSearchForm',
         'LSP.view.cmpd_by_name.CmpdByNameForm',
-        'xLSP.view.target_by_name.TargetByNameForm',
+        'LSP.view.target_by_name.TargetByNameForm',
         'LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm',
         'LSP.view.pharm_by_target_name2.PharmByTargetNameForm',
         'LSP.view.concept.SummeryForm',
