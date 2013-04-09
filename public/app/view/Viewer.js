@@ -1,7 +1,8 @@
 Ext.define('LSP.view.Viewer', {
     extend:'Ext.tab.Panel',
     alias:'widget.viewer',
-
+    xtype: 'plain-tabs',
+    plain: true,
     requires:[
 		'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.usergrid.UserGrid',
