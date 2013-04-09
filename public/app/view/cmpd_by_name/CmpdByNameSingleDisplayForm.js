@@ -1,7 +1,7 @@
 Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     extend:'Ext.form.Panel',
     alias:'widget.CmpdByNameSingleDisplayForm',
-    title:'Compound by Name search results',
+    //title:'Compound by Name search results',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
