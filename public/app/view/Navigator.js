@@ -20,14 +20,15 @@ Ext.define('LSP.view.Navigator', {
         this.items = [
             {
                 title:'Navigation',
-                autoScroll:true,
+                //autoScroll:true,
                 layout:'fit',
                 border:false,
                 iconCls:'nav',
                 items:[
                     {
                         xtype:'appmoduletree',
-                        id:'appModuleTree'
+                        id:'appModuleTree',
+                        border: false
                     }
                 ]
             },
