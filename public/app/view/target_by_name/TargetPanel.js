@@ -9,6 +9,7 @@
 Ext.define('LSP.view.target_by_name.TargetPanel', {
     extend:'Ext.panel.Panel',
     alias:'widget.TargetPanel',
+    border: false,
     //title:'Target Data',
     anchor:'100% 100%',
     autoScroll:true,
