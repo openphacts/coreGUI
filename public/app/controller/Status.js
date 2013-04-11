@@ -32,12 +32,12 @@ Ext.define('LSP.controller.Status', {
         var me = this;
         var updateAPIStatus = function () {
             me.testConceptWiki();
-            var lda_status = me.testLDA();
-            console.log('*** STATUS *** LDA ' + lda_status);
-            var cp_status = me.testChemspider();
-            console.log('*** STATUS *** ChemSpider' + cp_status);
-            var ims_status = me.testIMS();
-            console.log('*** STATUS *** IMS' + ims_status);
+            //var lda_status = me.testLDA();
+            //console.log('*** STATUS *** LDA ' + lda_status);
+            //var cp_status = me.testChemspider();
+            //console.log('*** STATUS *** ChemSpider' + cp_status);
+            //var ims_status = me.testIMS();
+            //console.log('*** STATUS *** IMS' + ims_status);
         };
 
         var task = Ext.TaskManager.start({
