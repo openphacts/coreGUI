@@ -364,3 +364,18 @@ sub {
     font-size: 16px;
     font-weight: bold;
 }
+.inline-list li
+{
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+.centre {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+.grey {
+    color: gray;
+}
