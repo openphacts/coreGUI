@@ -75,8 +75,8 @@ Ext.define('LDA.helper.LDAConstants', {
 
 Ext.define('CW.config.Settings', {
     singleton: true,
-    searchByTagUrl: cwBaseUrl + '/web-ws/concept/search/byTag',
-    getConceptUrl: cwBaseUrl + '/web-ws/concept/get',
+    searchByTagUrl: cwBaseUrl + '/search/byTag',
+    getConceptUrl: cwBaseUrl + '/getConceptDescription',
     base_ops_uri: 'http://www.conceptwiki.org/concept/',
     lang_code: "en"
 });
@@ -95,7 +95,8 @@ Ext.define('LSP.model.DynamicGrid', {
 Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     extend:'Ext.form.Panel',
     alias:'widget.CmpdByNameSingleDisplayForm',
-    title:'Compound by Name search results',
+    border: false,
+    //title:'Compound by Name search results',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
@@ -1164,58 +1165,39 @@ Ext.define('CW.helper.ConceptWikiJSONReader', {
     extend:'Ext.data.reader.Json',
     
     readRecords:function (data) {
-
         var records = [];
         var count = 0;
-        Ext.each(data, function (item) {
-           var record = {};
-           var pref_label = "";
-           var alt_labels = [];
-           // iterating over labels to get preferred and alternative labels in relevant language
-           Ext.each(item.labels, function (label){
-              if (label.language.code == CW.config.Settings.lang_code) {
-                if (label.type == "PREFERRED") {
-                    pref_label = label.text;
+        var results = data['result']['primaryTopic']['result'];
+        var uuid, textMatch, prefLabel, altLabel, altLabels, matches, prefUrl;
+        altLabels = [];
+        Ext.each(results, function(result, index) {
+            uuid = result['_about'].split('/').pop();
+            textMatch = result.match;
+            prefLabel = result.prefLabel;
+            prefUrl="";
+            Ext.each(result['exactMatch'], function(match, jindex) {
+                if (match.matchType == "PREFERRED") {
+                      prefUrl = match.url;
+                      return false; // breaks loop
                 }
-                if (label.type == "ALTERNATIVE") {
-                    alt_labels.push(label.text);
-                }             
-              }
-           });
-           // iterating over tags to get the different tag uuid types and tag texts
-//// NB we do not care aboout these at the moment
-            var concept_tag_uuids = [];
-//            var concept_tag_labels = [];           
-//            Ext.each(item.tags, function (tag){              
-//                concept_tag_uuids.push(tag.uuid);         
-//            });
-           // iterating over urls to get first preferred url
-           pref_url = "";
-           Ext.each(item.urls, function (url){
-              if (url.type == "PREFERRED") {
-                    pref_url = url.value;
-                    return false; // breaks loop
-              }
-           });
+            });
+        Ext.each(result["altLabel_en"], function(item, jindex) {
+		altLabels.push(item);
+		});
 
-           // constructing the data record
+        // constructing the data record
         var record = Ext.create('CW.model.ConceptWikiLookup', {
-          match: item.match.replace(/\<\/em\>/g,"</b>").replace(/\<em\>/g,"<b>"),
-          uuid: item.uuid,
-          ops_uri: CW.config.Settings.base_ops_uri + item.uuid,
-          pref_label: pref_label,
-          alt_labels: alt_labels.join("; "),
-          concept_type_tags: concept_tag_uuids.join("; "),
-          pref_url: pref_url
+          match: textMatch.replace(/\<\/em\>/g,"</b>").replace(/\<em\>/g,"<b>"),
+          uuid: uuid,
+          ops_uri: CW.config.Settings.base_ops_uri + uuid,
+          pref_label: prefLabel,
+          alt_labels: altLabels.join("; "),
+          pref_url: prefUrl
         });
         
         records.push(record);
         count++;
-//        console.log(JSON.stringify(record));
-
-
-       
-    })
+     });
      return new Ext.data.ResultSet(
             {
                 total  : count,
@@ -1664,16 +1646,16 @@ var task = Ext.TaskManager.start({
        var me = this;
        var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
-                finished: function(sender, rid) {
-                    searchEngine.loadCSIDs(function(csids) {
-						if (csids.length == 0) {
-						    console.log('CS fetch boom');
-                                                    me.getCSImage().setSrc('./assets/cancel.png');
-                                                    me.getCSImage().setVisible(true);
-						} else {
-							me.csFetch(csids);
-						}
-                    });
+                finished: function(sender, csids) {
+                if (csids.length == 0) {
+		    console.log('CS fetch boom');
+                    me.getCSImage().setSrc('./assets/cancel.png');
+                    me.getCSImage().setVisible(true);
+		} else {
+		    console.log('CS fetch success ' + csids[0]);
+                    me.getCSImage().setSrc('./assets/tick.png');
+                    me.getCSImage().setVisible(true);
+		}
                 },
 		failed: function(sender, error) {
                     console.log('CS fetch boom');
@@ -1685,9 +1667,10 @@ var task = Ext.TaskManager.start({
         var params = {};
         params['searchOptions.Molecule'] = 'CC(=O)Oc1ccccc1C(=O)O';
 	// there can also be 'ChEBI' and 'MeSH'
-	params['scopeOptions.DataSources[0]'] = 'DrugBank';
-	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-	params['scopeOptions.DataSources[2]'] = 'PDB';
+	//TODO add data sources back in when ops dev api can handle it
+        //params['scopeOptions.DataSources[0]'] = 'DrugBank';
+	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+	//params['scopeOptions.DataSources[2]'] = 'PDB';
         searchEngine.doSearch('exact', params);
 
     },
@@ -1717,11 +1700,18 @@ var task = Ext.TaskManager.start({
     testConceptWiki: function() {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
-	cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
-	cw_lookup.proxy.setExtraParam('limit', 1);
+        // remove params that dev api cannot handle
+        cw_lookup.proxy.noCache = false;
+        cw_lookup.proxy.pageParam = '';
+        cw_lookup.proxy.startParam = '';
+	    cw_lookup.proxy.setExtraParam('uuid', cw_uuid);
+	    cw_lookup.proxy.setExtraParam('limit', 1);
+	    cw_lookup.proxy.callbackKey = '_callback';
         var me = this;
         cw_lookup.load({
-          params: {'q': 'aspi', 'branch' :'4' },
+          params: {'q': 'aspi', 
+'branch' :'4', 
+'app_key': app_key, 'app_id': app_id, '_format' : 'json' },
           callback:function (records, operation, success) {
               if (success) {
                 console.log("Success",records[0]);
@@ -1872,7 +1862,8 @@ Ext.define('CW.controller.ConceptWikiLookup', {
      prepProxy:function (cw_dropdown_view) {
         // cw_dropdown_view.store.proxy.extraParams = cw_dropdown_view.store.proxy.extraParams + {uuid: cw_dropdown_view.cwTagUuid, limit: 10};
 		cw_dropdown_view.store.proxy.setExtraParam('uuid', cw_dropdown_view.cwTagUuid);
-		cw_dropdown_view.store.proxy.setExtraParam('limit', 10);
+                //TODO add this back in when it is in the lda api for concept wiki
+		//cw_dropdown_view.store.proxy.setExtraParam('limit', 10);
     },
     
    
@@ -1884,7 +1875,17 @@ Ext.define('CW.controller.ConceptWikiLookup', {
         proxy: {
           type: 'jsonp',
           url: CW.config.Settings.getConceptUrl,
-          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader')
+          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader'),
+          noCache: false,
+          limitParam: undefined,
+          startParam: undefined,
+          pageParam: undefined,
+          callbackKey: '_callback',
+          extraParams: {
+              '_format': 'json', 
+              'app_id': app_id,
+              'app_key': app_key
+          }
       }
       });
       store.load({
@@ -3227,7 +3228,8 @@ Ext.define('Ext.ux.DataView.Animated', {
 Ext.define('LSP.view.target_by_name.TargetPanel', {
     extend:'Ext.panel.Panel',
     alias:'widget.TargetPanel',
-    title:'Target Data',
+    border: false,
+    //title:'Target Data',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
@@ -3492,7 +3494,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         else if (fieldId == 'keywords') {
             if (value != null) {
                 var keywordfield = this.down('#' + fieldId);
-                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                //var keywordValue = value.replace(new RegExp(" ,", 'g'),","); old API value return (not array)
+                var keywordValue = value.join(", ");
                 keywordfield.setValue(keywordValue);
                 keywordfield.show();
             }
@@ -3785,8 +3788,16 @@ Ext.define('LSP.view.target_by_name.TargetByNameForm', {
                         timeout: 5000,
                         url: CW.config.Settings.searchByTagUrl,
                         reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                        noCache: false,
+                        limitParam: undefined,
+                        startParam: undefined,
+                        pageParam: undefined,
+		        callbackKey: '_callback',
                         extraParams: {
-                            'branch': 3 // Only show species results from swissprot
+                            'branch': 3, // Only show species results from swissprot
+                            _format: 'json',
+                            'app_id': app_id,
+                            'app_key': app_key
                         }
                     }
                 }),
@@ -4166,6 +4177,8 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	uri: '',
 	BASE_URL: '',
 	remoteSort: true,
+	app_key: app_key,
+	app_id: app_id,
 	//gridController: undefined,
         typeName: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
@@ -4261,7 +4274,9 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	updateProxyURL: function() {
 		this.proxy.url = this.BASE_URL + this.stringEncoder.toQueryString({
 			_format: this._format,
-			uri: this.uri
+			uri: this.uri,
+			app_key: this.app_key,
+			app_id: this.app_id
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},
@@ -5613,6 +5628,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					xtype: 'combobox',
 					itemId: 'sim_search_type_id',
 					fieldLabel: 'Similarity Threshold Type',
+                    labelWidth: 150,
 					store: sim_search_type,
 					queryMode: 'local',
 					displayField: 'sim_type',
@@ -5627,23 +5643,27 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					anchor: '100%',
 					name: 'tanimoto_threshold',
 					fieldLabel: 'Similarity threshold',
-					// step: 5,
+                    labelWidth: 115,
+                    // step: 5,
 					value: 90,
+                    width: 175,
 					allowDecimals: false,
 					maxValue: 100,
 					minValue: 1,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}, {
 					xtype: 'numberfield',
 					itemId: 'max_records_id',
 					anchor: '100%',
 					name: 'max_records',
 					fieldLabel: 'Maximum records to retrieve',
-					step: 20,
+                    labelWidth: 160,
+                    width: 260,
+                    step: 20,
 					value: 100,
 					allowDecimals: false,
 					minValue: 20,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}]
 			}, {
 				xtype: 'button',
@@ -5870,7 +5890,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log("SimSearchForm: hitCoreAPI()");
         var me = this;
 	this.failed_to_load = 0;
-		me.getStrucGrid().getStore().sorters.clear();
+	me.getStrucGrid().getStore().sorters.clear();
         var grid = this.getStrucGrid();
         this.all_records = new Array();
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
@@ -5880,10 +5900,10 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
+            csid_store.proxy.extraParams.uri = csid_list[i];
             csid_store.load(function(records, operation, success) {
                 if (success) {
-					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
+		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
                     records[0].index = me.success_count;
@@ -5918,7 +5938,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
 } else {
 
-	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (No information on ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
             if (this.missing_count > 0) {
                 this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
             }
@@ -5929,7 +5949,7 @@ if (this.current_mode == 'exact') {
 } else {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
             if (this.missing_count > 0) {
-                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + 'OPS has no data on ' + this.missing_records + ' compounds.');
             }
 }
         }
@@ -5939,8 +5959,8 @@ if (this.current_mode == 'exact') {
     handleHistoryToken: function(historyTokenObject) {
         console.log('SimSearchForm: handleHistoryToken() ' + historyTokenObject);
         var me = this;
-		me.current_smiles = historyTokenObject.sm;
-		me.current_mode = historyTokenObject.st;
+	me.current_smiles = historyTokenObject.sm;
+	me.current_mode = historyTokenObject.st;
         var this_gridview = me.getStrucGrid();
         var current_records = this_gridview.store.getRange();
         //this_gridview.store.remove(current_records);
@@ -5949,12 +5969,11 @@ if (this.current_mode == 'exact') {
         this_gridview.getStore().setTypeName(me.current_smiles + " : " + me.current_mode);
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
-                finished: function(sender, rid) {
-                    searchEngine.loadCSIDs(function(csids) {
+                finished: function(sender, csids) {
 						if (csids.length == 0) {
 							Ext.MessageBox.show({
 		                        title: 'Error',
-		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        msg: 'No compounds were found for this search, please try again with a different structure.',
 		                        buttons: Ext.MessageBox.OK,
 		                        icon: Ext.MessageBox.ERROR
 		                    });
@@ -5963,12 +5982,11 @@ if (this.current_mode == 'exact') {
 						} else {
 							me.hitCoreAPI(csids);
 						}
-                    });
                 },
 		failed: function(sender, error){
                     Ext.MessageBox.show({
                         title: 'Error',
-                        msg: 'There was an error retrieving the list of compounds from Chemspider',
+                        msg: 'There was an error retrieving the compounds for this structure search.',
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });
@@ -5993,23 +6011,26 @@ if (this.current_mode == 'exact') {
         } else if (values.search_type == '3') { //  Similarity search
             grid_title = 'Similarity search';
             search_type = 'similarity';
-            //  In the future this parameters should be taken from the UI.
-            //  But right now in order to make Similarity search more realistic they are entered manually.
-			var threshold = this.getTanimotoThresholdSpinner().value;
-			params['searchOptions.Threshold'] = threshold/100;
-            // params['searchOptions.Threshold'] = 0.99;
-            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+	    var threshold = this.getTanimotoThresholdSpinner().value;
+	    //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+            params['resultOptions.Threshold'] = threshold/100;
+	    //params['searchOptions.Threshold'] = threshold/100;
+            var search_type_value = this.getSimSearchType().value;
+            search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+            search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+            search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
         } else {
             //  Unsupported search type...
         }
-	// there can also be 'ChEBI' and 'MeSH'
-	params['scopeOptions.DataSources[0]'] = 'DrugBank';
-	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-	params['scopeOptions.DataSources[2]'] = 'PDB';
+	
+        // there can also be 'ChEBI' and 'MeSH'
+	//TODO add these data source options back in when the ops dev api can support it
+        //params['scopeOptions.DataSources[0]'] = 'DrugBank';
+	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-		searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
         searchEngine.doSearch(search_type, params);
     },
 
@@ -6074,21 +6095,19 @@ if (this.current_mode == 'exact') {
 			this_gridview.store.removeAll();
 		    var searchEngine = Ext.create('CS.engine.search.Structure', {
 		    	listeners: {
-		        	finished: function(sender, rid) {
-		            	searchEngine.loadCSIDs(function(csids) {
-							if (csids.length == 0) {
-								Ext.MessageBox.show({
-				                	title: 'Error',
-				                    msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
-				                    buttons: Ext.MessageBox.OK,
-				                    icon: Ext.MessageBox.ERROR
-				                });
-				                me.getSubmitButton().enable();
-			                    me.getSsform().setLoading(false);
-							} else {
-								me.hitCoreAPI(csids);
-							}
-		                });
+		        	finished: function(sender, csids) {
+						if (csids.length == 0) {
+							Ext.MessageBox.show({
+		                        title: 'Error',
+		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        buttons: Ext.MessageBox.OK,
+		                        icon: Ext.MessageBox.ERROR
+		                    });
+		                    me.getSubmitButton().enable();
+	                        me.getSsform().setLoading(false);
+						} else {
+							me.hitCoreAPI(csids);
+						}
 		        	},
 					failed: function(sender, error){
 		            	Ext.MessageBox.show({
@@ -6118,18 +6137,21 @@ if (this.current_mode == 'exact') {
 	            search_type = 'similarity';
 	            //  In the future this parameters should be taken from the UI.
 	            //  But right now in order to make Similarity search more realistic they are entered manually.
-				var threshold = this.getTanimotoThresholdSpinner().value;
-				params['searchOptions.Threshold'] = threshold/100;
-	            // params['searchOptions.Threshold'] = 0.99;
-	            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-	            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+		    var threshold = this.getTanimotoThresholdSpinner().value;
+	            //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+                    params['resultOptions.Threshold'] = threshold/100;
+	            //params['searchOptions.Threshold'] = threshold/100;
+                    var search_type_value = this.getSimSearchType().value;
+                    search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+                    search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+                    search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
 	        } else {
 	            //  Unsupported search type...
 	        }
 			// there can also be 'ChEBI' and 'MeSH'
-			params['scopeOptions.DataSources[0]'] = 'DrugBank';
-			params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-			params['scopeOptions.DataSources[2]'] = 'PDB';
+			//params['scopeOptions.DataSources[0]'] = 'DrugBank';
+			//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+			//params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
 			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
@@ -6437,8 +6459,16 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 				        timeout: 5000,
 				        url: CW.config.Settings.searchByTagUrl,
 				        reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                                        noCache: false,
+                                        limitParam: undefined,
+                                        startParam: undefined,
+                                        pageParam: undefined,
+		                        callbackKey: '_callback',
 						extraParams: {
-							'branch': 3 // Only show species results from swissprot
+						       'branch': 3, // Only show species results from swissprot
+                                                        _format: 'json',
+                                                       'app_id': app_id,
+                                                       'app_key': app_key
 						}
 					}
 				}),
@@ -7724,8 +7754,16 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                                    timeout: 5000,
                                    url: CW.config.Settings.searchByTagUrl,
                                    reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                                   noCache: false,
+                                   limitParam: undefined,
+                                   startParam: undefined,
+                                   pageParam: undefined,
+		                   callbackKey: '_callback',
                                    extraParams: {
-                                       'branch': 4 // Only show species results from swissprot
+	                                   '_format': 'json', 
+                                       'branch': 4, // Only show species results from swissprot
+                                       'app_id': app_id,
+                                       'app_key': app_key
                                    }
                                }
                            }),
@@ -11142,7 +11180,7 @@ Ext.define('CS.view.CompoundWindow', {
 Ext.define('CS.config.Settings', {
     singleton: true,
 //    baseUrl: 'http://cs.beta.rsc-us.org'
-    baseUrl: 'http://www.chemspider.com'
+    baseUrl: chemspiderURL
 });
 
 Ext.define('CS.view.BaseProperties', {
@@ -11874,8 +11912,16 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameForm', {
                             timeout: 5000,
                             url: CW.config.Settings.searchByTagUrl,
                             reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                            noCache: false,
+                            limitParam: undefined,
+                            startParam: undefined,
+                            pageParam: undefined,
+                            callbackKey: '_callback',
                             extraParams: {
-                                'branch': 4 // Only show species results from swissprot
+                                'branch': 4, // Only show species results from swissprot
+                                _format: 'json',
+                                'app_id': app_id,
+                                'app_key': app_key
                             }
                         }
                     }),
@@ -12395,7 +12441,8 @@ Ext.define('LSP.view.pathways.pathwayByProteinForm', {
 Ext.define('LSP.view.Viewer', {
     extend:'Ext.tab.Panel',
     alias:'widget.viewer',
-
+    xtype: 'plain-tabs',
+    plain: true,
     requires:[
 		'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.usergrid.UserGrid',
@@ -12418,6 +12465,24 @@ Ext.define('LSP.view.Viewer', {
     activeItem:0,
     margins:'0 4 4 4',
     //cls: 'preview',
+    items: [
+        {
+            title: 'Home',
+            bodyPadding: 60,
+            padding: '0 0 0 100',
+            html : '<div class="welcome-text-heading">Welcome to the Open PHACTS Explorer</div>'  +
+                '<br><br><p><div class="welcome-text">We are pleased to present the first public release of the beta Open PHACTS Explorer.</div></p>' +
+                '<br><p><div class="welcome-text">The Open PHACTS Explorer allows multiple sources of publicly-available pharmacological and ' +
+                'physicochemical data to be intuitively queried, and makes data provenance accessible at every step. The ' +
+                'Open PHACTS Explorer was built to answer critical pharmacological questions as defined by academic and ' +
+                'pharmaceutical industry scientists.</div></p>' +
+                '<br><p><div class="welcome-text">For more information visit the Open PHACTS Explorer <a href="http://www.openphacts.org/explorer">homepage</a></div></p>'
+                + '<br><br><iframe  width="640" height="360" src="http://www.youtube.com/embed/BK3fkEFkOy0?feature=player_embedded" frameborder="0" allowfullscreen></iframe>' +
+                '<br><br><p><div class="welcome-text">This is the first public release of the Open PHACTS Explorer, and we look forward to and value your feedback and comments.</div></p>' +
+                '<br><br><p><div class="welcome-text-linkout"><a href="http://www.openphacts.org/the-project">About us & Acknowledgments</a></div></p>'
+
+
+        }],
 
     initComponent:function () {
 		console.log('Viewer: initComponent()');
