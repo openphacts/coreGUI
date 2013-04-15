@@ -66,7 +66,11 @@
             callback: function (records, operation, success) {
                 if (success) {
                     var csids = [];
-                    Ext.each(operation.response.result.primaryTopic.result, function(csid, index) {
+                    var result = operation.response.result.primaryTopic.result;
+                    if (result == null) {
+                        result = operation.response.result.primaryTopic[0].result;
+                    }
+                    Ext.each(result, function(csid, index) {
                         csids.push(csid);
                     });
                     //this.updateProgress();
