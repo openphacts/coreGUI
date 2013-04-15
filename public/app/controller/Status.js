@@ -21,31 +21,75 @@ Ext.define('LSP.controller.Status', {
     ],
 
     cw_status: false,
+    lda_status: false,
+    cs_status: false,
+    ims_status: false,
 
     changeCWStatus: function(status) {
-
+        // whenver the status changes we update the api status widget
         this.cw_status = status;
+        this.changeStatusColour();
+    },
 
+    changeLDAStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.lda_status = status;
+        this.changeStatusColour();
+    },
+
+    changeCSStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.cs_status = status;
+        this.changeStatusColour();
+    },
+
+    changeIMSStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.ims_status = status;
+        this.changeStatusColour();
+    },
+
+    changeStatusColour: function() {
+        var status_indicator = Ext.ComponentQuery.query('#explorer_api_status_id')[0];
+        var cw_img, lda_img, cs_img, ims_img;
+        // If any of the status indicators are false then change the overall status to be orange
+        // If they are all false then change the overall to red
+        var green_img = "<img src='/assets/success_status.png'/>";
+        var red_img = "<img src='/assets/red_status.png'/>"
+        this.cw_status == true ? cw_img = green_img : cw_img = red_img;
+        this.lda_status == true ? lda_img = green_img : lda_img = red_img;
+        this.cs_status == true ? cs_img = green_img : cs_img = red_img;
+        this.ims_status == true ? ims_img = green_img : ims_img = red_img;
+        var cw_tooltip = '<tr><td>ConceptWiki</td><td> ' + cw_img + '</td></tr>';
+        var cs_tooltip = '<tr><td>Chemspider</td><td>' + cs_img + '</td></tr>';
+        var ims_tooltip = '<tr><td>IMS</td><td>' + ims_img + '</td></tr>';
+        var lda_tooltip = '<tr><td>LDA</td><td>' + lda_img + '</td></tr>';
+
+        var tooltip = '<table>' + cw_tooltip + ims_tooltip + cs_tooltip + lda_tooltip + '</table>';
+        if (!this.cw_status || !this.lda_status || !this.cs_status || !this.ims_status) {
+            //one or more apis are red
+            status_indicator.setIconCls('icon-amber-status');
+            status_indicator.setTooltip(tooltip);
+        } else if (!this.cw_status && !this.lda_status && !this.cs_status && !this.ims_status) {
+            //every api shows red
+            status_indicator.setIconCls('icon-red-status');
+            status_indicator.setTooltip(tooltip);
+        }
     },
 
     init: function () {
         var me = this;
         var updateAPIStatus = function () {
             me.testConceptWiki();
-            //var lda_status = me.testLDA();
-            //console.log('*** STATUS *** LDA ' + lda_status);
-            //var cp_status = me.testChemspider();
-            //console.log('*** STATUS *** ChemSpider' + cp_status);
-            //var ims_status = me.testIMS();
-            //console.log('*** STATUS *** IMS' + ims_status);
+            me.testIMS();
+            //me.testChemspider();
+            me.testLDA();
         };
 
         var task = Ext.TaskManager.start({
             run: updateAPIStatus,
             interval: 600000
         });
-
-        console.log('*** STATUS *** Concept Wiki ' + me.cw_status);
 
     },
 
@@ -55,18 +99,13 @@ Ext.define('LSP.controller.Status', {
         var ims_status = false;
         ims_store.load(function (records, operation, success) {
             if (records[0].data.status == 'true') {
-                console.log('IMS fetch success ' + records[0]);
-                me.getIMSImage().setSrc('./assets/tick.png');
-                me.getIMSImage().setVisible(true);
-                ims_status = true;
+                me.ims_status != true ? me.changeIMSStatus(true) : '';
+                console.log("IMS ** STATUS CHANGED **" + me.ims_status);
             } else {
-                console.log('IMS fetch boom');
-                me.getIMSImage().setSrc('./assets/cancel.png');
-                me.getIMSImage().setVisible(true);
-                ims_status = false;
+                me.ims_status != false ? me.changeIMSStatus(false) : '';
+                console.log("IMS ** STATUS CHANGED **" + me.ims_status);
             }
         });
-        return ims_status;
     },
 
     testChemspider: function () {
@@ -77,10 +116,8 @@ Ext.define('LSP.controller.Status', {
                 finished: function (sender, rid) {
                     searchEngine.loadCSIDs(function (csids) {
                         if (csids.length == 0) {
-                            console.log('CS fetch boom');
-                            me.getCSImage().setSrc('./assets/cancel.png');
-                            me.getCSImage().setVisible(true);
-                            chemspider_status = false;
+                            me.cs_status != false ? me.changeCSStatus(false) : '';
+                            console.log("CS ** STATUS CHANGED **" + me.cs_status);
                         } else {
                             chemspider_status = me.csFetch(csids);
                         }
@@ -91,6 +128,8 @@ Ext.define('LSP.controller.Status', {
                     me.getCSImage().setSrc('./assets/cancel.png');
                     me.getCSImage().setVisible(true);
                     chemspider_status = false;
+                    me.cs_status != false ? me.changeCSStatus(false) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 }
             }
         });
@@ -114,22 +153,15 @@ Ext.define('LSP.controller.Status', {
         compound_store.load({
             callback: function (records, operation, success) {
                 if (success) {
-                    console.log("Compound Store Success", records[0]);
-                    me.getLDAImage().setSrc('./assets/tick.png');
-                    me.getLDAImage().setVisible(true);
-                    lda_status = true;
-
-                }
-                else {
-                    console.log("LDA boom");
-                    me.getLDAImage().setSrc('./assets/cancel.png');
-                    me.getLDAImage().setVisible(true);
-                    lda_status = false;
+                    me.lda_status != true ? me.changeLDAStatus(true) : '';
+                    console.log("LDA ** STATUS CHANGED **" + me.lda_status);
+                } else {
+                    me.lda_status != false ? me.changeLDAStatus(false) : '';
+                    console.log("LDA ** STATUS CHANGED **" + me.lda_status);
 
                 }
             }
         }, this);
-        return lda_status;
     },
 
     testConceptWiki: function () {
@@ -143,23 +175,15 @@ Ext.define('LSP.controller.Status', {
             params: {'q': 'aspi', 'branch': '4' },
             callback: function (records, operation, success) {
                 if (success) {
-                    console.log("Success", records[0]);
-                    //me.getCWImage().setSrc('./assets/tick.png');
-                    //me.getCWImage().setVisible(true);
-                    me.changeCWStatus(true);
-                    console.log("** STATUS CHANGED **" + me.cw_status);
+                    me.cw_status != true ? me.changeCWStatus(true) : '';
+                    console.log("CW ** STATUS CHANGED **" + me.cw_status);
                 }
                 else {
-                    console.log("CW boom");
-                    //me.getCWImage().setSrc('./assets/cancel.png');
-                    //me.getCWImage().setVisible(true);
-                    me.changeCWStatus(false);
-                    console.log("** STATUS CHANGED **");
+                    me.cw_status != false ? me.changeCWStatus(false) : '';
+                    console.log("CW ** STATUS CHANGED **" + me.cw_status);
                 }
             }
         }, this);
-        console.log(" RESULT " + result);
-        //return conceptwiki_status;
     },
 
     csFetch: function (csid_list) {
@@ -184,6 +208,5 @@ Ext.define('LSP.controller.Status', {
                 }
             });
         }
-        return fetch_status;
     }
 });
