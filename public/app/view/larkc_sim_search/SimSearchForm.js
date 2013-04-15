@@ -106,6 +106,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					xtype: 'combobox',
 					itemId: 'sim_search_type_id',
 					fieldLabel: 'Similarity Threshold Type',
+                    labelWidth: 150,
 					store: sim_search_type,
 					queryMode: 'local',
 					displayField: 'sim_type',
@@ -120,23 +121,27 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					anchor: '100%',
 					name: 'tanimoto_threshold',
 					fieldLabel: 'Similarity threshold',
-					// step: 5,
+                    labelWidth: 115,
+                    // step: 5,
 					value: 90,
+                    width: 175,
 					allowDecimals: false,
 					maxValue: 100,
 					minValue: 1,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}, {
 					xtype: 'numberfield',
 					itemId: 'max_records_id',
 					anchor: '100%',
 					name: 'max_records',
 					fieldLabel: 'Maximum records to retrieve',
-					step: 20,
+                    labelWidth: 160,
+                    width: 260,
+                    step: 20,
 					value: 100,
 					allowDecimals: false,
 					minValue: 20,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}]
 			}, {
 				xtype: 'button',

@@ -29,7 +29,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
-    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm'],
+    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm', 'LSP.view.filter.TargetOrganismFilterForm'],
     header: false,
     layout: {
         type: 'vbox',
@@ -227,7 +227,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             margin: '0 5 5 5',
             name: 'organism_filter_fields',
             hidden: false
-}]}, {
+        }, {
+            xtype: 'TargetOrganismFilterForm',
+            itemId: 'targetOrganismFilterContainer_id',
+            margin: '0 5 5 5',
+            name: 'target_organism_filter_fields',
+            hidden: false
+        }]}, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',
             margin: '0 5 5 5',

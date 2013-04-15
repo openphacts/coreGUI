@@ -18,7 +18,7 @@ Ext.define('LSP.controller.Status', {
     init: function() {
 var me=this;
  var updateAPIStatus = function () {
-             me.testCompoundWiki();
+             me.testConceptWiki();
         me.testLDA();
         me.testChemspider();
         me.testIMS();
@@ -101,7 +101,7 @@ var task = Ext.TaskManager.start({
       },this );
     },
 
-    testCompoundWiki: function() {
+    testConceptWiki: function() {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
         // remove params that dev api cannot handle

@@ -200,7 +200,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
 } else {
 
-	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (No information on ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
             if (this.missing_count > 0) {
                 this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
             }
@@ -211,7 +211,7 @@ if (this.current_mode == 'exact') {
 } else {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
             if (this.missing_count > 0) {
-                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + 'OPS has no data on ' + this.missing_records + ' compounds.');
             }
 }
         }
@@ -235,7 +235,7 @@ if (this.current_mode == 'exact') {
 						if (csids.length == 0) {
 							Ext.MessageBox.show({
 		                        title: 'Error',
-		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        msg: 'No compounds were found for this search, please try again with a different structure.',
 		                        buttons: Ext.MessageBox.OK,
 		                        icon: Ext.MessageBox.ERROR
 		                    });
@@ -248,7 +248,7 @@ if (this.current_mode == 'exact') {
 		failed: function(sender, error){
                     Ext.MessageBox.show({
                         title: 'Error',
-                        msg: 'There was an error retrieving the list of compounds from Chemspider',
+                        msg: 'There was an error retrieving the compounds for this structure search.',
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });

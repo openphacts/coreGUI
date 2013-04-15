@@ -9,7 +9,8 @@
 Ext.define('LSP.view.target_by_name.TargetPanel', {
     extend:'Ext.panel.Panel',
     alias:'widget.TargetPanel',
-    title:'Target Data',
+    border: false,
+    //title:'Target Data',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
@@ -274,8 +275,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         else if (fieldId == 'keywords') {
             if (value != null) {
                 var keywordfield = this.down('#' + fieldId);
-                //var keywordValue = value.join();
-                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                //var keywordValue = value.replace(new RegExp(" ,", 'g'),","); old API value return (not array)
+                var keywordValue = value.join(", ");
                 keywordfield.setValue(keywordValue);
                 keywordfield.show();
             }
