@@ -74,6 +74,10 @@ Ext.define('LSP.controller.Status', {
             //every api shows red
             status_indicator.setIconCls('icon-red-status');
             status_indicator.setTooltip(tooltip);
+        } else {
+            //every api returns green
+            status_indicator.setIconCls('icon-success-status');
+            status_indicator.setTooltip(tooltip);
         }
     },
 
@@ -82,7 +86,7 @@ Ext.define('LSP.controller.Status', {
         var updateAPIStatus = function () {
             me.testConceptWiki();
             me.testIMS();
-            //me.testChemspider();
+            me.testChemspider();
             me.testLDA();
         };
 
@@ -124,10 +128,6 @@ Ext.define('LSP.controller.Status', {
                     });
                 },
                 failed: function (sender, error) {
-                    console.log('CS fetch boom');
-                    me.getCSImage().setSrc('./assets/cancel.png');
-                    me.getCSImage().setVisible(true);
-                    chemspider_status = false;
                     me.cs_status != false ? me.changeCSStatus(false) : '';
                     console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 }
@@ -196,15 +196,11 @@ Ext.define('LSP.controller.Status', {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
             csid_store.load(function (records, operation, success) {
                 if (success) {
-                    console.log('CS fetch success ' + records[0]);
-                    me.getCSImage().setSrc('./assets/tick.png');
-                    me.getCSImage().setVisible(true);
-                    fetch_status = true;
+                    me.cs_status != true ? me.changeCSStatus(true) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 } else {
-                    console.log('CS fetch boom');
-                    me.getCSImage().setSrc('./assets/cancel.png');
-                    me.getCSImage().setVisible(true);
-                    fetch_status = false;
+                    me.cs_status != true ? me.changeCSStatus(true) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 }
             });
         }

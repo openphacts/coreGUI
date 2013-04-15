@@ -206,26 +206,6 @@ Ext.define('LSP.view.Viewport', {
                         flex:1
                     },
                     {
-                        xtype:'button',
-                        //title:'System Status **************',
-                        //region: 'east',
-                        //text: 'o',
-                        iconCls: 'icon-red-status',
-                        height: 15,
-                        width: 15,
-                        value: 'value',
-                        name:'explorer_api_status',
-                        itemId:'explorer_api_status_id',
-                        tooltip: '<br>Services<br><br>ConceptWiki [ ]<br><br>IMS [ ]<br><br>ChemSpider [ ]<br><br>LD API [ ]',
-                        border: false
-                    },
-                    {
-                        xtype: 'displayfield',
-                        id: 'statusMessageAnnouncement',
-                        padding: '0 0 0 10',
-                        value: 'Test Status Message'
-                    },
-                    {
                         xtype:'tbspacer',
                         flex:1
                     },
@@ -243,6 +223,21 @@ Ext.define('LSP.view.Viewport', {
                         xtype:'logoutbutton',
                         id:'logoutButton',
                         hidden:true
+                    },
+                    {
+                        xtype:'button',
+                        //title:'System Status **************',
+                        //region: 'east',
+                        //text: 'o',
+                        iconCls: 'icon-red-status',
+                        height: 15,
+                        width: 15,
+                        value: 'value',
+                        name:'explorer_api_status',
+                        itemId:'explorer_api_status_id',
+                        tooltip: '<br>Services<br><br>ConceptWiki [ ]<br><br>IMS [ ]<br><br>ChemSpider [ ]<br><br>LD API [ ]',
+                        border: false,
+                        margin: '0 10 0 0'
                     }
                 ]
             },
