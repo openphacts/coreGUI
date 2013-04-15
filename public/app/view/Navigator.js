@@ -31,7 +31,7 @@ Ext.define('LSP.view.Navigator', {
                     }
                 ]
             },
-            //Removed this because it isn't actually used any more
+//          Removed this because it isn't actually used any more
 //            {
 //                title:'Settings',
 //                border:false,
@@ -55,7 +55,7 @@ Ext.define('LSP.view.Navigator', {
                         xtype:'FeedbackPanel'
                     }
                 ]
-            }, {
+            },/* {
                 title:'API Status',
                 border:false,
                 autoScroll:true,
@@ -66,7 +66,7 @@ Ext.define('LSP.view.Navigator', {
                         xtype:'Status'
                     }
                 ]
-            }, {
+            },*/ {
                 title:'TSV Downloads',
                 border:false,
                 itemId: 'background_tasks_form',

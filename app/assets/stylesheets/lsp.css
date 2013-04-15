@@ -6,6 +6,13 @@
     text-shadow: 0 1px 0 #fff;
 }
 
+.icon-amber-status {
+    background-image: url(/assets/amber_status.png) !important;
+}
+
+.icon-red-status {
+    background-image: url(/assets/red_status.png) !important;
+}
 .icon-success-status {
     background-image: url(/assets/success_status.png) !important;
 }
