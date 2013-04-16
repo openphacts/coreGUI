@@ -47,8 +47,8 @@ Ext.define('LSP.controller.BackgroundTasks', {
        callback: function(records, operation, success) {
            if (success) {
                console.log('success tsv status');
-               status = records[0].data.status;
-               percentage = records[0].data.percentage;
+               var status = records[0].data.status;
+               var percentage = records[0].data.percentage;
                if (percentage != '0') {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
                    this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
