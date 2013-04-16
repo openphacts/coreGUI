@@ -95,7 +95,8 @@ Ext.define('LSP.model.DynamicGrid', {
 Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     extend:'Ext.form.Panel',
     alias:'widget.CmpdByNameSingleDisplayForm',
-    title:'Compound by Name search results',
+    border: false,
+    //title:'Compound by Name search results',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
@@ -813,7 +814,7 @@ Ext.define('LSP.view.Appmoduletree', {
     rootVisible:false,
     useArrows:true,
     frame:false,
-    autoScroll:true,
+    //autoScroll:true,
     height:'100%',
 
     store:'NavigationTree',
@@ -3227,7 +3228,8 @@ Ext.define('Ext.ux.DataView.Animated', {
 Ext.define('LSP.view.target_by_name.TargetPanel', {
     extend:'Ext.panel.Panel',
     alias:'widget.TargetPanel',
-    title:'Target Data',
+    border: false,
+    //title:'Target Data',
     anchor:'100% 100%',
     autoScroll:true,
     bodyPadding:'10px',
@@ -3492,7 +3494,8 @@ Ext.define('LSP.view.target_by_name.TargetPanel', {
         else if (fieldId == 'keywords') {
             if (value != null) {
                 var keywordfield = this.down('#' + fieldId);
-                var keywordValue = value.replace(new RegExp(" ,", 'g'),",");
+                //var keywordValue = value.replace(new RegExp(" ,", 'g'),","); old API value return (not array)
+                var keywordValue = value.join(", ");
                 keywordfield.setValue(keywordValue);
                 keywordfield.show();
             }
@@ -3702,8 +3705,8 @@ Ext.define('LSP.controller.BackgroundTasks', {
        callback: function(records, operation, success) {
            if (success) {
                console.log('success tsv status');
-               status = records[0].data.status;
-               percentage = records[0].data.percentage;
+               var status = records[0].data.status;
+               var percentage = records[0].data.percentage;
                if (percentage != '0') {
                    this.getTask().down('#progress').updateProgress(percentage/100, '', true);
                    this.getTask().down('#type').setText(resource_type + "....creating(" + percentage + "%)");
@@ -5613,6 +5616,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					xtype: 'combobox',
 					itemId: 'sim_search_type_id',
 					fieldLabel: 'Similarity Threshold Type',
+                    labelWidth: 150,
 					store: sim_search_type,
 					queryMode: 'local',
 					displayField: 'sim_type',
@@ -5627,23 +5631,27 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					anchor: '100%',
 					name: 'tanimoto_threshold',
 					fieldLabel: 'Similarity threshold',
-					// step: 5,
+                    labelWidth: 115,
+                    // step: 5,
 					value: 90,
+                    width: 175,
 					allowDecimals: false,
 					maxValue: 100,
 					minValue: 1,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}, {
 					xtype: 'numberfield',
 					itemId: 'max_records_id',
 					anchor: '100%',
 					name: 'max_records',
 					fieldLabel: 'Maximum records to retrieve',
-					step: 20,
+                    labelWidth: 160,
+                    width: 260,
+                    step: 20,
 					value: 100,
 					allowDecimals: false,
 					minValue: 20,
-					padding: '0 2 0 0'
+					padding: '0 2 0 25'
 				}]
 			}, {
 				xtype: 'button',
@@ -5918,7 +5926,7 @@ Ext.define('LSP.controller.SimSearchForm', {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ': There are no records in OPS for this compound');
 } else {
 
-	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (Failed to load ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
+	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' (No information on ' + this.failed_to_load + ' records out of ' + this.total_count + ')');
             if (this.missing_count > 0) {
                 this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
             }
@@ -5929,7 +5937,7 @@ if (this.current_mode == 'exact') {
 } else {
 	    this.getStrucGrid().setTitle(this.getStrucGrid().gridBaseTitle + ' ('  + this.total_count + ' records)');
             if (this.missing_count > 0) {
-                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + '. The OPS API has no data on ' + this.missing_records + ' compounds.');
+                this.getStrucGrid().setTitle(this.getStrucGrid().getTitle + 'OPS has no data on ' + this.missing_records + ' compounds.');
             }
 }
         }
@@ -5954,7 +5962,7 @@ if (this.current_mode == 'exact') {
 						if (csids.length == 0) {
 							Ext.MessageBox.show({
 		                        title: 'Error',
-		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        msg: 'No compounds were found for this search, please try again with a different structure.',
 		                        buttons: Ext.MessageBox.OK,
 		                        icon: Ext.MessageBox.ERROR
 		                    });
@@ -5968,7 +5976,7 @@ if (this.current_mode == 'exact') {
 		failed: function(sender, error){
                     Ext.MessageBox.show({
                         title: 'Error',
-                        msg: 'There was an error retrieving the list of compounds from Chemspider',
+                        msg: 'There was an error retrieving the compounds for this structure search.',
                         buttons: Ext.MessageBox.OK,
                         icon: Ext.MessageBox.ERROR
                     });
@@ -11142,7 +11150,7 @@ Ext.define('CS.view.CompoundWindow', {
 Ext.define('CS.config.Settings', {
     singleton: true,
 //    baseUrl: 'http://cs.beta.rsc-us.org'
-    baseUrl: 'http://www.chemspider.com'
+    baseUrl: chemspiderURL
 });
 
 Ext.define('CS.view.BaseProperties', {
@@ -12395,7 +12403,8 @@ Ext.define('LSP.view.pathways.pathwayByProteinForm', {
 Ext.define('LSP.view.Viewer', {
     extend:'Ext.tab.Panel',
     alias:'widget.viewer',
-
+    xtype: 'plain-tabs',
+    plain: true,
     requires:[
 		'LSP.view.dynamicgrid.DynamicGrid',
         'LSP.view.usergrid.UserGrid',
@@ -12418,6 +12427,24 @@ Ext.define('LSP.view.Viewer', {
     activeItem:0,
     margins:'0 4 4 4',
     //cls: 'preview',
+    items: [
+        {
+            title: 'Home',
+            bodyPadding: 60,
+            padding: '0 0 0 100',
+            html : '<div class="welcome-text-heading">Welcome to the Open PHACTS Explorer</div>'  +
+                '<br><br><p><div class="welcome-text">We are pleased to present the first public release of the beta Open PHACTS Explorer.</div></p>' +
+                '<br><p><div class="welcome-text">The Open PHACTS Explorer allows multiple sources of publicly-available pharmacological and ' +
+                'physicochemical data to be intuitively queried, and makes data provenance accessible at every step. The ' +
+                'Open PHACTS Explorer was built to answer critical pharmacological questions as defined by academic and ' +
+                'pharmaceutical industry scientists.</div></p>' +
+                '<br><p><div class="welcome-text">For more information visit the Open PHACTS Explorer <a href="http://www.openphacts.org/explorer">homepage</a></div></p>'
+                + '<br><br><iframe  width="640" height="360" src="http://www.youtube.com/embed/BK3fkEFkOy0?feature=player_embedded" frameborder="0" allowfullscreen></iframe>' +
+                '<br><br><p><div class="welcome-text">This is the first public release of the Open PHACTS Explorer, and we look forward to and value your feedback and comments.</div></p>' +
+                '<br><br><p><div class="welcome-text-linkout"><a href="http://www.openphacts.org/the-project">About us & Acknowledgments</a></div></p>'
+
+
+        }],
 
     initComponent:function () {
 		console.log('Viewer: initComponent()');
@@ -12624,14 +12651,15 @@ Ext.define('LSP.view.Navigator', {
         this.items = [
             {
                 title:'Navigation',
-                autoScroll:true,
+                //autoScroll:true,
                 layout:'fit',
                 border:false,
                 iconCls:'nav',
                 items:[
                     {
                         xtype:'appmoduletree',
-                        id:'appModuleTree'
+                        id:'appModuleTree',
+                        border: false
                     }
                 ]
             },
@@ -13068,7 +13096,7 @@ Ext.define('LSP.view.Viewport', {
             {
                 region:'west',
                 id:'westView',
-                width:225,
+                width:230,
                 xtype:'navigator'
             }
         ];
