@@ -106,7 +106,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 			uri: this.uri,
 			app_key: this.app_key,
 			app_id: this.app_id,
-                        lens: "ops:" + this.lens
+                        lens: "ops:" + this.lens ? this.lens : ""
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},
