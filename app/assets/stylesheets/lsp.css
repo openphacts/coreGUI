@@ -6,6 +6,10 @@
     text-shadow: 0 1px 0 #fff;
 }
 
+.helpIcon {
+    background-image: url(/assets/help.png) !important;
+}
+
 .icon-amber-status {
     background-image: url(/assets/amber_status.png) !important;
 }

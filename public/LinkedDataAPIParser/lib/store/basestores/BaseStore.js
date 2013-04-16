@@ -9,6 +9,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	app_id: app_id,
 	//gridController: undefined,
         typeName: '',
+        lens: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
 	proxy: {
 		type: 'jsonp',
@@ -104,7 +105,8 @@ Ext.define('LDA.store.basestores.BaseStore', {
 			_format: this._format,
 			uri: this.uri,
 			app_key: this.app_key,
-			app_id: this.app_id
+			app_id: this.app_id,
+                        lens: "ops:" + this.lens
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},
@@ -115,6 +117,14 @@ Ext.define('LDA.store.basestores.BaseStore', {
 
         getTypeName: function() {
             return this.typeName;
+        },
+
+        setLens: function(lens) {
+            this.lens = lens;
+        },
+
+        getLens: function() {
+            return this.lens;
         }
 
 });

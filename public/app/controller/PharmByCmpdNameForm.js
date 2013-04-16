@@ -32,6 +32,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	filters: undefined,
 	current_uri: undefined,
 	current_activity_combo_select: undefined,
+        current_lens: 'l1',
 
 	init: function() {
 		console.log('PharmByCmpdNameForm: init()');
@@ -68,9 +69,17 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             },
 'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            },
+            'PharmByCmpdNameForm #lensId' : {
+                change: this.onLensChange
             }
 		});
 	},
+
+    onLensChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal.lens;
+       this.getGridView().store.setLens(this.currentLens);
+    },
 	
    comboSelect: function(combo, records, eOpts) {
 	var activity = records[0].get('about');

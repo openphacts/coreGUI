@@ -137,6 +137,31 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+            },{
+                xtype: 'radiogroup',
+                width: 400,
+                fieldLabel: 'Lenses',
+                itemId: 'lensId',
+                margin: '5 5 0 65',
+                labelAlign: 'right',
+                labelPad: 10,
+
+                items: [{
+                    boxLabel: 'Stereochemistry matching (default)',
+                    name: 'lens',
+                    inputValue: 'l1',
+                    checked: true
+                }, {
+                    boxLabel: 'Inchi key matching',
+                    name: 'lens',
+                    inputValue: 'l2'
+                }]
+            }, {
+                xtype: 'button',
+                name: 'lensHelp',
+                margin: '5 0 0 0',
+                iconCls: 'helpIcon',
+                tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
             }]
         },  {
             xtype: 'container',

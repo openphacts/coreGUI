@@ -69,7 +69,8 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                     _format:this._format,
                     uri:this.uri,
                     app_key: this.app_key,
-                    app_id: this.app_id
+                    app_id: this.app_id,
+                    lens: "ops:" + this.lens
                 });
 
         this.setAllConditions();
