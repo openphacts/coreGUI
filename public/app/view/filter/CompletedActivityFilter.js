@@ -3,7 +3,7 @@ Ext.define('LSP.view.filter.CompletedActivityFilter', {
 	alias: 'widget.CompletedActivityFilter',
 	closable: true,
 	headerPosition: 'right',
-	height: 30,
+	height: 28,
 	width: 270,
 	filterModel:null,
 	layout: {

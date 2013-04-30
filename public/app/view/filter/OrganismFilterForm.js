@@ -42,7 +42,8 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		displayField: 'abbr',
 		valueField: 'name',
 		labelWidth: 100,
-		width: 400,
+        labelAlign: 'right',
+        width: 400,
 		labelPad: 2,
 		padding: '0 2 0 0',
 		emptyText: 'Enter the name of an assay organism...',
@@ -55,7 +56,7 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		xtype: 'button',
 		itemId: 'addCompletedOrganismFilter_id',
 		iconCls: 'icon-new',
-		padding: '5 5 5 5',
+		//padding: '5 5 5 5',
 		tooltip: 'Add this organism filter',
 		action: 'add_completed_organism_filter'
 	}]
