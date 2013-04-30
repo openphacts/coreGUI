@@ -15,8 +15,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 		    }
 		},
         store:'EnzymeFamilyPaginatedStore',
-	exportStore: null,
-	getExportStore: function() {
+	    exportStore: null,
+	    getExportStore: function() {
 		if (this.exportStore == null) {
 			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
 		}
@@ -185,13 +185,13 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
                             //var targetId = url.split('/').pop();
                             var linkOut = targetBaseURL + url.split('/').pop();
                             //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div>' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
                         } else {
 
                             var onlyTarget = targetURIs[0].split('/').pop();
                             var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                            output += '<div>' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
                         }
 
                     });
@@ -200,11 +200,11 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
                 }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div>' + data + '</div>'
 
             }
 
