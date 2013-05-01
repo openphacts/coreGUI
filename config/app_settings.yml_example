@@ -9,11 +9,10 @@ defaults: &defaults
     port : 587
 
   tsv:
-    tsv_url : "where.the.api.is.located" #without the http:// bit and no trailing slash
+    tsv_url : "where.the.api.is.located" #without the protocol bit and no trailing slash
     target_path : "/target/pharmacology/pages"
     compound_path: "/compound/pharmacology/pages"
     enzyme_path: "/target/enzyme/pharmacology/pages"
-
     protocol: "http" #or https
 
   cw:
@@ -23,7 +22,7 @@ defaults: &defaults
     url : "where.the.chemspider.api.is.located" #no protocol and no trailing slash
 
   cs:
-    url : "where.the.api.is.located" #without the protocol
+    url : "where.the.api.is.located" #without the protocol and no trailing slash
 
   enzyme:
     root_url : "/target/enzyme/root"
