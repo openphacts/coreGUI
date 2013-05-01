@@ -5,6 +5,8 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	uri: '',
 	BASE_URL: '',
 	remoteSort: true,
+	app_key: app_key,
+	app_id: app_id,
 	//gridController: undefined,
         typeName: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
@@ -100,7 +102,9 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	updateProxyURL: function() {
 		this.proxy.url = this.BASE_URL + this.stringEncoder.toQueryString({
 			_format: this._format,
-			uri: this.uri
+			uri: this.uri,
+			app_key: this.app_key,
+			app_id: this.app_id
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},

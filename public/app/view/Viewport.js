@@ -206,14 +206,6 @@ Ext.define('LSP.view.Viewport', {
                         flex:1
                     },
                     {
-                        xtype:'displayfield',
-                        value:'Testing connection to OPS API...',
-                        width:400,
-                        name:'ops_api_staus',
-                        id:'ops_api_staus_id',
-						hidden: true
-                    },
-                    {
                         xtype:'tbspacer',
                         flex:1
                     },
@@ -231,6 +223,21 @@ Ext.define('LSP.view.Viewport', {
                         xtype:'logoutbutton',
                         id:'logoutButton',
                         hidden:true
+                    },
+                    {
+                        xtype:'button',
+                        //title:'System Status **************',
+                        //region: 'east',
+                        //text: 'o',
+                        iconCls: 'icon-red-status',
+                        height: 15,
+                        width: 15,
+                        value: 'value',
+                        name:'explorer_api_status',
+                        itemId:'explorer_api_status_id',
+                        tooltip: '<br>Services<br><br>ConceptWiki [ ]<br><br>IMS [ ]<br><br>ChemSpider [ ]<br><br>LD API [ ]',
+                        border: false,
+                        margin: '0 10 0 0'
                     }
                 ]
             },
@@ -248,5 +255,4 @@ Ext.define('LSP.view.Viewport', {
         ];
         this.callParent(arguments);
     }
-})
-;
+});

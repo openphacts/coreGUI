@@ -67,7 +67,9 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                     //activity_value:this.activity_value,
                     //activity_condition:this.activity_condition,
                     _format:this._format,
-                    uri:this.uri
+                    uri:this.uri,
+                    app_key: this.app_key,
+                    app_id: this.app_id
                 });
 
         this.setAllConditions();

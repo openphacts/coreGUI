@@ -55,8 +55,7 @@
     runSearch: function (params) {
 	// no need for 2 loading masks
         //this.startProgress();
-
-        params.limit = this.limit;
+        params['resultOptions.Limit'] = this.limit;
 
         //  clear previous search results
         this.csids = null;
@@ -66,9 +65,16 @@
             scope: this,
             callback: function (records, operation, success) {
                 if (success) {
-                    this.rid = operation.response;
+                    var csids = [];
+                    var result = operation.response.result.primaryTopic.result;
+                    if (result == null) {
+                        result = operation.response.result.primaryTopic[0].result;
+                    }
+                    Ext.each(result, function(csid, index) {
+                        csids.push(csid);
+                    });
                     //this.updateProgress();
-                    this.fireEvent('finished', this, this.rid);
+                    this.fireEvent('finished', this, csids);
                 }
                 else {
                     this.err = operation.error;

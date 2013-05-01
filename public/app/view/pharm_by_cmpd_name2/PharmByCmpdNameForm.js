@@ -55,47 +55,46 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 labelWidth: 400,
                 padding: '5 0 0 140'
             },
-            {
-                xtype: 'container',
-                margin: '0 5 5 5',
-                name: 'form_fields',
-                layout: {
-                    type: 'column'
-                },
-                style: 'background-color: #fff;',
-                items: [
-                    {
-                        name: 'cmpd_uuid',
-                        xtype: 'hidden',
-                        value: ''
-                    },
-                    Ext.create('CW.view.ConceptWikiLookup', {
-                        xtype: 'conceptWikiLookup',
-                        fieldLabel: 'Compound name',
-                        itemId: 'pharmByCompoundCWLookup',
-                        store: Ext.create('CW.store.ConceptWikiLookup', {
-                            proxy: {
-                                type: 'jsonp',
-                                timeout: 5000,
-                                url: CW.config.Settings.searchByTagUrl,
-                                reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
-                                extraParams: {
-                                    'branch': 4 // Only show species results from swissprot
-                                }
-                            }
-                        }),
-                        name: 'compound_uri',
-                        cwTagUuid: '07a84994-e464-4bbf-812a-a4b96fa3d197' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
-                    }),
-                    {
-                        xtype: 'button',
-                        itemId: 'pharmByCmpdSubmit_id',
-                        padding: '5 5 5 5',
-                        text: 'Search...',
-                        disabled: true,
-                        action: 'query_pharm_by_cmpd_name'
-                    }
-                ]
+
+            Ext.create('CW.view.ConceptWikiLookup', {
+                           xtype: 'conceptWikiLookup',
+                           fieldLabel: 'Compound name',
+                           itemId: 'pharmByCompoundCWLookup',
+                           store: Ext.create('CW.store.ConceptWikiLookup', {
+                               proxy: {
+                                   type: 'jsonp',
+                                   timeout: 5000,
+                                   url: CW.config.Settings.searchByTagUrl,
+                                   reader: Ext.create('CW.helper.ConceptWikiJSONReader'),
+                                   noCache: false,
+                                   limitParam: undefined,
+                                   startParam: undefined,
+                                   pageParam: undefined,
+		                   callbackKey: '_callback',
+                                   extraParams: {
+	                                   '_format': 'json', 
+                                       'branch': 4, // Only show species results from swissprot
+                                       'app_id': app_id,
+                                       'app_key': app_key
+                                   }
+                               }
+                           }),
+                           name: 'compound_uri',
+                           cwTagUuid: '07a84994-e464-4bbf-812a-a4b96fa3d197' // This is the ConceptWiki tag uuid for proteins. Must be set to use method!
+                       }), {
+                xtype: 'button',
+                itemId: 'pharmByCmpdSubmit_id',
+                padding: '5 5 5 5',
+                text: 'Search...',
+                disabled: true,
+                action: 'query_pharm_by_cmpd_name'
+            }]
+        }, {
+            xtype: 'container',
+            margin: '0 5 5 5',
+            name: 'filter_fields',
+            layout: {
+                type: 'column'
             },
             {
                 xtype: 'container',

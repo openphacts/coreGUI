@@ -32,42 +32,7 @@ Ext.define('LSP.view.Navigator', {
                     }
                 ]
             },
-            //Removed this because it isn't actually used any more
-//            {
-//                title:'Settings',
-//                border:false,
-//                autoScroll:true,
-//                iconCls:'settings',
-//                items:[
-//                    {
-//                        xtype:'settingsform',
-//                        id:'appSettings'
-//                    }
-//                ]
-//            },
-            {
-                title:'Help and Feedback',
-                border:false,
-                autoScroll:true,
-                iconCls:'fb-accordion',
-                bodyBorder:false,
-                items:[
-                    {
-                        xtype:'FeedbackPanel'
-                    }
-                ]
-            }, {
-                title:'API Status',
-                border:false,
-                autoScroll:true,
-                iconCls:'fb-accordion',
-                bodyBorder:false,
-                items:[
-                    {
-                        xtype:'Status'
-                    }
-                ]
-            }, {
+           {
                 title:'TSV Downloads',
                 border:false,
                 itemId: 'background_tasks_form',

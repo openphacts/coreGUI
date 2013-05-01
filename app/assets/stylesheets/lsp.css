@@ -6,6 +6,13 @@
     text-shadow: 0 1px 0 #fff;
 }
 
+.icon-amber-status {
+    background-image: url(/assets/amber_status.png) !important;
+}
+
+.icon-red-status {
+    background-image: url(/assets/red_status.png) !important;
+}
 .icon-success-status {
     background-image: url(/assets/success_status.png) !important;
 }
@@ -356,4 +363,19 @@ sub {
     line-height:150%;
     font-size: 16px;
     font-weight: bold;
+}
+.inline-list li
+{
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}
+.centre {
+    text-align: center;
+}
+.right {
+    text-align: right;
+}
+.grey {
+    color: gray;
 }

@@ -152,7 +152,7 @@ Ext.define('LSP.controller.SimSearchForm', {
         console.log("SimSearchForm: hitCoreAPI()");
         var me = this;
 	this.failed_to_load = 0;
-		me.getStrucGrid().getStore().sorters.clear();
+	me.getStrucGrid().getStore().sorters.clear();
         var grid = this.getStrucGrid();
         this.all_records = new Array();
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
@@ -162,10 +162,10 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
+            csid_store.proxy.extraParams.uri = csid_list[i];
             csid_store.load(function(records, operation, success) {
                 if (success) {
-					me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
+		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
                     records[0].index = me.success_count;
@@ -221,8 +221,8 @@ if (this.current_mode == 'exact') {
     handleHistoryToken: function(historyTokenObject) {
         console.log('SimSearchForm: handleHistoryToken() ' + historyTokenObject);
         var me = this;
-		me.current_smiles = historyTokenObject.sm;
-		me.current_mode = historyTokenObject.st;
+	me.current_smiles = historyTokenObject.sm;
+	me.current_mode = historyTokenObject.st;
         var this_gridview = me.getStrucGrid();
         var current_records = this_gridview.store.getRange();
         //this_gridview.store.remove(current_records);
@@ -231,8 +231,7 @@ if (this.current_mode == 'exact') {
         this_gridview.getStore().setTypeName(me.current_smiles + " : " + me.current_mode);
         var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
-                finished: function(sender, rid) {
-                    searchEngine.loadCSIDs(function(csids) {
+                finished: function(sender, csids) {
 						if (csids.length == 0) {
 							Ext.MessageBox.show({
 		                        title: 'Error',
@@ -245,7 +244,6 @@ if (this.current_mode == 'exact') {
 						} else {
 							me.hitCoreAPI(csids);
 						}
-                    });
                 },
 		failed: function(sender, error){
                     Ext.MessageBox.show({
@@ -275,23 +273,26 @@ if (this.current_mode == 'exact') {
         } else if (values.search_type == '3') { //  Similarity search
             grid_title = 'Similarity search';
             search_type = 'similarity';
-            //  In the future this parameters should be taken from the UI.
-            //  But right now in order to make Similarity search more realistic they are entered manually.
-			var threshold = this.getTanimotoThresholdSpinner().value;
-			params['searchOptions.Threshold'] = threshold/100;
-            // params['searchOptions.Threshold'] = 0.99;
-            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+	    var threshold = this.getTanimotoThresholdSpinner().value;
+	    //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+            params['resultOptions.Threshold'] = threshold/100;
+	    //params['searchOptions.Threshold'] = threshold/100;
+            var search_type_value = this.getSimSearchType().value;
+            search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+            search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+            search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
         } else {
             //  Unsupported search type...
         }
-	// there can also be 'ChEBI' and 'MeSH'
-	params['scopeOptions.DataSources[0]'] = 'DrugBank';
-	params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-	params['scopeOptions.DataSources[2]'] = 'PDB';
+	
+        // there can also be 'ChEBI' and 'MeSH'
+	//TODO add these data source options back in when the ops dev api can support it
+        //params['scopeOptions.DataSources[0]'] = 'DrugBank';
+	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-		searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
         searchEngine.doSearch(search_type, params);
     },
 
@@ -356,21 +357,19 @@ if (this.current_mode == 'exact') {
 			this_gridview.store.removeAll();
 		    var searchEngine = Ext.create('CS.engine.search.Structure', {
 		    	listeners: {
-		        	finished: function(sender, rid) {
-		            	searchEngine.loadCSIDs(function(csids) {
-							if (csids.length == 0) {
-								Ext.MessageBox.show({
-				                	title: 'Error',
-				                    msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
-				                    buttons: Ext.MessageBox.OK,
-				                    icon: Ext.MessageBox.ERROR
-				                });
-				                me.getSubmitButton().enable();
-			                    me.getSsform().setLoading(false);
-							} else {
-								me.hitCoreAPI(csids);
-							}
-		                });
+		        	finished: function(sender, csids) {
+						if (csids.length == 0) {
+							Ext.MessageBox.show({
+		                        title: 'Error',
+		                        msg: 'Chemspider returned no compounds for this search, please try again with a different structure.',
+		                        buttons: Ext.MessageBox.OK,
+		                        icon: Ext.MessageBox.ERROR
+		                    });
+		                    me.getSubmitButton().enable();
+	                        me.getSsform().setLoading(false);
+						} else {
+							me.hitCoreAPI(csids);
+						}
 		        	},
 					failed: function(sender, error){
 		            	Ext.MessageBox.show({
@@ -400,18 +399,21 @@ if (this.current_mode == 'exact') {
 	            search_type = 'similarity';
 	            //  In the future this parameters should be taken from the UI.
 	            //  But right now in order to make Similarity search more realistic they are entered manually.
-				var threshold = this.getTanimotoThresholdSpinner().value;
-				params['searchOptions.Threshold'] = threshold/100;
-	            // params['searchOptions.Threshold'] = 0.99;
-	            // params['searchOptions.SimilarityType'] = 'Tanimoto';
-	            params['searchOptions.SimilarityType'] = this.getSimSearchType().value;
+		    var threshold = this.getTanimotoThresholdSpinner().value;
+	            //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
+                    params['resultOptions.Threshold'] = threshold/100;
+	            //params['searchOptions.Threshold'] = threshold/100;
+                    var search_type_value = this.getSimSearchType().value;
+                    search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
+                    search_type_value == "Tversky" ?  params['searchOptions.SimilarityType'] = 1 : ''
+                    search_type_value == "Euclidian" ?  params['searchOptions.SimilarityType'] = 2 : ''
 	        } else {
 	            //  Unsupported search type...
 	        }
 			// there can also be 'ChEBI' and 'MeSH'
-			params['scopeOptions.DataSources[0]'] = 'DrugBank';
-			params['scopeOptions.DataSources[1]'] = 'ChEMBL';
-			params['scopeOptions.DataSources[2]'] = 'PDB';
+			//params['scopeOptions.DataSources[0]'] = 'DrugBank';
+			//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
+			//params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
 			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
