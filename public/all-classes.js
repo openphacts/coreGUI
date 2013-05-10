@@ -1597,71 +1597,135 @@ Ext.define('LDA.store.SimSearchLocalStore', {
 Ext.define('LSP.controller.Status', {
     extend: 'Ext.app.Controller',
     views: ['api_status.Status'],
-    refs: [{
-	    ref: 'CWImage',
-	    selector: '#status_form_cw_image'
-    }, {
-	    ref: 'LDAImage',
-	    selector: '#status_form_lda_image'
-    }, {
-	    ref: 'CSImage',
-	    selector: '#status_form_cs_image'
-    }, {
-	    ref: 'IMSImage',
-	    selector: '#status_form_ims_image'
-    }],
+    refs: [
+        {
+            ref: 'CWImage',
+            selector: '#status_form_cw_image'
+        },
+        {
+            ref: 'LDAImage',
+            selector: '#status_form_lda_image'
+        },
+        {
+            ref: 'CSImage',
+            selector: '#status_form_cs_image'
+        },
+        {
+            ref: 'IMSImage',
+            selector: '#status_form_ims_image'
+        }
+    ],
 
-    init: function() {
-var me=this;
- var updateAPIStatus = function () {
-             me.testConceptWiki();
-        me.testLDA();
-        me.testChemspider();
-        me.testIMS();
- };
-var task = Ext.TaskManager.start({
-     run: updateAPIStatus,
-     interval: 600000
- });
+    cw_status: false,
+    lda_status: false,
+    cs_status: false,
+    ims_status: false,
+
+    changeCWStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.cw_status = status;
+        this.changeStatusColour();
+    },
+
+    changeLDAStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.lda_status = status;
+        this.changeStatusColour();
+    },
+
+    changeCSStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.cs_status = status;
+        this.changeStatusColour();
+    },
+
+    changeIMSStatus: function(status) {
+        // whenver the status changes we update the api status widget
+        this.ims_status = status;
+        this.changeStatusColour();
+    },
+
+    changeStatusColour: function() {
+        var status_indicator = Ext.ComponentQuery.query('#explorer_api_status_id')[0];
+        var cw_img, lda_img, cs_img, ims_img;
+        // If any of the status indicators are false then change the overall status to be orange
+        // If they are all false then change the overall to red
+        var green_img = "<img src='/assets/success_status.png'/>";
+        var red_img = "<img src='/assets/red_status.png'/>"
+        this.cw_status == true ? cw_img = green_img : cw_img = red_img;
+        this.lda_status == true ? lda_img = green_img : lda_img = red_img;
+        this.cs_status == true ? cs_img = green_img : cs_img = red_img;
+        this.ims_status == true ? ims_img = green_img : ims_img = red_img;
+        var cw_tooltip = '<tr><td>ConceptWiki</td><td> ' + cw_img + '</td></tr>';
+        var cs_tooltip = '<tr><td>Chemspider</td><td>' + cs_img + '</td></tr>';
+        var ims_tooltip = '<tr><td>IMS</td><td>' + ims_img + '</td></tr>';
+        var lda_tooltip = '<tr><td>LDA</td><td>' + lda_img + '</td></tr>';
+
+        var tooltip = '<table>' + cw_tooltip + ims_tooltip + cs_tooltip + lda_tooltip + '</table>';
+        if (!this.cw_status || !this.lda_status || !this.cs_status || !this.ims_status) {
+            //one or more apis are red
+            status_indicator.setIconCls('icon-amber-status');
+            status_indicator.setTooltip(tooltip);
+        } else if (!this.cw_status && !this.lda_status && !this.cs_status && !this.ims_status) {
+            //every api shows red
+            status_indicator.setIconCls('icon-red-status');
+            status_indicator.setTooltip(tooltip);
+        } else {
+            //every api returns green
+            status_indicator.setIconCls('icon-success-status');
+            status_indicator.setTooltip(tooltip);
+        }
+    },
+
+    init: function () {
+        var me = this;
+        var updateAPIStatus = function () {
+            me.testConceptWiki();
+            me.testIMS();
+            me.testChemspider();
+            me.testLDA();
+        };
+
+        var task = Ext.TaskManager.start({
+            run: updateAPIStatus,
+            interval: 600000
+        });
 
     },
 
-   testIMS: function() {
-     var me = this;
-     var ims_store = Ext.create('LDA.store.IMSStore', {});
-     ims_store.load(function(records, operation, success) {
-     if (records[0].data.status == 'true') {
-         console.log('IMS fetch success ' + records[0]);
-         me.getIMSImage().setSrc('./assets/tick.png');
-         me.getIMSImage().setVisible(true);
-      } else {
-         console.log('IMS fetch boom');
-         me.getIMSImage().setSrc('./assets/cancel.png');
-         me.getIMSImage().setVisible(true);
-      }
-      });
-   },
+    testIMS: function () {
+        var me = this;
+        var ims_store = Ext.create('LDA.store.IMSStore', {});
+        var ims_status = false;
+        ims_store.load(function (records, operation, success) {
+            if (records[0].data.status == 'true') {
+                me.ims_status != true ? me.changeIMSStatus(true) : '';
+                console.log("IMS ** STATUS CHANGED **" + me.ims_status);
+            } else {
+                me.ims_status != false ? me.changeIMSStatus(false) : '';
+                console.log("IMS ** STATUS CHANGED **" + me.ims_status);
+            }
+        });
+    },
 
-   testChemspider: function() {
-       var me = this;
-       var searchEngine = Ext.create('CS.engine.search.Structure', {
+    testChemspider: function () {
+        var me = this;
+        var chemspider_status = false;
+        var searchEngine = Ext.create('CS.engine.search.Structure', {
             listeners: {
                 finished: function(sender, csids) {
-                if (csids.length == 0) {
-		    console.log('CS fetch boom');
-                    me.getCSImage().setSrc('./assets/cancel.png');
-                    me.getCSImage().setVisible(true);
-		} else {
-		    console.log('CS fetch success ' + csids[0]);
-                    me.getCSImage().setSrc('./assets/tick.png');
-                    me.getCSImage().setVisible(true);
-		}
+                    if (csids.length == 0) {
+                        me.cs_status != false ? me.changeCSStatus(false) : '';
+                        console.log("CS ** STATUS CHANGED **" + me.cs_status);
+		    } else {
+                        me.cs_status != true ? me.changeCSStatus(true) : '';
+                        console.log("CW ** STATUS CHANGED **" + me.cw_status);
+                    }
                 },
-		failed: function(sender, error) {
-                    console.log('CS fetch boom');
-                    me.getCSImage().setSrc('./assets/cancel.png');
-                    me.getCSImage().setVisible(true);
-		}
+                failed: function (sender, error) {
+                    me.cs_status != false ? me.changeCSStatus(false) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
+                }
             }
         });
         var params = {};
@@ -1672,32 +1736,30 @@ var task = Ext.TaskManager.start({
 	//params['scopeOptions.DataSources[1]'] = 'ChEMBL';
 	//params['scopeOptions.DataSources[2]'] = 'PDB';
         searchEngine.doSearch('exact', params);
-
     },
 
-    testLDA: function() {
-      var aspirin_uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
-      var compound_store = Ext.create("LDA.store.CompoundStore", {});
-      var me = this;
-      compound_store.proxy.extraParams.uri = aspirin_uri;
-      compound_store.proxy.reader.uri = aspirin_uri;
-      compound_store.load({
-          callback:function (records, operation, success) {
-              if (success) {
-                console.log("Compound Store Success",records[0]);
-                me.getLDAImage().setSrc('./assets/tick.png');
-                me.getLDAImage().setVisible(true);
-              }
-              else {
-                console.log("LDA boom");
-                me.getLDAImage().setSrc('./assets/cancel.png');
-                me.getLDAImage().setVisible(true);
-              }
-          }
-      },this );
+    testLDA: function () {
+        var aspirin_uri = 'http://www.conceptwiki.org/concept/dd758846-1dac-4f0d-a329-06af9a7fa413';
+        var compound_store = Ext.create("LDA.store.CompoundStore", {});
+        var me = this;
+        var lda_status = false;
+        compound_store.proxy.extraParams.uri = aspirin_uri;
+        compound_store.proxy.reader.uri = aspirin_uri;
+        compound_store.load({
+            callback: function (records, operation, success) {
+                if (success) {
+                    me.lda_status != true ? me.changeLDAStatus(true) : '';
+                    console.log("LDA ** STATUS CHANGED **" + me.lda_status);
+                } else {
+                    me.lda_status != false ? me.changeLDAStatus(false) : '';
+                    console.log("LDA ** STATUS CHANGED **" + me.lda_status);
+
+                }
+            }
+        }, this);
     },
 
-    testConceptWiki: function() {
+    testConceptWiki: function () {
         var cw_uuid = '07a84994-e464-4bbf-812a-a4b96fa3d197';
         var cw_lookup = Ext.create('CW.store.ConceptWikiLookup', {});
         // remove params that dev api cannot handle
@@ -1714,34 +1776,31 @@ var task = Ext.TaskManager.start({
 'app_key': app_key, 'app_id': app_id, '_format' : 'json' },
           callback:function (records, operation, success) {
               if (success) {
-                console.log("Success",records[0]);
-                me.getCWImage().setSrc('./assets/tick.png');
-                me.getCWImage().setVisible(true);
-              }
-              else {
-                console.log("CW boom");
-                me.getCWImage().setSrc('./assets/cancel.png');
-                me.getCWImage().setVisible(true);
+                me.cw_status != true ? me.changeCWStatus(true) : '';
+                console.log("CW ** STATUS CHANGED **" + me.cw_status);
+              } else {
+                me.cw_status != false ? me.changeCWStatus(false) : '';
+                console.log("CW ** STATUS CHANGED **" + me.cw_status);
               }
           }
       },this );
     },
 
-    csFetch: function(csid_list) {
+    csFetch: function (csid_list) {
         var me = this;
+        var fetch_status = false;
         var csid_store = Ext.create('LDA.store.CompoundStore', {});
-        csid_store.proxy.reader = Ext.create('LDA.helper.ChemspiderCompoundReader');
+        csid_store.proxy.reader = Ext.create('LDA.helper.Chems' +
+            'piderCompoundReader');
         for (var i = 0; i < csid_list.length; i++) {
             csid_store.proxy.extraParams.uri = "http://rdf.chemspider.com/" + csid_list[i];
-            csid_store.load(function(records, operation, success) {
+            csid_store.load(function (records, operation, success) {
                 if (success) {
-                    console.log('CS fetch success ' + records[0]);
-                    me.getCSImage().setSrc('./assets/tick.png');
-                    me.getCSImage().setVisible(true);
+                    me.cs_status != true ? me.changeCSStatus(true) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 } else {
-                    console.log('CS fetch boom');
-                    me.getCSImage().setSrc('./assets/cancel.png');
-                    me.getCSImage().setVisible(true);
+                    me.cs_status != true ? me.changeCSStatus(true) : '';
+                    console.log("CS ** STATUS CHANGED **" + me.cs_status);
                 }
             });
         }
@@ -4637,7 +4696,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         uri = gridview.store.proxy.extraParams.uri;
         total_count = gridview.store.getTotalCount();
         request_type = gridview.store.REQUEST_TYPE;
-        
+        if (gridview.store.getTypeName() == undefined) {
+            gridview.store.setTypeName(this.getLookup().rawValue);
+        }
+
        tsv_request_store.load(
            {params: {
                activity_value_type : activity_value_type,
@@ -5492,17 +5554,16 @@ function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, 
         var iconCls = cls + 'Icon';
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
-        cls += LDAProvenanceMode;
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
                 data == null ? data = '' : ''
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div>' + data + '</div>'
 
             }
 
@@ -5599,7 +5660,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchForm', {
 					name: 'provHelp',
 					margin: '5 0 0 0',
 					iconCls: 'provenanceHelpIcon',
-					tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+                    tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
 				}]
 			}, {
 				xtype: 'radiogroup',
@@ -6185,8 +6246,8 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 		    }
 		},
         store:'EnzymeFamilyPaginatedStore',
-	exportStore: null,
-	getExportStore: function() {
+	    exportStore: null,
+	    getExportStore: function() {
 		if (this.exportStore == null) {
 			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
 		}
@@ -6217,16 +6278,17 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     tdCls: 'wrap gridDescriptiveRowPadding'
                 },
                 {
-                    header:'Target Name',
-                    dataIndex:'target_title',
+                    header:'Target Names',
                     width: 180,
-                    renderer: enzymeProvenanceRenderer,
+                    dataIndex:'targets',
+                    renderer:enzymeProvenanceRenderer,
                     tdCls: 'wrap gridDescriptiveRowPadding'
+                    //align:'center'
                 },
                 {
-                    header:'Target Organism',
-                    dataIndex:'target_organism',
-                    renderer: enzymeProvenanceRenderer,
+                    header:'Target Organisms',
+                    dataIndex:'target_organisms',
+                    renderer:enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
                 },
@@ -6336,45 +6398,43 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
         cls += LDAProvenanceMode;
+
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
-            if (record.data[recdata] && data){
+            if (record.data[recdata] && data || this.columns[columnIndex].dataIndex == 'targets' || this.columns[columnIndex].dataIndex == 'target_organisms' ) {
+                if (this.columns[columnIndex].dataIndex == 'targets') {
 
-                if (this.columns[columnIndex].dataIndex == 'target_title') {
-
+                    //loops through arrays
                     var output = new String();
-                    var targetNames = data.split(',');
-                    //console.log( ' concat uisl ' + record.data['target_concatenated_uris']);
-                    var targetURIs = record.data['target_concatenated_uris'].split(',');
-                    var targetBaseURL = 'https://www.ebi.ac.uk/chembl/target/inspect/';
-                    Ext.each(targetNames, function (target, index) {
-
-                        var url = targetURIs[index];
-                        if (url) {
-                            //console.log( ' url ' + url);
-                            //var targetId = url.split('/').pop();
-                            var linkOut = targetBaseURL + url.split('/').pop();
-                            //console.log( "  TARGET NAME " + index + ' ' + target + ' ' +targetURIs[index]  );
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOut + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-
-                        } else {
-
-                            var onlyTarget = targetURIs[0].split('/').pop();
-                            var linkOutfirst = targetBaseURL + onlyTarget;
-                            output += '<div class="' + cls + '">' + target + '</div>' + '<br>' + '<a href="' + linkOutfirst + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
-                        }
+                    Ext.each(data, function (target, index) {
+                        var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
+                        var targetIconCls = targetcls + 'Icon';
+                        targetIconCls = '/assets/' + targetIconCls + '.png';
+                        output += '<div>' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return output;
+                }
 
+                if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+                    //loops through arrays
+                    var organismsOutput = new String();
+                    Ext.each(data, function (organism, index) {
+                        var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
+                        var organismIconCls = organismCls + 'Icon';
+                        organismIconCls = '/assets/' + organismIconCls + '.png';
+                        organismsOutput += '<div>' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
+
+                    });
+                    return organismsOutput;
                 }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] +'" target="_blank">' +'<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div">' + data + '</div>'
 
             }
 
@@ -6386,6 +6446,24 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
+        if (this.columns[columnIndex].dataIndex == 'targets') {
+            //console.log('target_title ' + data.length);
+            var target_names = "";
+            Ext.each(data, function (target, index) {
+                target_names += target.title;
+                //console.log(" TARGET NAME SRC " + target['src']);
+                target_names += "<br><br>";
+            });
+            return "<div>" + target_names + "</div>";
+        } else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
+            //console.log('target_organism ' + data.length);
+            var target_organisms = "";
+            Ext.each(data, function (target, index) {
+                target_organisms += target['organism'];
+                target_organisms += "<br><br>";
+            });
+            return "<div>" + target_organisms + "</div>";
+        }
         return data;
     }
     return data;
@@ -6526,7 +6604,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 				name: 'provHelp',
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
-				tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+                tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
 			}]
 		}, {
             xtype: 'container',
@@ -6759,7 +6837,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'Relation',
@@ -6768,7 +6845,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'Value',
@@ -6785,7 +6861,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'PubMed ID',
@@ -6827,7 +6902,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 }
             ],
 
@@ -6859,17 +6933,17 @@ function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, sto
         var iconCls = cls + 'Icon';
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
-        cls += LDAProvenanceMode;
+
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div>' + data + '</div>'
 
             }
 
@@ -7103,8 +7177,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                         var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
                         var targetIconCls = targetcls + 'Icon';
                         targetIconCls = '/assets/' + targetIconCls + '.png';
-                        targetcls += LDAProvenanceMode;
-                        output += '<div class="' + targetcls + '">' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
+                        output += '<div>' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return output;
@@ -7117,19 +7190,18 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                         var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
                         var organismIconCls = organismCls + 'Icon';
                         organismIconCls = '/assets/' + organismIconCls + '.png';
-                        organismCls += LDAProvenanceMode;
-                        organismsOutput += '<div class="' + organismCls + '">' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
+                        organismsOutput += '<div>' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return organismsOutput;
                 }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div">' + data + '</div>'
 
             }
 
@@ -7556,7 +7628,8 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		displayField: 'abbr',
 		valueField: 'name',
 		labelWidth: 100,
-		width: 400,
+        labelAlign: 'right',
+        width: 400,
 		labelPad: 2,
 		padding: '0 2 0 0',
 		emptyText: 'Enter the name of an assay organism...',
@@ -7569,7 +7642,7 @@ Ext.define('LSP.view.filter.OrganismFilterForm', {
 		xtype: 'button',
 		itemId: 'addCompletedOrganismFilter_id',
 		iconCls: 'icon-new',
-		padding: '5 5 5 5',
+		//padding: '5 5 5 5',
 		tooltip: 'Add this organism filter',
 		action: 'add_completed_organism_filter'
 	}]
@@ -8051,8 +8124,6 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
         var cw_controller = this.getController("CW.controller.ConceptWikiLookup"); 
         var cw_dropdown = this.getFormView().down('conceptWikiLookup');
         cw_controller.setConcept(historyTokenObject.u,cw_dropdown, store);
-        console.log('blah ' + cw_controller);
-        console.log('blah 2 ' + cw_dropdown);
         // Setting the uri for the LDA search
 				this.current_uri = historyTokenObject.u;
 				store.proxy.extraParams.uri = historyTokenObject.u;
@@ -8296,7 +8367,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 name: 'provHelp',
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
-                tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+                tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
             }]
         }, {
             xtype: 'container',
@@ -12459,29 +12530,15 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm',
         'LSP.view.api_status.Status',
-        'LSP.view.background_tasks.BackgroundTasksForm'
+        'LSP.view.background_tasks.BackgroundTasksForm',
+        'LSP.view.feedback.HomePanel'
     ],
 
     activeItem:0,
     margins:'0 4 4 4',
     //cls: 'preview',
-    items: [
-        {
-            title: 'Home',
-            bodyPadding: 60,
-            padding: '0 0 0 100',
-            html : '<div class="welcome-text-heading">Welcome to the Open PHACTS Explorer</div>'  +
-                '<br><br><p><div class="welcome-text">We are pleased to present the first public release of the beta Open PHACTS Explorer.</div></p>' +
-                '<br><p><div class="welcome-text">The Open PHACTS Explorer allows multiple sources of publicly-available pharmacological and ' +
-                'physicochemical data to be intuitively queried, and makes data provenance accessible at every step. The ' +
-                'Open PHACTS Explorer was built to answer critical pharmacological questions as defined by academic and ' +
-                'pharmaceutical industry scientists.</div></p>' +
-                '<br><p><div class="welcome-text">For more information visit the Open PHACTS Explorer <a href="http://www.openphacts.org/explorer">homepage</a></div></p>'
-                + '<br><br><iframe  width="640" height="360" src="http://www.youtube.com/embed/BK3fkEFkOy0?feature=player_embedded" frameborder="0" allowfullscreen></iframe>' +
-                '<br><br><p><div class="welcome-text">This is the first public release of the Open PHACTS Explorer, and we look forward to and value your feedback and comments.</div></p>' +
-                '<br><br><p><div class="welcome-text-linkout"><a href="http://www.openphacts.org/the-project">About us & Acknowledgments</a></div></p>'
-
-
+    items: [{
+            xtype: 'homepanel'
         }],
 
     initComponent:function () {
@@ -12701,42 +12758,7 @@ Ext.define('LSP.view.Navigator', {
                     }
                 ]
             },
-            //Removed this because it isn't actually used any more
-//            {
-//                title:'Settings',
-//                border:false,
-//                autoScroll:true,
-//                iconCls:'settings',
-//                items:[
-//                    {
-//                        xtype:'settingsform',
-//                        id:'appSettings'
-//                    }
-//                ]
-//            },
-            {
-                title:'Help and Feedback',
-                border:false,
-                autoScroll:true,
-                iconCls:'fb-accordion',
-                bodyBorder:false,
-                items:[
-                    {
-                        xtype:'FeedbackPanel'
-                    }
-                ]
-            }, {
-                title:'API Status',
-                border:false,
-                autoScroll:true,
-                iconCls:'fb-accordion',
-                bodyBorder:false,
-                items:[
-                    {
-                        xtype:'Status'
-                    }
-                ]
-            }, {
+           {
                 title:'TSV Downloads',
                 border:false,
                 itemId: 'background_tasks_form',
@@ -13098,14 +13120,6 @@ Ext.define('LSP.view.Viewport', {
                         flex:1
                     },
                     {
-                        xtype:'displayfield',
-                        value:'Testing connection to OPS API...',
-                        width:400,
-                        name:'ops_api_staus',
-                        id:'ops_api_staus_id',
-						hidden: true
-                    },
-                    {
                         xtype:'tbspacer',
                         flex:1
                     },
@@ -13123,6 +13137,21 @@ Ext.define('LSP.view.Viewport', {
                         xtype:'logoutbutton',
                         id:'logoutButton',
                         hidden:true
+                    },
+                    {
+                        xtype:'button',
+                        //title:'System Status **************',
+                        //region: 'east',
+                        //text: 'o',
+                        iconCls: 'icon-red-status',
+                        height: 15,
+                        width: 15,
+                        value: 'value',
+                        name:'explorer_api_status',
+                        itemId:'explorer_api_status_id',
+                        tooltip: '<br>Services<br><br>ConceptWiki [ ]<br><br>IMS [ ]<br><br>ChemSpider [ ]<br><br>LD API [ ]',
+                        border: false,
+                        margin: '0 10 0 0'
                     }
                 ]
             },
@@ -13140,6 +13169,5 @@ Ext.define('LSP.view.Viewport', {
         ];
         this.callParent(arguments);
     }
-})
-;
+});
 
