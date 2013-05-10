@@ -147,12 +147,12 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 labelPad: 10,
 
                 items: [{
-                    boxLabel: 'Stereochemistry matching (default)',
+                    boxLabel: 'InChI matching (default)',
                     name: 'lens',
                     inputValue: 'l1',
                     checked: true
                 }, {
-                    boxLabel: 'Inchi key matching',
+                    boxLabel: 'parent/child',
                     name: 'lens',
                     inputValue: 'l2'
                 }]
