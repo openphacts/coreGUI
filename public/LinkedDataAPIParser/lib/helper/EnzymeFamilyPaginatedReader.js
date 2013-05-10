@@ -78,15 +78,35 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 assay_organism_item = chembldAssayLink;
                 assay_description_item = chembldAssayLink;
             	var target = item['target'];
-				if (target != null) {
-            		var chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
-            		var target_pref_label = target['prefLabel'];
-            		var target_title = target['title'];
-                    target_title_item = chembl_target_uri;
-            		var target_organism = target['organism'];
-                    target_organism_item = chembl_target_uri;
-            		var target_concatenated_uris = target['concatenetedURIs'];  // API sp mistake... to change
-				}
+		var targets = new Array();
+                var target_organisms = new Array();
+
+                Ext.each(target, function (target_item, index) {
+
+                    // For Target
+                    var target_inner = {};
+                    target_inner['title'] = target_item['title'] ? target_item['title'] : '';
+                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                        target_inner['item'] = targetLink;
+                    } else {
+                        target_inner['item'] = '';
+                    }
+                    targets.push(target_inner);
+
+                    // For Organism
+                    var organism_inner = {};
+                    organism_inner['organism'] = target_item['organism'] ? target_item['organism'] : '';
+                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                        var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
+                        organism_inner['item'] = organismLink;
+                    } else {
+                        organism_inner['item'] = '';
+                    }
+                    target_organisms.push(organism_inner);
+                });
 			}
 
             var activity_activity_type_item, activity_standard_value_item, activity_standard_units_item,
@@ -116,14 +136,11 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 compound_inchikey:compound_inchikey,
                 compound_drug_type:compound_drug_type,
                 compound_generic_name:compound_generic_name,
-                target_title:target_title,
-                target_concatenated_uris:target_concatenated_uris,
 
                 compound_inchikey_src:cs_src,
                 compound_drug_type_src:drugbank_src,
                 compound_generic_name_src:drugbank_src,
                 target_title_src:chembl_src,
-                target_concatenated_uris_src:chembl_src,
 
 
                 //for target
@@ -137,10 +154,8 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 compound_inchi:compound_inchi,
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,
-                chembl_target_uri:chembl_target_uri,
                 //this is labelled assay_organism
                 target_organism:target_organism,
-                target_pref_label:target_pref_label,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
                 assay_description:assay_description,
@@ -174,7 +189,10 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 activity_relation_item:activity_relation_item,
                 activity_standard_value_item:activity_standard_value_item,
                 activity_standard_units_item:activity_standard_units_item,
-                compound_full_mwt_item:compound_full_mwt_item
+                compound_full_mwt_item:compound_full_mwt_item,
+
+                targets: targets,
+                target_organisms: target_organisms
 
             });
 
