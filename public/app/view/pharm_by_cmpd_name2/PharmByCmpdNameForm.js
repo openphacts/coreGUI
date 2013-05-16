@@ -29,7 +29,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
-    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm', 'LSP.view.filter.TargetOrganismFilterForm'],
+    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm'],
     header: false,
     layout: {
         type: 'vbox',

@@ -7785,7 +7785,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
     closable: true,
-    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm', 'LSP.view.filter.TargetOrganismFilterForm'],
+    requires: ['LSP.view.filter.ActivityFilterForm', 'LSP.view.filter.OrganismFilterForm'],
     header: false,
     layout: {
         type: 'vbox',
@@ -12530,8 +12530,7 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm',
         'LSP.view.api_status.Status',
-        'LSP.view.background_tasks.BackgroundTasksForm',
-        'LSP.view.feedback.HomePanel'
+        'LSP.view.background_tasks.BackgroundTasksForm'
     ],
 
     activeItem:0,
