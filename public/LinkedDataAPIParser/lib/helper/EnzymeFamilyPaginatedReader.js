@@ -118,6 +118,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             var activity_standard_value = item['standardValue'];
             var activity_standard_units = item['standardUnits'];
             var activity_relation = item['relation'];
+            var activity_pubmed_id = item['pmid'];
 
             activity_activity_type_item = chemblActivityLink;
             activity_standard_value_item = chemblActivityLink;
@@ -176,6 +177,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 activity_standard_units_src:chembl_src,
                 activity_standard_value_src:chembl_src,
                 activity_activity_type_src:chembl_src,
+                activity_pubmed_id:activity_pubmed_id,
 
                 compound_pref_label_item:compound_pref_label_item,
                 target_title_item:target_title_item,
