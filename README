@@ -5,6 +5,9 @@ your public RSA key to your GitHub account.
 Then on the command line type
 $ git clone git@github.com:openphacts/coreGUI/whatever_branch_you_are_interested_in
 
+== Licence
+
+GPL http://www.gnu.org/licenses/gpl.html
 
 == Git Flow
 
