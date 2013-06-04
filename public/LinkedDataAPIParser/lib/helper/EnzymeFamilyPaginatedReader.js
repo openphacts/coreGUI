@@ -86,7 +86,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                     // For Target
                     var target_inner = {};
                     target_inner['title'] = target_item['title'] ? target_item['title'] : '';
-                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    target_inner['src'] = item[LDA.helper.LDAConstants.LDA_IN_DATASET] ? item[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
                     if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
                         var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
                         target_inner['item'] = targetLink;
@@ -98,7 +98,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                     // For Organism
                     var organism_inner = {};
                     organism_inner['organism'] = target_item['organism'] ? target_item['organism'] : '';
-                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
+                    organism_inner['src'] = item[LDA.helper.LDAConstants.LDA_IN_DATASET] ? item[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
                     if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
                         var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
                         organism_inner['item'] = organismLink;
