@@ -23,6 +23,7 @@ defaults: &defaults
 
   cs:
     url : "where.the.api.is.located" #without the protocol and no trailing slash
+    widget : "where.the.api.for.the.widget.is.located" #without the protocol and no trailing slash
 
   enzyme:
     root_url : "/target/enzyme/root"
