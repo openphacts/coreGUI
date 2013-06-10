@@ -72,8 +72,15 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            }, 'PharmEnzymeForm #lensComboId': {
+                change: this.lensComboChange
             }
         });
+    },
+
+    lensComboChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal;
+       this.getGridView().store.setLens(this.currentLens);
     },
 
    comboSelect: function(combo, records, eOpts) {

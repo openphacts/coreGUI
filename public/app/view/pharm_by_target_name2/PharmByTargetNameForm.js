@@ -1,3 +1,11 @@
+// The data store containing the list of lenses
+var target_lense_store = Ext.create('Ext.data.Store', {
+    fields: ['url', 'name'],
+    data : [
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+    ]
+});
 var target_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -127,8 +135,20 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
-			}]
-		}, {
+			}, {
+                xtype: 'combobox',
+                store: target_lense_store,
+                itemId: 'lensComboId',
+                displayField: 'name',
+                valueField: 'url',
+                fieldLabel: 'Lenses',
+                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                width: 400,
+                margin: '5 0 0 0',
+                padding: '0 0 0 20',
+                labelAlign: 'right',
+                labelPad: 10
+            }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
             name: 'filter_selector_container',

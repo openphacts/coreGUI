@@ -65,8 +65,16 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             },
 'PharmByTargetNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            },
+            'PharmByTargetNameForm #lensComboId': {
+                change: this.lensComboChange
             }
         });
+    },
+
+    lensComboChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal;
+       this.getGridView().store.setLens(this.currentLens);
     },
 
    comboSelect: function(combo, records, eOpts) {
