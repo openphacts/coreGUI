@@ -142,13 +142,19 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 displayField: 'name',
                 valueField: 'url',
                 fieldLabel: 'Lenses',
-                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                emptyText: 'Click the dropdown and select a lens',
                 width: 400,
                 margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
                 labelPad: 10
-            }]}, {
+            }, {
+                xtype: 'button',
+                name: 'lensHelp',
+                margin: '0 0 0 10',
+                iconCls: 'helpIcon',
+                tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
+              }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
             name: 'filter_selector_container',
