@@ -4327,6 +4327,7 @@ Ext.define('LDA.store.basestores.BaseStore', {
 	app_id: app_id,
 	//gridController: undefined,
         typeName: '',
+        lens: '',
 	stringEncoder: Ext.create('LDA.helper.JamesQueryStringEncoder'),
 	proxy: {
 		type: 'jsonp',
@@ -4422,7 +4423,8 @@ Ext.define('LDA.store.basestores.BaseStore', {
 			_format: this._format,
 			uri: this.uri,
 			app_key: this.app_key,
-			app_id: this.app_id
+			app_id: this.app_id,
+                        lens: "ops:" + this.lens ? this.lens : ""
 		});
 		//        console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},
@@ -4433,6 +4435,14 @@ Ext.define('LDA.store.basestores.BaseStore', {
 
         getTypeName: function() {
             return this.typeName;
+        },
+
+        setLens: function(lens) {
+            this.lens = lens;
+        },
+
+        getLens: function() {
+            return this.lens;
         }
 
 });
@@ -5211,6 +5221,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             this.resetDownload();
             countStore = this.getCountStore();
             countStore.uri = grid_store.proxy.reader.uri;
+            countStore.setLens(this.currentLens);
             // TODO only one filter can be used at the moment, need to change code for multiple
             // at some point
             // Count with filters was slow, easier to grab all the results and count them here
@@ -5227,42 +5238,6 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setTargetOrganism(filter.data.value);
                 }
             });
-            //if (this.getFilters().length > 0) {
-            //	countStore.filters = this.getFilters();
-            //	countStore.setActivityType(this.getFilters()[0].data.activity);
-            //	countStore.setActivityValue(this.getFilters()[0].data.value);
-            //	countStore.setActivityCondition(this.getFilters()[0].data.condition);
-            //}
-            //	allResultsStore = Ext.create('LDA.store.CompoundPharmacologyStore');
-            //	allResultsStore.proxy.extraParams.uri = grid_store.proxy.extraParams.uri;
-            //	allResultsStore.setActivityType(this.filters[0].data.activity);
-            //	allResultsStore.setActivityValue(this.filters[0].data.value);
-            //	allResultsStore.setActivityCondition(this.filters[0].data.condition);	
-            //	allResultsStore.load(function(records, operation, success) {
-            //		total = records.length;
-            //		grid_store.proxy.reader.total_count = total;
-            //	// we have the total number of results now and the proxy reader knows what it is so
-            //	// fetch the first page of results
-            //	if (total == 0) {
-            //		grid_view.setTitle(grid_view.gridBaseTitle + ' - No records found within OPS for this search!');
-            //		grid_view.down('#sdfDownload_id').disable();
-            //		grid_view.down('#sdfDownloadProxy_id').setText('Prepare SD-file download');
-            //		grid_view.down('#sdfDownloadProxy_id').disable();
-            //		button.enable();
-            //		grid_view.setLoading(false);
-            //		Ext.MessageBox.show({
-            //			title: 'Info',
-            //			msg: 'The OPS system does not contain any data that match this search.',
-            //			buttons: Ext.MessageBox.OK,
-            //			icon: Ext.MessageBox.INFO
-            //		});
-            //	} else {
-            //		// for pagianted grid use this
-            //		// grid_store.load();
-            //		grid_store.guaranteeRange(0, 49);
-            //	}
-            //	});	
-            //} else {
             countStore.load(function(records, operation, success) {
                 if (success) {
                     total = operation.response.result.primaryTopic[this.countNode];
@@ -6316,6 +6291,14 @@ if (this.current_mode == 'exact') {
     }
 });
 
+// The data store containing the list of lenses
+var target_lense_store = Ext.create('Ext.data.Store', {
+    fields: ['url', 'name'],
+    data : [
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+    ]
+});
 var target_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -6445,8 +6428,20 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
-			}]
-		}, {
+			}, {
+                xtype: 'combobox',
+                store: target_lense_store,
+                itemId: 'lensComboId',
+                displayField: 'name',
+                valueField: 'url',
+                fieldLabel: 'Lenses',
+                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                width: 400,
+                margin: '5 0 0 0',
+                padding: '0 0 0 20',
+                labelAlign: 'right',
+                labelPad: 10
+            }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
             name: 'filter_selector_container',
@@ -7450,8 +7445,16 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
             },
 'PharmByTargetNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            },
+            'PharmByTargetNameForm #lensComboId': {
+                change: this.lensComboChange
             }
         });
+    },
+
+    lensComboChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal;
+       this.getGridView().store.setLens(this.currentLens);
     },
 
    comboSelect: function(combo, records, eOpts) {
@@ -7850,7 +7853,15 @@ Ext.define('LSP.view.Enzymetree', {
         this.callParent(arguments);
     }
 });
-// The data store containing the list of states
+// The data store containing the list of lenses
+var lense_store = Ext.create('Ext.data.Store', {
+    fields: ['url', 'name'],
+    data : [
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+    ]
+});
+// The data store containing the list of conditions
 //var compound_activity_type = Ext.create('LDA.store.FilterActivityStore', {});
 var compound_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
@@ -7989,6 +8000,18 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
+            }, {
+                xtype: 'combobox',
+                store: lense_store,
+                itemId: 'lensComboId',
+                displayField: 'name',
+                valueField: 'url',
+                fieldLabel: 'Lenses',
+                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                width: 400,
+                padding: '0 0 0 20',
+                labelAlign: 'right',
+                labelPad: 10
             }]
         },  {
             xtype: 'container',
@@ -8137,6 +8160,7 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 	filters: undefined,
 	current_uri: undefined,
 	current_activity_combo_select: undefined,
+        current_lens: 'l1',
 
 	init: function() {
 		console.log('PharmByCmpdNameForm: init()');
@@ -8173,9 +8197,25 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             },
 'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            },
+            'PharmByCmpdNameForm #lensId': {
+                change: this.onLensChange
+            },
+            'PharmByCmpdNameForm #lensComboId': {
+                change: this.lensComboChange
             }
 		});
 	},
+
+    lensComboChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal;
+       this.getGridView().store.setLens(this.currentLens);
+    },
+
+    onLensChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal.lens;
+       this.getGridView().store.setLens(this.currentLens);
+    },
 	
    comboSelect: function(combo, records, eOpts) {
 	var activity = records[0].get('about');
@@ -8350,6 +8390,14 @@ Ext.define('LSP.view.tree_selector_forms.EnzymeTreeForm', {
 })
 ;
 
+// The data store containing the list of lenses
+var enzyme_lense_store = Ext.create('Ext.data.Store', {
+    fields: ['url', 'name'],
+    data : [
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
+        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+    ]
+});
 var enzyme_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -8464,6 +8512,19 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
+            },{
+                xtype: 'combobox',
+                store: enzyme_lense_store,
+                itemId: 'lensComboId',
+                displayField: 'name',
+                valueField: 'url',
+                fieldLabel: 'Lenses',
+                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                width: 400,
+                margin: '5 0 0 0',
+                padding: '0 0 0 20',
+                labelAlign: 'right',
+                labelPad: 10
             }]
         }, {
             xtype: 'container',
@@ -8650,8 +8711,15 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
+            }, 'PharmEnzymeForm #lensComboId': {
+                change: this.lensComboChange
             }
         });
+    },
+
+    lensComboChange: function(field, newVal, oldVal) {
+       this.currentLens = newVal;
+       this.getGridView().store.setLens(this.currentLens);
     },
 
    comboSelect: function(combo, records, eOpts) {
@@ -13266,6 +13334,4 @@ Ext.define('LSP.view.Viewport', {
         this.callParent(arguments);
     }
 });
-
-
 
