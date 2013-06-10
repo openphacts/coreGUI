@@ -284,17 +284,16 @@ function structureProvenanceRenderer(data, cell, record, rowIndex, columnIndex, 
         var iconCls = cls + 'Icon';
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
-        cls += LDAProvenanceMode;
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
                 data == null ? data = '' : ''
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div>' + data + '</div>'
 
             }
 

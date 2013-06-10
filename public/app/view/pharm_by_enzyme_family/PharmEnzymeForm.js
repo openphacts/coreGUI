@@ -111,7 +111,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 name: 'provHelp',
                 margin: '5 0 0 0',
                 iconCls: 'provenanceHelpIcon',
-                tooltip: 'Provenance Datasources <br><br><p class="conceptWikiValueColour"> - ConceptWiki </p> ' + '<br><p class="chemspiderValueColour"> - ChemSpider </p>' + '<br><p class="drugbankValueColour"> - Drugbank </p>' + '<br><p class="chemblValueColour"> - Chembl</p>'
+                tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
             }]
         }, {
             xtype: 'container',
@@ -138,6 +138,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
 		fieldLabel: 'Activity Type',
 		store: Ext.create('LDA.store.FilterActivityStore', {}),
 		queryMode: 'remote',
+		queryParam: false,
 		displayField: 'activity_type',
 		valueField: 'about',
 		labelWidth: 100,

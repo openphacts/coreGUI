@@ -19,8 +19,7 @@ Ext.define('LSP.view.Viewer', {
         'LSP.view.pathways.pathwayByCompoundForm',
         'LSP.view.pathways.pathwayByProteinForm',
         'LSP.view.api_status.Status',
-        'LSP.view.background_tasks.BackgroundTasksForm',
-        'LSP.view.feedback.HomePanel'
+        'LSP.view.background_tasks.BackgroundTasksForm'
     ],
 
     activeItem:0,

@@ -3,7 +3,7 @@ Ext.define('LSP.view.filter.CompletedOrganismFilter', {
 	alias: 'widget.CompletedOrganismFilter',
 	closable: true,
 	headerPosition: 'right',
-	height: 30,
+	height: 28,
 	width: 400,
 	filterModel:null,
 	layout: {

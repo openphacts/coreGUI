@@ -88,7 +88,10 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         uri = gridview.store.proxy.extraParams.uri;
         total_count = gridview.store.getTotalCount();
         request_type = gridview.store.REQUEST_TYPE;
-        
+        if (gridview.store.getTypeName() == undefined) {
+            gridview.store.setTypeName(this.getLookup().rawValue);
+        }
+
        tsv_request_store.load(
            {params: {
                activity_value_type : activity_value_type,

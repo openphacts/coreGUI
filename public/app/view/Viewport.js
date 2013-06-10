@@ -249,7 +249,7 @@ Ext.define('LSP.view.Viewport', {
             {
                 region:'west',
                 id:'westView',
-                width:225,
+                width:230,
                 xtype:'navigator'
             }
         ];
