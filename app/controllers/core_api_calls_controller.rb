@@ -6,6 +6,23 @@ class CoreApiCallsController < ApplicationController
    #this has been changed to 9183 from 9188 on the recommendation of Antonis
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
+  # Get the list of organisms for use in the filter
+  # autocompleter
+  def lenses
+    uri = URI.parse('http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens')
+    request = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
+    http =  Net::HTTP.new(uri.host, uri.port)
+    response = http.start{|http| http.request(request)}
+    json = JSON.parse(response.body)
+    lenses = []
+    json["Lens"].each {|lens|  lenses.push({ :name => lens["name"], :uri => lens["uri"]})}
+    respond_to do |format|
+      format.json {
+        render :json => lenses
+      }
+    end
+  end
+
   def ims_status
     uri = URI.parse("http://openphacts.cs.man.ac.uk:9090/QueryExpander/SqlCompatVersion")
     http = Net::HTTP.new(uri.host, uri.port)

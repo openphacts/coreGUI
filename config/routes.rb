@@ -61,6 +61,7 @@ LSP4All::Application.routes.draw do
       get :ims_status
       get :tsv_download
       get :tsv_status
+      get :lenses
     end
   end
 

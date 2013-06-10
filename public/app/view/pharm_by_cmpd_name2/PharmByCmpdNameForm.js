@@ -1,3 +1,21 @@
+Ext.define('LSP.model.Lense', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'uri',      type: 'string'}
+    ]
+});
+var compound_lense_store = Ext.create('Ext.data.Store', {
+     model: 'LSP.model.Lense',
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/lenses.json',
+         model: 'LSP.model.Lense',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
 // The data store containing the list of lenses
 var lense_store = Ext.create('Ext.data.Store', {
     fields: ['url', 'name'],
