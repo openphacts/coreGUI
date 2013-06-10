@@ -1,11 +1,22 @@
-// The data store containing the list of lenses
-var enzyme_lense_store = Ext.create('Ext.data.Store', {
-    fields: ['url', 'name'],
-    data : [
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+Ext.define('LSP.model.Lense', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'uri',      type: 'string'}
     ]
 });
+var enzyme_lense_store = Ext.create('Ext.data.Store', {
+     requires: 'LSP.model.Lense',
+     model: 'LSP.model.Lense',
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/lenses.json',
+         model: 'LSP.model.Lense',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
 var enzyme_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -125,18 +136,21 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 store: enzyme_lense_store,
                 itemId: 'lensComboId',
                 displayField: 'name',
-                valueField: 'url',
+                valueField: 'uri',
                 fieldLabel: 'Lenses',
                 emptyText: 'Click the dropdown and select a lens',
                 width: 400,
                 margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
-                labelPad: 10
+                labelPad: 10,
+		queryMode: 'remote',
+		queryParam: false,
+                editable: false
             }, {
                 xtype: 'button',
                 name: 'lensHelp',
-                margin: '0 0 0 10',
+                margin: '5 0 0 10',
                 iconCls: 'helpIcon',
                 tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
               }]

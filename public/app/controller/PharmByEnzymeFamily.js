@@ -78,8 +78,8 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         });
     },
 
-    lensComboChange: function(field, newVal, oldVal) {
-       this.currentLens = newVal;
+    lensComboChange: function(combo, records, eOpts) {
+       this.currentLens = records[0].get('uri');
        this.getGridView().store.setLens(this.currentLens);
     },
 
