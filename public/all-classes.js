@@ -6291,14 +6291,26 @@ if (this.current_mode == 'exact') {
     }
 });
 
-// The data store containing the list of lenses
-var target_lense_store = Ext.create('Ext.data.Store', {
-    fields: ['url', 'name'],
-    data : [
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+Ext.define('LSP.model.Lense', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'uri',      type: 'string'}
     ]
 });
+var target_lense_store = Ext.create('Ext.data.Store', {
+     requires: 'LSP.model.Lense',
+     model: 'LSP.model.Lense',
+//     fields: ['uri', 'name'],
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/lenses.json',
+         model: 'LSP.model.Lense',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
 var target_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -6433,15 +6445,24 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 store: target_lense_store,
                 itemId: 'lensComboId',
                 displayField: 'name',
-                valueField: 'url',
+                valueField: 'uri',
                 fieldLabel: 'Lenses',
-                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                emptyText: 'Click the dropdown and select a lens',
                 width: 400,
                 margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
-                labelPad: 10
-            }]}, {
+                labelPad: 10,
+		queryMode: 'remote',
+		queryParam: false,
+                editable: false
+            }, {
+                xtype: 'button',
+                name: 'lensHelp',
+                margin: '5 0 0 10',
+                iconCls: 'helpIcon',
+                tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
+              }]}, {
             xtype: 'container',
             margin: '0 5 5 5',
             name: 'filter_selector_container',
@@ -7452,8 +7473,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         });
     },
 
-    lensComboChange: function(field, newVal, oldVal) {
-       this.currentLens = newVal;
+    lensComboChange: function(combo, value) {
+       this.currentLens = value;
        this.getGridView().store.setLens(this.currentLens);
     },
 
@@ -7853,14 +7874,26 @@ Ext.define('LSP.view.Enzymetree', {
         this.callParent(arguments);
     }
 });
-// The data store containing the list of lenses
-var lense_store = Ext.create('Ext.data.Store', {
-    fields: ['url', 'name'],
-    data : [
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+Ext.define('LSP.model.Lense', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'uri',      type: 'string'}
     ]
 });
+var compound_lense_store = Ext.create('Ext.data.Store', {
+     requires: 'LSP.model.Lense',
+     model: 'LSP.model.Lense',
+//     fields: ['uri', 'name'],
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/lenses.json',
+         model: 'LSP.model.Lense',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
 // The data store containing the list of conditions
 //var compound_activity_type = Ext.create('LDA.store.FilterActivityStore', {});
 var compound_condition = Ext.create('Ext.data.Store', {
@@ -8002,17 +8035,27 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
             }, {
                 xtype: 'combobox',
-                store: lense_store,
+                store: compound_lense_store,
                 itemId: 'lensComboId',
                 displayField: 'name',
-                valueField: 'url',
+                valueField: 'uri',
                 fieldLabel: 'Lenses',
-                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                emptyText: 'Click the dropdown and select a lens',
                 width: 400,
+                margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
-                labelPad: 10
-            }]
+                labelPad: 10,
+		queryMode: 'remote',
+		queryParam: false,
+                editable: false
+            }, {
+                xtype: 'button',
+                name: 'lensHelp',
+                margin: '0 0 0 10',
+                iconCls: 'helpIcon',
+                tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
+              }]
         },  {
             xtype: 'container',
             margin: '0 5 5 5',
@@ -8198,22 +8241,14 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
 'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
             },
-            'PharmByCmpdNameForm #lensId': {
-                change: this.onLensChange
-            },
             'PharmByCmpdNameForm #lensComboId': {
                 change: this.lensComboChange
             }
 		});
 	},
 
-    lensComboChange: function(field, newVal, oldVal) {
-       this.currentLens = newVal;
-       this.getGridView().store.setLens(this.currentLens);
-    },
-
-    onLensChange: function(field, newVal, oldVal) {
-       this.currentLens = newVal.lens;
+    lensComboChange: function(combo, value) {
+       this.currentLens = value;
        this.getGridView().store.setLens(this.currentLens);
     },
 	
@@ -8390,14 +8425,25 @@ Ext.define('LSP.view.tree_selector_forms.EnzymeTreeForm', {
 })
 ;
 
-// The data store containing the list of lenses
-var enzyme_lense_store = Ext.create('Ext.data.Store', {
-    fields: ['url', 'name'],
-    data : [
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1", "name":"Stereochemistry matching (default)"},
-        {"url":"http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l2", "name":"Inchi key matching"}
+Ext.define('LSP.model.Lense', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'name',     type: 'string'},
+        {name: 'uri',      type: 'string'}
     ]
 });
+var enzyme_lense_store = Ext.create('Ext.data.Store', {
+     requires: 'LSP.model.Lense',
+     model: 'LSP.model.Lense',
+     proxy: {
+         type: 'ajax',
+         url: '/core_api_calls/lenses.json',
+         model: 'LSP.model.Lense',
+         reader: {
+             type: 'json'
+         }
+     }
+ });
 var enzyme_condition = Ext.create('Ext.data.Store', {
 	fields: ['symbol', 'name'],
 	data: [{
@@ -8517,15 +8563,24 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 store: enzyme_lense_store,
                 itemId: 'lensComboId',
                 displayField: 'name',
-                valueField: 'url',
+                valueField: 'uri',
                 fieldLabel: 'Lenses',
-                value: 'http://openphacts.cs.man.ac.uk:9090/OPS-IMS-TEST/lens/l1',
+                emptyText: 'Click the dropdown and select a lens',
                 width: 400,
                 margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
-                labelPad: 10
-            }]
+                labelPad: 10,
+		queryMode: 'remote',
+		queryParam: false,
+                editable: false
+            }, {
+                xtype: 'button',
+                name: 'lensHelp',
+                margin: '5 0 0 10',
+                iconCls: 'helpIcon',
+                tooltip: 'Lenses allow you to change the strictness of a search and narrow or widen what you are looking for'
+              }]
         }, {
             xtype: 'container',
             margin: '0 5 5 5',
@@ -8717,8 +8772,8 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
         });
     },
 
-    lensComboChange: function(field, newVal, oldVal) {
-       this.currentLens = newVal;
+    lensComboChange: function(combo, value) {
+       this.currentLens = value;
        this.getGridView().store.setLens(this.currentLens);
     },
 
