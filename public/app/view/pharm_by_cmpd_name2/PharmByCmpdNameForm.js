@@ -5,9 +5,10 @@ Ext.define('LSP.model.Lense', {
         {name: 'uri',      type: 'string'}
     ]
 });
-var lense_store = Ext.create('Ext.data.Store', {
+var compound_lense_store = Ext.create('Ext.data.Store', {
      requires: 'LSP.model.Lense',
      model: 'LSP.model.Lense',
+//     fields: ['uri', 'name'],
      proxy: {
          type: 'ajax',
          url: '/core_api_calls/lenses.json',
@@ -158,13 +159,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
                 tooltip: 'Provenance Datasources <br><br><p style="text-align:right;">ConceptWiki <img src="/assets/conceptWikiValueIcon.png" height="15" width="15"/></p> ' + '<br><p style="text-align:right;">ChemSpider <img src="/assets/chemspiderValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Drugbank <img src="/assets/drugbankValueIcon.png" height="15" width="15"/></p>' + '<br><p style="text-align:right;">Chembl <img src="/assets/chemblValueIcon.png" height="15" width="15"/></p>'
             }, {
                 xtype: 'combobox',
-                store: lense_store,
+                store: compound_lense_store,
                 itemId: 'lensComboId',
                 displayField: 'name',
                 valueField: 'uri',
                 fieldLabel: 'Lenses',
                 emptyText: 'Click the dropdown and select a lens',
                 width: 400,
+                margin: '5 0 0 0',
                 padding: '0 0 0 20',
                 labelAlign: 'right',
                 labelPad: 10,

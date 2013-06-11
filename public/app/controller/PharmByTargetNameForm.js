@@ -72,8 +72,8 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
         });
     },
 
-    lensComboChange: function(combo, records, eOpts) {
-       this.currentLens = records[0].get('uri');
+    lensComboChange: function(combo, value) {
+       this.currentLens = value;
        this.getGridView().store.setLens(this.currentLens);
     },
 

@@ -8,6 +8,7 @@ Ext.define('LSP.model.Lense', {
 var target_lense_store = Ext.create('Ext.data.Store', {
      requires: 'LSP.model.Lense',
      model: 'LSP.model.Lense',
+//     fields: ['uri', 'name'],
      proxy: {
          type: 'ajax',
          url: '/core_api_calls/lenses.json',
