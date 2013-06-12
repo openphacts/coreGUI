@@ -11348,7 +11348,8 @@ Ext.define('CS.view.CompoundWindow', {
 Ext.define('CS.config.Settings', {
     singleton: true,
 //    baseUrl: 'http://cs.beta.rsc-us.org'
-    baseUrl: chemspiderWidgetURL
+    baseUrl: chemspiderURL,
+    widgetUrl: chemspiderWidgetURL
 });
 
 Ext.define('CS.view.BaseProperties', {
@@ -11426,7 +11427,7 @@ Ext.define('CS.view.Molecule2D', {
         return this.el.dom.src || this.src;
     },
     load: function (csid) {
-        this.setSrc(CS.config.Settings.baseUrl + '/ImagesHandler.ashx?id=' + csid + '&w=' + this.width + '&h=' + this.height);
+        this.setSrc(CS.config.Settings.widgetUrl + '/ImagesHandler.ashx?id=' + csid + '&w=' + this.width + '&h=' + this.height);
     }
 });
 
@@ -11856,7 +11857,7 @@ Ext.define('CS.store.Compound', {
         this.setProxy({
             type: 'jsonp',
             timeout: 60000,
-            url: CS.config.Settings.baseUrl + '/JSON.ashx?op=GetRecordsAsCompounds'
+            url: CS.config.Settings.widgetUrl + '/JSON.ashx?op=GetRecordsAsCompounds'
         });
     }
 });
@@ -13266,6 +13267,4 @@ Ext.define('LSP.view.Viewport', {
         this.callParent(arguments);
     }
 });
-
-
 
