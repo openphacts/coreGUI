@@ -8,7 +8,7 @@ Ext.define('CS.store.Compound', {
         this.setProxy({
             type: 'jsonp',
             timeout: 60000,
-            url: CS.config.Settings.baseUrl + '/JSON.ashx?op=GetRecordsAsCompounds'
+            url: CS.config.Settings.widgetUrl + '/JSON.ashx?op=GetRecordsAsCompounds'
         });
     }
 });

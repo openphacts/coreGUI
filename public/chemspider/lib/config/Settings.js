@@ -1,5 +1,6 @@
 Ext.define('CS.config.Settings', {
     singleton: true,
 //    baseUrl: 'http://cs.beta.rsc-us.org'
-    baseUrl: chemspiderWidgetURL
+    baseUrl: chemspiderURL,
+    widgetUrl: chemspiderWidgetURL
 });
