@@ -19,10 +19,7 @@ defaults: &defaults
     url : "where.the.concept.wiki.api.is.located" #no protocol and no trailing slash
 
   cs:
-    url : "where.the.chemspider.api.is.located" #no protocol and no trailing slash
-
-  cs:
-    url : "where.the.api.is.located" #without the protocol and no trailing slash
+    url : "where.the.chemspider.api.is.located" #without the protocol and no trailing slash
     widget : "where.the.api.for.the.widget.is.located" #without the protocol and no trailing slash
 
   enzyme:
