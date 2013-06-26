@@ -15,11 +15,6 @@
                     "path": "app/view/filter/"
                 },
                 {
-                    "clsName": "CW.config.Settings",
-                    "name": "Settings.js",
-                    "path": "conceptwiki/lib/config/"
-                },
-                {
                     "clsName": "LDA.helper.LDAConstants",
                     "name": "LDAConstants.js",
                     "path": "LinkedDataAPIParser/lib/helper/"
@@ -28,6 +23,11 @@
                     "clsName": "LSP.view.feedback.HomePanel",
                     "name": "HomePanel.js",
                     "path": "app/view/feedback/"
+                },
+                {
+                    "clsName": "CW.config.Settings",
+                    "name": "Settings.js",
+                    "path": "conceptwiki/lib/config/"
                 },
                 {
                     "clsName": "LSP.view.Appmoduletree",
@@ -50,14 +50,14 @@
                     "path": "app/model/"
                 },
                 {
-                    "clsName": "LSP.view.mol_editor_forms.KetcherForm",
-                    "name": "KetcherForm.js",
-                    "path": "app/view/mol_editor_forms/"
-                },
-                {
                     "clsName": "LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm",
                     "name": "CmpdByNameSingleDisplayForm.js",
                     "path": "app/view/cmpd_by_name/"
+                },
+                {
+                    "clsName": "LSP.view.mol_editor_forms.KetcherForm",
+                    "name": "KetcherForm.js",
+                    "path": "app/view/mol_editor_forms/"
                 },
                 {
                     "clsName": "LSP.view.Settings",
@@ -120,11 +120,6 @@
                     "path": "app/view/dynamicgrid/feature/"
                 },
                 {
-                    "clsName": "Ext.ux.grid.FiltersFeature",
-                    "name": "FiltersFeature.js",
-                    "path": "ext/examples/ux/grid/"
-                },
-                {
                     "clsName": "LSP.view.ux.download.FileDownload",
                     "name": "FileDownload.js",
                     "path": "app/view/ux/download/"
@@ -133,6 +128,11 @@
                     "clsName": "LSP.view.dropdowns.conceptWikiProteinLookup",
                     "name": "conceptWikiProteinLookup.js",
                     "path": "app/view/dropdowns/"
+                },
+                {
+                    "clsName": "Ext.ux.grid.FiltersFeature",
+                    "name": "FiltersFeature.js",
+                    "path": "ext/examples/ux/grid/"
                 },
                 {
                     "clsName": "LSP.view.target_by_name.TargetPanel",
@@ -350,6 +350,11 @@
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
+                    "clsName": "Ext.ux.exporter.csvFormatter.CsvFormatter",
+                    "name": "CsvFormatter.js",
+                    "path": "/app/view/ux/exporter/csvFormatter/"
+                },
+                {
                     "clsName": "Ext.ux.exporter.sdfFormatter.SdfFormatter",
                     "name": "SdfFormatter.js",
                     "path": "/app/view/ux/exporter/sdfFormatter/"
@@ -360,23 +365,13 @@
                     "path": "/app/view/ux/exporter/excelFormatter/"
                 },
                 {
-                    "clsName": "Ext.ux.exporter.csvFormatter.CsvFormatter",
-                    "name": "CsvFormatter.js",
-                    "path": "/app/view/ux/exporter/csvFormatter/"
+                    "clsName": "Ext.ux.grid.filter.BooleanFilter",
+                    "name": "BooleanFilter.js",
+                    "path": "ext/examples/ux/grid/filter/"
                 },
                 {
                     "clsName": "Ext.ux.grid.filter.NumericFilter",
                     "name": "NumericFilter.js",
-                    "path": "ext/examples/ux/grid/filter/"
-                },
-                {
-                    "clsName": "Ext.ux.grid.filter.DateFilter",
-                    "name": "DateFilter.js",
-                    "path": "ext/examples/ux/grid/filter/"
-                },
-                {
-                    "clsName": "Ext.ux.grid.filter.StringFilter",
-                    "name": "StringFilter.js",
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
@@ -385,8 +380,13 @@
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
-                    "clsName": "Ext.ux.grid.filter.BooleanFilter",
-                    "name": "BooleanFilter.js",
+                    "clsName": "Ext.ux.grid.filter.StringFilter",
+                    "name": "StringFilter.js",
+                    "path": "ext/examples/ux/grid/filter/"
+                },
+                {
+                    "clsName": "Ext.ux.grid.filter.DateFilter",
+                    "name": "DateFilter.js",
                     "path": "ext/examples/ux/grid/filter/"
                 },
                 {
