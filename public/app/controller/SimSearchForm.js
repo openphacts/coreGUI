@@ -275,7 +275,7 @@ if (this.current_mode == 'exact') {
             search_type = 'similarity';
 	    var threshold = this.getTanimotoThresholdSpinner().value;
 	    //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
-            params['resultOptions.Threshold'] = threshold/100;
+            params['searchOptions.Threshold'] = threshold/100;
 	    //params['searchOptions.Threshold'] = threshold/100;
             var search_type_value = this.getSimSearchType().value;
             search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
@@ -401,7 +401,7 @@ if (this.current_mode == 'exact') {
 	            //  But right now in order to make Similarity search more realistic they are entered manually.
 		    var threshold = this.getTanimotoThresholdSpinner().value;
 	            //TODO this has been coded as resultOptions.Threshold in the ops dev api for the moment
-                    params['resultOptions.Threshold'] = threshold/100;
+                    params['searchOptions.Threshold'] = threshold/100;
 	            //params['searchOptions.Threshold'] = threshold/100;
                     var search_type_value = this.getSimSearchType().value;
                     search_type_value == "Tanimoto" ?  params['searchOptions.SimilarityType'] = 0 : ''
