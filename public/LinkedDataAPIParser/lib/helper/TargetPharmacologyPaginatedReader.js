@@ -22,11 +22,11 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
         var start_index = result[LDA.helper.LDAConstants.LDA_PAGINATED_START_INDEX];
 
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
-	if (items == null) {
-		Ext.Error.raise({
-                	msg: 'There are no items in the response'
-            	});
-	}
+	//if (items == null) {
+	//	Ext.Error.raise({
+        //        	msg: 'There are no items in the response'
+        //    	});
+	//}
         Ext.each(items, function (item, index, items) {
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];

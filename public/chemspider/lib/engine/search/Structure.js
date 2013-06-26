@@ -7,13 +7,13 @@
     },
     doSearch: function (type, params) {
         if (type.toLowerCase() == 'exact') {
-            this.store.setOperation('ExactStructureSearch');
+            this.store.setOperation('/structure/exact');
         }
         else if (type.toLowerCase() == 'substructure') {
-            this.store.setOperation('SubstructureSearch');
+            this.store.setOperation('/structure/substructure');
         }
         else if (type.toLowerCase() == 'similarity') {
-            this.store.setOperation('SimilaritySearch');
+            this.store.setOperation('/structure/similarity');
         }
 
         this.runSearch(params);

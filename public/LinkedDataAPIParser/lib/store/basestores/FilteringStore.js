@@ -1,6 +1,7 @@
 Ext.define('LDA.store.basestores.FilteringStore', {
     extend:'LDA.store.basestores.BaseStore',
     assay_organism:'',
+    target_organism: '',
     activity_type:'',
     activity_value:'',
     activity_condition:'',
@@ -27,6 +28,10 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     setAssayOrganism:function (assayOrganism) {
         this.assay_organism = assayOrganism;
     },
+
+   setTargetOrganism: function(targetOrganism) {
+       this.target_organism = targetOrganism;
+   },
 
     setActivityType:function (activityType) {
 	//TODO fix LDA_PERMITTED_ACTIVITY_TYPES
@@ -58,10 +63,13 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                 {
                     assay_organism:this.assay_organism,
                     activity_type:this.activity_type,
+                    target_organism: this.target_organism,
                     //activity_value:this.activity_value,
                     //activity_condition:this.activity_condition,
                     _format:this._format,
-                    uri:this.uri
+                    uri:this.uri,
+                    app_key: this.app_key,
+                    app_id: this.app_id
                 });
 
         this.setAllConditions();

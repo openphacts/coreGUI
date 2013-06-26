@@ -22,6 +22,6 @@
         return this.el.dom.src || this.src;
     },
     load: function (csid) {
-        this.setSrc(CS.config.Settings.baseUrl + '/ImagesHandler.ashx?id=' + csid + '&w=' + this.width + '&h=' + this.height);
+        this.setSrc(CS.config.Settings.widgetUrl + '/ImagesHandler.ashx?id=' + csid + '&w=' + this.width + '&h=' + this.height);
     }
 });

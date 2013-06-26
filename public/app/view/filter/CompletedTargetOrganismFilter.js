@@ -1,6 +1,6 @@
-Ext.define('LSP.view.filter.CompletedOrganismFilter', {
+Ext.define('LSP.view.filter.CompletedTargetOrganismFilter', {
 	extend: 'Ext.panel.Panel',
-	alias: 'widget.CompletedOrganismFilter',
+	alias: 'widget.CompletedTargetOrganismFilter',
 	closable: true,
 	headerPosition: 'right',
 	height: 28,

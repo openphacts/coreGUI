@@ -16,7 +16,8 @@ Ext.define('CW.controller.ConceptWikiLookup', {
      prepProxy:function (cw_dropdown_view) {
         // cw_dropdown_view.store.proxy.extraParams = cw_dropdown_view.store.proxy.extraParams + {uuid: cw_dropdown_view.cwTagUuid, limit: 10};
 		cw_dropdown_view.store.proxy.setExtraParam('uuid', cw_dropdown_view.cwTagUuid);
-		cw_dropdown_view.store.proxy.setExtraParam('limit', 10);
+                //TODO add this back in when it is in the lda api for concept wiki
+		//cw_dropdown_view.store.proxy.setExtraParam('limit', 10);
     },
     
    
@@ -28,7 +29,17 @@ Ext.define('CW.controller.ConceptWikiLookup', {
         proxy: {
           type: 'jsonp',
           url: CW.config.Settings.getConceptUrl,
-          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader')
+          reader: Ext.create('CW.helper.ConceptWikiJSONGetReader'),
+          noCache: false,
+          limitParam: undefined,
+          startParam: undefined,
+          pageParam: undefined,
+          callbackKey: '_callback',
+          extraParams: {
+              '_format': 'json', 
+              'app_id': app_id,
+              'app_key': app_key
+          }
       }
       });
       store.load({

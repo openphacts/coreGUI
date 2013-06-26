@@ -120,7 +120,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'Relation',
@@ -129,7 +128,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'Value',
@@ -146,7 +144,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 },
                 {
                     header:'PubMed ID',
@@ -188,7 +185,6 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-
                 }
             ],
 
@@ -220,17 +216,17 @@ function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, sto
         var iconCls = cls + 'Icon';
         iconCls = '/assets/' + iconCls + '.png';
         //console.log(iconCls);
-        cls += LDAProvenanceMode;
+
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
             if (record.data[recdata] && data) {
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div>' + data + '</div>'
 
             }
 

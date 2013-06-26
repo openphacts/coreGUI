@@ -206,8 +206,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                         var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
                         var targetIconCls = targetcls + 'Icon';
                         targetIconCls = '/assets/' + targetIconCls + '.png';
-                        targetcls += LDAProvenanceMode;
-                        output += '<div class="' + targetcls + '">' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
+                        output += '<div>' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return output;
@@ -220,19 +219,18 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                         var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
                         var organismIconCls = organismCls + 'Icon';
                         organismIconCls = '/assets/' + organismIconCls + '.png';
-                        organismCls += LDAProvenanceMode;
-                        organismsOutput += '<div class="' + organismCls + '">' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
+                        organismsOutput += '<div>' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
 
                     });
                     return organismsOutput;
                 }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
-                return '<div class="' + cls + '">' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
+                return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
 
             } else {
 
-                return '<div class="' + cls + '">' + data + '</div>'
+                return '<div">' + data + '</div>'
 
             }
 
