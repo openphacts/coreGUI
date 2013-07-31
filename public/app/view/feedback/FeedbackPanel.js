@@ -66,7 +66,7 @@ Ext.define('LSP.view.feedback.FeedbackPanel', {
         {
             xtype:'displayfield',
             fieldCls:'fb-message',
-            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer-" target="_blank">known issues</a>',
+            value:'See <a href="http://www.openphacts.org/known-issues-with-beta-open-phacts-explorer" target="_blank">known issues</a>',
             itemId:'issues'
         },
         {
