@@ -292,7 +292,12 @@ if (this.current_mode == 'exact') {
 	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        if (search_type == 'exact') {
+            // do not send limit param for exact search since api rejects the request
+            searchEngine.setLimit(1);
+        } else {
+	        searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        }
         searchEngine.doSearch(search_type, params);
     },
 

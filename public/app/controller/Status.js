@@ -132,6 +132,9 @@ Ext.define('LSP.controller.Status', {
                 }
             }
         });
+        // tell the search not to set the limit since the api does not like it
+        // set for exact searches
+        searchEngine.setLimit(1);
         var params = {};
         params['searchOptions.Molecule'] = 'CC(=O)Oc1ccccc1C(=O)O';
 	// there can also be 'ChEBI' and 'MeSH'
