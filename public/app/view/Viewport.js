@@ -102,7 +102,7 @@ Ext.define('LSP.view.Viewport', {
 //            console.log('Viewport History change: ' + token);
                 //cut off shebang
 //                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
-                var historyTokenObject = this.parseHistoryToken(token.substring(1));
+                var historyTokenObject = this.parseHistoryToken(unescape(token.substring(1)));
 //                console.dir(historyTokenObject);
                 if (historyTokenObject.p) {
                     var form = this.getFormByXtype(historyTokenObject.p);
