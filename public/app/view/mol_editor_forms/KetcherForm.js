@@ -61,7 +61,8 @@ Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
                         id:'ketcher_box_id',
                         autoEl:{
                             tag:'iframe',
-                            src:'ketcher/ketcher.html'
+                            // pass the url encoded molfile in to the iframe
+                            src:'ketcher/ketcher.html?molfile=' + ketcher_molfile_initializer
                         }}
                 ]
             }

@@ -17,7 +17,11 @@ ketcher = function () {
 ketcher.init = function ()
 {
     ui.init();
-    this.setMolecule(ketcher_molfile_initializer);
+    encoded_molfile = window.location.search.substring(window.location.search.indexOf('molfile') + 8);
+    if (encoded_molfile != '') {
+        unencoded_molfile = unescape(encoded_molfile);
+        this.setMolecule(unencoded_molfile);
+    }
 };
 
 ketcher.getSmiles = function ()
