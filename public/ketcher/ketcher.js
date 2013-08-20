@@ -17,6 +17,7 @@ ketcher = function () {
 ketcher.init = function ()
 {
     ui.init();
+    this.setMolecule(ketcher_molfile_initializer);
 };
 
 ketcher.getSmiles = function ()
