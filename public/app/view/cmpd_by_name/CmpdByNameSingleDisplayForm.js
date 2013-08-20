@@ -269,8 +269,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'molform',
-                                        itemId:'molform',
+                                        name:'molformula',
+                                        itemId:'molformula',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
                                         padding:'10px 0 0 0',
@@ -534,7 +534,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             }
                             break;
 
-                        case 'molform':
+                        case 'molformula':
 
                             if (td[prop]){
                                 // correctly format molecular formula
@@ -577,23 +577,24 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 }
             }
 }
-	if (compound.data.cs_uri) {
-            var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-            var csLink = this.query('#chemspider_id')[0];
-            csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
-            csLink.show();
-	}
-        var ip = this.query('#compound_form_imagepanel')[0];
-		var csid;
-		if (compound.data.cs_uri) {
-			csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-	        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-		}
-        ip.show();
+    // WAITING TO RESOLVE CS ID FIRST
+	//if (compound.data.cs_uri) {
+    //        var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+    //        var csLink = this.query('#chemspider_id')[0];
+    //        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
+    //        csLink.show();
+	//}
+    //    var ip = this.query('#compound_form_imagepanel')[0];
+	//	var csid;
+	//	if (compound.data.cs_uri) {
+	//		csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+	//        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
+	//	}
+    //    ip.show();
         // Preparing for Chemspider window open
-        var csButton = this.query('#csWindowLaunchButton')[0];
-        csButton.show();
-        csButton.chemspiderId = csid;
+    //    var csButton = this.query('#csWindowLaunchButton')[0];
+    //    csButton.show();
+    //    csButton.chemspiderId = csid;
         // End of Chemspider window open prep.
         this.doLayout();
     },
