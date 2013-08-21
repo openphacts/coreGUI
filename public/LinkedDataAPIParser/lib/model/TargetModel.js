@@ -8,6 +8,11 @@
 Ext.define('LDA.model.TargetModel', {
     extend:'Ext.data.Model',
     fields:[
+        'sequence',
+        'classifiedWith',
+        'seeAlso',
+        // multiple proteins can be associated with a single target
+        'chemblItems',
         //this msay need to change (target information endpiint is down)
 
         'cw_target_uri',

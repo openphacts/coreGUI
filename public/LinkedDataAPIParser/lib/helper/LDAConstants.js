@@ -27,6 +27,7 @@ Ext.define('LDA.helper.LDAConstants', {
         'http://www.conceptwiki.org/': 'conceptWikiValue',
         'http://data.kasabi.com/dataset/chembl-rdf': 'chemblValue',
         'http://rdf.ebi.ac.uk/resource/chembl/molecule' : 'chemblValue',
+        'http://www.ebi.ac.uk/chembl' : 'chemblValue',
         'http://www4.wiwiss.fu-berlin.de/drugbank': 'drugbankValue',
         'http://linkedlifedata.com/resource/drugbank': 'drugbankValue',
         'http://www.chemspider.com': 'chemspiderValue',
@@ -35,6 +36,7 @@ Ext.define('LDA.helper.LDAConstants', {
         'http://ops.rsc.org': 'chemspiderValue',
         'http://rdf.chemspider.com': 'chemspiderValue',
         'http://rdf.chemspider.com/': 'chemspiderValue',
+        'http://ops.rsc-us.org' : 'chemspiderValue',
         'http://purl.uniprot.org' : 'uniprotValue',
         'http://purl.uniprot.org/' : 'uniprotValue'
     },
