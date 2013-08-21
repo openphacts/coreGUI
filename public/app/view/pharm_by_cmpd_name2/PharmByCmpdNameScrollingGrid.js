@@ -49,7 +49,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'cs_compound_uri',
                 xtype:'templatecolumn',
                 width:135,
-                tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                tpl:'<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
                 sortable:false
             },
             {
@@ -63,7 +63,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             {
                 header:'Target Names',
                 width: 180,
-                dataIndex:'targets',
+                dataIndex:'target_pref_label',
                 renderer:compoundProvenanceRenderer,
                 tdCls: 'wrap gridDescriptiveRowPadding'
                 //align:'center'
@@ -134,7 +134,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 header:'PubMed ID',
                 dataIndex:'activity_pubmed_id',
                 xtype:'templatecolumn',
-                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                tpl: '<a href="{activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                 //renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -242,6 +242,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
+        /*
         if (this.columns[columnIndex].dataIndex == 'targets') {
             //console.log('target_title ' + data.length);
             var target_names = "";
@@ -259,7 +260,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                 target_organisms += "<br><br>";
             });
             return "<div>" + target_organisms + "</div>";
-        }
+        }            */
         return data;
     }
     return data;
