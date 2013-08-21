@@ -584,12 +584,14 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
     //        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
     //        csLink.show();
 	//}
-    //    var ip = this.query('#compound_form_imagepanel')[0];
-	//	var csid;
-	//	if (compound.data.cs_uri) {
-	//		csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-	//        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-	//	}
+        var ip = this.query('#compound_form_imagepanel')[0];
+		var csid;
+
+		if (compound.data.cs_uri) {
+            cs_uri = compound.data.cs_uri;
+            csid = cs_uri.split('/').pop();
+	        ip.setSrc('http://ops.rsc.org/' + csid + '/image');
+	    }
     //    ip.show();
         // Preparing for Chemspider window open
     //    var csButton = this.query('#csWindowLaunchButton')[0];
