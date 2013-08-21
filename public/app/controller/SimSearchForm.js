@@ -299,31 +299,35 @@ if (this.current_mode == 'exact') {
     // Launch ketcher window
     launchKetcher: function(button) {
         // Launch the window
-        var view = Ext.widget('KetcherForm');
+        var fields;
         // Check to see if we already have a structure to modify and load it if we do
         fields = this.getSsform().form.getFields().items;
         var molfile = '';
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'molfile') {
                 molfile = item.getValue();
-                var temp = 12;
+                //var temp = 12;
             }
         });
         if (molfile != '') {
-            document.getElementById('ketcher_box_id').contentWindow.ketcher.setMolecule(molfile);
+            // encode and save the molfile in js var so that it can be passed to the iframe
+            // from the ketcher frame
+            ketcher_molfile_initializer = encodeURIComponent(molfile);
         }
+        var view = Ext.widget('KetcherForm');
     },
 
     // Grep smiles from ketcher window and store in smiles field in form
     getSmiles: function(button) {
         var ketcher_window = document.getElementById('ketcher_box_id');
         // smiles is used for query
+        var smiles, molfile;
         smiles = ketcher_window.contentWindow.ketcher.getSmiles();
         // molfile is stored in hidden field for use when updating existing structure
         molfile = ketcher_window.contentWindow.ketcher.getMolfile();
         // We get all fields in form so that we can update the right one
         fields = this.getSsform().form.getFields().items;
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'smiles') {
                 item.setValue(smiles)
             } else if (item.name == 'molfile') {
