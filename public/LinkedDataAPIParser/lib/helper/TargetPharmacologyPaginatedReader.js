@@ -22,31 +22,31 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
         var start_index = result[LDA.helper.LDAConstants.LDA_PAGINATED_START_INDEX];
 
         var items = result[LDA.helper.LDAConstants.LDA_ITEMS];
-	//if (items == null) {
-	//	Ext.Error.raise({
+        //if (items == null) {
+        //	Ext.Error.raise({
         //        	msg: 'There are no items in the response'
         //    	});
-	//}
+        //}
         Ext.each(items, function (item, index, items) {
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
             //big bits
             var forMolecule = item[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
-	    var chembl_compound_uri;
-	    var compound_full_mwt;
-        var compound_full_mwt_item;
+            var chembl_compound_uri;
+            var compound_full_mwt;
+            var compound_full_mwt_item;
 
-        var em;
-        var chembleMolecultLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
+            var em;
+            var chembleMolecultLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
 
-        if (forMolecule != null) {
-		chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
-		compound_full_mwt = forMolecule['full_mwt'];
-        chembleMolecultLink += chembl_compound_uri.split('/').pop();
-        compound_full_mwt_item = chembleMolecultLink;
-		em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
-	    }
+            if (forMolecule != null) {
+                chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
+                compound_full_mwt = forMolecule['full_mwt'];
+                chembleMolecultLink += chembl_compound_uri.split('/').pop();
+                compound_full_mwt_item = chembleMolecultLink;
+                em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
+            }
 
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
@@ -63,7 +63,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                         compound_pref_label_item = cw_compound_uri;
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
                         cs_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
-			            csid = cs_compound_uri.split('/').pop();
+                        csid = cs_compound_uri.split('/').pop();
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
@@ -81,56 +81,64 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 }
             );
 
-        var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
-	    var chembl_assay_uri;
-	    var assay_organism;
-        var assay_organism_item;
-	    var target;
-        var chembldAssayLink = 'https://www.ebi.ac.uk/chembldb/assay/inspect/';
+            var onAssay = item[LDA.helper.LDAConstants.LDA_ON_ASSAY];
+            var chembl_assay_uri;
+            var assay_organism;
+            var assay_organism_item;
+            var target;
+            var chembldAssayLink = 'https://www.ebi.ac.uk/chembldb/assay/inspect/';
 
-        if (onAssay != null) {
-		chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
-		assay_organism = onAssay['assay_organism'];
-        assay_organism_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
-        assay_description = onAssay['description'];
-        assay_description_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
-		target = onAssay['target'];
-	    }
-	   var chembl_target_uri; 
-	   var target_pref_label;
-       var target_pref_label_item;
-       var targetMatch;
-	   var target_title;
-	   var target_organism;
-       var target_organism_item;
-	   var target_concatenated_uris;
-       var chemblTargetLink = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
-       var target_organisms = new Array();
-       var targets = new Array();
-	    if (target != null) {
-		chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
-		//target_pref_label = target['prefLabel'];
+            if (onAssay != null) {
+                chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
+                assay_organism = onAssay['assayOrganismName'];
+                assay_organism_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
+                assay_description = onAssay['description'];
+                assay_description_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
+                target = onAssay['target'];
+            }
+            var chembl_target_uri;
+            var target_pref_label;
+            var target_pref_label_item;
+            var targetMatch;
+            var target_title;
+            var target_organism;
+            var target_organism_item;
+            var target_concatenated_uris;
+            var chemblTargetLink = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
 
-        targetMatch = target['exactMatch'];
-        if (targetMatch != null) {
-            var targetMatchURI = targetMatch[LDA.helper.LDAConstants.LDA_ABOUT];
-            target_pref_label = targetMatch['prefLabel'];
-            target_pref_label_item = targetMatchURI;
-            target_title = target_pref_label;
-        }
+            target = onAssay[LDA.helper.LDAConstants.LDA_ON_TARGET];
 
-		target_organism = target['target_organism'];
-        target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
-		target_concatenated_uris = target['concatenatedURIs'];
-            var target_organisms_inner = {};
-            target_organisms_inner['organism'] = target_organism;
-            target_organisms_inner['src'] = target_organism_item;
-            target_organisms.push(target_organisms_inner);
-            var targets_inner = {};
-            targets_inner['title'] = target_pref_label;
-            targets_inner['cw_uri'] = target_pref_label_item;
-            targets.push(targets_inner);
-	    }
+            target_pref_label = target['title'];
+            target_organism = target['targetOrganismName'];
+
+            /*
+            var target_organisms = new Array();
+            var targets = new Array();
+            if (target != null) {                                                                                                                                     w
+                chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
+                //target_pref_label = target['prefLabel'];
+
+                targetMatch = target['exactMatch'];
+                if (targetMatch != null) {
+                    var targetMatchURI = targetMatch[LDA.helper.LDAConstants.LDA_ABOUT];
+                    target_pref_label = targetMatch['prefLabel'];
+                    target_pref_label_item = targetMatchURI;
+                    target_title = target_pref_label;
+                }
+
+                target_organism = target['target_organism'];
+                target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
+                target_concatenated_uris = target['concatenatedURIs'];
+                var target_organisms_inner = {};
+                target_organisms_inner['organism'] = target_organism;
+                target_organisms_inner['src'] = target_organism_item;
+                target_organisms.push(target_organisms_inner);
+                var targets_inner = {};
+                targets_inner['title'] = target_pref_label;
+                targets_inner['cw_uri'] = target_pref_label_item;
+                targets.push(targets_inner);
+            }
+            */
 
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
 
@@ -139,11 +147,11 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 
             var activity_activity_type = item['activity_type'];
             activity_activity_type_item =  chemblActivityLink;
-            var activity_standard_value = item['standardValue'];
+            var activity_standard_value = item['activity_value'];
             activity_standard_value_item = chemblActivityLink;
             var activity_standard_units = item['standardUnits'];
             activity_standard_units_item = chemblActivityLink;
-            var activity_relation = item['relation'];
+            var activity_relation = item['activity_relation'];
             activity_relation_item = chemblActivityLink;
             var activity_pubmed_id = item['pmid'];
 
@@ -176,14 +184,14 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 cw_compound_uri:cw_compound_uri,
                 compound_pref_label:compound_pref_label,
                 cs_compound_uri:cs_compound_uri,
-				csid:csid,
+                csid:csid,
                 compound_inchi:compound_inchi,
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,
                 chembl_target_uri:chembl_target_uri,
 
                 target_organism :target_organism,
-                target_organisms: target_organisms,
+                //target_organisms: target_organisms,
                 target_pref_label:target_pref_label,
 
                 assay_organism:assay_organism,
@@ -219,15 +227,15 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 target_pref_label_item: target_pref_label_item,
                 assay_organism_item: assay_organism_item,
                 assay_description_item: assay_description_item,
-                target_organism_item:target_organism_item,
-                targets: targets
+                target_organism_item:target_organism_item
+                //targets: targets
             });
 
 
             records.push(record);
 
         });
-		var total_count = this.total_count;
+        var total_count = this.total_count;
         return new Ext.data.ResultSet(
             {
                 total:total_count,
