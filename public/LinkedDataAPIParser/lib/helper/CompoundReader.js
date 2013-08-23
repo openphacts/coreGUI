@@ -38,7 +38,7 @@ Ext.define('LDA.helper.CompoundReader', {
         chemblValue != null ? chemblUri = chemblValue[LDA.helper.LDAConstants.LDA_ABOUT] : chemblUri = null;
         drugBankData != null ? drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : drugbankUrl = null;
 
-        chemspiderValue != null ? chemspiderLinkOut = 'http://www.chemspider.com/' + chemSpiderUri.split('/').pop() : chemspiderLinkOut = null ;
+        chemspiderValue != null ? chemspiderLinkOut = 'http://ops.rsc.org/' + chemSpiderUri.split('/').pop() : chemspiderLinkOut = null ;
         chemblValue != null ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = null;
         drugBankData != null ? drugbankLinkOut = 'http://www.drugbank.ca/drugs/' + drugbankUrl.split('/').pop()  : drugbankLinkOut = null;
 
