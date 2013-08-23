@@ -638,8 +638,8 @@ function provenanceSummaryRenderer(value, field) {
 	//console.log("Compound by name provenance renderer");
 
     var sources = new Array();
-    sources['http://www.chemspider.com'] = "ChemSpider";
-    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://ops.rsc-us.org'] = "ChemSpider";
+    sources['http://www.ebi.ac.uk/chembl'] = "Chembl";
     sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
     sources['http://www.conceptwiki.org'] = "ConceptWiki";
 
