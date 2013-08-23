@@ -73,15 +73,23 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             	var chembl_assay_uri = onAssay[LDA.helper.LDAConstants.LDA_ABOUT];
                 var chembldAssayLink = 'https://www.ebi.ac.uk/chembldb/assay/inspect/';
                 chembldAssayLink += chembl_assay_uri.split('/').pop();
-                var assay_organism = onAssay['assay_organism'];
+                var assay_organism = onAssay['assayOrganismName'];
                 var assay_description = onAssay['description'];
                 assay_organism_item = chembldAssayLink;
                 assay_description_item = chembldAssayLink;
-            	var target = item['target'];
-		var targets = new Array();
+
+                var target_pref_label, target_organism;
+                var target = onAssay[LDA.helper.LDAConstants.LDA_ON_TARGET];
+                target_pref_label = target['title'];
+                target_organism = target['targetOrganismName'];
+
+                /*
+                var target = item['target'];
+                var targets = new Array();
                 var target_organisms = new Array();
 
                 Ext.each(target, function (target_item, index) {
+
 
                     // For Target
                     var target_inner = {};
@@ -107,6 +115,8 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                     }
                     target_organisms.push(organism_inner);
                 });
+                */
+
 			}
 
             var activity_activity_type_item, activity_standard_value_item, activity_standard_units_item,
@@ -115,9 +125,9 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' + chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
 
             var activity_activity_type = item['activity_type'];
-            var activity_standard_value = item['standardValue'];
+            var activity_standard_value = item['activity_value'];
             var activity_standard_units = item['standardUnits'];
-            var activity_relation = item['relation'];
+            var activity_relation = item['activity_relation'];
             var activity_pubmed_id = item['pmid'];
 
             activity_activity_type_item = chemblActivityLink;
@@ -156,6 +166,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 compound_smiles:compound_smiles,
                 chembl_assay_uri:chembl_assay_uri,
                 //this is labelled assay_organism
+                target_pref_label:target_pref_label,
                 target_organism:target_organism,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
@@ -191,10 +202,10 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 activity_relation_item:activity_relation_item,
                 activity_standard_value_item:activity_standard_value_item,
                 activity_standard_units_item:activity_standard_units_item,
-                compound_full_mwt_item:compound_full_mwt_item,
+                compound_full_mwt_item:compound_full_mwt_item
 
-                targets: targets,
-                target_organisms: target_organisms
+                //targets: targets,
+                //target_organisms: target_organisms
 
             });
 
