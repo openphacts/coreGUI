@@ -29,7 +29,7 @@ Ext.define('LDA.model.CompoundModel', {
          'compound_pref_label_item',
          'description_item',
          'biotransformation_item',
-         'molform_item',
+         'molformula_item',
          'compound_smiles_item',
          'inchi_item',
          'inchi_key_item',
