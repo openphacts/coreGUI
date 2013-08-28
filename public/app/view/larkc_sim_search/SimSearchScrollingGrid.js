@@ -44,7 +44,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         header: 'Structure',
         dataIndex: 'cs_uri',
         xtype: 'templatecolumn',
-        tpl: '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+        tpl: '<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
         width: 135,
         sortable: false
     }, {
@@ -55,7 +55,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
         header: 'Molecular Formula',
-        dataIndex: 'molform',
+        dataIndex: 'molformula',
         renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
