@@ -162,7 +162,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = csid_list[i];
+            csid_store.proxy.extraParams.uri = csid_list[i][LDA.helper.LDAConstants.LDA_ABOUT];
+            //TODO also get a relevance for each compound
             csid_store.load(function(records, operation, success) {
                 if (success) {
 		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
