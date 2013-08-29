@@ -6,7 +6,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDA_LABEL: 'label',
     LDA_COMPOUND_PHARMACOLOGY_COUNT: 'compoundPharmacologyTotalResults',
     LDA_TARGET_PHARMACOLOGY_COUNT: 'targetPharmacologyTotalResults',
-    LDA_ENZYME_FAMILY_COUNT: 'enzymePharmacologyTotalResults',
+    LDA_ENZYME_FAMILY_COUNT: 'targetPharmacologyTotalResults',
     LDA_PERMITTED_ACTIVITY_TYPES: ['IC50', 'Activity'],
     LDA_ON_ASSAY: 'hasAssay',
     LDA_ON_TARGET: 'hasTarget',

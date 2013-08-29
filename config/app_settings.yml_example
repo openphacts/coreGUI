@@ -12,7 +12,7 @@ defaults: &defaults
     tsv_url : "where.the.api.is.located" #without the protocol bit and no trailing slash
     target_path : "/target/pharmacology/pages"
     compound_path: "/compound/pharmacology/pages"
-    enzyme_path: "/target/enzyme/pharmacology/pages"
+    enzyme_path: "/target/tree/pharmacology/pages"
     protocol: "http" #or https
 
   ims:
@@ -26,8 +26,8 @@ defaults: &defaults
     widget : "where.the.api.for.the.widget.is.located" #without the protocol and no trailing slash
 
   enzyme:
-    root_url : "/target/enzyme/root"
-    class_url : "/target/enzyme/members"
+    root_url : "/tree"
+    class_url : "/tree/children"
 
   keys:
     app_id: "blahblahblah" #app id from https://dev.openphacts.org

@@ -50,17 +50,18 @@ class EnzymesController < ApplicationController
 
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["root_url"]
-          url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key
+          url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key + "&root=enzyme"
           url_path = "#{path}?".concat(url_params)
           begin
+            puts "root: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
             console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
           end
           unless response.nil?
             json = JSON.parse(response)
-            json["result"]["primaryTopic"]["rootNode"].each { |d|
-              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+            json["result"]["primaryTopic"]["hasPart"]["rootNode"].each { |d|
+              nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
           end
         else
@@ -69,6 +70,7 @@ class EnzymesController < ApplicationController
           url_params = "uri=" + CGI::escape("http://purl.uniprot.org/enzyme/" + params["node"]) + "&_format=json&app_id=" + app_id + "&app_key=" + app_key
           url_path = "#{path}?".concat(url_params)
           begin
+            puts "child: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
             console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
@@ -77,13 +79,13 @@ class EnzymesController < ApplicationController
             json = JSON.parse(response)
             #check whether there is one or multiple sub enzymes, the response format changes
             #depending on this ie is it 'has_member' => [{....}] or just 'has_member' => {....}
-            if json["result"]["primaryTopic"]["has_member"].class.eql?(Hash)             
-              about = json["result"]["primaryTopic"]["has_member"]["_about"]
-              name = json["result"]["primaryTopic"]["has_member"]["name"]
+            if json["result"]["primaryTopic"]["childNode"].class.eql?(Hash)             
+              about = json["result"]["primaryTopic"]["childNode"]["_about"]
+              name = json["result"]["primaryTopic"]["childNode"]["prefLabel"]
               nodes.push( { :name => name, :ec_number => about.split("/").last, :id => about.split("/").last, :leaf => about[-1,1].eql?("-") ? false : true, :cls => about[-1,1].eql?("-") ? 'folder' : 'file' } )
             else
-            json["result"]["primaryTopic"]["has_member"].each { |d|
-              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+            json["result"]["primaryTopic"]["childNode"].each { |d|
+              nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
           end
           end
