@@ -15,6 +15,9 @@ defaults: &defaults
     enzyme_path: "/target/enzyme/pharmacology/pages"
     protocol: "http" #or https
 
+  ims:
+    url: "full url for the ims status check including protocol"
+
   cw:
     url : "where.the.concept.wiki.api.is.located" #no protocol and no trailing slash
 
