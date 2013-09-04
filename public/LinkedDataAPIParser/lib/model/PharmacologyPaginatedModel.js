@@ -43,7 +43,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'chembl_assay_uri',
         'chembl_target_uri',
         //this is labelled assay_organism
-        'target_organisms',
+        //'target_organisms',
         'target_organism',
         'target_pref_label',
         'targets',
@@ -71,6 +71,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
 
         // provenance items
         'target_title_item',
+        'target_pref_label_item',
         'target_organism_item',
         'activity_activity_type_item',
         'activity_relation_item',
