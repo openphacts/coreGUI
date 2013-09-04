@@ -60,7 +60,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                         compound_inchi = match['inchi'];
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
-                        var chemSpiderLink = 'http://www.chemspider.com/' + csid;
+                        var chemSpiderLink = 'http://ops.rsc.org/' + csid;
                         compound_smiles_item = chemSpiderLink;
                         compound_inchi_item = chemSpiderLink;
                         compound_inchikey_item = chemSpiderLink;
@@ -92,39 +92,17 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
                 var target = onAssay[LDA.helper.LDAConstants.LDA_ON_TARGET];
                 var target_pref_label = target['title'];
-                var target_organisms = target['targetOrganismName'];
-                /*
-                var target = onAssay['target'];
-                var targets = new Array();
-                var target_organisms = new Array();
+                var target_organism = target['targetOrganismName'];
+                var target_pref_label_item;
 
-                Ext.each(target, function (target_item, index) {
+                if (target[LDA.helper.LDAConstants.LDA_ABOUT]) {
+                    var targetLink = target[LDA.helper.LDAConstants.LDA_ABOUT];
+                    targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + targetLink.split('/').pop();
+                    target_pref_label_item = targetLink;
 
-                    // For Target
-                    var target_inner = {};
-                    target_inner['title'] = target_item['title'] ? target_item['title'] : '';
-                    target_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
-                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
-                        var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
-                        target_inner['item'] = targetLink;
-                    } else {
-                        target_inner['item'] = '';
-                    }
-                    targets.push(target_inner);
+                    target_organism_item = targetLink;
+                }
 
-                    // For Organism
-                    var organism_inner = {};
-                    organism_inner['organism'] = target_item['organism'] ? target_item['organism'] : '';
-                    organism_inner['src'] = onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] ? onAssay[LDA.helper.LDAConstants.LDA_IN_DATASET] : '';
-                    if (target_item[LDA.helper.LDAConstants.LDA_ABOUT]) {
-                        var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item[LDA.helper.LDAConstants.LDA_ABOUT].split('/').pop();
-                        organism_inner['item'] = organismLink;
-                    } else {
-                        organism_inner['item'] = '';
-                    }
-                    target_organisms.push(organism_inner);
-                });
-                */
             }
 
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
@@ -152,15 +130,11 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_inchikey:compound_inchikey,
                 compound_drug_type:compound_drug_type,
                 compound_generic_name:compound_generic_name,
-                //targets:targets,
-                //target_concatenated_uris:target_concatenated_uris,
 
                 compound_inchikey_src:cs_src,
                 compound_drug_type_src:drugbank_src,
                 compound_generic_name_src:drugbank_src,
                 target_title_src:chembl_src,
-                //target_concatenated_uris_src:chembl_src,
-
 
                 //for target
                 chembl_activity_uri:chembl_activity_uri,
@@ -175,7 +149,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 chembl_assay_uri:chembl_assay_uri,
                 chembl_target_uri:undefined,
                 //this is labelled assay_organism - actually now seems to be target_organisms
-                target_organisms:target_organisms,
+                target_organism:target_organism,
                 target_pref_label:target_pref_label,
                 //this value is missing totally from compound pharmacology paginated
                 assay_organism:assay_organism,
@@ -190,7 +164,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_inchi_src:cs_src,
                 compound_smiles_src:cs_src,
                 target_organism_src:chembl_src,
-                target_pref_label_src:undefined,
+                target_pref_label_src:chembl_src,
                 assay_organism_src:chembl_src,
                 assay_description_src:chembl_src,
                 activity_relation_src:chembl_src,
@@ -200,7 +174,8 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 				activity_pubmed_id:activity_pubmed_id,
 
                 //target_title_item:target_title_item,
-                //target_organism_item:target_organism_item,
+                target_organism_item:target_organism_item,
+                target_pref_label_item:target_pref_label_item,
                 assay_description_item:assay_description_item,
                 assay_organism_item:assay_organism_item,
                 activity_activity_type_item:activity_activity_type_item,
@@ -215,11 +190,10 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 				
             });
 
-
             records.push(record);
 
-//            console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
-//            console.log(JSON.stringify(record));
+            //console.log('LDA.model.PharmacologyPaginatedModel: CompoundPharmacologyPaginated');
+            //console.log(JSON.stringify(record));
         });
         var total_count = this.total_count;
         return new Ext.data.ResultSet(
