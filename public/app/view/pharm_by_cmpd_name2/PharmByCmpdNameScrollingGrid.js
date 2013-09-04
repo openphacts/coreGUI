@@ -70,7 +70,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             },
             {
                 header:'Target Organisms',
-                dataIndex:'target_organisms',
+                dataIndex:'target_organism',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -197,33 +197,6 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
 
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
-            if (record.data[recdata] && data || this.columns[columnIndex].dataIndex == 'targets' || this.columns[columnIndex].dataIndex == 'target_organisms' ) {
-                if (this.columns[columnIndex].dataIndex == 'targets') {
-
-                    //loops through arrays
-                    var output = new String();
-                    Ext.each(data, function (target, index) {
-                        var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
-                        var targetIconCls = targetcls + 'Icon';
-                        targetIconCls = '/assets/' + targetIconCls + '.png';
-                        output += '<div>' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
-
-                    });
-                    return output;
-                }
-
-                if (this.columns[columnIndex].dataIndex == 'target_organisms') {
-                    //loops through arrays
-                    var organismsOutput = new String();
-                    Ext.each(data, function (organism, index) {
-                        var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
-                        var organismIconCls = organismCls + 'Icon';
-                        organismIconCls = '/assets/' + organismIconCls + '.png';
-                        organismsOutput += '<div>' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
-
-                    });
-                    return organismsOutput;
-                }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
                 return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
@@ -231,8 +204,6 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
             } else {
 
                 return '<div">' + data + '</div>'
-
-            }
 
         }
         //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
