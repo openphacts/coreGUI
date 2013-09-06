@@ -111,36 +111,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             target_pref_label = target['title'];
             target_organism = target['targetOrganismName'];
 
-            /*
-            var target_organisms = new Array();
-            var targets = new Array();
-            if (target != null) {                                                                                                                                     w
-                chembl_target_uri = target[LDA.helper.LDAConstants.LDA_ABOUT];
-                //target_pref_label = target['prefLabel'];
-
-                targetMatch = target['exactMatch'];
-                if (targetMatch != null) {
-                    var targetMatchURI = targetMatch[LDA.helper.LDAConstants.LDA_ABOUT];
-                    target_pref_label = targetMatch['prefLabel'];
-                    target_pref_label_item = targetMatchURI;
-                    target_title = target_pref_label;
-                }
-
-                target_organism = target['target_organism'];
-                target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
-                target_concatenated_uris = target['concatenatedURIs'];
-                var target_organisms_inner = {};
-                target_organisms_inner['organism'] = target_organism;
-                target_organisms_inner['src'] = target_organism_item;
-                target_organisms.push(target_organisms_inner);
-                var targets_inner = {};
-                targets_inner['title'] = target_pref_label;
-                targets_inner['cw_uri'] = target_pref_label_item;
-                targets.push(targets_inner);
-            }
-            */
-
-            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
+            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/search.ebi?db=chembl-activity&t=' +chembl_activity_uri.split('ACT_').pop();
 
             var activity_activity_type_item, activity_standard_value_item, activity_standard_units_item,
                 activity_relation_item;
