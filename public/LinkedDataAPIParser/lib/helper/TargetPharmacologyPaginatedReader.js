@@ -68,7 +68,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                         compound_inchikey = match['inchikey'];
                         compound_smiles = match['smiles'];
                         cs_src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
-                        var chemSpiderLink = 'http://www.chemspider.com/' + csid;
+                        var chemSpiderLink = 'http://ops.rsc.org/' + csid;
                         compound_inchi_item = chemSpiderLink;
                         compound_inchikey_item = chemSpiderLink;
                         compound_smiles_item = chemSpiderLink;
@@ -109,7 +109,12 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             target = onAssay[LDA.helper.LDAConstants.LDA_ON_TARGET];
 
             target_pref_label = target['title'];
+            var targetLink = target[LDA.helper.LDAConstants.LDA_ABOUT];
+            targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + targetLink.split('/').pop();
+            target_pref_label_item = targetLink;
+
             target_organism = target['targetOrganismName'];
+            target_organism_item = targetLink;
 
             var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/search.ebi?db=chembl-activity&t=' +chembl_activity_uri.split('ACT_').pop();
 
@@ -178,7 +183,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 compound_inchi_src:cs_src,
                 compound_smiles_src:cs_src,
                 target_organism_src:chembl_src,
-                target_pref_label_src:cw_src,
+                target_pref_label_src:chembl_src,
                 assay_organism_src:chembl_src,
                 assay_description_src:chembl_src,
                 activity_relation_src:chembl_src,
