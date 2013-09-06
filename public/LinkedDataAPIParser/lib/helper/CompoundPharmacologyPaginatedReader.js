@@ -105,7 +105,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
             }
 
-            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' +chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
+            var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/search.ebi?db=chembl-activity&t=' +chembl_activity_uri.split('ACT_').pop();
 
             var activity_activity_type = item['activity_type'];
             //console.log(" chembl value " + chembl_activity_uri.split('/a').pop());
