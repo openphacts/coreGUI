@@ -73,14 +73,15 @@ Ext.define('LDA.helper.LDAConstants', {
     LDA_LABEL: 'label',
     LDA_COMPOUND_PHARMACOLOGY_COUNT: 'compoundPharmacologyTotalResults',
     LDA_TARGET_PHARMACOLOGY_COUNT: 'targetPharmacologyTotalResults',
-    LDA_ENZYME_FAMILY_COUNT: 'enzymePharmacologyTotalResults',
+    LDA_ENZYME_FAMILY_COUNT: 'targetPharmacologyTotalResults',
     LDA_PERMITTED_ACTIVITY_TYPES: ['IC50', 'Activity'],
-    LDA_ON_ASSAY: 'onAssay',
+    LDA_ON_ASSAY: 'hasAssay',
+    LDA_ON_TARGET: 'hasTarget',
     LDA_EXACT_MATCH: 'exactMatch',
     LDA_PRIMARY_TOPIC: 'primaryTopic',
     LDA_RESULT: 'result',
     LDA_ACTIVITY: 'activity',
-    LDA_FOR_MOLECULE: 'forMolecule',
+    LDA_FOR_MOLECULE: 'hasMolecule',
     LDA_ASSAY_TARGET: 'target',
     LDA_ITEMS: 'items',
     LDA_PAGINATED_NEXT: 'next',
@@ -93,12 +94,17 @@ Ext.define('LDA.helper.LDAConstants', {
         'http://www.conceptwiki.org': 'conceptWikiValue',
         'http://www.conceptwiki.org/': 'conceptWikiValue',
         'http://data.kasabi.com/dataset/chembl-rdf': 'chemblValue',
+        'http://rdf.ebi.ac.uk/resource/chembl/molecule' : 'chemblValue',
+        'http://www.ebi.ac.uk/chembl' : 'chemblValue',
         'http://www4.wiwiss.fu-berlin.de/drugbank': 'drugbankValue',
         'http://linkedlifedata.com/resource/drugbank': 'drugbankValue',
         'http://www.chemspider.com': 'chemspiderValue',
         'http://www.chemspider.com/': 'chemspiderValue',
+        'http://ops.rsc-us.org': 'chemspiderValue',
+        'http://ops.rsc.org': 'chemspiderValue',
         'http://rdf.chemspider.com': 'chemspiderValue',
         'http://rdf.chemspider.com/': 'chemspiderValue',
+        'http://ops.rsc-us.org' : 'chemspiderValue',
         'http://purl.uniprot.org' : 'uniprotValue',
         'http://purl.uniprot.org/' : 'uniprotValue'
     },
@@ -711,8 +717,8 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                     },
                                     {
                                         xtype:'displayfield',
-                                        name:'molform',
-                                        itemId:'molform',
+                                        name:'molformula',
+                                        itemId:'molformula',
                                         cls:'x-cmpfield',
                                         labelWidth:120,
                                         padding:'10px 0 0 0',
@@ -976,7 +982,7 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             }
                             break;
 
-                        case 'molform':
+                        case 'molformula':
 
                             if (td[prop]){
                                 // correctly format molecular formula
@@ -1019,23 +1025,26 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                 }
             }
 }
-	if (compound.data.cs_uri) {
-            var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-            var csLink = this.query('#chemspider_id')[0];
-            csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
-            csLink.show();
-	}
+    // WAITING TO RESOLVE CS ID FIRST
+	//if (compound.data.cs_uri) {
+    //        var csLinkFrag = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
+    //        var csLink = this.query('#chemspider_id')[0];
+    //        csLink.setValue('<a href="http://www.chemspider.com/' + csLinkFrag +'"  target="_blank">' + csLinkFrag + '</a>');
+    //        csLink.show();
+	//}
         var ip = this.query('#compound_form_imagepanel')[0];
 		var csid;
+
 		if (compound.data.cs_uri) {
-			csid = compound.data.cs_uri.match(/http:\/\/rdf.chemspider.com\/(\d+)/)[1];
-	        ip.setSrc('http://www.chemspider.com/ImagesHandler.ashx?id=' + csid);
-		}
-        ip.show();
+            cs_uri = compound.data.cs_uri;
+            csid = cs_uri.split('/').pop();
+	        ip.setSrc('http://ops.rsc.org/' + csid + '/image');
+	    }
+    //    ip.show();
         // Preparing for Chemspider window open
-        var csButton = this.query('#csWindowLaunchButton')[0];
-        csButton.show();
-        csButton.chemspiderId = csid;
+    //    var csButton = this.query('#csWindowLaunchButton')[0];
+    //    csButton.show();
+    //    csButton.chemspiderId = csid;
         // End of Chemspider window open prep.
         this.doLayout();
     },
@@ -1077,8 +1086,8 @@ function provenanceSummaryRenderer(value, field) {
 	//console.log("Compound by name provenance renderer");
 
     var sources = new Array();
-    sources['http://www.chemspider.com'] = "ChemSpider";
-    sources['http://data.kasabi.com/dataset/chembl-rdf'] = "Chembl";
+    sources['http://ops.rsc-us.org'] = "ChemSpider";
+    sources['http://www.ebi.ac.uk/chembl'] = "Chembl";
     sources['http://linkedlifedata.com/resource/drugbank'] = "DrugBank";
     sources['http://www.conceptwiki.org'] = "ConceptWiki";
 
@@ -1179,7 +1188,8 @@ Ext.define('LSP.view.mol_editor_forms.KetcherForm', {
                         id:'ketcher_box_id',
                         autoEl:{
                             tag:'iframe',
-                            src:'ketcher/ketcher.html'
+                            // pass the url encoded molfile in to the iframe
+                            src:'ketcher/ketcher.html?molfile=' + ketcher_molfile_initializer
                         }}
                 ]
             }
@@ -3326,6 +3336,9 @@ Ext.define('LSP.controller.Status', {
                 }
             }
         });
+        // tell the search not to set the limit since the api does not like it
+        // set for exact searches
+        searchEngine.setLimit(1);
         var params = {};
         params['searchOptions.Molecule'] = 'CC(=O)Oc1ccccc1C(=O)O';
 	// there can also be 'ChEBI' and 'MeSH'
@@ -5401,7 +5414,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         header: 'Structure',
         dataIndex: 'cs_uri',
         xtype: 'templatecolumn',
-        tpl: '<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+        tpl: '<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
         width: 135,
         sortable: false
     }, {
@@ -5412,7 +5425,7 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         tdCls: 'wrap gridDescriptiveRowPadding'
     }, {
         header: 'Molecular Formula',
-        dataIndex: 'molform',
+        dataIndex: 'molformula',
         renderer:structureProvenanceRenderer,
         align: 'center',
         tdCls: 'gridRowPadding'
@@ -6048,7 +6061,8 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = csid_list[i];
+            csid_store.proxy.extraParams.uri = csid_list[i][LDA.helper.LDAConstants.LDA_ABOUT];
+            //TODO also get a relevance for each compound
             csid_store.load(function(records, operation, success) {
                 if (success) {
 		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
@@ -6178,38 +6192,47 @@ if (this.current_mode == 'exact') {
 	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        if (search_type == 'exact') {
+            // do not send limit param for exact search since api rejects the request
+            searchEngine.setLimit(1);
+        } else {
+	        searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        }
         searchEngine.doSearch(search_type, params);
     },
 
     // Launch ketcher window
     launchKetcher: function(button) {
         // Launch the window
-        var view = Ext.widget('KetcherForm');
+        var fields;
         // Check to see if we already have a structure to modify and load it if we do
         fields = this.getSsform().form.getFields().items;
         var molfile = '';
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'molfile') {
                 molfile = item.getValue();
-                var temp = 12;
+                //var temp = 12;
             }
         });
         if (molfile != '') {
-            document.getElementById('ketcher_box_id').contentWindow.ketcher.setMolecule(molfile);
+            // encode and save the molfile in js var so that it can be passed to the iframe
+            // from the ketcher frame
+            ketcher_molfile_initializer = encodeURIComponent(molfile);
         }
+        var view = Ext.widget('KetcherForm');
     },
 
     // Grep smiles from ketcher window and store in smiles field in form
     getSmiles: function(button) {
         var ketcher_window = document.getElementById('ketcher_box_id');
         // smiles is used for query
+        var smiles, molfile;
         smiles = ketcher_window.contentWindow.ketcher.getSmiles();
         // molfile is stored in hidden field for use when updating existing structure
         molfile = ketcher_window.contentWindow.ketcher.getMolfile();
         // We get all fields in form so that we can update the right one
         fields = this.getSsform().form.getFields().items;
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'smiles') {
                 item.setValue(smiles)
             } else if (item.name == 'molfile') {
@@ -6623,7 +6646,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     dataIndex:'cs_compound_uri',
                     xtype:'templatecolumn',
                     width:135,
-                    tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                    tpl:'<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
                     sortable:false
                 },
                 {
@@ -6706,7 +6729,7 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     header:'PubMed ID',
                     dataIndex:'activity_pubmed_id',
                     xtype:'templatecolumn',
-                    tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                    tpl: '<a href="{activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                     //renderer:compoundProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -6810,43 +6833,43 @@ function targetProvenanceRenderer(data, cell, record, rowIndex, columnIndex, sto
 //},
 
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
-    extend:'LSP.view.dynamicgrid.DynamicGrid',
+        extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByEnzymeFamilyScrollingGrid',
         layout:'fit',
- 	//verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+        //verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
         disableSelection: true,
         invalidateScrollerOnRefresh: false,
         requires:[
 
         ],
-		listeners: {
-		    'sortchange': function(ct, column, direction, eOpts ) {
-				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
-				this.setLoading(true);
-		    }
-		},
+        listeners: {
+            'sortchange': function(ct, column, direction, eOpts ) {
+                console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
+                this.setLoading(true);
+            }
+        },
         store:'EnzymeFamilyPaginatedStore',
-	    exportStore: null,
-	    getExportStore: function() {
-		if (this.exportStore == null) {
-			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
-		}
-		return this.exportStore;		
-	},
+        exportStore: null,
+        getExportStore: function() {
+            if (this.exportStore == null) {
+                this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
+            }
+            return this.exportStore;
+        },
         columns:{
             defaults:{
             },
 
             items:[
-				{
-					xtype: 'rownumberer',
-					width: 40
-				},
+                {
+                    xtype: 'rownumberer',
+                    width: 40
+                },
                 {
                     header:'Structure',
                     dataIndex:'cs_compound_uri',
-					xtype: 'templatecolumn',
-					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                    xtype: 'templatecolumn',
+                    tpl:'<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
                     width:135,
                     sortable:false
                 },
@@ -6860,14 +6883,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Target Names',
                     width: 180,
-                    dataIndex:'targets',
+                    dataIndex:'target_pref_label',
                     renderer:enzymeProvenanceRenderer,
                     tdCls: 'wrap gridDescriptiveRowPadding'
                     //align:'center'
                 },
                 {
                     header:'Target Organisms',
-                    dataIndex:'target_organisms',
+                    dataIndex:'target_organism',
                     renderer:enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -6922,7 +6945,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     header:'PubMed ID',
                     dataIndex:'activity_pubmed_id',
                     xtype:'templatecolumn',
-                    tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                    tpl: '<a href="{activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                     //renderer:compoundProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -6970,7 +6993,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 );
 
 function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
-	//console.log("Enzyme Pharmacology provenance renderer");
+    //console.log("Enzyme Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (this.enzyme_prov) {
@@ -7035,24 +7058,7 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
-        if (this.columns[columnIndex].dataIndex == 'targets') {
-            //console.log('target_title ' + data.length);
-            var target_names = "";
-            Ext.each(data, function (target, index) {
-                target_names += target.title;
-                //console.log(" TARGET NAME SRC " + target['src']);
-                target_names += "<br><br>";
-            });
-            return "<div>" + target_names + "</div>";
-        } else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
-            //console.log('target_organism ' + data.length);
-            var target_organisms = "";
-            Ext.each(data, function (target, index) {
-                target_organisms += target['organism'];
-                target_organisms += "<br><br>";
-            });
-            return "<div>" + target_organisms + "</div>";
-        }
+
         return data;
     }
     return data;
@@ -7116,7 +7122,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 dataIndex:'cs_compound_uri',
                 xtype:'templatecolumn',
                 width:135,
-                tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                tpl:'<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
                 sortable:false
             },
             {
@@ -7130,14 +7136,14 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
             {
                 header:'Target Names',
                 width: 180,
-                dataIndex:'targets',
+                dataIndex:'target_pref_label',
                 renderer:compoundProvenanceRenderer,
                 tdCls: 'wrap gridDescriptiveRowPadding'
                 //align:'center'
             },
             {
                 header:'Target Organisms',
-                dataIndex:'target_organisms',
+                dataIndex:'target_organism',
                 renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -7201,7 +7207,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
                 header:'PubMed ID',
                 dataIndex:'activity_pubmed_id',
                 xtype:'templatecolumn',
-                tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                tpl: '<a href="{activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                 //renderer:compoundProvenanceRenderer,
                 align:'center',
                 tdCls: 'gridRowPadding'
@@ -7264,33 +7270,6 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
 
         if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_COLOUR) {
 
-            if (record.data[recdata] && data || this.columns[columnIndex].dataIndex == 'targets' || this.columns[columnIndex].dataIndex == 'target_organisms' ) {
-                if (this.columns[columnIndex].dataIndex == 'targets') {
-
-                    //loops through arrays
-                    var output = new String();
-                    Ext.each(data, function (target, index) {
-                        var targetcls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[target['src']];
-                        var targetIconCls = targetcls + 'Icon';
-                        targetIconCls = '/assets/' + targetIconCls + '.png';
-                        output += '<div>' + target.title + '</div>' + '<br>' + '<a href="' + target['item'] + '" target="_blank">' + '<img src="' + targetIconCls + '" height="15" width="15"/>' + '</a>';
-
-                    });
-                    return output;
-                }
-
-                if (this.columns[columnIndex].dataIndex == 'target_organisms') {
-                    //loops through arrays
-                    var organismsOutput = new String();
-                    Ext.each(data, function (organism, index) {
-                        var organismCls = LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[organism['src']];
-                        var organismIconCls = organismCls + 'Icon';
-                        organismIconCls = '/assets/' + organismIconCls + '.png';
-                        organismsOutput += '<div>' + organism.organism + '</div>' + '<br>' + '<a href="' + organism['item'] + '" target="_blank">' + '<img src="' + organismIconCls + '" height="15" width="15"/>' + '</a>';
-
-                    });
-                    return organismsOutput;
-                }
 
                 // return '<div class="' + cls + '">' + data + '</div>' + '<br>' + record.data[recdata];
                 return '<div>' + data + '</div>' + '<br>' + '<a href="' + record.data[itemdata] + '" target="_blank">' + '<img src="' + iconCls + '" height="15" width="15"/>' + '</a>';
@@ -7298,8 +7277,6 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
             } else {
 
                 return '<div">' + data + '</div>'
-
-            }
 
         }
         //else if (LDAProvenanceMode == LDA.helper.LDAConstants.LDA_PROVENANCE_ICON) {
@@ -7309,6 +7286,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
+        /*
         if (this.columns[columnIndex].dataIndex == 'targets') {
             //console.log('target_title ' + data.length);
             var target_names = "";
@@ -7326,7 +7304,7 @@ function compoundProvenanceRenderer(data, cell, record, rowIndex, columnIndex, s
                 target_organisms += "<br><br>";
             });
             return "<div>" + target_organisms + "</div>";
-        }
+        }            */
         return data;
     }
     return data;
@@ -13113,7 +13091,7 @@ Ext.define('LSP.view.Viewport', {
 //            console.log('Viewport History change: ' + token);
                 //cut off shebang
 //                var historyTokenObject = Ext.Object.fromQueryString(token.substring(1));
-                var historyTokenObject = this.parseHistoryToken(unescape(token).substring(1));
+                var historyTokenObject = this.parseHistoryToken(unescape(token.substring(1)));
 //                console.dir(historyTokenObject);
                 if (historyTokenObject.p) {
                     var form = this.getFormByXtype(historyTokenObject.p);
