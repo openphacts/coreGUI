@@ -132,6 +132,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
+    }, {
+        header: 'Relevance',
+        dataIndex: 'relevance',
+        renderer:structureProvenanceRenderer,
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
     }]
     ,
 

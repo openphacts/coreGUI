@@ -43,7 +43,9 @@ Ext.define('LDA.model.CompoundModel', {
          'mw_freebase_item',
          'num_ro5_violations_item',
          'psa_item',
-         'rtb_item'
+         'rtb_item',
+         // for structure search
+         'relevance'
 
 //        '', '_src',
     ]

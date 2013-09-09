@@ -23,6 +23,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDA_PAGINATED_START_INDEX: 'startIndex',
     LDA_TARGET_OF_ASSAY: 'targetOfAssay',
     LDA_ASSAY_OF_ACTIVITY: 'assayOfActivity',
+    LDA_STRUCTURE_RELEVANCE: 'relevance',
     LDA_SRC_CLS_MAPPINGS: {
         'http://www.conceptwiki.org': 'conceptWikiValue',
         'http://www.conceptwiki.org/': 'conceptWikiValue',
