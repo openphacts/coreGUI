@@ -90,6 +90,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDA_PAGINATED_START_INDEX: 'startIndex',
     LDA_TARGET_OF_ASSAY: 'targetOfAssay',
     LDA_ASSAY_OF_ACTIVITY: 'assayOfActivity',
+    LDA_STRUCTURE_RELEVANCE: 'relevance',
     LDA_SRC_CLS_MAPPINGS: {
         'http://www.conceptwiki.org': 'conceptWikiValue',
         'http://www.conceptwiki.org/': 'conceptWikiValue',
@@ -5502,6 +5503,13 @@ Ext.define('LSP.view.larkc_sim_search.SimSearchScrollingGrid', {
         width: 135,
         align: 'center',
         tdCls: 'gridRowPadding'
+    }, {
+        header: 'Relevance',
+        dataIndex: 'relevance',
+        renderer:structureProvenanceRenderer,
+        width: 60,
+        align: 'center',
+        tdCls: 'gridRowPadding'
     }]
     ,
 
@@ -5942,6 +5950,10 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     csids: undefined,
 
+    relevance: undefined,
+
+    search_type: undefined,
+
     current_jobs: new Array(),
 
     init: function() {
@@ -6060,14 +6072,28 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.missing_count = 0;
         this.success_count = 0;
         this.total_count = csid_list.length;
+        relevance = {};
+        if (search_type === 'exact') {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].hide();
+        } else {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].show();
+        }
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = csid_list[i][LDA.helper.LDAConstants.LDA_ABOUT];
+            if (search_type === 'exact') {
+                csid_store.proxy.extraParams.uri = csid_list[i];
+            } else {
+                var csid = csid_list[i][LDA.helper.LDAConstants.LDA_ABOUT];
+                csid_store.proxy.extraParams.uri = csid;
+                relevance[csid] = csid_list[i][LDA.helper.LDAConstants.LDA_STRUCTURE_RELEVANCE];
+            }
+
             //TODO also get a relevance for each compound
             csid_store.load(function(records, operation, success) {
                 if (success) {
 		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
+                    records[0].data.relevance = relevance[operation.request.params.uri];
                     records[0].index = me.success_count;
                     me.success_count++;
                     me.current_count++;
@@ -6160,7 +6186,7 @@ if (this.current_mode == 'exact') {
         });
 
         var grid_title = '';
-        var search_type = '';
+        //var search_type = '';
         var params = {};
         var values = this.getSsform().getValues();
         params['searchOptions.Molecule'] = values.smiles;
@@ -6253,7 +6279,7 @@ if (this.current_mode == 'exact') {
             return;
         }
 
-        var searchType = 'exact';
+        searchType = 'exact';
         if (values.search_type == 2) {
             searchType = 'sub';
         } else if (values.search_type == 3) {
@@ -6325,7 +6351,11 @@ if (this.current_mode == 'exact') {
 			//params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
-			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+            if (search_type == 'exact') {
+			    searchEngine.setLimit(1);
+            } else {
+			    searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+            }
 		    searchEngine.doSearch(search_type, params);
 		} else {
 			Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);
