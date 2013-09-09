@@ -166,6 +166,11 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.success_count = 0;
         this.total_count = csid_list.length;
         relevance = {};
+        if (search_type === 'exact') {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].hide();
+        } else {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].show();
+        }
         for (var i = 0; i < csid_list.length; i++) {
             if (search_type === 'exact') {
                 csid_store.proxy.extraParams.uri = csid_list[i];
