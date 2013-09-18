@@ -137,10 +137,12 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organisms": "target_organisms"
     },
     LDAUnits: {
+        "percent": "%",
 	    "percentage": "%",
 	    "microgram_per_milliliter": "μg/ml",
 	    "nanomolar": "nM",
-	    "micromolar": "μM"
+	    "micromolar": "μM",
+        "molar": "M"
 }
 });
 
@@ -7546,18 +7548,18 @@ Ext.define('LDA.helper.FilterActivityReader', {
     requires: ['LDA.helper.LDAConstants'],
 
     readRecords: function(data) {
-        var pt = data['result']['primaryTopic'];
-        var activities = pt['normalised_activity_type'];
         var records = new Array();
 
-        Ext.each(activities, function(match, index) {
+        Ext.each(data['result']['items'], function(match, index) {
             var about = match[LDA.helper.LDAConstants.LDA_ABOUT];
             var about_split = about.split('/');
-            var api_label = about_split[about_split.length - 1].substr(1);
+            var api_label = about_split[about_split.length - 1];
+            var split_api_label = api_label.split('#');
+            var actual_activity = split_api_label[split_api_label.length -1];
             var label = match[LDA.helper.LDAConstants.LDA_LABEL];
             var record = Ext.create('LDA.model.FilterActivityModel', {
                 activity_type: label,
-                about: api_label
+                about: actual_activity
             });
             records.push(record);
         });
