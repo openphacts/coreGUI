@@ -54,7 +54,7 @@ class TsvFile < ActiveRecord::Base
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
     url_path = ''
-    all_headers = ["http://www.chemspider.com", "inchi", "inchikey", "smiles", "hba", "hbd", "logp", "psa", "ro5_violations", "http://www.conceptwiki.org", "prefLabel", "http://linkedlifedata.com/resource/drugbank", "biotransformation", "description", "meltingPoint", "proteinBinding", "toxicity", "http://data.kasabi.com/dataset/chembl-rdf", "full_mwt", "molform", "mw_freebase", "rtb", "isPrimaryTopicOf"]
+    all_headers = []
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = "/compound"
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
@@ -62,14 +62,19 @@ class TsvFile < ActiveRecord::Base
     i = 1
     total = JSON.parse(params[:csids]).size
     FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
-      tab << all_headers
+      #tab << all_headers
       JSON.parse(params[:csids]).each do |csid|
         
-        url_params = "uri=" + CGI::escape("http://rdf.chemspider.com/#{csid}") + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
+        url_params = "uri=" + CGI::escape("http://ops.rsc-us.org/#{csid}") + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
           url_path = "#{path}?".concat(url_params)
           response = Net::HTTP.get(domain, url_path)
           tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
+          if i == 1 
+            all_headers = tab_data.headers
+            all_headers.delete(nil)
+            tab << all_headers
+          end
           tab_data.each do |row|
             current_row = []
             all_headers.each {|header| current_row << row.values_at(header)}
