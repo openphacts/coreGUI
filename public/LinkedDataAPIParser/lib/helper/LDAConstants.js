@@ -70,9 +70,11 @@ Ext.define('LDA.helper.LDAConstants', {
         "target_organisms": "target_organisms"
     },
     LDAUnits: {
+        "percent": "%",
 	    "percentage": "%",
 	    "microgram_per_milliliter": "μg/ml",
 	    "nanomolar": "nM",
-	    "micromolar": "μM"
+	    "micromolar": "μM",
+        "molar": "M"
 }
 });
