@@ -51,7 +51,7 @@ Ext.define('LDA.helper.LDAConstants', {
     LDAProvenanceMode: 'Colour',
     LDADataItems: {
         "compound_smiles": "smiles",
-        "activity_standard_value": "std_value",
+        "activity_standard_value": "activity_value",
         "compound_inchikey": "inchiKey",
         "activity_activity_type": "std_type",
         "activity_standard_units": "std_unit",
