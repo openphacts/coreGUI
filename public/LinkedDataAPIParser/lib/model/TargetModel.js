@@ -70,7 +70,8 @@ Ext.define('LDA.model.TargetModel', {
 
         'theoretical_pi',
         'theoretical_pi_src',
-        'theoretical_pi_item'
+        'theoretical_pi_item',
+        'pChembl'
 
 //        'cw_uri', 'cs_uri', 'chembl_uri', 'drugbank_uri',
 //        'inchi', 'inchi_src',

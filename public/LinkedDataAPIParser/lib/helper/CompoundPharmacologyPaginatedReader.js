@@ -27,10 +27,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
         Ext.each(items, function (item, index, items) {
 
-            var pChembl = null;
-			if (item.pChembl) {
-				pChembl = item.pChembl;
-			}
+			var pChembl = item.pChembl ? item.pChembl : null;
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
             var compound_full_mwt_item;

@@ -185,7 +185,14 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-                }
+                },
+			    {
+			        header:'pChembl',
+			        dataIndex:'pChembl',
+			        renderer:targetProvenanceRenderer,
+			        align:'center',
+			        tdCls: 'gridRowPadding'
+		        }
             ],
 
         target_prov: false,
