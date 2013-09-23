@@ -143,7 +143,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-                }
+                },
+			    {
+			        header:'pChembl',
+			        dataIndex:'pChembl',
+			        renderer:enzymeProvenanceRenderer,
+			        align:'center',
+			        tdCls: 'gridRowPadding'
+			    }
             ]
 
         },

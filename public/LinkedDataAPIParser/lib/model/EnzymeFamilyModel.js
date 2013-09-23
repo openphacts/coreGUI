@@ -37,7 +37,8 @@ Ext.define('LDA.model.EnzymeFamilyModel', {
         'activity_relation_item',
         'activity_standard_value_item',
         'activity_standard_units_item',
-        'compound_full_mwt_item'
+        'compound_full_mwt_item',
+        'pChembl'
 
 //        '', '_src',
     ]

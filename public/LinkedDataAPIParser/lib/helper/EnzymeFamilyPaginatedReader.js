@@ -19,6 +19,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
 
         Ext.each(items, function (item, index, items) {
 	        //console.log(index);
+			var pChembl = item.pChembl ? item.pChembl : null;
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
@@ -174,7 +175,8 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                 activity_relation_item:activity_relation_item,
                 activity_standard_value_item:activity_standard_value_item,
                 activity_standard_units_item:activity_standard_units_item,
-                compound_full_mwt_item:compound_full_mwt_item
+                compound_full_mwt_item:compound_full_mwt_item,
+                pChembl: pChembl
 
                 //targets: targets,
                 //target_organisms: target_organisms

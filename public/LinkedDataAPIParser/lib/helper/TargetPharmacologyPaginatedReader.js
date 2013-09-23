@@ -28,6 +28,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
         //    	});
         //}
         Ext.each(items, function (item, index, items) {
+			var pChembl = item.pChembl ? item.pChembl : null;
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
 
@@ -203,7 +204,8 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                 target_pref_label_item: target_pref_label_item,
                 assay_organism_item: assay_organism_item,
                 assay_description_item: assay_description_item,
-                target_organism_item:target_organism_item
+                target_organism_item:target_organism_item,
+                pChembl: pChembl
                 //targets: targets
             });
 
