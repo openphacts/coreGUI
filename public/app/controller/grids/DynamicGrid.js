@@ -83,6 +83,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 assay_organism = gridview.store.assay_organism;
             } else if (filter.filterType == "target") {
                 target_organism = gridview.store.target_organism;
+            } else if (filter.filterType == "pchembl") {
+	            pchembl_value = gridview.store.pchembl_value;
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -100,6 +102,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                activity_unit : activity_unit,
                assay_organism : assay_organism,
                target_organism: target_organism,
+               pchembl_value: pchembl_value,
                uri : uri,
                total_count : total_count,
                request_type : request_type
@@ -279,6 +282,48 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }
     },
 
+    addCompletedPChemblFilter: function(button) {
+        console.log('DynamicGrid: addCompletedPChemblFilter()');
+        pchembl_value = this.getFilterContainer().down('#pchembl_textfield_id').getValue();
+        if (pchembl_value != null || pchembl_value != "") {
+            filter = Ext.create('LSP.model.Filter', {
+                value: pchembl_value
+            });
+            filter.filterType = "pchembl";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
+
+            filter_view = Ext.create('LSP.view.filter.CompletedPChemblFilterForm', {});
+            filter_view.down('#valueLabel_id').setText(pchembl_value);
+            filter_view.down('#pchemblLabel_id').setText('pChembl');
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setPChemblValue(pchembl_value);
+            // currently only 1 organism filter can be added at a time
+            this.getFormView().down('#addCompletedPChemblFilter_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').setVisible(false);
+        } else {
+            Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+    },
+
     removeFilter: function(filter) {
         console.log('DynamicGrid: filterClosed()');
         controller = filter.filterModel.controller;
@@ -310,8 +355,13 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.filters = controller.getFilters();
             store.setTargetOrganism(null);
             controller.getFormView().down('#addCompletedTargetOrganismFilter_id').enable();
-        }
-
+        } else if (filter.filterModel.filterType == "pchembl") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setPChemblValue(null);
+            controller.getFormView().down('#addCompletedPChemblFilter_id').enable();	        
+	    }
     },
 
     addFilterForm: function(button) {
@@ -530,6 +580,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setAssayOrganism(filter.data.value);
                 } else if (filter.filterType == "target") {
                     countStore.setTargetOrganism(filter.data.value);
+                } else if (filter.filterType == "pchembl") {
+	                countStore.setPChemblValue(filter.data.value);
                 }
             });
             //if (this.getFilters().length > 0) {
