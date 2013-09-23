@@ -16,7 +16,11 @@ Ext.define('LSP.view.filter.CompletedPChemblFilterForm', {
 		   xtype: 'label',
 		   itemId: 'pchemblLabel_id',
 		   padding: '0 5 0 0',
-	    },
+	    },{
+		    xtype: 'label',
+			itemId: 'conditionLabel_id',
+			padding: '0 5 0 0'
+		},
 		{
 		    xtype: 'label',
 			itemId: 'valueLabel_id',
