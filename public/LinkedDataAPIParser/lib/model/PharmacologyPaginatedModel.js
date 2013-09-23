@@ -84,7 +84,9 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'compound_pref_label_item',
         'target_pref_label_item',
         'assay_organism_item',
-        'assay_description_item'
+        'assay_description_item',
+
+        'pChembl'
 
     ]
 });

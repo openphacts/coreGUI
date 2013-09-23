@@ -27,6 +27,10 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
 
         Ext.each(items, function (item, index, items) {
 
+            var pChembl = null;
+			if (item.pChembl) {
+				pChembl = item.pChembl;
+			}
             var chembl_activity_uri = item[LDA.helper.LDAConstants.LDA_ABOUT];
             var chembl_src = item[LDA.helper.LDAConstants.LDA_IN_DATASET];
             var compound_full_mwt_item;
@@ -186,7 +190,8 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_smiles_item:compound_smiles_item,
                 compound_inchi_item:compound_inchi_item,
                 compound_inchikey_item:compound_inchikey_item,
-                compound_pref_label_item:compound_pref_label_item
+                compound_pref_label_item:compound_pref_label_item,
+                pChembl: pChembl
 				
             });
 

@@ -67,7 +67,8 @@ Ext.define('LDA.helper.LDAConstants', {
 	"assay_organism": "assay_organism",
 	"activity_pubmed_id": "pmid",
         "targets": "target_name",
-        "target_organisms": "target_organisms"
+        "target_organisms": "target_organisms",
+        "pChembl": "pChembl"
     },
     LDAUnits: {
         "percent": "%",
