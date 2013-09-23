@@ -85,6 +85,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 target_organism = gridview.store.target_organism;
             } else if (filter.filterType == "pchembl") {
 	            pchembl_value = gridview.store.pchembl_value;
+	            activity_value_type = gridview.store.getPChemblConditionParam();
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -284,10 +285,12 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
     addCompletedPChemblFilter: function(button) {
         console.log('DynamicGrid: addCompletedPChemblFilter()');
-        pchembl_value = this.getFilterContainer().down('#pchembl_textfield_id').getValue();
+        var pchembl_value = this.getFilterContainer().down('#pchembl_textfield_id').getValue();
+        var condition_value = this.getFilterContainer().down('#pchembl_combobox_id').getValue();
         if (pchembl_value != null || pchembl_value != "") {
             filter = Ext.create('LSP.model.Filter', {
-                value: pchembl_value
+                value: pchembl_value,
+                condition: condition_value
             });
             filter.filterType = "pchembl";
             this.getFilters().push(filter);
@@ -296,6 +299,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
 
             filter_view = Ext.create('LSP.view.filter.CompletedPChemblFilterForm', {});
             filter_view.down('#valueLabel_id').setText(pchembl_value);
+            filter_view.down('#conditionLabel_id').setText(condition_value);
             filter_view.down('#pchemblLabel_id').setText('pChembl');
             // tell the filter what model it is using so we can get back to the controller when the
             // filter is removed from the view
@@ -310,6 +314,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             var store = dg.store;
             store.filters = this.getFilters();
             store.setPChemblValue(pchembl_value);
+            store.setPChemblCondition(condition_value);
             // currently only 1 organism filter can be added at a time
             this.getFormView().down('#addCompletedPChemblFilter_id').disable();
             //this.getFormView().down('#organismFilterContainer_id').disable();
