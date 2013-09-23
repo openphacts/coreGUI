@@ -7,6 +7,7 @@ Ext.define('LDA.store.basestores.FilteringStore', {
     activity_condition:'',
 	activity_unit:'',
 	sort_column:'',
+	pchembl_value : '',
     filters: new Array(),
 	
 	// Set up the sort properties, check the direction of sort and prepend with
@@ -56,6 +57,10 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	//TODO check whether condition is valid
             this.activity_unit = activityUnit;
     },
+
+   setPChemblValue: function(pchemblValue) {
+       this.pchembl_value = pchemblValue;
+   },
 
     updateProxyURL:function () {
         this.proxy.url = this.BASE_URL +

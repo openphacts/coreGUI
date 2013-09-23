@@ -68,7 +68,10 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
             },
 'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }
+            }	,
+				'PharmByCmpdNameForm button[action=add_completed_pchembl_filter]': {
+					click: this.addCompletedPChemblFilter
+				}
 		});
 	},
 	

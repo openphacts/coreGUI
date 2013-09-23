@@ -25,6 +25,31 @@ var compound_condition = Ext.create('Ext.data.Store', {
 	//}
 	]
 });
+var pchembl_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}
+	// TODO this part of the ui is conflating ideas I think. all is for the relation part of the results not the activity type
+	//, {
+	//	"symbol": "all",
+	//	"name": "all"
+	//}
+	]
+});
 Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
@@ -149,6 +174,47 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             },
             style: 'background-color: #fff;',
             items: [
+{
+	xtype: 'container',
+	margin: '0 5 5 5',
+	name: 'pchembl_filter_container',
+	itemId: 'pchemblFilterContainer_id',
+	hidden: false,
+	layout: {
+		type: 'hbox'
+	},
+	style: 'background-color: #fff;',
+	items: [
+	{
+		xtype: 'combobox',
+		itemId: 'pchembl_combobox_id',
+		fieldLabel: 'pChembl',
+		store: pchembl_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 100,
+		labelPad: 2,
+		labelAlign: 'right',
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	},
+	{
+		xtype: 'textfield',
+		itemId: 'pchembl_textfield_id',
+        width: 400,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a pChembl value...'
+	},{
+		xtype: 'button',
+		itemId: 'addCompletedpChemblFilter_id',
+		iconCls: 'icon-new',
+		tooltip: 'Add this pChembl filter',
+		action: 'add_completed_pchembl_filter'
+	}
+	]
+},
 
 {xtype: 'container',
             margin: '0 5 5 5',
@@ -170,6 +236,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		displayField: 'activity_type',
 		valueField: 'about',
 		labelWidth: 100,
+		labelAlign: 'right',
 		labelPad: 2,
 		padding: '0 2 0 0',
 		emptyText: 'Use drop down...',
@@ -233,7 +300,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             margin: '0 5 5 5',
             name: 'target_organism_filter_fields',
             hidden: false
-        }]}, {
+        }, {
+		    xtype: 'container',
+		    itemId: 'addCompletedPChemblFilter_id',
+		    margin: '0 5 5 5',
+		    name: 'completed_pchembl_filter_container',
+		    hidden: true
+	    }]}, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',
             margin: '0 5 5 5',
