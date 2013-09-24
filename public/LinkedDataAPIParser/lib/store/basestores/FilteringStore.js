@@ -82,7 +82,31 @@ Ext.define('LDA.store.basestores.FilteringStore', {
                 });
 
         this.setAllConditions();
+        this.setPChemblConditions();
         console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
+    },
+
+    setPChemblConditions: function() {
+ 	// add the conditions property to the url
+    console.log('setPchembl conditions');
+	switch(this.pchembl_condition)
+	{
+	case '>':
+  	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('minEx-pChembl') + '=' + encodeURIComponent(String(this.pchembl_value));
+	  break;
+	case '<':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('maxEx-pChembl') + '=' + encodeURIComponent(String(this.pchembl_value));
+  	  break;
+	case '=':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('pChembl') + '=' + encodeURIComponent(String(this.pchembl_value));
+	  break;
+	case '<=':
+	  this.proxy.url = this.proxy.url  + '&' + encodeURIComponent('max-pChembl') + '=' + encodeURIComponent(String(this.pchembl_value));
+	  break;
+	case '>=':
+	  this.proxy.url = this.proxy.url + '&' + encodeURIComponent('min-pChembl') + '=' + encodeURIComponent(String(this.pchembl_value));
+	  break;
+	}
     },
 
     setAllConditions: function() {
@@ -138,19 +162,19 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 		switch(this.activity_condition)
 		{
 		case '>':
-	  	  return  'minEx-activity_value';
+	  	  return  'minEx-pChembl';
 		  break;
 		case '<':
-		  return 'maxEx-activity_value';
+		  return 'maxEx-pChembl';
 	  	  break;
 		case '=':
-		  return 'activity_value';
+		  return 'pChembl';
 		  break;
 		case '<=':
-		  return 'max-activity_value';
+		  return 'max-pChembl';
 		  break;
 		case '>=':
-		  return 'min-activity_value';
+		  return 'min-pChembl';
 		  break;
 		}	
 	}
