@@ -49,7 +49,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             var cw_compound_uri, compound_pref_label, cw_src,
                 cs_compound_uri, compound_inchi , compound_inchikey, compound_smiles, cs_src,
                 drugbank_compound_uri, compound_drug_type, compound_generic_name, drugbank_src, csid,
-                compound_smiles_item, compound_inchi_item, compound_inchikey_item, compound_pref_label_item;
+                compound_smiles_item, compound_inchi_item, compound_inchikey_item, compound_pref_label_item, pChembl_item;
 
             Ext.each(em, function (match, index, matches) {
                     var src = match[LDA.helper.LDAConstants.LDA_IN_DATASET];
@@ -121,6 +121,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
             var activity_relation = item['activity_relation'];
             activity_relation_item = chemblActivityLink;
 			var activity_pubmed_id = item['pmid'];
+            pChembl_item = chemblActivityLink;
 
             var record = Ext.create('LDA.model.PharmacologyPaginatedModel', {
                 //for page
@@ -162,6 +163,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_standard_units:activity_standard_units,
                 activity_standard_value:activity_standard_value,
                 activity_activity_type:activity_activity_type,
+                pChembl: pChembl,
 
                 compound_full_mwt_src:chembl_src,
                 compound_pref_label_src:cw_src,
@@ -176,6 +178,7 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 activity_standard_value_src:chembl_src,
                 activity_activity_type_src:chembl_src,
 				activity_pubmed_id:activity_pubmed_id,
+                pChembl_src:chembl_src,
 
                 //target_title_item:target_title_item,
                 target_organism_item:target_organism_item,
@@ -191,8 +194,8 @@ Ext.define('LDA.helper.CompoundPharmacologyPaginatedReader', {
                 compound_inchi_item:compound_inchi_item,
                 compound_inchikey_item:compound_inchikey_item,
                 compound_pref_label_item:compound_pref_label_item,
-                pChembl: pChembl
-				
+                pChembl_item:pChembl_item
+
             });
 
             records.push(record);
