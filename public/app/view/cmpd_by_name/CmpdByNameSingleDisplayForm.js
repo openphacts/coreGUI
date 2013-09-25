@@ -545,15 +545,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                             }
                             break;
 
-						case 'psa':
-
-                            if (td[prop]){
-                                var psaValue = parseFloat(td[prop])*1e19 ;                              
-                                field.setValue(psaValue.toFixed(1));
-                                field.show();
-                            }
-							break;
-
                         case 'meltingPoint':
 
                             if (td[prop]){
