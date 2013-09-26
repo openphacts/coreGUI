@@ -134,7 +134,8 @@ Ext.define('LDA.helper.LDAConstants', {
 	"assay_organism": "assay_organism",
 	"activity_pubmed_id": "pmid",
         "targets": "target_name",
-        "target_organisms": "target_organisms"
+        "target_organisms": "target_organisms",
+        "pChembl": "pChembl"
     },
     LDAUnits: {
         "percent": "%",
@@ -995,15 +996,6 @@ Ext.define('LSP.view.cmpd_by_name.CmpdByNameSingleDisplayForm', {
                                 field.show();
                             }
                             break;
-
-						case 'psa':
-
-                            if (td[prop]){
-                                var psaValue = parseFloat(td[prop])*1e19 ;                              
-                                field.setValue(psaValue.toFixed(1));
-                                field.show();
-                            }
-							break;
 
                         case 'meltingPoint':
 
@@ -4794,6 +4786,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 assay_organism = gridview.store.assay_organism;
             } else if (filter.filterType == "target") {
                 target_organism = gridview.store.target_organism;
+            } else if (filter.filterType == "pchembl") {
+	            pchembl_value = gridview.store.pchembl_value;
+	            activity_value_type = gridview.store.getPChemblConditionParam();
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -4811,6 +4806,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                activity_unit : activity_unit,
                assay_organism : assay_organism,
                target_organism: target_organism,
+               pchembl_value: pchembl_value,
                uri : uri,
                total_count : total_count,
                request_type : request_type
@@ -4990,6 +4986,52 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
         }
     },
 
+    addCompletedPChemblFilter: function(button) {
+        console.log('DynamicGrid: addCompletedPChemblFilter()');
+        var pchembl_value = this.getFilterContainer().down('#pchembl_textfield_id').getValue();
+        var condition_value = this.getFilterContainer().down('#pchembl_combobox_id').getValue();
+        if (pchembl_value != null || pchembl_value != "") {
+            filter = Ext.create('LSP.model.Filter', {
+                value: pchembl_value,
+                condition: condition_value
+            });
+            filter.filterType = "pchembl";
+            this.getFilters().push(filter);
+            // this is the only way I could find to reference the controller from the model and the view
+            filter.controller = this;
+
+            filter_view = Ext.create('LSP.view.filter.CompletedPChemblFilterForm', {});
+            filter_view.down('#valueLabel_id').setText(pchembl_value);
+            filter_view.down('#conditionLabel_id').setText(condition_value);
+            filter_view.down('#pchemblLabel_id').setText('pChembl');
+            // tell the filter what model it is using so we can get back to the controller when the
+            // filter is removed from the view
+            filter.filterView = filter_view;
+            this.getFormView().down('#completedFilterContainer_id').add(filter_view);
+            this.getFormView().down('#completedFilterContainer_id').setVisible(true);
+            filter_view.filterModel = filter;
+            filter_view.on({
+                close: this.removeFilter
+            });
+            var dg = this.getGridView();
+            var store = dg.store;
+            store.filters = this.getFilters();
+            store.setPChemblValue(pchembl_value);
+            store.setPChemblCondition(condition_value);
+            // currently only 1 organism filter can be added at a time
+            this.getFormView().down('#addCompletedpChemblFilter_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').disable();
+            //this.getFormView().down('#organismFilterContainer_id').setVisible(false);
+        } else {
+            Ext.MessageBox.show({
+                title: 'Error',
+                msg: 'Filter options cannot be empty.<br\>Please select a value for each of the filter options.',
+                buttons: Ext.MessageBox.OK,
+                icon: Ext.MessageBox.ERROR
+            });
+        }
+    },
+
     removeFilter: function(filter) {
         console.log('DynamicGrid: filterClosed()');
         controller = filter.filterModel.controller;
@@ -5021,8 +5063,14 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.filters = controller.getFilters();
             store.setTargetOrganism(null);
             controller.getFormView().down('#addCompletedTargetOrganismFilter_id').enable();
-        }
-
+        } else if (filter.filterModel.filterType == "pchembl") {
+            var index = controller.getFilters().indexOf(filter.filterModel);
+            controller.getFilters().splice(index, 1);
+            store.filters = controller.getFilters();
+            store.setPChemblValue("");
+            store.setPChemblCondition("");
+            controller.getFormView().down('#addCompletedpChemblFilter_id').enable();	        
+	    }
     },
 
     addFilterForm: function(button) {
@@ -5241,6 +5289,9 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                     countStore.setAssayOrganism(filter.data.value);
                 } else if (filter.filterType == "target") {
                     countStore.setTargetOrganism(filter.data.value);
+                } else if (filter.filterType == "pchembl") {
+	                countStore.setPChemblCondition(filter.data.condition);
+	                countStore.setPChemblValue(filter.data.value);
                 }
             });
             //if (this.getFilters().length > 0) {
@@ -6390,6 +6441,26 @@ var target_condition = Ext.create('Ext.data.Store', {
 		"name": ">="
 	}]
 });
+var pchembl_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}
+	]
+});
 Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.PharmByTargetNameForm',
@@ -6511,7 +6582,49 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameForm', {
                 type: 'vbox'
             },
             style: 'background-color: #fff;',
-            items: [{xtype: 'container',
+            items: [{
+	xtype: 'container',
+	margin: '0 5 5 5',
+	name: 'pchembl_filter_container',
+	itemId: 'pchemblFilterContainer_id',
+	hidden: false,
+	layout: {
+		type: 'hbox'
+	},
+	style: 'background-color: #fff;',
+	items: [
+	{
+		xtype: 'combobox',
+		itemId: 'pchembl_combobox_id',
+		fieldLabel: 'pChembl',
+		store: pchembl_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 100,
+		labelPad: 2,
+		labelAlign: 'right',
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	},
+	{
+		xtype: 'textfield',
+		itemId: 'pchembl_textfield_id',
+        width: 400,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a pChembl value...'
+	},{
+		xtype: 'button',
+		itemId: 'addCompletedpChemblFilter_id',
+		iconCls: 'icon-new',
+		tooltip: 'Add this pChembl filter',
+		action: 'add_completed_pchembl_filter'
+	}
+	]
+},
+
+{xtype: 'container',
             margin: '0 5 5 5',
             name: 'activity_selector_container',
 	    itemId: 'activitySelectorContainer_id',
@@ -6797,7 +6910,14 @@ Ext.define('LSP.view.pharm_by_target_name2.PharmByTargetNameScrollingGrid', {
                     renderer:targetProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-                }
+                },
+			    {
+			        header:'pChembl',
+			        dataIndex:'pChembl',
+			        renderer:targetProvenanceRenderer,
+			        align:'center',
+			        tdCls: 'gridRowPadding'
+		        }
             ],
 
         target_prov: false,
@@ -7009,7 +7129,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-                }
+                },
+			    {
+			        header:'pChembl',
+			        dataIndex:'pChembl',
+			        renderer:enzymeProvenanceRenderer,
+			        align:'center',
+			        tdCls: 'gridRowPadding'
+			    }
             ]
 
         },
@@ -7236,6 +7363,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameScrollingGrid', {
 
             },
             {
+                header:'pChEMBL',
+                dataIndex:'pChembl',
+                renderer:compoundProvenanceRenderer,
+                align:'center',
+                tdCls: 'gridRowPadding'
+            },
+            {
                 header:'PubMed ID',
                 dataIndex:'activity_pubmed_id',
                 xtype:'templatecolumn',
@@ -7458,9 +7592,12 @@ Ext.define('LSP.controller.PharmByTargetNameForm', {
                 select: this.comboSelect,
                 scope: this
             },
-'PharmByTargetNameForm #tsvDownloadProxy_id': {
+            'PharmByTargetNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }
+            },
+			'PharmByTargetNameForm button[action=add_completed_pchembl_filter]': {
+			    click: this.addCompletedPChemblFilter
+			}
         });
     },
 
@@ -7887,6 +8024,31 @@ var compound_condition = Ext.create('Ext.data.Store', {
 	//}
 	]
 });
+var pchembl_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}
+	// TODO this part of the ui is conflating ideas I think. all is for the relation part of the results not the activity type
+	//, {
+	//	"symbol": "all",
+	//	"name": "all"
+	//}
+	]
+});
 Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmByCmpdNameForm',
@@ -8011,6 +8173,47 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             },
             style: 'background-color: #fff;',
             items: [
+{
+	xtype: 'container',
+	margin: '0 5 5 5',
+	name: 'pchembl_filter_container',
+	itemId: 'pchemblFilterContainer_id',
+	hidden: false,
+	layout: {
+		type: 'hbox'
+	},
+	style: 'background-color: #fff;',
+	items: [
+	{
+		xtype: 'combobox',
+		itemId: 'pchembl_combobox_id',
+		fieldLabel: 'pChembl',
+		store: pchembl_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 100,
+		labelPad: 2,
+		labelAlign: 'right',
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	},
+	{
+		xtype: 'textfield',
+		itemId: 'pchembl_textfield_id',
+        width: 400,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a pChembl value...'
+	},{
+		xtype: 'button',
+		itemId: 'addCompletedpChemblFilter_id',
+		iconCls: 'icon-new',
+		tooltip: 'Add this pChembl filter',
+		action: 'add_completed_pchembl_filter'
+	}
+	]
+},
 
 {xtype: 'container',
             margin: '0 5 5 5',
@@ -8032,6 +8235,7 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
 		displayField: 'activity_type',
 		valueField: 'about',
 		labelWidth: 100,
+		labelAlign: 'right',
 		labelPad: 2,
 		padding: '0 2 0 0',
 		emptyText: 'Use drop down...',
@@ -8095,7 +8299,13 @@ Ext.define('LSP.view.pharm_by_cmpd_name2.PharmByCmpdNameForm', {
             margin: '0 5 5 5',
             name: 'target_organism_filter_fields',
             hidden: false
-        }]}, {
+        }, {
+		    xtype: 'container',
+		    itemId: 'addCompletedPChemblFilter_id',
+		    margin: '0 5 5 5',
+		    name: 'completed_pchembl_filter_container',
+		    hidden: true
+	    }]}, {
             xtype: 'container',
             itemId: 'completedFilterContainer_id',
             margin: '0 5 5 5',
@@ -8181,9 +8391,12 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 select: this.comboSelect,
                 scope: this
             },
-'PharmByCmpdNameForm #tsvDownloadProxy_id': {
+            'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }
+            },
+			'PharmByCmpdNameForm button[action=add_completed_pchembl_filter]': {
+			    click: this.addCompletedPChemblFilter
+			}
 		});
 	},
 	
@@ -8379,6 +8592,26 @@ var enzyme_condition = Ext.create('Ext.data.Store', {
 		"name": ">="
 	}]
 });
+var pchembl_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}
+	]
+});
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmEnzymeForm',
@@ -8485,7 +8718,49 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 type: 'vbox'
             },
             style: 'background-color: #fff;',
-            items: [{xtype: 'container',
+            items: [
+{
+	xtype: 'container',
+	margin: '0 5 5 5',
+	name: 'pchembl_filter_container',
+	itemId: 'pchemblFilterContainer_id',
+	hidden: false,
+	layout: {
+		type: 'hbox'
+	},
+	style: 'background-color: #fff;',
+	items: [
+	{
+		xtype: 'combobox',
+		itemId: 'pchembl_combobox_id',
+		fieldLabel: 'pChembl',
+		store: pchembl_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 100,
+		labelPad: 2,
+		labelAlign: 'right',
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	},
+	{
+		xtype: 'textfield',
+		itemId: 'pchembl_textfield_id',
+        width: 400,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a pChembl value...'
+	},{
+		xtype: 'button',
+		itemId: 'addCompletedpChemblFilter_id',
+		iconCls: 'icon-new',
+		tooltip: 'Add this pChembl filter',
+		action: 'add_completed_pchembl_filter'
+	}
+	]
+},
+{xtype: 'container',
             margin: '0 5 5 5',
             name: 'activity_selector_container',
 	    itemId: 'activitySelectorContainer_id',
@@ -8660,7 +8935,10 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }
+            },
+			'PharmEnzymeForm button[action=add_completed_pchembl_filter]': {
+			    click: this.addCompletedPChemblFilter
+			}
         });
     },
 
