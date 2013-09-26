@@ -17,6 +17,26 @@ var enzyme_condition = Ext.create('Ext.data.Store', {
 		"name": ">="
 	}]
 });
+var pchembl_condition = Ext.create('Ext.data.Store', {
+	fields: ['symbol', 'name'],
+	data: [{
+		"symbol": "=",
+		"name": "="
+	}, {
+		"symbol": ">",
+		"name": ">"
+	}, {
+		"symbol": "<",
+		"name": "<"
+	}, {
+		"symbol": "<=",
+		"name": "<="
+	}, {
+		"symbol": ">=",
+		"name": ">="
+	}
+	]
+});
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.PharmEnzymeForm',
@@ -123,7 +143,49 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmEnzymeForm', {
                 type: 'vbox'
             },
             style: 'background-color: #fff;',
-            items: [{xtype: 'container',
+            items: [
+{
+	xtype: 'container',
+	margin: '0 5 5 5',
+	name: 'pchembl_filter_container',
+	itemId: 'pchemblFilterContainer_id',
+	hidden: false,
+	layout: {
+		type: 'hbox'
+	},
+	style: 'background-color: #fff;',
+	items: [
+	{
+		xtype: 'combobox',
+		itemId: 'pchembl_combobox_id',
+		fieldLabel: 'pChembl',
+		store: pchembl_condition,
+		queryMode: 'local',
+		displayField: 'symbol',
+		valueField: 'name',
+		labelWidth: 100,
+		labelPad: 2,
+		labelAlign: 'right',
+		padding: '0 2 0 0',
+		emptyText: 'Use drop down...',
+		editable: false
+	},
+	{
+		xtype: 'textfield',
+		itemId: 'pchembl_textfield_id',
+        width: 400,
+		padding: '0 2 0 0',
+		emptyText: 'Enter a pChembl value...'
+	},{
+		xtype: 'button',
+		itemId: 'addCompletedpChemblFilter_id',
+		iconCls: 'icon-new',
+		tooltip: 'Add this pChembl filter',
+		action: 'add_completed_pchembl_filter'
+	}
+	]
+},
+{xtype: 'container',
             margin: '0 5 5 5',
             name: 'activity_selector_container',
 	    itemId: 'activitySelectorContainer_id',

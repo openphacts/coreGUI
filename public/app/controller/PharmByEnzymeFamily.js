@@ -72,7 +72,10 @@ Ext.define('LSP.controller.PharmByEnzymeFamily', {
             },
             'PharmEnzymeForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }
+            },
+			'PharmEnzymeForm button[action=add_completed_pchembl_filter]': {
+			    click: this.addCompletedPChemblFilter
+			}
         });
     },
 
