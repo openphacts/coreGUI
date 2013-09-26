@@ -43,6 +43,7 @@ Ext.define('LDA.store.basestores.PaginatedFilteringStore', {
             app_id: this.app_id
 		});
 		this.setAllConditions();
+        this.setPChemblConditions();
 		console.log('Proxy: ' + Ext.ClassManager.getName(this) + ' URL updated to: ' + this.proxy.url);
 	},
 	/**
