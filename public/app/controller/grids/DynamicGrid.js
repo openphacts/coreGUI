@@ -364,7 +364,8 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             var index = controller.getFilters().indexOf(filter.filterModel);
             controller.getFilters().splice(index, 1);
             store.filters = controller.getFilters();
-            store.setPChemblValue(null);
+            store.setPChemblValue("");
+            store.setPChemblCondition("");
             controller.getFormView().down('#addCompletedPChemblFilter_id').enable();	        
 	    }
     },
@@ -586,6 +587,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 } else if (filter.filterType == "target") {
                     countStore.setTargetOrganism(filter.data.value);
                 } else if (filter.filterType == "pchembl") {
+	                countStore.setPChemblCondition(filter.data.condition);
 	                countStore.setPChemblValue(filter.data.value);
                 }
             });
