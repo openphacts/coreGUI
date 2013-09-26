@@ -316,7 +316,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.setPChemblValue(pchembl_value);
             store.setPChemblCondition(condition_value);
             // currently only 1 organism filter can be added at a time
-            this.getFormView().down('#addCompletedPChemblFilter_id').disable();
+            this.getFormView().down('#addCompletedpChemblFilter_id').disable();
             //this.getFormView().down('#organismFilterContainer_id').disable();
             //this.getFormView().down('#organismFilterContainer_id').setVisible(false);
         } else {
@@ -366,7 +366,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
             store.filters = controller.getFilters();
             store.setPChemblValue("");
             store.setPChemblCondition("");
-            controller.getFormView().down('#addCompletedPChemblFilter_id').enable();	        
+            controller.getFormView().down('#addCompletedpChemblFilter_id').enable();	        
 	    }
     },
 

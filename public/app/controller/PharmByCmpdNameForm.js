@@ -66,12 +66,12 @@ Ext.define('LSP.controller.PharmByCmpdNameForm', {
                 select: this.comboSelect,
                 scope: this
             },
-'PharmByCmpdNameForm #tsvDownloadProxy_id': {
+            'PharmByCmpdNameForm #tsvDownloadProxy_id': {
                 click: this.prepareTSVDownload
-            }	,
-				'PharmByCmpdNameForm button[action=add_completed_pchembl_filter]': {
-					click: this.addCompletedPChemblFilter
-				}
+            },
+			'PharmByCmpdNameForm button[action=add_completed_pchembl_filter]': {
+			    click: this.addCompletedPChemblFilter
+			}
 		});
 	},
 	
