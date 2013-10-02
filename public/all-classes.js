@@ -3069,7 +3069,7 @@ Ext.define('LDA.model.SimModel', {
         'full_mwt', 'full_mwt_src',
         'hba', 'hba_src',
         'hbd', 'hbd_src',
-        'molform', 'molform_src',
+        'molformula', 'molformula_src',
         'mw_freebase', 'mw_freebase_src',
         'psa', 'psa_src',
         'rtb', 'rtb_src',
