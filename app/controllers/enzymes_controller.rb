@@ -56,7 +56,7 @@ class EnzymesController < ApplicationController
             puts "root: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
-            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+            logger.error "Error retrieving enzymes for : "  + domain + url_path + " : " + e.to_s
           end
           unless response.nil?
             json = JSON.parse(response)
@@ -73,7 +73,7 @@ class EnzymesController < ApplicationController
             puts "child: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
-            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+            logger.error "Error retrieving enzymes for : "  + domain + url_path + " : " + e.to_s
           end 
           unless response.nil?
             json = JSON.parse(response)

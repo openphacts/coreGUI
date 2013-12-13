@@ -126,7 +126,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
             activity_activity_type_item =  chemblActivityLink;
             var activity_standard_value = item['activity_value'];
             activity_standard_value_item = chemblActivityLink;
-            var activity_standard_units = item['standardUnits'];
+            var activity_standard_units = item['activity_unit'] != null ? item['activity_unit'].prefLabel : null;
             activity_standard_units_item = chemblActivityLink;
             var activity_relation = item['activity_relation'];
             activity_relation_item = chemblActivityLink;
