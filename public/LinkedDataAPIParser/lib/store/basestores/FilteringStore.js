@@ -158,8 +158,29 @@ Ext.define('LDA.store.basestores.FilteringStore', {
 	}
     },
 
+        getActivityConditionParam: function() {
+                switch(this.activity_condition)
+                {
+                case '>':
+                    return  'minEx-activity_value';
+                  break;
+                case '<':
+                  return 'maxEx-activity_value';
+                    break;
+                case '=':
+                  return 'activity_value';
+                  break;
+                case '<=':
+                  return 'max-activity_value';
+                  break;
+                case '>=':
+                  return 'min-activity_value';
+                  break;
+                }        
+        },
+
 	getPChemblConditionParam: function() {
-		switch(this.activity_condition)
+		switch(this.pchembl_condition)
 		{
 		case '>':
 	  	  return  'minEx-pChembl';

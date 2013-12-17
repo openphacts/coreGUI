@@ -70,7 +70,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
     prepareTSVDownload: function() {
        var me = this;
        var gridview = this.getGridView();
-       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, target_organism, uri, total_count, request_type;
+       var activity_value_type, activity_type, activity_value, activity_unit, assay_organism, target_organism, uri, total_count, request_type, pchembl_value, pchembl_value_type;
        var tsv_request_store = Ext.create('LDA.store.TSVCreateStore', {});
        Ext.ComponentQuery.query('#background_tasks_form')[0].expand();
        Ext.each(this.getFilters(), function(filter, index) {
@@ -85,7 +85,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                 target_organism = gridview.store.target_organism;
             } else if (filter.filterType == "pchembl") {
 	            pchembl_value = gridview.store.pchembl_value;
-	            activity_value_type = gridview.store.getPChemblConditionParam();
+	            pchembl_value_type = gridview.store.getPChemblConditionParam();
             }
         });
         uri = gridview.store.proxy.extraParams.uri;
@@ -104,6 +104,7 @@ Ext.define('LSP.controller.grids.DynamicGrid', {
                assay_organism : assay_organism,
                target_organism: target_organism,
                pchembl_value: pchembl_value,
+               pchembl_value_type: pchembl_value_type,
                uri : uri,
                total_count : total_count,
                request_type : request_type
