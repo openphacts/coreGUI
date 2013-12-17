@@ -27,10 +27,11 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
 
             //big bits
             var forMolecule = item[LDA.helper.LDAConstants.LDA_FOR_MOLECULE];
+            var compound_full_mwt;
             var chemblMolecultLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
             if (forMolecule != null) {
 				var chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
-				var compound_full_mwt = forMolecule['full_mwt'];
+				compound_full_mwt = forMolecule['full_mwt'];
                 chemblMolecultLink += chembl_compound_uri.split('/').pop();
                 compound_full_mwt_item = chemblMolecultLink;
                 var em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
@@ -59,6 +60,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
                             compound_smiles_item = chemSpiderLink;
                             compound_inchi_item = chemSpiderLink;
                             compound_inchikey_item = chemSpiderLink;
+                            compound_full_mwt = match.molweight;
                     	} else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                         	drugbank_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
                         	compound_drug_type = match['drugType'];

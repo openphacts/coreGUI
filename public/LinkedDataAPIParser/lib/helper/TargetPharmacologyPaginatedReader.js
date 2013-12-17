@@ -43,7 +43,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
 
             if (forMolecule != null) {
                 chembl_compound_uri = forMolecule[LDA.helper.LDAConstants.LDA_ABOUT];
-                compound_full_mwt = forMolecule['full_mwt'];
+                //compound_full_mwt = forMolecule['full_mwt'];
                 chembleMolecultLink += chembl_compound_uri.split('/').pop();
                 compound_full_mwt_item = chembleMolecultLink;
                 em = forMolecule[LDA.helper.LDAConstants.LDA_EXACT_MATCH];
@@ -73,6 +73,7 @@ Ext.define('LDA.helper.TargetPharmacologyPaginatedReader', {
                         compound_inchi_item = chemSpiderLink;
                         compound_inchikey_item = chemSpiderLink;
                         compound_smiles_item = chemSpiderLink;
+                        compound_full_mwt = match.molweight;
                     } else if (LDA.helper.LDAConstants.LDA_SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                         drugbank_compound_uri = match[LDA.helper.LDAConstants.LDA_ABOUT];
                         compound_drug_type = match['drugType'];
