@@ -115,9 +115,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
                         if (targets.length > 0) {
                             contextMenu.insert(contextMenu.items.length -2, menu_item);
                         }
-                        if (cs_menu_item != null) {
-                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
-                        }
+                        //if (cs_menu_item != null) {
+                        //  contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        //}
 			contextMenu.showAt(x, y);
 		} else {
 			var cmpValueMenu = new Ext.menu.Menu({
@@ -154,9 +154,9 @@ Ext.define('LSP.view.dynamicgrid.DynamicGrid', {
 					menu: cmpValueMenu
 				}]
 			});                        
-                        if (cs_menu_item != null) {
-                          contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
-                        }
+                        //if (cs_menu_item != null) {
+                        //  contextMenu.insert(contextMenu.items.length -1 , cs_menu_item);
+                        //}
 			contextMenu.showAt(x, y);
 		}
 
