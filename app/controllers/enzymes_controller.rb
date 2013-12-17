@@ -39,6 +39,7 @@ class EnzymesController < ApplicationController
 
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
+    api_version = AppSettings.config["tsv"]["api_version"]
     
     respond_to do |format|
       format.xml  { render :xml => "" }
@@ -51,7 +52,7 @@ class EnzymesController < ApplicationController
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["root_url"]
           url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key + "&root=enzyme"
-          url_path = "#{path}?".concat(url_params)
+          url_path = "/#{api_version}#{path}?".concat(url_params)
           begin
             puts "root: " + url_path
             response = Net::HTTP.get(domain, url_path)
@@ -68,7 +69,7 @@ class EnzymesController < ApplicationController
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["class_url"]
           url_params = "uri=" + CGI::escape("http://purl.uniprot.org/enzyme/" + params["node"]) + "&_format=json&app_id=" + app_id + "&app_key=" + app_key
-          url_path = "#{path}?".concat(url_params)
+          url_path = "/#{api_version}#{path}?".concat(url_params)
           begin
             puts "child: " + url_path
             response = Net::HTTP.get(domain, url_path)

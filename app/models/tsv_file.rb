@@ -6,6 +6,7 @@ class TsvFile < ActiveRecord::Base
   def process params
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
+    app_version = AppSettings.config["tsv"]["app_version"]
     url_path = ''
     domain = AppSettings.config["tsv"]["tsv_url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
@@ -21,7 +22,7 @@ class TsvFile < ActiveRecord::Base
     begin
       FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
         while i <= number_of_pages
-          url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+          url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
           response = Net::HTTP.get(domain, url_path)
           tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers => true})
           # only need the header line from the first response
@@ -53,6 +54,7 @@ class TsvFile < ActiveRecord::Base
     # no guarantee you will get all the headers so here is a complete list, might change in the future so be aware
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
+    app_version = AppSettings.config["tsv"]["app_version"]
     url_path = ''
     all_headers = []
     domain = AppSettings.config["tsv"]["tsv_url"]
@@ -67,7 +69,7 @@ class TsvFile < ActiveRecord::Base
         
         url_params = "uri=" + CGI::escape("http://ops.rsc-us.org/#{csid}") + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
-          url_path = "#{path}?".concat(url_params)
+          url_path = "/#{app_version}#{path}?".concat(url_params)
           response = Net::HTTP.get(domain, url_path)
           tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
           if i == 1 

@@ -99,7 +99,7 @@ Ext.define('LDA.helper.EnzymeFamilyPaginatedReader', {
 
             var activity_activity_type = item['activity_type'];
             var activity_standard_value = item['activity_value'];
-            var activity_standard_units = item['standardUnits'];
+            var activity_standard_units = item['activity_unit'] != null ? item['activity_unit'].prefLabel : null;
             var activity_relation = item['activity_relation'];
             var activity_pubmed_id = item['pmid'];
 
