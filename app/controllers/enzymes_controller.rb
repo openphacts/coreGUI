@@ -52,7 +52,11 @@ class EnzymesController < ApplicationController
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["root_url"]
           url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key + "&root=enzyme"
-          url_path = "/#{api_version}#{path}?".concat(url_params)
+          if api_version == ""
+            url_path = "#{path}?".concat(url_params)
+          else
+            url_path = "/#{api_version}#{path}?".concat(url_params)
+          end
           begin
             puts "root: " + url_path
             response = Net::HTTP.get(domain, url_path)
@@ -69,7 +73,11 @@ class EnzymesController < ApplicationController
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["class_url"]
           url_params = "uri=" + CGI::escape("http://purl.uniprot.org/enzyme/" + params["node"]) + "&_format=json&app_id=" + app_id + "&app_key=" + app_key
-          url_path = "/#{api_version}#{path}?".concat(url_params)
+          if api_version == ""
+            url_path = "#{path}?".concat(url_params)
+          else
+            url_path = "/#{api_version}#{path}?".concat(url_params)
+          end
           begin
             puts "child: " + url_path
             response = Net::HTTP.get(domain, url_path)

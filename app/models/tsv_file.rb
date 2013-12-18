@@ -23,7 +23,11 @@ class TsvFile < ActiveRecord::Base
     begin
       FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
         while i <= number_of_pages
-          url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+          if app_version == ""
+            url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+          else
+            url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+          end
           response = Net::HTTP.get(domain, url_path)
           tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers => true})
           # only need the header line from the first response
@@ -70,7 +74,11 @@ class TsvFile < ActiveRecord::Base
         
         url_params = "uri=" + CGI::escape("http://ops.rsc-us.org/#{csid}") + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
-          url_path = "/#{app_version}#{path}?".concat(url_params)
+          if app_version == ""
+            url_path = "#{path}?".concat(url_params)
+          else
+            url_path = "/#{app_version}#{path}?".concat(url_params)
+          end
           response = Net::HTTP.get(domain, url_path)
           tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
           if i == 1 
