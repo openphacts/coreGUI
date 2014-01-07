@@ -15,7 +15,7 @@ Ext.define('LDA.model.CompoundModel', {
         'full_mwt', 'full_mwt_src',
         'hba', 'hba_src',
         'hbd', 'hbd_src',
-        'molform', 'molform_src',
+        'molformula', 'molformula_src',
         'mw_freebase', 'mw_freebase_src',
         'psa', 'psa_src',
         'rtb', 'rtb_src',
@@ -29,7 +29,7 @@ Ext.define('LDA.model.CompoundModel', {
          'compound_pref_label_item',
          'description_item',
          'biotransformation_item',
-         'molform_item',
+         'molformula_item',
          'compound_smiles_item',
          'inchi_item',
          'inchi_key_item',
@@ -43,7 +43,9 @@ Ext.define('LDA.model.CompoundModel', {
          'mw_freebase_item',
          'num_ro5_violations_item',
          'psa_item',
-         'rtb_item'
+         'rtb_item',
+         // for structure search
+         'relevance'
 
 //        '', '_src',
     ]

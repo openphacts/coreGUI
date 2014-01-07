@@ -7,7 +7,8 @@ class CoreApiCallsController < ApplicationController
    NO_EXPANDER_CORE_API_URL = "http://ops.few.vu.nl:9183/opsapi"
 
   def ims_status
-    uri = URI.parse("http://openphacts.cs.man.ac.uk:9090/QueryExpander/SqlCompatVersion")
+    ims_url = AppSettings.config["ims"]["url"]
+    uri = URI.parse(ims_url)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
     @status = true

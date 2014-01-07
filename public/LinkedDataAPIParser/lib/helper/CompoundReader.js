@@ -38,7 +38,7 @@ Ext.define('LDA.helper.CompoundReader', {
         chemblValue != null ? chemblUri = chemblValue[LDA.helper.LDAConstants.LDA_ABOUT] : chemblUri = null;
         drugBankData != null ? drugbankUrl = drugBankData[LDA.helper.LDAConstants.LDA_ABOUT] : drugbankUrl = null;
 
-        chemspiderValue != null ? chemspiderLinkOut = 'http://www.chemspider.com/' + chemSpiderUri.split('/').pop() : chemspiderLinkOut = null ;
+        chemspiderValue != null ? chemspiderLinkOut = 'http://ops.rsc.org/' + chemSpiderUri.split('/').pop() : chemspiderLinkOut = null ;
         chemblValue != null ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = null;
         drugBankData != null ? drugbankLinkOut = 'http://www.drugbank.ca/drugs/' + drugbankUrl.split('/').pop()  : drugbankLinkOut = null;
 
@@ -68,9 +68,9 @@ Ext.define('LDA.helper.CompoundReader', {
             hbd: chemspiderValue != null ? chemspiderValue['hbd'] : null,
             hbd_src: chemspiderValue != null ? chemspiderValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
             hbd_item: chemspiderLinkOut,
-            molform: chemblValue != null ? chemblValue['molform'] : null,
-            molform_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
-            molform_item: chemblLinkOut,
+            molformula: chemblValue != null ? chemblValue['molformula'] : null,
+            molformula_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
+            molformula_item: chemblLinkOut,
             mw_freebase: chemblValue != null ? chemblValue['mw_freebase'] : null,
             mw_freebase_src: chemblValue != null ? chemblValue[LDA.helper.LDAConstants.LDA_IN_DATASET] : null,
             mw_freebase_item: chemblLinkOut,

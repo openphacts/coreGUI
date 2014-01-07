@@ -43,7 +43,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'chembl_assay_uri',
         'chembl_target_uri',
         //this is labelled assay_organism
-        'target_organisms',
+        //'target_organisms',
         'target_organism',
         'target_pref_label',
         'targets',
@@ -55,6 +55,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'activity_standard_value',
         'activity_activity_type',
 		'activity_pubmed_id',
+        'pChembl',
 
         'compound_full_mwt_src',
         'compound_pref_label_src',
@@ -68,9 +69,11 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'activity_standard_units_src',
         'activity_standard_value_src',
         'activity_activity_type_src',
+        'pChembl_src',
 
         // provenance items
         'target_title_item',
+        'target_pref_label_item',
         'target_organism_item',
         'activity_activity_type_item',
         'activity_relation_item',
@@ -83,7 +86,7 @@ Ext.define('LDA.model.PharmacologyPaginatedModel', {
         'compound_pref_label_item',
         'target_pref_label_item',
         'assay_organism_item',
-        'assay_description_item'
-
+        'assay_description_item',
+        'pChembl_item'
     ]
 });

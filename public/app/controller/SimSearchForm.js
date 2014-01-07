@@ -43,6 +43,10 @@ Ext.define('LSP.controller.SimSearchForm', {
 
     csids: undefined,
 
+    relevance: undefined,
+
+    search_type: undefined,
+
     current_jobs: new Array(),
 
     init: function() {
@@ -161,13 +165,28 @@ Ext.define('LSP.controller.SimSearchForm', {
         this.missing_count = 0;
         this.success_count = 0;
         this.total_count = csid_list.length;
+        relevance = {};
+        if (search_type === 'exact') {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].hide();
+        } else {
+            this.getStrucGrid().columns[this.getStrucGrid().columns.length - 1].show();
+        }
         for (var i = 0; i < csid_list.length; i++) {
-            csid_store.proxy.extraParams.uri = csid_list[i];
+            if (search_type === 'exact') {
+                csid_store.proxy.extraParams.uri = csid_list[i];
+            } else {
+                var csid = csid_list[i][LDA.helper.LDAConstants.LDA_ABOUT];
+                csid_store.proxy.extraParams.uri = csid;
+                relevance[csid] = csid_list[i][LDA.helper.LDAConstants.LDA_STRUCTURE_RELEVANCE];
+            }
+
+            //TODO also get a relevance for each compound
             csid_store.load(function(records, operation, success) {
                 if (success) {
 		    me.getSsform().setLoading('Fetching compounds....' + me.current_count + ' of ' + me.total_count);
                     // set the index on the record so that the rows will be numbered correctly.
                     // this is a known bug in extjs when adding records dynamically
+                    records[0].data.relevance = relevance[operation.request.params.uri];
                     records[0].index = me.success_count;
                     me.success_count++;
                     me.current_count++;
@@ -260,7 +279,7 @@ if (this.current_mode == 'exact') {
         });
 
         var grid_title = '';
-        var search_type = '';
+        //var search_type = '';
         var params = {};
         var values = this.getSsform().getValues();
         params['searchOptions.Molecule'] = values.smiles;
@@ -292,38 +311,47 @@ if (this.current_mode == 'exact') {
 	//params['scopeOptions.DataSources[2]'] = 'PDB';
         this.getStrucGrid().setTitle(grid_title);
         this.getSsform().setLoading('Fetching compounds....');
-	searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        if (search_type == 'exact') {
+            // do not send limit param for exact search since api rejects the request
+            searchEngine.setLimit(1);
+        } else {
+	        searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+        }
         searchEngine.doSearch(search_type, params);
     },
 
     // Launch ketcher window
     launchKetcher: function(button) {
         // Launch the window
-        var view = Ext.widget('KetcherForm');
+        var fields;
         // Check to see if we already have a structure to modify and load it if we do
         fields = this.getSsform().form.getFields().items;
         var molfile = '';
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'molfile') {
                 molfile = item.getValue();
-                var temp = 12;
+                //var temp = 12;
             }
         });
         if (molfile != '') {
-            document.getElementById('ketcher_box_id').contentWindow.ketcher.setMolecule(molfile);
+            // encode and save the molfile in js var so that it can be passed to the iframe
+            // from the ketcher frame
+            ketcher_molfile_initializer = encodeURIComponent(molfile);
         }
+        var view = Ext.widget('KetcherForm');
     },
 
     // Grep smiles from ketcher window and store in smiles field in form
     getSmiles: function(button) {
         var ketcher_window = document.getElementById('ketcher_box_id');
         // smiles is used for query
+        var smiles, molfile;
         smiles = ketcher_window.contentWindow.ketcher.getSmiles();
         // molfile is stored in hidden field for use when updating existing structure
         molfile = ketcher_window.contentWindow.ketcher.getMolfile();
         // We get all fields in form so that we can update the right one
         fields = this.getSsform().form.getFields().items;
-        fields.forEach(function(item) {
+        Ext.each(fields, function (item, index) {
             if (item.name == 'smiles') {
                 item.setValue(smiles)
             } else if (item.name == 'molfile') {
@@ -344,7 +372,7 @@ if (this.current_mode == 'exact') {
             return;
         }
 
-        var searchType = 'exact';
+        searchType = 'exact';
         if (values.search_type == 2) {
             searchType = 'sub';
         } else if (values.search_type == 3) {
@@ -416,7 +444,11 @@ if (this.current_mode == 'exact') {
 			//params['scopeOptions.DataSources[2]'] = 'PDB';
 		    me.getStrucGrid().setTitle(grid_title);
 		    me.getSsform().setLoading('Fetching compounds....');
-			searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+            if (search_type == 'exact') {
+			    searchEngine.setLimit(1);
+            } else {
+			    searchEngine.setLimit(this.getMaxRecordsSpinner().value);
+            }
 		    searchEngine.doSearch(search_type, params);
 		} else {
 			Ext.History.add('!p=SimSearchForm&sm=' + values.smiles + '&st=' + searchType);

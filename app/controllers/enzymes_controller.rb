@@ -39,6 +39,7 @@ class EnzymesController < ApplicationController
 
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
+    api_version = AppSettings.config["tsv"]["api_version"]
     
     respond_to do |format|
       format.xml  { render :xml => "" }
@@ -50,40 +51,50 @@ class EnzymesController < ApplicationController
 
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["root_url"]
-          url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key
-          url_path = "#{path}?".concat(url_params)
+          url_params = "_format=json&app_id=" + app_id + "&app_key=" + app_key + "&root=enzyme"
+          if api_version == ""
+            url_path = "#{path}?".concat(url_params)
+          else
+            url_path = "/#{api_version}#{path}?".concat(url_params)
+          end
           begin
+            puts "root: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
-            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+            logger.error "Error retrieving enzymes for : "  + domain + url_path + " : " + e.to_s
           end
           unless response.nil?
             json = JSON.parse(response)
-            json["result"]["primaryTopic"]["rootNode"].each { |d|
-              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+            json["result"]["primaryTopic"]["hasPart"]["rootNode"].each { |d|
+              nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
           end
         else
           domain = AppSettings.config["tsv"]["tsv_url"]
           path = AppSettings.config["enzyme"]["class_url"]
           url_params = "uri=" + CGI::escape("http://purl.uniprot.org/enzyme/" + params["node"]) + "&_format=json&app_id=" + app_id + "&app_key=" + app_key
-          url_path = "#{path}?".concat(url_params)
+          if api_version == ""
+            url_path = "#{path}?".concat(url_params)
+          else
+            url_path = "/#{api_version}#{path}?".concat(url_params)
+          end
           begin
+            puts "child: " + url_path
             response = Net::HTTP.get(domain, url_path)
           rescue Exception => e
-            console.log "Error retrieving enzymes for : "  + url_path + " : " + e.to_string
+            logger.error "Error retrieving enzymes for : "  + domain + url_path + " : " + e.to_s
           end 
           unless response.nil?
             json = JSON.parse(response)
             #check whether there is one or multiple sub enzymes, the response format changes
             #depending on this ie is it 'has_member' => [{....}] or just 'has_member' => {....}
-            if json["result"]["primaryTopic"]["has_member"].class.eql?(Hash)             
-              about = json["result"]["primaryTopic"]["has_member"]["_about"]
-              name = json["result"]["primaryTopic"]["has_member"]["name"]
+            if json["result"]["primaryTopic"]["childNode"].class.eql?(Hash)             
+              about = json["result"]["primaryTopic"]["childNode"]["_about"]
+              name = json["result"]["primaryTopic"]["childNode"]["prefLabel"]
               nodes.push( { :name => name, :ec_number => about.split("/").last, :id => about.split("/").last, :leaf => about[-1,1].eql?("-") ? false : true, :cls => about[-1,1].eql?("-") ? 'folder' : 'file' } )
             else
-            json["result"]["primaryTopic"]["has_member"].each { |d|
-              nodes.push( { :name => d["name"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+            json["result"]["primaryTopic"]["childNode"].each { |d|
+              nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
             }
           end
           end

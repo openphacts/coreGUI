@@ -1,41 +1,41 @@
 Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
-    extend:'LSP.view.dynamicgrid.DynamicGrid',
+        extend:'LSP.view.dynamicgrid.DynamicGrid',
         alias:'widget.PharmByEnzymeFamilyScrollingGrid',
         layout:'fit',
- 	//verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
+        //verticalScrollerType: Ext.create('LDA.helper.DynamicPagingToolbar',{itemId: 'pager_id'}),
         disableSelection: true,
         invalidateScrollerOnRefresh: false,
         requires:[
 
         ],
-		listeners: {
-		    'sortchange': function(ct, column, direction, eOpts ) {
-				console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
-				this.setLoading(true);
-		    }
-		},
+        listeners: {
+            'sortchange': function(ct, column, direction, eOpts ) {
+                console.log('PharmByEnzymeFamilyScrollingGrid: sortchange()');
+                this.setLoading(true);
+            }
+        },
         store:'EnzymeFamilyPaginatedStore',
-	    exportStore: null,
-	    getExportStore: function() {
-		if (this.exportStore == null) {
-			this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
-		}
-		return this.exportStore;		
-	},
+        exportStore: null,
+        getExportStore: function() {
+            if (this.exportStore == null) {
+                this.exportStore = Ext.create('LDA.store.EnzymeFamilyPaginatedStore', {});
+            }
+            return this.exportStore;
+        },
         columns:{
             defaults:{
             },
 
             items:[
-				{
-					xtype: 'rownumberer',
-					width: 40
-				},
+                {
+                    xtype: 'rownumberer',
+                    width: 40
+                },
                 {
                     header:'Structure',
                     dataIndex:'cs_compound_uri',
-					xtype: 'templatecolumn',
-					tpl:'<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id={csid}&w=128&h=128" alt="CSID:{csid}"/>',
+                    xtype: 'templatecolumn',
+                    tpl:'<img width="128" height="128" src="http://ops.rsc.org/{csid}/image?w=128&h=128" alt="CSID:{csid}"/>',
                     width:135,
                     sortable:false
                 },
@@ -49,14 +49,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                 {
                     header:'Target Names',
                     width: 180,
-                    dataIndex:'targets',
+                    dataIndex:'target_pref_label',
                     renderer:enzymeProvenanceRenderer,
                     tdCls: 'wrap gridDescriptiveRowPadding'
                     //align:'center'
                 },
                 {
                     header:'Target Organisms',
-                    dataIndex:'target_organisms',
+                    dataIndex:'target_organism',
                     renderer:enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -111,7 +111,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     header:'PubMed ID',
                     dataIndex:'activity_pubmed_id',
                     xtype:'templatecolumn',
-                    tpl: '<a href="http://www.ncbi.nlm.nih.gov/pubmed?term={activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
+                    tpl: '<a href="{activity_pubmed_id}" target="_blank">{activity_pubmed_id}</a>',
                     //renderer:compoundProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
@@ -143,7 +143,14 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
                     renderer: enzymeProvenanceRenderer,
                     align:'center',
                     tdCls: 'gridRowPadding'
-                }
+                },
+			    {
+			        header:'pChembl',
+			        dataIndex:'pChembl',
+			        renderer:enzymeProvenanceRenderer,
+			        align:'center',
+			        tdCls: 'gridRowPadding'
+			    }
             ]
 
         },
@@ -159,7 +166,7 @@ Ext.define('LSP.view.pharm_by_enzyme_family.PharmByEnzymeFamilyScrollingGrid', {
 );
 
 function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, store) {
-	//console.log("Enzyme Pharmacology provenance renderer");
+    //console.log("Enzyme Pharmacology provenance renderer");
 
     //if (LDAProvenanceMode != LDA.helper.LDAConstants.LDA_PROVENANCE_OFF) {
     if (this.enzyme_prov) {
@@ -224,24 +231,7 @@ function enzymeProvenanceRenderer (data, cell, record, rowIndex, columnIndex, st
         //    return '<div class="' + cls + '">' + data + ' (' + source + ')</div>';
         //}
     } else {
-        if (this.columns[columnIndex].dataIndex == 'targets') {
-            //console.log('target_title ' + data.length);
-            var target_names = "";
-            Ext.each(data, function (target, index) {
-                target_names += target.title;
-                //console.log(" TARGET NAME SRC " + target['src']);
-                target_names += "<br><br>";
-            });
-            return "<div>" + target_names + "</div>";
-        } else if (this.columns[columnIndex].dataIndex == 'target_organisms') {
-            //console.log('target_organism ' + data.length);
-            var target_organisms = "";
-            Ext.each(data, function (target, index) {
-                target_organisms += target['organism'];
-                target_organisms += "<br><br>";
-            });
-            return "<div>" + target_organisms + "</div>";
-        }
+
         return data;
     }
     return data;

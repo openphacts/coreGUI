@@ -45,4 +45,14 @@ module ApplicationHelper
     end
   end
 
+  def api_version_details
+
+    if AppSettings.config["tsv"]["api_version"] == ""
+      return ""
+    else
+      return "/" + AppSettings.config["tsv"]["api_version"]
+    end
+
+  end
+
 end

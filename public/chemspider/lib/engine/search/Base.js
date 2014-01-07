@@ -55,7 +55,9 @@
     runSearch: function (params) {
 	// no need for 2 loading masks
         //this.startProgress();
-        params['resultOptions.Limit'] = this.limit;
+        if (this.limit > 1) {
+            params['resultOptions.Count'] = this.limit;
+        }
 
         //  clear previous search results
         this.csids = null;
