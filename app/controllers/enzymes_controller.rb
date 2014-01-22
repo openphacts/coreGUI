@@ -94,7 +94,11 @@ class EnzymesController < ApplicationController
               nodes.push( { :name => name, :ec_number => about.split("/").last, :id => about.split("/").last, :leaf => about[-1,1].eql?("-") ? false : true, :cls => about[-1,1].eql?("-") ? 'folder' : 'file' } )
             else
             json["result"]["primaryTopic"]["childNode"].each { |d|
-              nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+              if d["_about"] != nil && d["prefLabel"] != nil
+                nodes.push( { :name => d["prefLabel"], :ec_number => d["_about"].split("/").last, :id => d["_about"].split("/").last, :leaf => d["_about"][-1,1].eql?("-") ? false : true, :cls => d["_about"][-1,1].eql?("-") ? 'folder' : 'file' } )
+              else
+                # do nothing since we probably only have a uri
+              end
             }
           end
           end

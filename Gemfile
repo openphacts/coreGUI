@@ -39,7 +39,7 @@ gem 'sqlite3'
 gem "uuidtools"
 gem 'authlogic'
 gem 'ancestry'
-gem 'rdf'
+gem 'rdf', '0.3.3'
 gem 'sparql-client'
 gem 'fastercsv'
 gem 'delayed_job_active_record'
