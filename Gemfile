@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.17'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -37,12 +37,13 @@ gem 'sqlite3'
 # OPS explorer gems
 ###################
 gem "uuidtools"
-gem 'authlogic'
-gem 'ancestry'
-gem 'rdf'
+gem 'authlogic', '3.3.0'
+gem 'ancestry', '2.0.0'
+gem 'rdf', '1.0.5'
 gem 'sparql-client'
 gem 'fastercsv'
-gem 'delayed_job_active_record'
+gem 'delayed_job', '3.0.5'
+gem 'delayed_job_active_record', '0.4.4'
 gem "daemons"
 #needed for some linux deploys
 gem 'therubyracer', '~>0.10.0', :platforms => :ruby
