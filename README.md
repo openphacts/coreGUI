@@ -23,7 +23,7 @@ Deployment
 ----------
 
 To set up the environment go to the genericGUI page on our OpenPHACTS wiki at
-wiki.openphacts.org and follow the instructions there.
+wiki.openphacts.org and follow the instructions there. You will need the [Sencha cmd tools](http://www.sencha.com/products/sencha-cmd/download/) to run the generate-production-build script.
 In case of problems please send [feedback](http://www.openphacts.org/explorer/160 "openPHACTS feedback")or contact pmu@openphacts.org
 
 Set the mailer constants, database file and application specific urls
@@ -34,6 +34,8 @@ the default values to whatever is appropriate for your application.
 Change config.action\_mailer.perform_deliveries = false to true in config/environments/development.rb
 if you want it to send feedback emails in development mode.  
 Copy config/database.example.yml to config/database.yml and enter your database details as appropriate.
+
+There are also 2 values where the explorer 1 retirement dates can be added. These are 'switchover' and 'switchoff'. switchover is when explorer1 is moved to a temporary explorer1.openpahcts.org url and switchoff is the date when the old explorer1 app is switched off and cannot be used any longer. The don't have to be dates but make sure the popup text makes sense before deploying.
 
 Development
 -----------
