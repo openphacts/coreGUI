@@ -25,9 +25,12 @@
     var chemspiderURL = '<%= AppSettings.config["tsv"]["protocol"] + "://" + AppSettings.config["cs"]["url"] + api_version_details -%>';
     var chemspiderWidgetURL = '<%= AppSettings.config["tsv"]["protocol"] + "://" + AppSettings.config["cs"]["widget"] -%>';
     var ketcher_molfile_initializer = '';
+    var switchOffDate = '<%= AppSettings.config["retirement"]["switchoff"] %>';
+    var handoverDate = '<%= AppSettings.config["retirement"]["switchover"] %>';
   </script>
-<!--[if lt IE 7]>
-<p div class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
+
+  <!--[if lt IE 7]>
+<p class="browser-warning">The OPS Explorer is currently only supported on IE7+, Firefox, Chrome, Opera & Safari. Please upgrade to one of these browsers</p>
 <![endif]-->
   <!-- console logging will not crash browsers that don't support it -->
   <!-- see https://github.com/andyet/ConsoleDummy.js/ -->
@@ -112,6 +115,5 @@ method.caller) && method.$owner.superclass[method.$name]));
 </form>
 
 <%= yield %>
-
 </body>
 </html>
