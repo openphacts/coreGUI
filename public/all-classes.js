@@ -13362,6 +13362,18 @@ Ext.define('LSP.view.Viewport', {
 					}
 				}
 			}
+		},
+		afterlayout: {
+			fn: function(){
+				Ext.Msg.show({
+					title:'Explorer 1 Retirement',
+				msg:'Open PHACTS Explorer 1 will be retired and removed from service by ' + switchOffDate + '.\n To prepare for the transition please use <a href="https://explorer2.openphacts.org">Explorer 2</a>.\nFrom ' + handoverDate + ' Explorer 1 will be moved to https://explorer1.openphacts.org\n',
+				buttons:Ext.MessageBox.OK,
+				icon:Ext.MessageBox.WARNING
+                    });
+
+	//		alert('Open PHACTS Explorer 1 will be switched off on ' + switchOffDate + '.\n To prepare for the transition please use Explorer 2 available at\nhttps://explorer2.openphacts.org.\n  From ' + handoverDate + ' Explorer 1 will be moved to\nhttps://explorer1.openphacts.org\n');
+			}
 		}
 		},
 

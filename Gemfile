@@ -25,7 +25,7 @@ gem 'jquery-rails'
 # Database adapter
 ##################
 # choose your database, uncomment the appropriate one or add another if you need to
-gem 'pg'
+#gem 'pg'
 #gem 'mysql2'
 gem 'sqlite3'
 #gem 'activerecord-oracle_enhanced-adapter'
